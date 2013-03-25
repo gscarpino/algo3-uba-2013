@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const std::string mostrarVecInt(const vector<int> &x);
+string mostrarVecInt(const vector<int> &x);
 void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out_i, int &out_tiempo);
 int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &orden);
 
@@ -21,15 +21,13 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-    std::string inputFileName = argv[1];
-    std::string outputFileName = argv[2];
 
-    ifstream inputFile(inputFileName);
+    ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
     }
 
-    ofstream outputFile("output1.txt",  ios_base::trunc);
+    ofstream outputFile(argv[2],  ios_base::trunc);
     if(!outputFile.is_open()){
         cerr << "Error al abrir/crear el archivo de salida." << endl;
     }
@@ -71,6 +69,7 @@ int main(int argc, char *argv[]) {
 
         resolver(p,c, orden, tiempoMinimo);
 
+
         for(auto maquina : orden)
             outputFile << maquina << " ";
 
@@ -83,8 +82,8 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-const std::string  mostrarVecInt(const vector<int> &x){
-    std::ostringstream oss;
+string  mostrarVecInt(const vector<int> &x){
+    ostringstream oss;
     for(auto elem: x){
         oss << elem << " ";
     }
@@ -101,7 +100,7 @@ void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out
       maquinas.push_back(make_pair(in_p[i], i));
 
    // Ordenamos la lista de manera decreciente, segun los P_i
-   std::sort(maquinas.begin(), maquinas.end(), std::greater<pair<int, int> > ());
+   sort(maquinas.begin(), maquinas.end(), greater<pair<int, int> > ());
 
    // Generamos el vector que contiene el orden en que se deben llenar las maquinas
    for(int i = 0;  i  < cant; i++) out_orden[i] = maquinas[i].second;
@@ -120,6 +119,6 @@ int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &or
         inicio = inicio + c[i];
         if(res < fin) res = fin;
     }
-
+    cout << "Tiempo: " << res << endl;
     return res;
 }
