@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <sstream>
 #include <iterator>
@@ -12,23 +11,37 @@
 
 using namespace std;
 
+const std::string mostrarVecInt(const vector<int> &x);
+void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out_i, int &out_tiempo);
+int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &orden);
 
-void mostrarVecInt(const vector<int> &x);
-void resolverOrdTiempos(int cant, const vector<int> &p, const vector<int> &c);
-void ordenarDesc(vector<int> &p, vector<int> &c);
-int calcTiempo(const vector<int> &p, const vector<int> &c);
+int main(int argc, char *argv[]) {
 
-int main() {
-    cout << "Ejercicio 1 - La fabrica de quesos" << endl << endl;
-    ifstream arch("input1.txt");
-    if(!arch.is_open()){
-        cerr << "Error al abrir el archivo." << endl;
+    if(argc <= 1) {
+      cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
+      return 0;
+    }
+    std::string inputFileName = argv[1];
+    std::string outputFileName = argv[2];
+
+    ifstream inputFile(inputFileName);
+    if(!inputFile.is_open()){
+        cerr << "Error al abrir el archivo de entrada." << endl;
     }
 
-    string linea;
+    ofstream outputFile("output1.txt",  ios_base::trunc);
+    if(!outputFile.is_open()){
+        cerr << "Error al abrir/crear el archivo de salida." << endl;
+    }
 
-    while(!arch.eof()){
-        getline(arch, linea);
+   string linea;
+   int tiempoMinimo;
+
+
+   cout << "Algoritmos y Estructuras de Datos III - 2013 C1" << endl << "TP1 - Ejercicio 1: La fabrica de quesos" << endl << endl;
+
+    while(!inputFile.eof()){
+        getline(inputFile, linea);
         if(linea == "#"){
             break;
         }
@@ -37,103 +50,76 @@ int main() {
 
         vector<int> p(cant);
         vector<int> c(cant);
+        vector<int> orden(cant);
 
-        getline(arch, linea);
-
-
+        getline(inputFile, linea);
         istringstream sLinea(linea);
-
-        for(int i = 0, n; i < cant; i++){
+        for(unsigned int i = 0, n; i < cant; i++){
             sLinea >> n;
             p[i] = n;
         }
 
-        getline(arch, linea);
+        getline(inputFile, linea);
         istringstream sLinea2(linea);
-
-        for(int i = 0, n; i < cant; i++){
+        for(unsigned int i = 0, n; i < cant; i++){
             sLinea2 >> n;
             c[i] = n;
         }
 
-        cout << "Tiempo de produccion:";
-        mostrarVecInt(p);
-        cout << endl << "Tiempo de carga de combustible:";
-        mostrarVecInt(c);
+        cout << "Tiempo de produccion          : " << mostrarVecInt(p) << endl;
+        cout << "Tiempo de carga de combustible: " << mostrarVecInt(c) << endl;
 
-        //Se crea una copia de p y c para poder contrastar con
-        // otras implementaciones
-        resolverOrdTiempos(cant,p,c);
+        resolver(p,c, orden, tiempoMinimo);
 
+        for(auto maquina : orden)
+            outputFile << maquina << " ";
 
+        outputFile << tiempoMinimo << endl;
     }
 
-    cout << endl << "Termino" << endl;
+   inputFile.close();
+   outputFile.close();
+   cout << endl << "Termino" << endl;
 	return 0;
 }
 
-void mostrarVecInt(const vector<int> &x){
-    cout << endl << "Vector: ";
-    for(int i = 0; i < x.size(); i++){
-        cout << x[i] << " ";
+const std::string  mostrarVecInt(const vector<int> &x){
+    std::ostringstream oss;
+    for(auto elem: x){
+        oss << elem << " ";
     }
-}
-
-void resolverOrdTiempos(int cant, const vector<int> &p, const vector<int> &c){
-    vector<int> tp(p);
-    vector<int> tc(c);
-
-    ordenarDesc(tp,tc);
-
-    calcTiempo(tp,tc);
+    return oss.str();
 }
 
 
-void ordenarDesc(vector<int> &p, vector<int> &c){
-    int temp;
-    for(int i = 0; i < p.size()-1; i++){
-        for(int j = i+1;j<p.size();j++){
-            if(p[i] < p[j]){
-                temp = p[i];
-                p[i] = p[j];
-                p[j] = temp;
-                temp = c[i];
-                c[i] = c[j];
-                c[j] = temp;
-            }
-//            // Ver si afecta el orden de tiempos de carga de
-//            // combustible cuando empata tiempo de produccion
-//            else if(p[i] == p[j]){
-//                if(c[i] < c[j]){
-//                    temp = p[i];
-//                    p[i] = p[j];
-//                    p[j] = temp;
-//                    temp = c[i];
-//                    c[i] = c[j];
-//                    c[j] = temp;
-//                }
-//            }
-        }
-    }
+void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out_orden, int &out_tiempo){
+   int cant = in_p.size();
+   vector< pair<int, int> > maquinas;
+
+   // Creamos una lista con tuplas (P_i, i)
+   for(int i = 0; i < cant; i++)
+      maquinas.push_back(make_pair(in_p[i], i));
+
+   // Ordenamos la lista de manera decreciente, segun los P_i
+   std::sort(maquinas.begin(), maquinas.end(), std::greater<pair<int, int> > ());
+
+   // Generamos el vector que contiene el orden en que se deben llenar las maquinas
+   for(int i = 0;  i  < cant; i++) out_orden[i] = maquinas[i].second;
+
+   // Calculamos cual es el tiempo que tardan en terminar todas las maquinas
+   out_tiempo = calcTiempo(in_p, in_c, out_orden);
 }
 
-int calcTiempo(const vector<int> &p, const vector<int> &c){
-    int res = 0;
-    vector<int> ejecucionInicio(p.size());
-    vector<int> terminacion(p.size());
 
-    ejecucionInicio[0] = c[0];
-    terminacion[0] = ejecucionInicio[0] + p[0];
-    for(int i = 1; i < ejecucionInicio.size(); i++){
-        ejecucionInicio[i] = ejecucionInicio[i - 1] + c[i];
-        terminacion[i] = ejecucionInicio[i] + p[i];
-        if(res < terminacion[i]){
-            res = terminacion[i];
-        }
+int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &orden){
+    int res = 0, inicio = 0, fin = 0;
+    vector<int> terminacion(orden.size());
+
+    for(auto i : orden){
+        fin = inicio + c[i] + p[i];
+        inicio = inicio + c[i];
+        if(res < fin) res = fin;
     }
-
-
-    cout << endl << "RES: " << res << endl;
 
     return res;
 }
