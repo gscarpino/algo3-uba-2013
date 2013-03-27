@@ -12,7 +12,19 @@
 using namespace std;
 
 
-void  mostrarVecTuplaInt(const vector< pair<int,int> > &x);
+void  mostrarVecInt(const vector<int> &x);
+
+int proxSensor(const vector<int> &tiempos){
+    int res = 0;
+    int minimo = tiempos[0];
+    for(int i = 0; i < tiempos.size(); i++){
+        if(tiempos[i] < minimo){
+            res = i;
+            minimo = tiempos[i];
+        }
+    }
+    return res;
+}
 
 int main(int argc, char *argv[]) {
 cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
@@ -32,9 +44,12 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
         istringstream sLinea(linea);
 
         unsigned int cant;
-        vector< pair<int,int> > sensores;
+        vector<int> sensores;
+        vector<int> tiempos;
         unsigned int medDefectuosa;
         unsigned int medicion = 0;
+        int proximo = 0;
+        vector<int> mediciones;
 
         int n; int i = 0;
         while(!sLinea.eof()){
@@ -42,35 +57,33 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
             if(i == 0){
                 cant = n;
                 sensores.resize(cant);
+                tiempos.resize(cant);
                 medicion = cant;
             }
             else if(i == 1){
                 medDefectuosa = n;
+                cout << "Medicion defectuosa: " << medDefectuosa << endl;
             }
             else{
-                sensores[i-2] = make_pair(n,n);
+                sensores[i-2] = n;
+                tiempos[i-2] = n;
+                mediciones.push_back(i-1);
             }
             i++;
         }
-        mostrarVecTuplaInt(sensores);
 
-        return 0;
-//        getline(arch, linea);
-//        istringstream sLinea2(linea);
-//
-//        for(int i = 0, n; i < cant; i++){
-//            sLinea2 >> n;
-//            c[i] = n;
-//        }
-//
-//        cout << "Tiempo de produccion:";
-//        mostrarVecInt(p);
-//        cout << endl << "Tiempo de carga de combustible:";
-//        mostrarVecInt(c);
-//
-//        //Se crea una copia de p y c para poder contrastar con
-//        // otras implementaciones
-//        resolverOrdTiempos(cant,p,c);
+        mostrarVecInt(tiempos);
+        while(medicion < medDefectuosa){
+            proximo = proxSensor(tiempos);
+            tiempos[proximo] = tiempos[proximo] + sensores[proximo];
+            mostrarVecInt(tiempos);
+            mediciones.push_back(proximo+1);
+            medicion++;
+        }
+
+
+
+        mostrarVecInt(mediciones);
 
 
     }
@@ -82,10 +95,11 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
 
 
 
-void  mostrarVecTuplaInt(const vector< pair<int,int> > &x){
+void  mostrarVecInt(const vector<int> &x){
     cout << "[ ";
     for(int i = 0; i < x.size(); i++){
-        cout << "(" << x[i].first << "," << x[i].second << ") ";
+//        cout << "(" << x[i].first << "," << x[i].second << ") ";
+        cout << x[i] << " ";
     }
     cout << "]";
 }
