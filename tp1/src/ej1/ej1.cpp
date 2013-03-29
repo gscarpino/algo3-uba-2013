@@ -93,7 +93,7 @@ string  mostrarVecInt(const vector<int> &x){
 
 void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out_orden, int &out_tiempo){
    int cant = in_p.size();
-   vector< pair<int, int> > maquinas;
+   vector< pair<int, int> > maquinas(cant);
 
    // Creamos una lista con tuplas (P_i, i)
    for(int i = 0; i < cant; i++)
@@ -105,8 +105,17 @@ void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out
    // Generamos el vector que contiene el orden en que se deben llenar las maquinas
    for(int i = 0;  i  < cant; i++) out_orden[i] = maquinas[i].second;
 
+   // El ordenamiento del vector out_orden puede realizarse sin necesidad de crear
+   // un vector de tuplas (maquinas), haciendo un sort indirecto por medio de una
+   // funcion lambda (como se muestra a continuacion), resultando en una constante
+   // oculta menor, ademas de un menor footprint:
+   //iota(out_orden.begin(), out_orden.end(), 0); // esta linea llena la lista out_orden con out_orden[i] = i
+   //sort(out_orden.begin(), out_orden.end(),[&in_p](int i, int j){return in_p[i] >= in_p[j];});
+
    // Calculamos cual es el tiempo que tardan en terminar todas las maquinas
    out_tiempo = calcTiempo(in_p, in_c, out_orden);
+
+   return;
 }
 
 
@@ -114,7 +123,7 @@ int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &or
     int res = 0, inicio = 0, fin = 0;
     vector<int> terminacion(orden.size());
 
-    for(auto i : orden){
+    for(int i : orden){
         fin = inicio + c[i] + p[i];
         inicio = inicio + c[i];
         if(res < fin) res = fin;
