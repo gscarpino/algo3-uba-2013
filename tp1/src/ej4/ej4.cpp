@@ -11,6 +11,10 @@ using namespace std;
 typedef vector<unsigned int> Vec;
 typedef vector<Vec> Matriz;
 
+//Seguro hay que modificar esto
+void resolver(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
+bool subPiezasDe(const int cantidad,const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
+
 void imprimirMatriz(const Matriz &m){
     for(int i = 0; i < m.size(); i++){
         for(int j = 0; j < m[0].size(); j++){
@@ -116,10 +120,36 @@ int main(int argc, char *argv[]) {
             cout << "- - -" << endl;
         }
 
-//        resolver(tablero,dimN,dimM,piezas);
+        //fruta
+        resolver(tablero,dimN,dimM,piezas);
     }
 
     inputFile.close();
     outputFile.close();
     return 0;
+}
+
+
+//
+void resolver(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
+    int cantidad = 1;
+    bool haySol = false;
+    while((!haySol) && (cantidad <= piezas.size())){
+        //buscar generar todos los subconjuntos de 'cantidad' de piezas
+        haySol = subPiezasDe(cantidad,tablero,dimN,dimM,piezas);
+        cantidad++;
+    }
+
+    if(haySol){
+        cout << "Se encontro solucion para esta instancia del problema con " << cantidad << " piezas." << endl;
+    }
+    else{
+        cout << "No existe solucion para esta instancia del problema." << endl;
+    }
+}
+
+
+bool subPiezasDe(const int cantidad,const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
+    bool res =  false;
+    return res;
 }
