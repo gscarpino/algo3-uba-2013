@@ -14,6 +14,17 @@ using namespace std;
 
 void  mostrarVecInt(const vector<int> &x);
 
+bool cmpHeap(int x, int y){
+    return y > x;
+}
+
+int proxSensorHeap(const vector<int> &tiempos){
+    //Requiere tiempos este heapificado
+    int res = 0;
+    res = pop_heap(tiempos.begin(),tiempos.end(),)
+    return res;
+}
+
 int proxSensor(const vector<int> &tiempos){
     int res = 0;
     int minimo = tiempos[0];
@@ -46,10 +57,13 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
         unsigned int cant;
         vector<int> sensores;
         vector<int> tiempos;
+        vector<int> tiemposHeap;
         unsigned int medDefectuosa;
         unsigned int medicion = 0;
         int proximo = 0;
+        int proximoHeap = 0;
         vector<int> mediciones;
+        vector<int> medicionesHeap;
 
         int n; int i = 0;
         while(!sLinea.eof()){
@@ -73,17 +87,23 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
         }
 
         mostrarVecInt(tiempos);
-        while(medicion < medDefectuosa){
+        make_heap(tiempos.begin(),tiempos.end());   //O(3*n)
+        while(medicion < medDefectuosa){            // k - n iteraciones
+            proximoHeap = proxSensorHeap(tiemposHeap);
             proximo = proxSensor(tiempos);
             tiempos[proximo] = tiempos[proximo] + sensores[proximo];
+
             mostrarVecInt(tiempos);
-            mediciones.push_back(proximo+1);
+            mostrarVecInt(tiemposHeap);
+            mediciones.push_back(proximo + 1);
+            medicionesHeap.push_back(proximoHeap + 1);
             medicion++;
         }
 
 
 
         mostrarVecInt(mediciones);
+        mostrarVecInt(medicionesHeap);
 
 
     }
