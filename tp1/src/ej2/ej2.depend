@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1364805671 source:c:\users\gino\desktop\algo3\tp1\src\ej2\ej2.cpp
+	<iostream>
+	<sstream>
+	<iterator>
+	<fstream>
+	<stdlib.h>
+	<vector>
+	<cstring>
+	<algorithm>
+

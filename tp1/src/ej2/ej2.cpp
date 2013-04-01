@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <vector>
 #include <cstring>
+#include <ctime>
 #include <algorithm>
 
-//typedef vector<unsigned int> vec;
+#define TESTING_AZAR 0
+#define TESTING_PAREJO 0  //FALTA
 
 using namespace std;
 
@@ -20,7 +22,6 @@ void  mostrarVecInt(const vector<int> &x){
     }
     cout << "]";
 }
-
 void  mostrarVecIntTupla(const vector<pair<int,int> > &x){
     cout << "[ ";
     for(int i = 0; i < x.size(); i++){
@@ -31,41 +32,83 @@ void  mostrarVecIntTupla(const vector<pair<int,int> > &x){
 }
 
 bool cmpHeap(const pair<int,int> &x, const pair<int, int> &y){
-    return y.second > x.second;
+
+    if(y.second < x.second)
+        return true;
+    else if(y.second == x.second)
+        return y.first < x.first;
+    else
+        return false;
+
 }
 
-int proxSensorHeap(vector<pair<int, int> > &tiempos){
+int proxSensorHeap(vector<pair<int, int> > &tiempos,const vector<int> sensores){
     //Requiere tiempos este heapificado
     pair<int, int> sig;
     int res = 0;
+
     sig = tiempos.front();
     res = sig.first;
-
+    sig.second = sig.second + sensores[res];
     pop_heap(tiempos.begin(),tiempos.end(),cmpHeap);
-    return res;
-}
+    tiempos.pop_back();
+    tiempos.push_back(sig);
+    push_heap(tiempos.begin(),tiempos.end(),cmpHeap);
 
-int proxSensor(const vector<int> &tiempos){
-    int res = 0;
-    int minimo = tiempos[0];
-    for(int i = 0; i < tiempos.size(); i++){
-        if(tiempos[i] < minimo){
-            res = i;
-            minimo = tiempos[i];
-        }
-    }
     return res;
 }
 
 int main(int argc, char *argv[]) {
-cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
-    ifstream arch("input1.txt");
+
+    cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
+
+    if(TESTING_AZAR){
+        cout << "Creando tests..." << endl;
+        int maxSensores = 100;
+        int repeticiones = 1000;
+        int tiempo = 0;
+        int falla = 0;
+        ofstream archTesting("testing.txt");
+        if(archTesting.is_open()){
+            srand(time(NULL));
+            for(int s = 2; s < maxSensores;s++){
+                for(int r = 0; r < repeticiones; r++){
+                    falla = s + rand() % 500 + 1;
+                    archTesting << s << " " << falla;
+                    for(int i = 0; i < s; i++){
+                        tiempo = 1 + rand() % 20;
+                        archTesting << " " << tiempo;
+                    }
+                    archTesting << "\n";
+                }
+            }
+        }
+        archTesting << "#";
+        archTesting.close();
+
+        cout << "Tests creados." << endl;
+        return 0;
+    }
+
+
+    if(argc <= 1) {
+      cout << "Modo de uso: ej2 archivoEntrada archivoSalida";
+      return 1;
+    }
+
+    ifstream arch(argv[1]);
     if(!arch.is_open()){
-        cerr << "Error al abrir el archivo." << endl;
+        cerr << "Error al abrir el archivo de entrada." << endl;
+    }
+
+    ofstream archSalida(argv[2],  ios_base::trunc);
+    if(!archSalida.is_open()){
+        cerr << "Error al abrir/crear el archivo de salida." << endl;
     }
 
     string linea;
 
+    unsigned int corrida = 1;
     while(!arch.eof()){
         getline(arch, linea);
         if(linea[0] == '#'){
@@ -74,65 +117,62 @@ cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
 
         istringstream sLinea(linea);
 
-        unsigned int cant;
+        unsigned int cant = 0;
         vector<int> sensores;
-        vector<int> tiempos;
         vector<pair<int, int> > tiemposHeap;
-        unsigned int medDefectuosa;
+        unsigned int medDefectuosa = 0;
         unsigned int medicion = 0;
-        int proximo = 0;
         int proximoHeap = 0;
-        vector<int> mediciones;
         vector<int> medicionesHeap;
 
-        int n; int i = 0;
+        int n = 0; int i = 0;
         while(!sLinea.eof()){
             sLinea >> n;
             if(i == 0){
                 cant = n;
                 sensores.resize(cant);
-                tiempos.resize(cant);
                 tiemposHeap.resize(cant);
                 medicion = cant;
             }
             else if(i == 1){
                 medDefectuosa = n;
-                cout << "Medicion defectuosa: " << medDefectuosa << endl;
             }
             else{
                 sensores[i-2] = n;
-                tiempos[i-2] = n;
                 tiemposHeap[i-2] = make_pair(i-2,n);
-                mediciones.push_back(i-1);
                 medicionesHeap.push_back(i-1);
             }
             i++;
         }
 
-        mostrarVecInt(tiempos);
         make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
-        while(medicion < medDefectuosa){            // k - n iteraciones
-            proximoHeap = proxSensorHeap(tiemposHeap);
-            proximo = proxSensor(tiempos);
-            tiempos[proximo] = tiempos[proximo] + sensores[proximo];
 
-            mostrarVecInt(tiempos);
-            mostrarVecIntTupla(tiemposHeap);
-            mediciones.push_back(proximo + 1);
+//        cout << endl << "Inicio:" << endl;
+//        mostrarVecIntTupla(tiemposHeap);
+        while(medicion < medDefectuosa){            // k - n iteraciones
+            proximoHeap = proxSensorHeap(tiemposHeap,sensores);
+//            cout << endl << endl << "Medicion " << medicion << ":" << endl;
+//            mostrarVecIntTupla(tiemposHeap);
             medicionesHeap.push_back(proximoHeap + 1);
             medicion++;
         }
 
 
+//        cout << endl << "Sol 1: ";
+//        mostrarVecInt(mediciones);
 
-        mostrarVecInt(mediciones);
-        mostrarVecInt(medicionesHeap);
-
+//        cout << endl << "Mediciones: ";
+//        mostrarVecInt(medicionesHeap);
+//        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
+        cout << "Corrida " << corrida << endl;
+        archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
+        corrida++;
 
     }
 
     cout << endl << "Termino" << endl;
-        return 0;
+    arch.close();
+    return 0;
 }
 
 
