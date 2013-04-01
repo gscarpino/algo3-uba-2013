@@ -66,12 +66,42 @@ int main(int argc, char *argv[]) {
         cout << "Creando tests..." << endl;
         int maxSensores = 100;
         int repeticiones = 1000;
+        int minSensores = 50;
         int tiempo = 0;
         int falla = 0;
-        ofstream archTesting("testing.txt");
+        ofstream archTesting("testingAzar.txt");
         if(archTesting.is_open()){
             srand(time(NULL));
-            for(int s = 2; s < maxSensores;s++){
+            for(int s = minSensores; s < maxSensores;s++){
+                for(int r = 0; r < repeticiones; r++){
+                    falla = s + rand() % 500 + 1;
+                    archTesting << s << " " << falla;
+                    for(int i = 0; i < s; i++){
+                        tiempo = 1 + rand() % 20;
+                        archTesting << " " << tiempo;
+                    }
+                    archTesting << "\n";
+                }
+            }
+        }
+        archTesting << "#";
+        archTesting.close();
+
+        cout << "Tests creados." << endl;
+        return 0;
+    }
+
+    if(TESTING_PAREJO){
+        cout << "Creando tests..." << endl;
+        int maxSensores = 100;
+        int repeticiones = 1000;
+        int minSensores = 50;
+        int tiempo = 0;
+        int falla = 0;
+        ofstream archTesting("testingParejo.txt");
+        if(archTesting.is_open()){
+            srand(time(NULL));
+            for(int s = minSensores; s < maxSensores;s++){
                 for(int r = 0; r < repeticiones; r++){
                     falla = s + rand() % 500 + 1;
                     archTesting << s << " " << falla;
