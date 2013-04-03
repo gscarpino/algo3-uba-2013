@@ -96,18 +96,7 @@ int main(int argc, char *argv[]) {
             resolver(cantPtos,  base,   altura,   puntosx,   puntosy, resCajax,  resCajay,  resPtos);
 
             outputFile<<resCajax<<" "<<resCajay<<" "<<resPtos<<endl;
-            /*outputFile << cantPtos << " ";
-            outputFile << base << " ";
-            outputFile << altura<< " "<<endl;
-            i=0;
-            while(i<cantPtos){
-
-              outputFile<< puntosx[i]<<" "<<puntosy[i];
-              i++;
-            }
-            outputFile<<endl;
-            outputFile<<"#"<<endl;*/
-
+         
 
         } 
     } 
