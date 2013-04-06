@@ -2,6 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <cmath>
+#include <algorithm>
+
 
 #define NEGRO 0;
 #define BLANCO 1;
@@ -12,8 +15,11 @@ typedef vector<unsigned int> Vec;
 typedef vector<Vec> Matriz;
 
 //Seguro hay que modificar esto
-void resolver(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
-bool subPiezasDe(const int cantidad,const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
+vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
+vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tamanio);
+bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM);
+
+vector<int> pasarBinario(int n);
 
 void imprimirMatriz(const Matriz &m){
     for(int i = 0; i < m.size(); i++){
@@ -120,8 +126,8 @@ int main(int argc, char *argv[]) {
             cout << "- - -" << endl;
         }
 
-        //fruta
-        resolver(tablero,dimN,dimM,piezas);
+
+        vector<Matriz> solucion = buscarSol(tablero,dimN,dimM,piezas);
     }
 
     inputFile.close();
@@ -130,26 +136,85 @@ int main(int argc, char *argv[]) {
 }
 
 
-//
-void resolver(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
-    int cantidad = 1;
-    bool haySol = false;
-    while((!haySol) && (cantidad <= piezas.size())){
-        //buscar generar todos los subconjuntos de 'cantidad' de piezas
-        haySol = subPiezasDe(cantidad,tablero,dimN,dimM,piezas);
-        cantidad++;
-    }
+vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
+    vector<Matriz> res;
+    for(int i = 1; i <= piezas.size(); i++){
+        vector< vector<Matriz> > subConjuntos;
 
-    if(haySol){
-        cout << "Se encontro solucion para esta instancia del problema con " << cantidad << " piezas." << endl;
+        cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
+
+        subConjuntos = subConjuntosDeTam(piezas,i);
+        for(int j = 0; j < subConjuntos.size(); j++){
+            if(esSolucion(subConjuntos[j],tablero,dimN,dimM)){
+                res = subConjuntos[j];
+                j = subConjuntos.size();
+            }
+        }
+
+        cout << endl << "*************************" << endl;
+        if(res.size() > 0){
+            i = piezas.size() + 1;
+        }
     }
-    else{
-        cout << "No existe solucion para esta instancia del problema." << endl;
-    }
+    return res;
 }
 
 
-bool subPiezasDe(const int cantidad,const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
-    bool res =  false;
+vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tamanio){
+    vector< vector<Matriz> > res;
+    unsigned int tope = pow(2,piezas.size());
+    vector<int> numBin;
+    unsigned int valor = 1;
+    int sumaParcial = 0;
+    vector<Matriz> subConj;
+    while(valor < tope){
+        numBin = pasarBinario(valor);
+
+
+
+        for(int i = 0; i < numBin.size();i++){
+            sumaParcial = sumaParcial + numBin[i];
+        }
+
+        if(sumaParcial == tamanio){
+
+            cout << endl << "aaa" << endl;
+            for(int i = 0; i < numBin.size();i++){
+                if(numBin[numBin.size() - i - 1]){
+                    cout << endl << "---" << endl;
+                    subConj.push_back(piezas[i]);
+                    imprimirMatriz(piezas[i]);
+                    cout << endl << "---" << endl;
+                }
+            }
+
+            res.push_back(subConj);
+            cout << endl << "aaa" << endl;
+        }
+        valor++;
+        sumaParcial = 0;
+    }
+    return res;
+}
+
+vector<int> pasarBinario(int n){
+    vector<int> res;
+    int temp;
+
+    while(n > 0){
+       temp = n % 2;
+       n = n / 2;
+       res.push_back(temp);
+    }
+
+    reverse(res.begin(),res.end());
+
+    return res;
+}
+
+
+bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
+    bool res = false;
+
     return res;
 }
