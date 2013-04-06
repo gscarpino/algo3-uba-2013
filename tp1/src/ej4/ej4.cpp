@@ -18,12 +18,13 @@ typedef vector<Vec> Matriz;
 vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
 vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tamanio);
 bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM);
-
+bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM);
 vector<int> pasarBinario(int n);
+bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM);
 
 void imprimirMatriz(const Matriz &m){
-    for(int i = 0; i < m.size(); i++){
-        for(int j = 0; j < m[0].size(); j++){
+    for(unsigned int i = 0; i < m.size(); i++){
+        for(unsigned int j = 0; j < m[0].size(); j++){
             if(m[i][j]){
                 cout << " BLANCO ";
             }
@@ -138,13 +139,13 @@ int main(int argc, char *argv[]) {
 
 vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
     vector<Matriz> res;
-    for(int i = 1; i <= piezas.size(); i++){
+    for(unsigned int i = 1; i <= piezas.size(); i++){
         vector< vector<Matriz> > subConjuntos;
 
         cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
 
         subConjuntos = subConjuntosDeTam(piezas,i);
-        for(int j = 0; j < subConjuntos.size(); j++){
+        for(unsigned int j = 0; j < subConjuntos.size(); j++){
             if(esSolucion(subConjuntos[j],tablero,dimN,dimM)){
                 res = subConjuntos[j];
                 j = subConjuntos.size();
@@ -172,14 +173,14 @@ vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tam
 
 
 
-        for(int i = 0; i < numBin.size();i++){
+        for(unsigned int i = 0; i < numBin.size();i++){
             sumaParcial = sumaParcial + numBin[i];
         }
 
         if(sumaParcial == tamanio){
 
             cout << endl << "aaa" << endl;
-            for(int i = 0; i < numBin.size();i++){
+            for(unsigned int i = 0; i < numBin.size();i++){
                 if(numBin[numBin.size() - i - 1]){
                     cout << endl << "---" << endl;
                     subConj.push_back(piezas[i]);
@@ -217,8 +218,8 @@ bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int di
     bool res = false;
     bool noSePodo = true;
     //Podas
-    if(cubreTablero(piezas,tablero,dimN,dimM)){
-        for(int i = 0; i < piezas.size(); i++){
+    if(cubreExactoElTablero(piezas,tablero,dimN,dimM)){
+        for(unsigned int i = 0; i < piezas.size(); i++){
             noSePodo = noSePodo & estaEnElTablero(piezas[i],tablero,dimN,dimM);
         }
     }
@@ -228,5 +229,17 @@ bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int di
     if(noSePodo){
         //Buscar solucion
     }
+    return res;
+}
+
+bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
+    bool res = true;
+
+    return res;
+}
+
+bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM){
+    bool res = true;
+
     return res;
 }
