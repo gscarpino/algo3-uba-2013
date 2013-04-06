@@ -139,16 +139,20 @@ int main(int argc, char *argv[]) {
 
 vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
     vector<Matriz> res;
-    for(unsigned int i = 1; i <= piezas.size(); i++){
+    int inf = 0;
+    int sup = piezas.size();
+    int medio;
+    bool haySol = false;
+    while(inf <= sup){
+        medio = (sup + inf) / 2;
         vector< vector<Matriz> > subConjuntos;
 
-        cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
+        cout << endl << "SubConjuntos de " << medio << " piezas: " << endl;
 
-        subConjuntos = subConjuntosDeTam(piezas,i);
+        subConjuntos = subConjuntosDeTam(piezas,medio);
         for(unsigned int j = 0; j < subConjuntos.size(); j++){
             if(esSolucion(subConjuntos[j],tablero,dimN,dimM)){
-                res = subConjuntos[j];
-                j = subConjuntos.size();
+                haySol = true;
             }
         }
 
@@ -228,18 +232,41 @@ bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int di
     }
     if(noSePodo){
         //Buscar solucion
+
     }
     return res;
 }
 
 bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
     bool res = true;
+    int total = dimM * dimN;
+
+    for(int i = 0; i < piezas.size(); i++){
+        total = total - (piezas[i].size() * piezas[i][0].size());
+    }
+
+    res = (total == 0);
 
     return res;
 }
 
 bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM){
-    bool res = true;
+    bool res = false;
+    Matriz copiaPieza = pieza;
+    int i = 0, j = 0;
+    while(i < pieza.size()){
+        while(j < pieza[0].size()){
+
+            j++;
+        }
+        i++;
+    }
+
+    if(i==pieza.size() && j == pieza[0].size()) res = true;
+
+    if(!res){
+        rotar(copiaPieza);
+    }
 
     return res;
 }
