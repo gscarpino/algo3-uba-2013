@@ -13,6 +13,7 @@ using namespace std;
 
 typedef vector<unsigned int> Vec;
 typedef vector<Vec> Matriz;
+typedef pair<int,int> posicion;
 
 //Seguro hay que modificar esto
 vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
@@ -139,26 +140,31 @@ int main(int argc, char *argv[]) {
 
 vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
     vector<Matriz> res;
-    int inf = 0;
-    int sup = piezas.size();
-    int medio;
     bool haySol = false;
-    while(inf <= sup){
-        medio = (sup + inf) / 2;
+//    int inf = 0;
+//    int sup = piezas.size();
+//    int medio;
+    //Se podria llegar a mejorar con busqueda binaria pero cambiar las podas
+//    while(inf <= sup){
+//        medio = (sup + inf) / 2;
+    for(int i = 1; i <= piezas.size(); i++){
         vector< vector<Matriz> > subConjuntos;
 
-        cout << endl << "SubConjuntos de " << medio << " piezas: " << endl;
+        cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
 
-        subConjuntos = subConjuntosDeTam(piezas,medio);
+
+
+        subConjuntos = subConjuntosDeTam(piezas,i);
         for(unsigned int j = 0; j < subConjuntos.size(); j++){
             if(esSolucion(subConjuntos[j],tablero,dimN,dimM)){
+                res = subConjuntos[j];
                 haySol = true;
+                break;
             }
         }
 
-        cout << endl << "*************************" << endl;
-        if(res.size() > 0){
-            i = piezas.size() + 1;
+        if(haySol){
+            break;
         }
     }
     return res;
@@ -192,7 +198,7 @@ vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tam
                     cout << endl << "---" << endl;
                 }
             }
-
+//            sort(subConj.begin(),subConj.end(),[](Matriz &a,Matriz &b){return a.size() * a[0].size() > b.size() * b[0].size();});
             res.push_back(subConj);
             cout << endl << "aaa" << endl;
         }
@@ -219,21 +225,20 @@ vector<int> pasarBinario(int n){
 
 
 bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
-    bool res = false;
-    bool noSePodo = true;
-    //Podas
-    if(cubreExactoElTablero(piezas,tablero,dimN,dimM)){
-        for(unsigned int i = 0; i < piezas.size(); i++){
-            noSePodo = noSePodo & estaEnElTablero(piezas[i],tablero,dimN,dimM);
-        }
-    }
-    else{
-        noSePodo = false;
-    }
-    if(noSePodo){
-        //Buscar solucion
+    //requiere piezas ordenadas de mayor a menor segun area
 
+    bool res = false;
+    //cubreExactoElTablero poda pero no siempre son solucion
+    if(cubreExactoElTablero(piezas,tablero,dimN,dimM)){
+        for(auto p : piezas){
+            vector< posicion > posiciones;
+        }
+        //Para cada pieza
+            //Busco las posibles posiciones
+            //Para cada posible posicion
+                //
     }
+
     return res;
 }
 
@@ -252,21 +257,21 @@ bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,co
 
 bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM){
     bool res = false;
-    Matriz copiaPieza = pieza;
-    int i = 0, j = 0;
-    while(i < pieza.size()){
-        while(j < pieza[0].size()){
-
-            j++;
-        }
-        i++;
-    }
-
-    if(i==pieza.size() && j == pieza[0].size()) res = true;
-
-    if(!res){
-        rotar(copiaPieza);
-    }
+//    Matriz copiaPieza = pieza;
+//    int i = 0, j = 0;
+//    while(i < pieza.size()){
+//        while(j < pieza[0].size()){
+//
+//            j++;
+//        }
+//        i++;
+//    }
+//
+//    if(i==pieza.size() && j == pieza[0].size()) res = true;
+//
+//    if(!res){
+//        rotar(copiaPieza);
+//    }
 
     return res;
 }
