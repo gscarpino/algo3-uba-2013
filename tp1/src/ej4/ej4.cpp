@@ -215,6 +215,18 @@ vector<int> pasarBinario(int n){
 
 bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
     bool res = false;
-
+    bool noSePodo = true;
+    //Podas
+    if(cubreTablero(piezas,tablero,dimN,dimM)){
+        for(int i = 0; i < piezas.size(); i++){
+            noSePodo = noSePodo & estaEnElTablero(piezas[i],tablero,dimN,dimM);
+        }
+    }
+    else{
+        noSePodo = false;
+    }
+    if(noSePodo){
+        //Buscar solucion
+    }
     return res;
 }
