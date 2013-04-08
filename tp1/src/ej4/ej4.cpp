@@ -13,15 +13,25 @@ using namespace std;
 
 typedef vector<unsigned int> Vec;
 typedef vector<Vec> Matriz;
-typedef pair<int,int> posicion;
+typedef pair<int,Matriz > Pieza; //1er tupla el di
+typedef pair<int,int> Posicion;
+typedef vector<vector<pair<int,bool> > > Tablero;
+typedef vector< pair<int,Matriz> >  Solucion; //Arreglar esto
 
 //Seguro hay que modificar esto
-vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas);
-vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tamanio);
-bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM);
-bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM);
+Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas);
+vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
+bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero, const int dimN, const int dimM, Solucion &sol);
+bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM);
 vector<int> pasarBinario(int n);
-bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM);
+bool resolverJuego(vector<Pieza> &piezas, Tablero &tablero,const int dimN, const int dimM, Solucion &sol);
+Tablero armarTablero(const Matriz &tablero,const int dimN, const int dimM);
+bool cmpPieza(const Pieza &a, const Pieza &b);
+bool esTableroCompleto(const Tablero &tablero,const int dimN, const int dimM);
+bool rotar(Pieza &pieza);
+vector<Posicion> posiblesPosiciones(const Pieza &pieza, const Tablero &tablero,const int dimN, const int dimM);
+void ocuparFicha(const Pieza &pieza, const Posicion &pos, Tablero &tablero);
+bool encaja(const Pieza &pieza, const Posicion &pos, const Tablero &tablero, const int dimN, const int dimM);
 
 void imprimirMatriz(const Matriz &m){
     for(unsigned int i = 0; i < m.size(); i++){
@@ -95,15 +105,15 @@ int main(int argc, char *argv[]) {
             tablero.push_back(fila);
         }
 
-        vector<Matriz> piezas;
-
+        vector<Pieza> piezas;
+        int id = 0;
         for(int i = 0; i < cantPiezas; i++){
             getline(inputFile, linea);
             istringstream sLinea2(linea);
             int piezaN,piezaM;
             sLinea2 >> piezaN;
             sLinea2 >> piezaM;
-            Matriz pieza;
+            Matriz forma;
             Vec fila2(piezaM);
             for(int j = 0; j < piezaN; j++){
                 getline(inputFile, linea);
@@ -112,9 +122,11 @@ int main(int argc, char *argv[]) {
                     sLinea3 >> n;
                     fila2[k] = n;
                 }
-                pieza.push_back(fila2);
+                forma.push_back(fila2);
 
             }
+            Pieza pieza = make_pair(id,forma);
+            id++;
             piezas.push_back(pieza);
         }
 
@@ -124,12 +136,12 @@ int main(int argc, char *argv[]) {
         cout << endl << endl << "Piezas: " << endl;
         for(int i = 0; i < cantPiezas; i++){
             cout << endl << "- - -" << endl;
-            imprimirMatriz(piezas[i]);
+            imprimirMatriz(piezas[i].second);
             cout << "- - -" << endl;
         }
 
 
-        vector<Matriz> solucion = buscarSol(tablero,dimN,dimM,piezas);
+        Solucion solucion = buscarSol(tablero,dimN,dimM,piezas);
     }
 
     inputFile.close();
@@ -138,8 +150,8 @@ int main(int argc, char *argv[]) {
 }
 
 
-vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Matriz> &piezas){
-    vector<Matriz> res;
+Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas){
+    Solucion res;
     bool haySol = false;
 //    int inf = 0;
 //    int sup = piezas.size();
@@ -147,8 +159,8 @@ vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, c
     //Se podria llegar a mejorar con busqueda binaria pero cambiar las podas
 //    while(inf <= sup){
 //        medio = (sup + inf) / 2;
-    for(int i = 1; i <= piezas.size(); i++){
-        vector< vector<Matriz> > subConjuntos;
+    for(unsigned int i = 1; i <= piezas.size(); i++){
+        vector< vector<Pieza> > subConjuntos;
 
         cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
 
@@ -156,8 +168,7 @@ vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, c
 
         subConjuntos = subConjuntosDeTam(piezas,i);
         for(unsigned int j = 0; j < subConjuntos.size(); j++){
-            if(esSolucion(subConjuntos[j],tablero,dimN,dimM)){
-                res = subConjuntos[j];
+            if(esSolucion(subConjuntos[j],tablero,dimN,dimM,res)){
                 haySol = true;
                 break;
             }
@@ -171,17 +182,15 @@ vector<Matriz> buscarSol(const Matriz &tablero,const int dimN, const int dimM, c
 }
 
 
-vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tamanio){
-    vector< vector<Matriz> > res;
+vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio){
+    vector< vector<Pieza> > res;
     unsigned int tope = pow(2,piezas.size());
     vector<int> numBin;
     unsigned int valor = 1;
     int sumaParcial = 0;
-    vector<Matriz> subConj;
+    vector<Pieza> subConj;
     while(valor < tope){
         numBin = pasarBinario(valor);
-
-
 
         for(unsigned int i = 0; i < numBin.size();i++){
             sumaParcial = sumaParcial + numBin[i];
@@ -194,11 +203,12 @@ vector< vector<Matriz> > subConjuntosDeTam(const vector<Matriz> &piezas, int tam
                 if(numBin[numBin.size() - i - 1]){
                     cout << endl << "---" << endl;
                     subConj.push_back(piezas[i]);
-                    imprimirMatriz(piezas[i]);
+                    imprimirMatriz(piezas[i].second);
                     cout << endl << "---" << endl;
                 }
             }
-//            sort(subConj.begin(),subConj.end(),[](Matriz &a,Matriz &b){return a.size() * a[0].size() > b.size() * b[0].size();});
+//            sort(subConj.begin(),subConj.end(),[](Matriz &a,Matriz &b){return (a.size() * a[0].size() > b.size() * b[0].size());});
+            sort(subConj.begin(),subConj.end(),cmpPieza);
             res.push_back(subConj);
             cout << endl << "aaa" << endl;
         }
@@ -224,30 +234,33 @@ vector<int> pasarBinario(int n){
 }
 
 
-bool esSolucion(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
+bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM, Solucion &sol){
     //requiere piezas ordenadas de mayor a menor segun area
 
     bool res = false;
+    Tablero copiaTablero;
+    vector<Pieza> copiaPiezas = piezas;
     //cubreExactoElTablero poda pero no siempre son solucion
     if(cubreExactoElTablero(piezas,tablero,dimN,dimM)){
-        for(auto p : piezas){
-            vector< posicion > posiciones;
+        copiaTablero = armarTablero(tablero,dimN,dimM);
+        res = resolverJuego(copiaPiezas,copiaTablero,dimN,dimM,sol);
+
+        //hacer para que recorrar todas las posibles permutaciones
+        while(next_permutation(copiaPiezas.begin(),copiaPiezas.end()) && !res){
+            copiaTablero = armarTablero(tablero,dimN,dimM);
+            res = resolverJuego(copiaPiezas,copiaTablero,dimN,dimM,sol);
         }
-        //Para cada pieza
-            //Busco las posibles posiciones
-            //Para cada posible posicion
-                //
     }
 
     return res;
 }
 
-bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,const int dimN, const int dimM){
+bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM){
     bool res = true;
     int total = dimM * dimN;
 
-    for(int i = 0; i < piezas.size(); i++){
-        total = total - (piezas[i].size() * piezas[i][0].size());
+    for(unsigned int i = 0; i < piezas.size(); i++){
+        total = total - (piezas[i].second.size() * piezas[i].second[0].size());
     }
 
     res = (total == 0);
@@ -255,23 +268,169 @@ bool cubreExactoElTablero(const vector<Matriz> &piezas, const Matriz &tablero,co
     return res;
 }
 
-bool estaEnElTablero(const Matriz &pieza, const Matriz &tablero,const int dimN, const int dimM){
-    bool res = false;
-//    Matriz copiaPieza = pieza;
-//    int i = 0, j = 0;
-//    while(i < pieza.size()){
-//        while(j < pieza[0].size()){
-//
-//            j++;
-//        }
-//        i++;
-//    }
-//
-//    if(i==pieza.size() && j == pieza[0].size()) res = true;
-//
-//    if(!res){
-//        rotar(copiaPieza);
-//    }
+bool cmpPieza(const Pieza &a, const Pieza &b){
+    return (a.second.size() * a.second[0].size() > b.second.size() * b.second[0].size());
+}
+
+bool resolverJuego(vector<Pieza> &piezas, Tablero &tablero,const int dimN, const int dimM, Solucion &sol){
+    bool res;
+    if(piezas.size() == 0){
+        res = esTableroCompleto(tablero,dimN,dimM);
+    }
+    else{
+        Pieza sigPieza = piezas.back();
+        piezas.pop_back();
+
+        Pieza sigPieza2,sigPieza3,sigPieza4,sigPiezaTemp = sigPieza;
+        vector<Posicion> posiciones;
+
+        if(rotar(sigPiezaTemp)){
+            sigPieza2 = sigPiezaTemp;
+            rotar(sigPiezaTemp);
+            sigPieza3 = sigPiezaTemp;
+            rotar(sigPiezaTemp);
+            sigPieza4 = sigPiezaTemp;
+
+            posiciones = posiblesPosiciones(sigPieza,tablero,dimN,dimM);
+            for(auto p : posiciones){
+                Tablero nuevoTablero = tablero;
+                ocuparFicha(sigPieza,p,nuevoTablero);
+                vector<Pieza> copiaPiezas = piezas;
+                Solucion nuevaSol = sol;
+                nuevaSol.push_back(sigPieza); //Faltaria poner rotacion y sacar la forma
+                res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
+            }
+
+            if(!res){
+                posiciones = posiblesPosiciones(sigPieza2,tablero,dimN,dimM);
+                for(auto p : posiciones){
+                    Tablero nuevoTablero = tablero;
+                    ocuparFicha(sigPieza2,p,nuevoTablero);
+                    vector<Pieza> copiaPiezas = piezas;
+                    Solucion nuevaSol = sol;
+                    nuevaSol.push_back(sigPieza2); //Faltaria poner rotacion y sacar la forma
+                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
+                }
+            }
+
+
+            if(!res){
+                posiciones = posiblesPosiciones(sigPieza3,tablero,dimN,dimM);
+                for(auto p : posiciones){
+                    Tablero nuevoTablero = tablero;
+                    ocuparFicha(sigPieza3,p,nuevoTablero);
+                    vector<Pieza> copiaPiezas = piezas;
+                    Solucion nuevaSol = sol;
+                    nuevaSol.push_back(sigPieza3); //Faltaria poner rotacion y sacar la forma
+                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
+                }
+            }
+
+
+            if(!res){
+                posiciones = posiblesPosiciones(sigPieza4,tablero,dimN,dimM);
+                for(auto p : posiciones){
+                    Tablero nuevoTablero = tablero;
+                    ocuparFicha(sigPieza4,p,nuevoTablero);
+                    vector<Pieza> copiaPiezas = piezas;
+                    Solucion nuevaSol = sol;
+                    nuevaSol.push_back(sigPieza4); //Faltaria poner rotacion y sacar la forma
+                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
+                }
+            }
+
+        }else{
+            posiciones = posiblesPosiciones(sigPieza,tablero,dimN,dimM);
+            for(auto p : posiciones){
+                Tablero nuevoTablero = tablero;
+                ocuparFicha(sigPieza,p,nuevoTablero);
+                vector<Pieza> copiaPiezas = piezas;
+                Solucion nuevaSol = sol;
+                nuevaSol.push_back(sigPieza); //Faltaria poner rotacion y sacar la forma
+                res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
+            }
+        }
+
+
+    }
+    return res;
+}
+
+Tablero armarTablero(const Matriz &tablero,const int dimN, const int dimM){
+    Tablero res;
+    vector<pair<int, bool> > fila(dimM);
+    for(int i = 0; i < dimN; i++){
+        for(int j = 0; j < dimM; j++){
+            fila[j] = make_pair(tablero[i][j],false);
+        }
+        res.push_back(fila);
+    }
+    return res;
+}
+
+bool rotar(Pieza &pieza){
+    Pieza res;
+    Matriz forma;
+    Vec fila(pieza.second.size());
+
+    for(unsigned int i = 0; i < pieza.second[0].size(); i++){
+        for(unsigned int j = 0; j < pieza.second.size(); j++){
+            fila[j] = pieza.second[j][i];
+        }
+        forma.push_back(fila);
+    }
+
+    res = make_pair(pieza.first,forma);
+
+    if(res != pieza){
+        pieza = res;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool esTableroCompleto(const Tablero &tablero,const int dimN, const int dimM){
+    bool res = true;
 
     return res;
+}
+
+vector<Posicion> posiblesPosiciones(const Pieza &pieza, const Tablero &tablero, const int dimN, const int dimM){
+    vector<Posicion> posiciones;
+    Posicion p;
+
+    for(int i = 0; i < dimN; i++){
+        for(int j = 0; j < dimM; j++){
+            p = make_pair(i,j);
+            if(encaja(pieza,p,tablero,dimN,dimM)){
+                posiciones.push_back(p);
+            }
+        }
+    }
+    return posiciones;
+}
+
+bool encaja(const Pieza &pieza, const Posicion &pos, const Tablero &tablero, const int dimN, const int dimM){
+    bool res = true;
+    for(unsigned int i = 0; i < pieza.second.size(); i++){
+        for(unsigned int j = 0; j < pieza.second[0].size(); j++){
+            if((i < dimN) && (j < dimM) && (res)){
+                res = res && (tablero[pos.first + i][pos.second + j].first == pieza.second[i][j]) && (!tablero[pos.first + i][pos.second + j].second);
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    return res;
+}
+
+void ocuparFicha(const Pieza &pieza, const Posicion &pos, Tablero &tablero){
+    for(unsigned int i = 0; i < pieza.second.size(); i++){
+        for(unsigned int j = 0; j < pieza.second[0].size(); j++){
+            tablero[pos.first + i][pos.second + j].second = true;
+        }
+    }
 }
