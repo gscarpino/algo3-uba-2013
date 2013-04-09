@@ -1,16 +1,5 @@
-typedef pair<int,int> Posicion;
+#include "Sol.h"
 
-class Sol{
-    private:
-        int id;
-        int rotaciones;
-        Posicion posicion;
-
-    public:
-
-    Sol();
-
-};
 
 Sol::Sol(){
     id = 0;
@@ -19,8 +8,8 @@ Sol::Sol(){
 }
 
 
-Sol::Sol(int id, int rotaciones, int posicion){
-    this.id = id;
-    this.rotaciones = rotaciones;
-    this.posicion = posicion;
+Sol::Sol(int id, int rotaciones, Posicion posicion){
+    this->id = id;
+    this->rotaciones = rotaciones;
+    this->posicion = posicion;
 }
