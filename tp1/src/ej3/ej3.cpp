@@ -120,7 +120,7 @@ void resolver(const int &n, const int &b, const int &h, const vector<int> &x, co
         for (int j=0; j< n; j++){
          
             m=cuantosEntran(n, b, h, x[i], y[j], x, y);
-            cout<<" "<<cant<<" "<<m<<endl;
+           
             if (cant<m){
                 
                 cant=m;
@@ -152,7 +152,7 @@ int cuantosEntran(int n, int b, int h,  int x, int y, const vector<int> &ptosx, 
 	if ((x<=ptosx[i]) && (ptosx[i]<= (x+b)) && (y<=ptosy[i]) && (ptosy[i]<= (y+h))){
      
   	
-	cout<<x<<" "<<y<<" "<<ptosx[i]<<" "<<ptosy[i]<<" "<<endl;
+	
 
         cant++;
 
