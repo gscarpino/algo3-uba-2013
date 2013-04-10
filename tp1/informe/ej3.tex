@@ -1,353 +1,82 @@
-\section{Problema 3}
+\section{Problema 3: La caja en el plano}
 
 \subsection{Introducci\'on}
-Un aserradero posee una m\'aquina para cortar listones de madera. El costo de cada corte con la m\'aquina es
-proporcional a largo del list\'on a cortar en cada momento. Como los cortes se aplican uno a la vez,
-el orden en que se realicen implica distintas longitudes para los listones resultantes en cada paso y,
-por lo tanto, distintos costos finales.
 
-Dados un list\'on inicial de longitud \textbf{l} y una serie de \textbf{m} cortes a realizar a lo largo de \'este,
-se busca minimizar el costo final del trabajo mediante el reordenamiento de la secuencia en que los cortes deben realizarse.
-Para clarificar la idea, supongamos que tenemos un list\'on de longitud 10 y se necesitan cortes en las posiciones 4, 5, 7 y 8. 
-Si no se altera el orden y se procede a cortar, se generar\'a un costo de 10 para el primer corte en 4, un coste de 6 para 
-el corte en 5, un coste de 5 para el corte en 7, y finalmente un costo de 3 al cortar en 8, con un costo total de 24. En cambio,
-una secuencia posible que minimiza el costo final corresponde a la secuencia 4, 7, 5 y 8: el valor final ser\'a 22, ya que el 
-primer corte en 4 cuesta 10, el segundo en 7 cuesta 6, y tanto el corte en 5 como en 8 cuestan 3.
+\indent En este caso, el problema que se nos presentó para resolver fue el siguiente:\\
+\indent Se tienen $n$ puntos en el plano con coordenadas enteras y se tiene adem\'as una caja, representada por un rect\'angulo de dimensiones dada. La caja puede ubicarse en cualquier lugar del plano, pero no puede rotarse, es decir, la base de la caja debe quedar paralela al eje $x$ y la altura de la caja debe quedar paralela al eje $y$. Un punto sobre un borde de la caja se considera dentro de la misma. Se desea ubicar la caja de manera tal que la cantidad de puntos que queden dentro de la caja sea m\'axima. El algoritmo que resuelva este problema debe hacerlo con una complejidad de a lo sumo \textbf{O}($n^{3}$).\\
+\indent Es oportuno realizar alguna aclaraciones. En primer lugar, que el problema siempre tiene soluci\'on \'optima, es decir que siempre habr\'a una ubicaci\'on de la caja que cubra mayor o igual cantidad de puntos que todas las dem\'as. En segundo lugar, que la soluci\'on \'optima no siempre es \'unica. \\
+\indent A continuaci\'on se provee un ejemplo de una posible instancia del problema con una posible soluci\'on y que adem\'as sirve para mostrar las aclaraciones hechas anteriormente:\\
 
 
-\begin{figure}[h!]
+							%DIBUJITO
 
-	\begin{subfigure}{0.5\textwidth}
-			\centering
-			%\includegraphics[scale=0.6]{figures/ej3-cortes-no-optimo.jpg}
-			\caption{}
-			\label{fig:ej3CortesNoOptimo}
-	\end{subfigure}
-	\begin{subfigure}{0.5\textwidth}
-			\centering
-			%\includegraphics[scale=0.6]{figures/ej3-cortes-optimo.jpg}
-			\caption{}
-			\label{fig:ej3CortesOptimo}
-	\end{subfigure}
-  \label{fig:ej3Cortes}
-  \caption{Ejmplo de un list\'on de largo 10 con cortes requeridos en las marcas 4,5,7 y 8. 
-  				\textbf{(\subref{fig:ej3CortesNoOptimo})} Si se aplica la secuencia de cortes 4,5,7 y 8, el resultado final es un costo de 24. 				
-  				\textbf{(\subref{fig:ej3CortesOptimo})} En cambio, si la secuencia de cortes es 4, 7, 5 y 8, se obtiene el costo \'optimo de 22.}
-\end{figure}
+
+\indent Para resolver este problema hemos asumido que por lo menos se tiene alg\'un punto en el plano (es decir que $k>0$) y que adem\'as los puntos que se proveen por entrada no est\'an repetidos.\\
+
 \subsection{Desarrollo}
-En principio intentamos resolver el problema con una idea sencilla y que nos garantiza revisar todas las posibles 
-secuencias de cortes de manera ordena. Pero ejecutar backtracking para secuencias de muchos corte se vuelve 
-impracticable ya que deber\'iamos revisar todas las posibles permutaciones para secuencias de largo \textbf{m}, lo que 
-corresponde al orden  $O(m!)$. En la Figura ~\ref{fig:Backtracking}, podemos ver el \'arbol que deber\'ia recorrer un algortimo de backtracking 
-para un caso particular. Si observamos dicho \'arbol con un poco de detalle, podemos apreciar que varias secuencias de corte 
-se repiten y que \'estas siempre dan siempre el mismo resultado. Esto se puede apreciar claramente en las hojas del \'arbol. \\
-Es por \'esto que empezamos a pensar que el problema podr\'ia ser resuelto con \textbf{Programaci\'on Din\'amica}.
 
-\begin{figure}[h!]
-	% \centering
-	%\includegraphics[scale=0.3]{figures/backtracking.pdf}
-	\caption{Backtracking para cortes 4,5,7,8; Longitud 10}
-	\label{fig:Backtracking}
-\end{figure}
-%Para poder intentar resolver el problema con Programaci\'on Din\'amica, primero 
-Comenzaremos por definir una 
-secuencia $S$ de n\'umeros enteros positivos (incluido el 0) estrictamente creciente. 
-Dada una determinada instancia del problema, en $S$ se incluir\'an las marcas de comienzo y fin del list\'on junto con las
-m marcas donde los cortes deben realizarse. Utilizaremos la notaci\'on $S_{i..j}$, con $j \geq i+1$, para representar
-un list\'on que comienza en $S_{i}$ y termina en $S_{j}$. La longitud de dicho list\'on se obtendr\'a, entonces, 
-como $S_{j} - S_{i}$; mientras tanto, los puntos de corte que le corresponden ser\'an aquellos $S_{k}$ donde $ i < k < j $.
-Observemos que, asi definido, un list\'on $S_{i..j}$ no requerir\'a cortes si $ j = i + 1$; \'este ser\'a el caso que llamaremos trivial.
 
-Consideremos entonces una instancia no trivial del problema: si tomamos un list\'on $S_{i..j}$ (con $j > i+1$), 
-existe al menos un valor $S_{k}$ (con $i < k < j$) donde debemos cortar el list\'on a fin de obtener el costo \'optimo. 
-Como resultado de este corte obtenemos dos nuevos listones, $S_{i..k}$ y $S_{k..j}$, que contiene, respectivamente, 
-las marcas previas y posteriores a $S_{k}$ (en caso de que \'estas existan).
-El costo m\'inino total ser\'a, entonces, el costo de realizar el corte en $S_{k}$ (es decir, $S_{j} - S_{i}$), 
-m\'as el costo de cortar las restantes marcas en $S_{i..k}$ y $S_{k..j}$: tenemos dos subproblemas del mismo tipo 
-que el problema original.
+\indent Dado el problema a resolver, la primera noci\'on que se extrajo al momento de analizarlo fue el hecho de que siempre existe una soluci\'on \'optima, aunque no siempre es \'unica.\\
+\indent Una primera aproximaci\'on intuitiva para la resoluci\'on consisti\'o en ir posicionando la esquina inferior izquierda de la caja en todos los lugares posibles de un \'area acotada por cuatro puntos, cada uno el m\'as extremo hacia la izquierda, la derecha, arriba o abajo. Si bien parece l\'ogico encontrar la soluci\'on deseada de esta manera, el algoritmo ser\'ia muy complejo (y en particular la complejidad estar\'ia condicionada por la lejan\'ia entre los puntos extremos), por lo que resultaba necesario acotar de alguna manera las posibles posiciones donde se evaluar\'ia la esquina inferior izquierda de la caja.\\
+\indent Una segunda aproximaci\'on consisti\'o en ir probando cada punto en los cuatro v\'ertices de la caja y evaluar cu\'antos de los dem\'as puntos entrar\'ian en ella. Sin embargo, esta idea no result\'o ser fruct\'ifera: solamente est\'abamos evaluando potenciales soluciones que cumpl\'ian con tener por lo menos un punto en el v\'ertice y no es cierto que siempre existe una soluci\'on \'optima que tenga por lo menos un punto en el v\'ertice.\\
+\indent Luego de analizar m\'as detenidamente el contexto del problema, se comprendi\'o que a partir de un posicionamiento de la esquina inferior izquierda de la caja con la condici\'on de que por lo menos un punto quedara cubierto por ella, uno podr\'ia encontrar otro posicionamiento que cumpliera que por lo menos un punto cubierto por ella se encuentre en el borde inferior de la caja y otro en el borde izquierdo de la caja (puede darse el caso que sean el mismo punto, si es así el punto estar\'ia ubicado en el v\'ertice inferior izquierdo de la caja) y que la cantidad de puntos dentro de la caja de este posicionamiento es mayor o igual que la cantidad del primer posicionamiento.\\
+ 								
+ 								%DIBUJITO
 
-Supongamos que tenemos el costo m\'inimo optimo del problema original, y que la soluci\'on a alguno de los subproblemas, llamemosla $c$, no es \'optima.
-Debe existir, sin embargo, una subsoluci\'on \'optima para ese subproblema, subsoluci\'on que agrega un valor $c'$. 
-Al ser $c'$ el valor \'optimo y $c$ un valor no \'optimo,  podemos asegurar que $c' < c$. 
-Pero entonces podr\'iamos utilizar la subsolucion que suma $c'$ en lugar de $c$, resultando en un costo 
-final menor que el costo \'optimo, y esto contradice nuestra suposici\'on de que teniamos una soluci\'on \'optima para 
-el problema original. Deducimos que el problema cumple con el principio de optimalidad, pues una soluci\'on \'optima se forma necesariamente a partir de
-subsoluciones \'optimas a subproblemas del mismo g\'enero.
+\indent  De aqu\'i se extrae que siempre hay por lo menos una solución \'optima que cumpla con estos criterios, puesto que la soluci\'on \'optima debe cubrir por lo menos un punto. En particular, esa soluci\'on \'optima cumple con que el componente $x$ de su esquina inferior izquierda se corresponde con la coordenada $x$ de alguno de los puntos que se tienen en el plano y que el componente $y$ de su esquina inferior izquierda se corresponde con la coordenada $y$ de alguno de los puntos que se tienen en el plano (y que no necesariamente son el mismo punto).Una demostraci\'on de todo esto se puede encontrar en la secci\'on de Correctitud de este problema.\\
+\indent De esta manera hemos reducido el conjunto de posibles soluciones a uno m\'as pequeño y que sabemos con seguridad que contiene una soluci\'on \'optima.\\ 
+\indent Luego, las potenciales soluciones son las esquinas inferiores izquierdas que cumplen que su coordenada $x$ se corresponde con la componente $x$ de alguno de los puntos en el plano y que su coordenada $y$ se corresponde con la componente $y$ de alguno de los puntos en el plano.\\
+\indent As\'i, hay a lo sumo $n^{2}$ candidatos a soluci\'on a analizar que se obtienen de combinar la coordenada $x$ de cada punto con las coordenadas $y$ de todos los puntos. En particular, nuestro algoritmo recorre estos candidatos a soluci\'on y devuelve el candidato que m\'as puntos cubra, siendo as\'i una soluci\'on \'optima.\\
 
-Pasemos ahora a encontrar una funci\'on recursiva que devuelva el costo m\'inimo. Dado un list\'on de longitud $l$
-y una secuencia $s$ que contine los $m$ cortes ordenados de manera creciente, armamos la secuencia $S_{1..m+2} = [0] + s + [l]$.
-Luego definimos $C(i, j)$ con $1 \leq i < j \leq m+2$, como el costo correspondiente a cortar cada sub-list\'on de largo
-$S_{j} - S_{i}$ (considerando $S_{i}$ como el inicio y $S_{j}$ como el fin del list\'on). 
-Obtendremos el costo m\'inimo para el problema orignal al calcular $C(1, m+2)$.
+\subsection{Algoritmo} 
 
-Para el caso base consideraremos un list\'on que no requiere cortes. Esto equivale a $S_{i..j}$ cuando $j = i + 1$,
-
-$$ C(i, j) = 0 \mbox{ si } j = i+1 $$.
-
-Para el caso recursivo consideramos que se realiza un corte en la posicion $S_{k} (i < k < j)$ y que al costo
-de este se le suman los costos de cortar los listones resultantes del primer corte ($S_{i..k}$ y $S_{k..j}$), 
-
-    $$C(i, j) = S_{j} - S_{i} + C(i, k) + C(k, j)$$
-
-Por supuesto, en el caso general puede no existir un \'unico $k$ que pueda ser seleccionado. Por ello, hay que tener en 
-cuenta todos los posibles puntos de corte (los $S_{k}$ con $i < k < j$, es decir, $j-i-1$ opciones), y tomar aquel que 
-conduzca a una soluci\'on \'optima.
-La formula recursiva que obtememos es: \\
-$$
-C(i, j) =
-   \begin{cases}
-      0 & \mbox{ si } j = i+1   \\
-      S_{j} - S_{i} + \displaystyle\min_{i < k < j}\{C(i, k) + C(k, j)\} & \mbox{ si } j \geq i+1
-   \end{cases}
-$$
-\\
-
-Dado que el problema cumple con el principio de optimalidad y una soluci\'on recursiva conlleva la repeticion de c\'alculos,
-utilizaremos alguna t\'ecnica de programaci\'on din\'amica para implementar un algoritmo m\'as
-eficiente. Primero implementaremos una version top-down del algortimo recursivo utilizando memoizaci\'on, y 
-luego una versi\'on bottom-up no recursiva. 
-
-\subsubsection{Algortimo Top-Down recursivo con memoizaci\'on}
-
-El concepto clave reside en almacenar en alguna estructura de datos los valores que la funci\'on recursiva devuelve 
-para distintos par\'ametros de entrada. Esto se realiza una \'unica vez para cada gurpo de parametros distintos de tal forma que, si la funci\'on es llamada 
-con par\'ametros para los cuales el c\'alculo ya fue realizaco y almacenado, se podr\'a obtener el resultado directamente de
-la estructura de datos. Para abordar este problema en particular, utilizaremos una matriz de tama\~no $ n x n $, donde $n = m+2$ es la longitud de la secuencia $S$ ($m$ es el n\'umero de cortes). La matriz, a la que llamaremos $memo$, contendr\'a en la posici\'on $(i, j)$
-el costo devuelto por $C(i, j)$, es decir, el costo \'optimo para realizar los cortes dentro del list\'on $S_{i..j}$. 
-Ser\'a necesario que la matriz $memo$ se encuentre inicializada en todas sus posiciones con alg\'un valor que permita decidir 
-si es necesario efectuar o no el c\'alculo (en el algoritmo usaremos INDEFINIDO). Como veremos luego, si bien nuestro algoritmo utiliza s\'olo la mitad de la 
-capacidad de la tabla, el resto de las posiciones pueden utilizarse para mantener informaci\'on que nos permita luego 
-reconstruir la secuencia \'optima de cortes que se nos pide en principio. 
-
-\begin{algorithm}[h!]
+\begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{Costo-Minimo-Top-Down}(Liston, i, j)$}
-\li \If $\id{memo}[i][j] \isequal \const{indefinido}$ 
-\li	\Then
-				\If $j \isequal i+1$
-\li			\Then 
-						$\id{memo}[i][j] \gets 0$
-\li			\Else
-\li							$\id{costoMinimo} \gets \min\{\proc{Costo-Minimo-Top-Down}(S, i, k)$ \zi \>\>\>\> $+ \proc{Costo-Minimo-Top-Down}(S, k, j): i < k < j\}$
-\li 		$\id{memo}[i][j] \gets S[j] - S[i] + \id{costoMinimo}$
+\Procname{$\proc{resolver}(n, b, h, vector<int> puntosX, vector<int> puntosY)$}
+\li int $cant \gets 0$
+\li int $m \gets 0$
+\li int $resx \gets puntosX[0]$
+\li int $resy \gets puntosY[0]$
+\li \For int $i$ desde 0 hasta n \Do
+\li		\For int $j$ desde 0 hasta n \Do
+\li 		$m \gets $ cuantosEntran(n, b, h, puntosX[i], puntosY[j], puntosX, puntosY)
+\li 		\If $(cant<m)$ 
+\li				\Then   $cant \gets m$
+\li 					$resx \gets puntosX[i]$
+\li 					$resy \gets puntosY[j]$
 				\End
- 		\End
-\li \Return $\id{memo}[i][j]$
+			\End
+		\End
+	\End
+\li \Return $cant$ , $resx$, $resy$
+
 \End
 \end{codebox}
 \end{algorithm}
-	
-
-\begin{figure}[h!]
-	\begin{center}
-		\begin{minipage}[c]{.85\textwidth}
-			\begin{center} 
-				\[ \left| \begin{array}{cccccc}
-				* & 0 & 5 & 10 & 15 & 22 \\
-				* & * & 0 & 3  & 7 & 12 \\
-				* & * & * & 0  & 3 & 8 \\
-				* & * & * & *  & 0 & 3 \\
-				* & * & * & *  & * & 0 \\
-				* & * & * & *  & * & * \end{array} \right|\]
-
-			  \caption{Ejemplo de la matriz memo generada para un list\'on de longitud $10$ y cortes en los puntos 4, 5, 7 y 8. Para este caso, $S = [0,4,5,7,8,10]$.}
-			\end{center}
-		\end{minipage}
-	\end{center}
-\end{figure}
-
-\subsubsection{Algortimo Bottom-Up iterativo.}
-El algoritmo previo, al ser del estilo top-down, se basa en resolver una instancia del problema asumiendo que se conocen 
-las soluciones para las subinstancias necesarias (\'estas son calculadas en las llamadas recursivas). Lo que haremos ahora 
-ser\'a implementar una versi\'on bottom-up: empezamos por las soluciones de las instancias bases para ir armando gradualmente 
-las soluciones de las instancias m\'as grandes hasta llegar a la que nos interesa.
-Para aplicar esta t\'ecnica es menester entender como realizar el llenado de la tabla. En el algortimo anterior podemos observar 
-que para calcular el elemento $memo[i, j]$ necesitamos los valores definidos en la fila $i$ y en la columna $j$, en ambos casos 
-desde la primera super-diagonal hasta el elemento $memo[i, j]$ (sin contarlo).
-
-
-\begin{figure}[h!]
-	\begin{center}
-		\begin{minipage}[c]{\figurewidth}
-			\begin{center}   
-\[ \left| \begin{array}{cccccc}
-* & 0 & 5 & 10 & ? &  \\
-* & * &   &    & 7 &   \\
-* & * & * &    & 3 &   \\
-* & * & * & *  & 0 &   \\
-* & * & * & *  & * &   \\
-* & * & * & *  & * & * \end{array} \right|\]
-  \caption{En este ejemplo se quiere calcular el valor correspondiente a la posicion $memo[1,5]$. Siguiendo el algortimo top-down, puede verse que solo se necesitan los valores que se muestran en la tabla.}
-			\end{center}
-		\end{minipage}
-	\end{center}
-\end{figure}
-
-Es interesante notar que, si comenzamos a contar las super-diagonales a partir de 0, en cada super-diagonal $d$ se encuentran 
-los costos de los listones $S_{i..j}$ que tiene d cortes por aplicar. Refiriendonos nuevamente al algortimo top-down y 
-teniendo en cuenta las diagonales, podemos ver que al calcular un elemento en la diagonal $d$ necesitamos tomar los pares 
-de elementos que se encuentran en las diagonales $e$ y $f$ (anteriores a $d$) tales que $d = e + f - 1$. 
-Por ejemplo, dada una instancia que genere una matriz de $5x5$, para calcular un elemento en la diagonal $3$ se requerira 
-examinar los elementos de los pares de diagonales 0 y 2, 1  y 1, 2 y 0.
-\\
-
-\begin{figure}[h!]
-	\begin{center}
-		\begin{minipage}[c]{\figurewidth}
-			\begin{center}   
-\[ \begin{array}{cccccc|c}
-
-  & 0 & 1 & 2  & 3  & 4  & \\
-\hline
-* & 0 & 5 & 10 & 15 & 22 & 4\\
-* & * & 0 & 3 & 7 & 12 & 3\\
-* & * & * & 0  & 3 & 8 & 2\\
-* & * & * & *  & 0 & 3& 1\\
-* & * & * & *  & * & 0& 0\\
-* & * & * & *  & * & *& \end{array} \]
-  \caption{
-   En el ejemplo con $S_{1..6} = {0,4,5,7,8,10}$, la 
-super-diagonal 0 corresponde a los casos en los que no se necesitan cortes (es decir, $j = i+1$), como $S_{1..2}$ o $S_{4..5}$, mientras que la 
-super-diagonal 4 correponde al problema original (realizar los cortes en 4, 5, 7 y 8)
-  }
-			\end{center}
-		\end{minipage}
-	\end{center}
-\end{figure}
-
-Llegamos a que la base del algortimo bottom-up estar\'a en llenar la matriz por diagonales, empezando desde el centro hacia afuera 
-y desde arriba hacia abajo (aunque este \'ultimo orden es irrelevante pu\'es, como vimos, para llenar una diagonal no se necesitan elementos de la diagonal misma). \\
-En este momento vamos a agregar lo necesario para generar la salida requerida; es decir, devolver la secuencia de cortes y no el costo final.
-Si mantenemos un registro sobre que punto de corte debe seleccionarse a fin de minimizar el costo para cada list\'on $S_{i..j}$, bastar\'a con recorrer
-este registro para armar una de las posibles secuencias. Es decir, necesitamos registrar que k que se utiliza para separar la secuencia $S_{i..j}$ en 
-$S_{i..k}$ y $S_{k..j}$ para cada par $(i,j)$. Por lo tanto, utilizaremos una matriz de tama\~no $n x n$ (con $n=m+2$) . Al igual que para los costos, 
-solo se utilizara un tri\'angulo de la matriz, sin contar la diagonal principal (pues un punto no representa a un liston) ni la diagonal con elementos $(i,j)$ tales que $j = i +1$ (dado que estos representan a listones que no necesitan ser cortados). En particular, en nuestro algortimo utilizaremos la misma 
-matriz para almacenar tanto los costos como los k a seleccionar, los primeros en el tri\'angulo superior y los segundos en el inferior. 
-Nos permitimos hacer un abuso en la notacion de la funci\'on m\'inimo en la l\'inea 9, notando como resultado no solo el valor m\'inimo de los considerados, sino tambi\'en el indice $k$ que lo genera. Ademas, ahora devolvemos la matriz $memo$ completa, pues nos ser\'a de utilidad en el \'ultimo paso de la resoluci\'on del ejercicio.   
 
 
 \begin{algorithm}[H]
-	\caption{Version bottom-up de costo minimo} 			
-	\begin{codebox}
-		\Procname{$\proc{costoMimimo\_BottomUp}(Liston)$}
-		\li $n \gets \attrib{Liston}{longitud}$
-		\li \For $ i \gets 1 \To n-1 $
-						\Do
-		\li					$j \gets i+1$
-		\li					$memo[i][j] \gets 0$
-						\End
-		\li
-		\li \For $ diag \gets 2 \To n-1$ 
-				\Do
-		\li			\For $ i \gets 1 \To n-diag$ 
-		 				\Do
-		\li					$j \gets i + diag$
-		%\li 	\Comment   en la siguiente linea lo que queremos obtener es tanto el costoMinimo 
-		%\li		\Comment como el  lugar de corte que da origen a ese costoMinimo
-		\li					$(k, costoMinimo) \gets \min\{\id{memo}[i][k] + memo[k][j]: i < k < j\}$
-		\li					$memo[i][j] \gets Liston[j]-Liston[i]+ costoMinimo $
-		\li					$memo[j][i] \gets k$
-						\End
-				\End
-		\li	\Return $memo$
-		\End
-	\end{codebox}
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{cuantosEntran}(n, b, h, x, y, vector<int> puntosX, vector<int> puntosY)$}
+\li int $cant \gets 0$
+\li \For int $i$ desde 0 hasta n \Do
+\li 	\If ($(x \leq puntosX[i] \leq x+b)$  $AND$  $(y \leq puntosY[i] \leq x+h)$) \Do
+\li 		$cant$ ++		
+ 		\End
+ 	\End	
+\li \Return $cant $
+\End
+\end{codebox}
 \end{algorithm}
 
-\begin{figure}
+\subsubsection{Correctitud}
 
-\[ \left| \begin{array}{cccccc}
-* & 0 & 5 & 10 & 15 & 22 \\
-* & * & 0 & 3  & 7 & 12 \\
-1 & * & * & 0  & 3 & 8 \\
-1 & 2 & * & *  & 0 & 3 \\
-1 & 2 & 3 & *  & * & 0 \\
-1 & 3 & 4 & 4  & * & * \end{array} \right|\]
+\subsubsection{Análisis de Complejidad}
 
-  \caption{Matriz $memo$ generada por el algoritmo bottom-up. En el tri\'angulo superior se encuentran los valores de los costos \'optimos para las secuencias $S_{i..j}$. En el tri\'angulo inferior, los valores $k$ minimizaban los costos para las secuencias $S_{j..i}$ (los \'indices se encuentran espejados).  }
-\end{figure}
-	
-\subsubsection{Algortimo para calcular la secuencia \'optima}
-Una vez que tenemos la matriz $memo$ generada por el algoritmo bottom-up, podemos utilizar el siguiente algoritmo recursivo para reconstruir la secuencia de \'optima, la cual es el resultado de invocarlo con los par\'ametros $i = 1$ y $j=n=Liston.longitud$ 
-
-
-\begin{algorithm}[H]
-g\caption{Generador de secuencia optima a partir de matriz memo} 
-	\begin{codebox}
-		\Procname{$\proc{SECUENCIA-OPTIMA}(i, j, Liston, Memo)$}
-		\li \If $j \gets i + 1$
-		\li 	\Then	
-						\Return $[]$
-		\li \Else 
-		\li		$k \gets Memo[j][i]$	
-		\li		\Return $Liston[k] + \proc{SECUENCIA-OPTIMA}(i, k, Liston, Memo) $ \\ \>\>\>\>\>$+ \proc{SECUENCIA-OPTIMA}(k, j, Liston, Memo)$
-		\End
-		\End
-	\end{codebox}
-\end{algorithm}
-
-%Este genera un \'arbol binario de llamadas con n-2 nodos (uno por cada llamada con $j > i+1$) y n+1 hojas (una por cada llamada con $j = i + 1$), donde $n = j - i$; es decir, es del orden $O(n)$. Como el caso que utilizaremos es $i = 1$ y $j = m + 2$, donde $m$ es la cantidad de cortes, no agregar\'a costo significativo a la resoluci\'on final. 
-Como se ve, el algoritmo implementado es simplemente BFS. A continuaci\'on presentamos una versi\'on iterativa.
-
-
-\begin{algorithm}[H]
-\caption{Version iterativa del generador de secuencia optima a partir de matriz memo} 
-	\begin{codebox}
-		\Procname{$\proc{SECUENCIA-OPTIMA}(Liston, Memo)$}
-		\li $cola.encolar(1)$ 
-		\li $cola.encolar(Liston.longitud)$
-		\li \While $cola$ no es vacia
-		\li	\Do
-			 	$i \gets cola.desencolar()$
-		\li 	$j \gets cola.desencolar()$
-		\li 	\If $i \not = j +1$
-		\li		\Then	
-				 		$k \gets Memo[i][j]$
-		\li			$secuenciaOptima.agregar(Liston[k])$
-		\li	 		$cola.encolar(i)$ 
-		\li		 	$cola.encolar(k)$ 
-		\li 		$cola.encolar(k)$ 
-		\li			$cola.encolar(j)$ 
-				\End
-				\End
-		\li \Return $secuenciaOptima$	
-		\End
-	\end{codebox}
-	\label{ej3SecuOptima}
-\end{algorithm}
-
-\subsubsection{An\'alisis de complejidad}
-
- Si observamos un ejemplo del \'arbol de llamadas que se genera con una implementacion directa de esta formula,
- notaremos que muchos casos son utilizados mas de una vez: se repiten c\'alculos. 
-%REVISAR si poner esto que sigue:
-Si llamamos $T(m)$  al tiempo necesario para decidir la mejor forma de realizar $m$ cortes sobre un list\'on, tenemos que: \\
-
- $$ T(m) =
-	 \begin{cases}
-		 O(1) 	& \mbox{ si m = 0} \\
-		 \sum_{i = 0}^{m-1}{T(m-i)+T(i)} + O(m) = 2 * \sum_{i = 0}^{m-1}{T(i)} + O(m) & \mbox{ si } m \geq 1
-	 \end{cases}
- $$
- \\
-
- donde el termino O(m) prov\'ee el costo de decidir cu\'al debe ser el lugar d\'onde cortar.
- Usando el m\'etodo de sustituci\'on, puede probarse que T(m) = $\Omega(2^m)$; es decir,
- el algortimo recursivo es exponencial en la cantidad de cortes a realizar.
-
-Realizemos el c\'alculo de complejidad temporal sobre el algoritmos Bottom-Up. F\'acilmente concluiremos que una cota para su complejidad temporal es del orden $O(m^3)$. \' Esto se desprende del siguiente an\'alis:\\
-El bucle de la linea 2, que rellena la primera super-diagonal de la matriz con $0$, se ejecuta $m$ veces (desde $1$ hasta $\attrib{S}{longitud}-1$).
-El bucle principal , que comienza en la linea 6, se ejecuta $m-1$ veces (desde 2 hasta $\attrib{S}{longitud}-1$); el siguiente bucle  anidado se ejecuta, 
-como m\'aximo, $m-1$ veces ($d = 2$, $i$ desde $1$ a $\attrib{S}{longitud}-2$) . Por \'ultimo, para calcular el minimo se requieren como maximo $m+1$ 
-comparaciones ($i = 1$, $d = \attrib{S}{longitud}-1$, $j = \attrib{S}{longitud}$, $k$ desde $2$ a $\attrib{S}{longitud}$). Teniendo en cuenta esto y que las operaciones de 
-asignaci\'on, acceso a aleatorio a la matriz, la funci\'on min, sumas y restas son operaciones con complejidad constantes 
-y por lo tanto las podemos acotar por con constante $c$, resulta $c*m*(m-1)*(m+1)$, es decir, $O(m^3)$.\\
-
-Por ultimo, el Algoritmo \ref{ej3SecuOptima} tiene complejidad $O(m)$: dado un grafo G(V, E), BFS tiene complejidad $O(|E| + |V|)$. En nuestro caso particular, el grafo es un \'arbol binario donde cada hoja corresponde a un list\'on que no requiere cortes. Tenemos, por lo tanto, $m+1$ hojas y $m$ nodos internos. Entonces, resulta $|V| = 2m+1$, $|V| = 2m$ y la complejidad del algortimo es $O(m)$.
-\subsection{Tests}
-Realizamos algunas observaciones sobre los posibles casos a probar.
-El orden relativo de los elementos no genera familias de casos, porque las secuencias de cortes son siempre es crecientes. La longitud y la cantidad de cortes, por si solos, no son factores de inter\'es. Sin embargo, podr\'ia resultar interesante considerar la cantidad de cortes en relaci\'on a la longitud del list\'on y  la distribuci\'on de la concentraci\'on de los cortes a lo largo del list\'on.
+\subsection{Pruebas}
 
 \subsection{Conclusiones}
-En el desarrollo de este ejercicio resultaron especialmente \'utiles los conceptos te\'oricos sobre Programaci\'on dinamica, pues llegamos a una implementaci\'on satisfactoria partiendo de un an\'alisis de este tipo. Es notable la reducci\'on de la complejidad algoritmica que logramos se logro, pasando de $O(2^n)$ a $O(n^3)$. Los casos de prueba no encontramos familias de casos que produjeran un mejor o peor rendimiento. 
+
+
