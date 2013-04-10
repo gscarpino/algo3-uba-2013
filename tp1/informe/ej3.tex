@@ -30,6 +30,11 @@
 
 \subsection{Algoritmo} 
 
+\indent Queremos hacer un par de aclaraciones: $n$, $b$ y $h$ son de tipo $int$ y representan la cantidad de puntos, la base de la caja y la altura de la caja respectivamente. A su vez, puntosX contiene en la posici\'on $i$ la coordenada $x$ del i-\'esimo punto de la entrada. An\'alogamente, puntosY contiene en la posici\'on $i$ la coordenada $y$ del i-\'esimo punto de la entrada. Por lo tanto, la longitud de ambos vectores es $n$, la cantidad de puntos en el plano.\\
+\indent El algoritmo recorre los candidatos a soluci\'on que cumplen que su coordenada $x$ coincide con la de alg\'un punto del sistema y que su coordenada $y$ coincide con la de alg\'un punto del sistema (que puede no ser el mismo que el de la coordenada $x$).\\
+\indent Esto se basa en el hecho de que en dicho conjunto de puntos seguro existe por lo menos una soluci\'on \'optima. Se provee la demostraci\'on de esta afirmaci\'on en la secci\'on Correctitud de este problema.\\
+
+
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
@@ -74,6 +79,24 @@
 \subsubsection{Correctitud}
 
 \subsubsection{Análisis de Complejidad}
+
+\indent Analicemos en primer lugar la complejidad de $cuantosEntran$. Asignarle un valor a la variable $int$ $cant$ cuesta tiempo constante, es decir \textbf{O}(1). A su vez, evaluar la condición del If también cuesta tiempo constante.Esto es porque realizar la comparaci\'on de $int$'s es constante y, de acuerdo a la documentaci\'on de C++, obtener un elemento de un vector mediante el operador [] tambi\'en lo es. Por lo tanto, evaluar la condición del If es \textbf{O}(1). Luego, se entre o no al cuerpo del If, en cada iteraci\'on del ciclo se ejecuta algo de costo constante. Como el ciclo se itera $n$ veces (siendo $n$ la cantidad de puntos que hay en el plano), el algoritmo $cuantosEntran$ tiene un costo de\\
+\begin{center}
+\textbf{O}(1 + n*1)
+\end{center}\\
+
+con lo cual tiene una complejidad temporal \textbf{O}(n), es decir lineal en la cantidad de puntos.\\
+
+
+\indent Analicemos ahora $resolver$. Las primeras cuatro asignaciones se realizan en tiempo constante (incluso las que obtiene un valor del vector con el operador []), es decir en \textbf{O}(1).\\
+\indent Veamos que ocurre en el cuerpo del segundo For. Se ejecuta $cuantosEntran$, que ya sabemos que lo hace en tiempo lineal, y lo que devuelve se lo asigna a una variable (en tiempo constante). Luego se hace una comparaci\'on en \textbf{O}(1). Ahora bien, si no entra al cuerpo del If no se hace nada más y se pasa a la pr\'oxima iteraci\'on. En este caso el costo de la iteración fue de \textbf{O}(n+2), con lo cual tiene una complejidad temporal de \textbf{O}(n). En cambio, si entra al cuerpo del If, se realizan tres asignaciones, todas en tiempo constante. Luego lo que está adentro del cuerpo del If tiene un costo de \textbf{O}(1). Es decir que en este caso también una iteraci\'on cuesta \textbf{O}(n). Es decir que lo que ocurre en cada iteraci\'on de este For tiene un costo lineal. Como este For se ejecuta $n$ veces, su complejidad temporal será \textbf{O}($n^2$).\\
+\indent Entonces, el primer For ejecuta en cada iteración algo con un costo cuadrático. Como se itera $n$ veces se obtiene que el costo de este For es \textbf{O}($n^3$). Es decir que el algoritmo cuesta \\
+\begin{center}
+\textbf{O}(1+1+1+ n^3)
+\end{center}\\
+
+con lo cual tiene un complejidad temporal de \textbf{O}($n^3$), es decir c\'ubica en la cantidad de puntos, cumpliendo entonces con la cota que se nos exigía en el enunciado del problema.\\
+
 
 \subsection{Pruebas}
 
