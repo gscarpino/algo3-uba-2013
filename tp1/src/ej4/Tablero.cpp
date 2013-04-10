@@ -167,6 +167,7 @@ Tablero& Tablero::operator=(const Tablero &otro){
     m = otro.m;
     rows = otro.rows;
     cols = otro.cols;
+    piezasColocadas = otro.piezasColocadas;
     return *this;
 }
 

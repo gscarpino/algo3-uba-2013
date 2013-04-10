@@ -9,7 +9,6 @@ class Pieza
     public:
         Pieza(const Matriz &p, const unsigned int id);
         Pieza(const Pieza &otra);
-        ~Pieza();
         unsigned int getRows() const;
         unsigned int getCols() const;
         unsigned int getID() const;
@@ -18,6 +17,8 @@ class Pieza
         unsigned int getColor(const Posicion &p) const;
         Pieza rotar() const;
         friend bool operator<(const Pieza &p1, const Pieza &p2);
+        friend bool operator!=(const Pieza &p1, const Pieza &p2);
+        Pieza& operator=(const Pieza &otro);
 
     private:
         Matriz m;

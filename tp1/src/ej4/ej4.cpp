@@ -248,77 +248,45 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
         Pieza sigPieza(piezas.back());
         piezas.pop_back();
 
-//        Pieza sigPieza2,sigPieza3,sigPieza4,sigPiezaTemp = sigPieza;
+        Pieza sigPieza2 = sigPieza.rotar();
+        Pieza sigPieza3 = sigPieza2.rotar();
+        Pieza sigPieza4 = sigPieza3.rotar();
         vector<Posicion> posiciones;
-//
-//        if(rotar(sigPiezaTemp)){
-//            sigPieza2 = sigPiezaTemp;
-//            rotar(sigPiezaTemp);
-//            sigPieza3 = sigPiezaTemp;
-//            rotar(sigPiezaTemp);
-//            sigPieza4 = sigPiezaTemp;
-//
-//            posiciones = posiblesPosiciones(sigPieza,tablero,dimN,dimM);
-//            for(auto p : posiciones){
-//                Tablero nuevoTablero = tablero;
-//                ocuparFicha(sigPieza,p,nuevoTablero);
-//                vector<Pieza> copiaPiezas = piezas;
-//                Solucion nuevaSol;
-//                Sol s(sigPieza.first,0,p);
-//                nuevaSol.push_back(s); //Faltaria poner rotacion y sacar la forma
-//                res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
-//            }
-//
-//            if(!res){
-//                posiciones = posiblesPosiciones(sigPieza2,tablero,dimN,dimM);
-//                for(auto p : posiciones){
-//                    Tablero nuevoTablero = tablero;
-//                    ocuparFicha(sigPieza2,p,nuevoTablero);
-//                    vector<Pieza> copiaPiezas = piezas;
-//                    Solucion nuevaSol;
-//                    Sol s(sigPieza2.first,1,p);
-//                    nuevaSol.push_back(s);
-//                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
-//                }
-//            }
-//
-//
-//            if(!res){
-//                posiciones = posiblesPosiciones(sigPieza3,tablero,dimN,dimM);
-//                for(auto p : posiciones){
-//                    Tablero nuevoTablero = tablero;
-//                    ocuparFicha(sigPieza3,p,nuevoTablero);
-//                    vector<Pieza> copiaPiezas = piezas;
-//                    Solucion nuevaSol;
-//                    Sol s(sigPieza3.first,2,p);
-//                    nuevaSol.push_back(s);
-//                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
-//                }
-//            }
-//
-//
-//            if(!res){
-//                posiciones = posiblesPosiciones(sigPieza4,tablero,dimN,dimM);
-//                for(auto p : posiciones){
-//                    Tablero nuevoTablero = tablero;
-//                    ocuparFicha(sigPieza4,p,nuevoTablero);
-//                    vector<Pieza> copiaPiezas = piezas;
-//                    Solucion nuevaSol;
-//                    Sol s(sigPieza4.first,3,p);
-//                    nuevaSol.push_back(s);
-//                    res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
-//                }
-//            }
-//
-//        }else{
-            posiciones = tablero.posiblesPosiciones(sigPieza);
+
+        posiciones = tablero.posiblesPosiciones(sigPieza);
+        for(auto p : posiciones){
+            Tablero nuevoTablero(tablero);
+            nuevoTablero.ubicarFicha(sigPieza,0,p);
+            res = resolverJuego(piezas,nuevoTablero,sol);
+            if(res) break;
+        }
+
+        if(sigPieza != sigPieza2){
+            posiciones = tablero.posiblesPosiciones(sigPieza2);
             for(auto p : posiciones){
                 Tablero nuevoTablero(tablero);
-                nuevoTablero.ubicarFicha(sigPieza,0,p);
+                nuevoTablero.ubicarFicha(sigPieza2,1,p);
                 res = resolverJuego(piezas,nuevoTablero,sol);
                 if(res) break;
             }
-//        }
+
+            posiciones = tablero.posiblesPosiciones(sigPieza3);
+            for(auto p : posiciones){
+                Tablero nuevoTablero(tablero);
+                nuevoTablero.ubicarFicha(sigPieza3,2,p);
+                res = resolverJuego(piezas,nuevoTablero,sol);
+                if(res) break;
+            }
+
+            posiciones = tablero.posiblesPosiciones(sigPieza4);
+            for(auto p : posiciones){
+                Tablero nuevoTablero(tablero);
+                nuevoTablero.ubicarFicha(sigPieza4,3,p);
+                res = resolverJuego(piezas,nuevoTablero,sol);
+                if(res) break;
+            }
+
+        }
 
 
     }
