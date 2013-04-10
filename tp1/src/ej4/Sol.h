@@ -1,12 +1,8 @@
-#include <iostream>
-
-using namespace std;
-
-typedef pair<int,int> Posicion;
-
-
 #ifndef SOL_H
 #define SOL_H
+
+#include "Redefs.h"
+
 
 class Sol{
     private:
@@ -18,6 +14,7 @@ class Sol{
 
     Sol();
     Sol(int id, int rotaciones, Posicion posicion);
+    void imprimir() const;
 };
 
 #endif // SOL_H
