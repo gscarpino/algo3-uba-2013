@@ -17,6 +17,7 @@ Tablero::Tablero(const Tablero &otro){
     this->rows = otro.rows;
     this->cols = otro.cols;
     this->m = otro.m;
+    this->piezasColocadas = otro.piezasColocadas;
 }
 
 Tablero::Tablero(const Matriz &matriz, unsigned int rows, unsigned int cols){
@@ -122,12 +123,14 @@ vector<Posicion> Tablero::posiblesPosiciones(const Pieza &pieza) const{
 }
 
 
-void Tablero::ubicarFicha(const Pieza &pieza, const Posicion &pos){
+void Tablero::ubicarFicha(const Pieza &pieza, const unsigned int rotacion, const Posicion &pos){
     for(unsigned int i = 0; i < pieza.getRows(); i++){
         for(unsigned int j = 0; j < pieza.getCols(); j++){
             m[pos.first + i][pos.second + j].second = true;
         }
     }
+    Sol s(pieza.getID(),rotacion,pos);
+    piezasColocadas.push_back(s);
 }
 
 
@@ -167,3 +170,19 @@ Tablero& Tablero::operator=(const Tablero &otro){
     return *this;
 }
 
+
+bool Tablero::cubreTodo(const vector<Pieza> &piezas) const{
+    bool res = false;
+    int total = rows * cols;
+
+    for(unsigned int i = 0; i < piezas.size(); i++){
+        total = total - (piezas[i].getRows() * piezas[i].getCols());
+    }
+
+    res = (total == 0);
+    return res;
+}
+
+Solucion Tablero::obtenerPiezas(){
+    return this->piezasColocadas;
+}

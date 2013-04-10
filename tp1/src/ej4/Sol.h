@@ -1,7 +1,10 @@
 #ifndef SOL_H
 #define SOL_H
 
-#include "Redefs.h"
+#include <iostream>
+using namespace std;
+typedef pair<unsigned int, unsigned int> Posicion;
+
 
 
 class Sol{

@@ -9,6 +9,7 @@ class Pieza
     public:
         Pieza(const Matriz &p, const unsigned int id);
         Pieza(const Pieza &otra);
+        ~Pieza();
         unsigned int getRows() const;
         unsigned int getCols() const;
         unsigned int getID() const;

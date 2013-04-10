@@ -4,12 +4,13 @@
 #include <iostream>
 #include <vector>
 
+#include "Sol.h"
 
 using namespace std;
-
+typedef vector< Sol >  Solucion;
 typedef vector<unsigned int> Vec;
 typedef vector<Vec> Matriz;
-typedef pair<unsigned int, unsigned int> Posicion;
+
 
 #define NEGRO 0;
 #define BLANCO 1;

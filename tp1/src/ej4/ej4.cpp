@@ -3,16 +3,11 @@
 #include <cmath>
 #include <algorithm>
 #include "Redefs.h"
-#include "Sol.h"
 #include "Tablero.h"
 #include "Pieza.h"
 
 
 
-
-
-
-typedef vector< Sol >  Solucion; //Arreglar esto
 
 //Seguro hay que modificar esto
 Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas);
@@ -20,11 +15,8 @@ vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int taman
 bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero, const int dimN, const int dimM, Solucion &sol);
 bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM);
 vector<int> pasarBinario(int n);
-bool resolverJuego(vector<Pieza> &piezas, Tablero &tablero,const int dimN, const int dimM, Solucion &sol);
-Tablero armarTablero(const Matriz &tablero,const int dimN, const int dimM);
-bool cmpPieza(const Pieza &a, const Pieza &b);
-bool esTableroCompleto(const Tablero &tablero,const int dimN, const int dimM);
-bool rotar(Pieza &pieza);
+bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
+
 
 void imprimirMatriz(const Matriz &m){
     for(unsigned int i = 0; i < m.size(); i++){
@@ -154,18 +146,8 @@ int main(int argc, char *argv[]) {
 Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas){
     Solucion res;
     bool haySol = false;
-//    int inf = 0;
-//    int sup = piezas.size();
-//    int medio;
-    //Se podria llegar a mejorar con busqueda binaria pero cambiar las podas
-//    while(inf <= sup){
-//        medio = (sup + inf) / 2;
     for(unsigned int i = 1; i <= piezas.size(); i++){
         vector< vector<Pieza> > subConjuntos;
-
-        cout << endl << "SubConjuntos de " << i << " piezas: " << endl;
-
-
 
         subConjuntos = subConjuntosDeTam(piezas,i);
 
@@ -174,18 +156,9 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
                     haySol = true;
                     break;
                 }
-//            cout << "aaa" << endl;
-//            for(int k = 0; k < subConjuntos[j].size(); k++){
-//                cout  << "---" << endl;
-//                imprimirMatriz(subConjuntos[j][k].second);
-//                cout << endl << "---" << endl;
-//            }
-//
-//            cout << "aaa" << endl;
         }
 
         if(haySol){
-                cout << "Se encontro sol" << endl;
             break;
         }
     }
@@ -215,8 +188,6 @@ vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int taman
                     subConj.push_back(piezas[i]);
                 }
             }
-//            sort(subConj.begin(),subConj.end(),[](Matriz &a,Matriz &b){return (a.size() * a[0].size() > b.size() * b[0].size());});
-//            sort(subConj.begin(),subConj.end(),cmpPieza);
             res.push_back(subConj);
 
         }
@@ -243,60 +214,35 @@ vector<int> pasarBinario(int n){
 
 
 bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM, Solucion &sol){
-    //requiere piezas ordenadas de mayor a menor segun area
-
     bool res = false;
-    vector<Pieza> permPiezas = piezas;
-    vector<Pieza> copiaPiezas = permPiezas;
+    vector<Pieza> copiaPiezas = piezas;
+
     //cubreExactoElTablero poda pero no siempre son solucion
 
-    if(cubreExactoElTablero(piezas,tablero,dimN,dimM)){
+    Tablero copiaTableroFija(tablero,dimN,dimM);
+    if(copiaTableroFija.cubreTodo(piezas)){
 
-        Tablero copiaTableroFija(tablero,dimN,dimM);
         Tablero copiaTablero = copiaTableroFija;
-        copiaTablero.imprimir();
-        copiaTablero.imprimirConFichas();
-        cout << "Tam de piezas: " << copiaPiezas.size() << endl;
-//        imprimirPiezas(copiaPiezas);
-        res = resolverJuego(copiaPiezas,copiaTablero,dimN,dimM,sol);
-        int marce = 1;
+        res = resolverJuego(copiaPiezas,copiaTablero,sol);
 
         //hacer para que recorrar todas las posibles permutaciones
-        while(next_permutation(permPiezas.begin(),permPiezas.end()) && !res){
-//                cout << "Marce " << marce << endl;
-            marce++;
-            copiaPiezas = permPiezas;
-//            imprimirPiezas(copiaPiezas);
+        while(next_permutation(copiaPiezas.begin(),copiaPiezas.end()) && !res){
+
             copiaTablero = copiaTableroFija;
-            res = resolverJuego(copiaPiezas,copiaTablero,dimN,dimM,sol);
+            res = resolverJuego(copiaPiezas,copiaTablero,sol);
         }
     }
-
-
     return res;
 }
 
-bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM){
-    bool res = true;
-//    int total = dimM * dimN;
-//
-//    for(unsigned int i = 0; i < piezas.size(); i++){
-//        total = total - (piezas[i].second.size() * piezas[i].second[0].size());
-//    }
-//
-//    res = (total == 0);
 
-    return res;
-}
-
-//bool cmpPieza(const Pieza &a, const Pieza &b){
-//    return (a.second.size() * a.second[0].size() > b.second.size() * b.second[0].size());
-//}
-
-bool resolverJuego(vector<Pieza> &piezas, Tablero &tablero,const int dimN, const int dimM, Solucion &sol){
+bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
     bool res;
     if(piezas.size() == 0){
         res = tablero.completo();
+        if(res){
+            sol = tablero.obtenerPiezas();
+        }
     }
     else{
         Pieza sigPieza(piezas.back());
@@ -368,14 +314,11 @@ bool resolverJuego(vector<Pieza> &piezas, Tablero &tablero,const int dimN, const
             posiciones = tablero.posiblesPosiciones(sigPieza);
             for(auto p : posiciones){
                 Tablero nuevoTablero(tablero);
-                nuevoTablero.ubicarFicha(sigPieza,p);
-                vector<Pieza> copiaPiezas = piezas;
-                Solucion nuevaSol;
-                Sol s(sigPieza.getID(),0,p);
-                nuevaSol.push_back(s);
-                res = resolverJuego(copiaPiezas,nuevoTablero,dimN,dimM,nuevaSol);
-//            }
-        }
+                nuevoTablero.ubicarFicha(sigPieza,0,p);
+                res = resolverJuego(piezas,nuevoTablero,sol);
+                if(res) break;
+            }
+//        }
 
 
     }

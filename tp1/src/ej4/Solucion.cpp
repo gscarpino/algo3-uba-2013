@@ -15,5 +15,5 @@ Sol::Sol(int id, int rotaciones, Posicion posicion){
 }
 
 void Sol::imprimir() const{
-    cout << "\<" << this->id << "," << this->rotaciones << ",(" << this->posicion.first << "," << this->posicion.second << ")\>";
+    cout << "<" << this->id << "," << this->rotaciones << ",(" << this->posicion.first << "," << this->posicion.second << ")>";
 }

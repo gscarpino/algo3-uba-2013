@@ -80,5 +80,10 @@ Pieza Pieza::rotar() const{
 }
 
 bool operator<(const Pieza &p1, const Pieza &p2){
+    //Necesario para poder buscar todas las permutaciones posibles
     return p1.id < p2.id;
+}
+
+
+Pieza::~Pieza(){
 }
