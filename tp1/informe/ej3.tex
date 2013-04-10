@@ -88,8 +88,11 @@
 con lo cual tiene una complejidad temporal \textbf{O}(n), es decir lineal en la cantidad de puntos.\\
 
 
-\indent Analicemos ahora $resolver$. Las primeras cuatro asignaciones se realizan en tiempo constante (incluso las que obtiene un valor del vector con el operador []), es decir en \textbf{O}(1).\\
-\indent Veamos que ocurre en el cuerpo del segundo For. Se ejecuta $cuantosEntran$, que ya sabemos que lo hace en tiempo lineal, y lo que devuelve se lo asigna a una variable (en tiempo constante). Luego se hace una comparaci\'on en \textbf{O}(1). Ahora bien, si no entra al cuerpo del If no se hace nada más y se pasa a la pr\'oxima iteraci\'on. En este caso el costo de la iteración fue de \textbf{O}(n+2), con lo cual tiene una complejidad temporal de \textbf{O}(n). En cambio, si entra al cuerpo del If, se realizan tres asignaciones, todas en tiempo constante. Luego lo que está adentro del cuerpo del If tiene un costo de \textbf{O}(1). Es decir que en este caso también una iteraci\'on cuesta \textbf{O}(n). Es decir que lo que ocurre en cada iteraci\'on de este For tiene un costo lineal. Como este For se ejecuta $n$ veces, su complejidad temporal será \textbf{O}($n^2$).\\
+\indent Analicemos ahora $resolver$. Las primeras cuatro asignaciones se realizan en tiempo constante (incluso las que obtienen un valor del vector con el operador [ ]), es decir en \textbf{O}(1).\\
+\indent Veamos que ocurre en el cuerpo del segundo For. Se ejecuta $cuantosEntran$, que ya sabemos que lo hace en tiempo lineal, y lo que devuelve se lo asigna a una variable (en tiempo constante). Luego se hace una comparaci\'on en \textbf{O}(1).\\
+\indent Ahora bien, si no entra al cuerpo del If no se hace nada más y se pasa a la pr\'oxima iteraci\'on. En este caso el costo de la iteración fue de \textbf{O}(n+2), con lo cual tiene una complejidad temporal de \textbf{O}(n).\\
+\indent En cambio, si entra al cuerpo del If, se realizan tres asignaciones, todas en tiempo constante. Luego lo que está adentro del cuerpo del If tiene un costo de \textbf{O}(1). Es decir que en este caso también una iteraci\'on cuesta \textbf{O}(n).\\
+\indent De aqu\'i se extrae que lo que ocurre en cada iteraci\'on de este For tiene un costo lineal. Como este For se ejecuta $n$ veces, su complejidad temporal será \textbf{O}($n^2$).\\
 \indent Entonces, el primer For ejecuta en cada iteración algo con un costo cuadrático. Como se itera $n$ veces se obtiene que el costo de este For es \textbf{O}($n^3$). Es decir que el algoritmo cuesta \\
 \begin{center}
 \textbf{O}(1+1+1+ n^3)
