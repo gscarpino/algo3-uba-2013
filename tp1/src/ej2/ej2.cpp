@@ -8,7 +8,7 @@
 #include <ctime>
 #include <algorithm>
 
-#define TESTING_AZAR 0
+#define TESTING_AZAR 1
 #define TESTING_PAREJO 0  //FALTA
 
 using namespace std;
