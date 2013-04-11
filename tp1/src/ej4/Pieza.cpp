@@ -68,6 +68,7 @@ unsigned int Pieza::getColor(const Posicion &p) const{
 
 Pieza Pieza::rotar() const{
     Matriz forma;
+    forma.reserve(cols);
     Vec fila(rows);
 
     for(unsigned int i = 0; i < cols; i++){

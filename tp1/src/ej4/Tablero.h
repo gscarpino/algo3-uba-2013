@@ -26,6 +26,8 @@ class Tablero
         bool cubreTodo(const vector<Pieza> &piezas) const;
         Tablero& operator=(const Tablero &otro);
         Solucion obtenerPiezas();
+        unsigned int getColor(const Posicion &pos) const;
+        unsigned int getColor(const unsigned int x, const unsigned int y) const;
 
     private:
         vector<vector<pair< unsigned int, bool> > > m;

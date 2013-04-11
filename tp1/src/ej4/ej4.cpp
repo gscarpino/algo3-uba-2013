@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-//    argv[1] = "input.txt";
+    argv[1] = "inputLargo.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -132,8 +132,8 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
     Solucion res;
     bool haySol = false;
 
-    for(unsigned int i = 1; i <= piezas.size(); i++){
-        cout << "Probando con " << i << " piezas" << endl;
+    for(unsigned int tamanio = 1; tamanio <= piezas.size(); tamanio++){
+        cout << "Probando con " << tamanio << " piezas" << endl;
         vector< vector<Pieza> > subConjuntos;
         //se genera un conjunto de subconjuntos de tamanio fijo
 
@@ -147,10 +147,11 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
             numBin = pasarBinario(valor);
 
             for(unsigned int i = 0; i < numBin.size();i++){
+                if(sumaParcial > tamanio) break;
                 sumaParcial = sumaParcial + numBin[i];
             }
 
-            if(sumaParcial == i){
+            if(sumaParcial == tamanio){
 
                 for(unsigned int i = 0; i < numBin.size();i++){
                     if(numBin[numBin.size() - i - 1]){
@@ -175,6 +176,7 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
 }
 
 
+//O(log n)
 //Pasa un numero decima a binario y lo devuelve en un vector de enteros
 vector<int> pasarBinario(int n){
     vector<int> res;
@@ -232,7 +234,7 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
 
         //Poda de cuando rotar una pieza es igual que no rotarla
         Pieza sigPieza2 = sigPieza.rotar();
-        if(sigPieza != sigPieza2){
+        if(sigPieza != sigPieza2 && !res){
             Pieza sigPieza3 = sigPieza2.rotar();
             Pieza sigPieza4 = sigPieza3.rotar();
             posiciones = tablero.posiblesPosiciones(sigPieza2);
@@ -242,21 +244,23 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
                 res = resolverJuego(piezas,nuevoTablero,sol);
                 if(res) break;
             }
-
-            posiciones = tablero.posiblesPosiciones(sigPieza3);
-            for(auto p : posiciones){
-                Tablero nuevoTablero(tablero);
-                nuevoTablero.ubicarFicha(sigPieza3,2,p);
-                res = resolverJuego(piezas,nuevoTablero,sol);
-                if(res) break;
+            if(!res){
+                posiciones = tablero.posiblesPosiciones(sigPieza3);
+                for(auto p : posiciones){
+                    Tablero nuevoTablero(tablero);
+                    nuevoTablero.ubicarFicha(sigPieza3,2,p);
+                    res = resolverJuego(piezas,nuevoTablero,sol);
+                    if(res) break;
+                }
             }
-
-            posiciones = tablero.posiblesPosiciones(sigPieza4);
-            for(auto p : posiciones){
-                Tablero nuevoTablero(tablero);
-                nuevoTablero.ubicarFicha(sigPieza4,3,p);
-                res = resolverJuego(piezas,nuevoTablero,sol);
-                if(res) break;
+            if(!res){
+                posiciones = tablero.posiblesPosiciones(sigPieza4);
+                for(auto p : posiciones){
+                    Tablero nuevoTablero(tablero);
+                    nuevoTablero.ubicarFicha(sigPieza4,3,p);
+                    res = resolverJuego(piezas,nuevoTablero,sol);
+                    if(res) break;
+                }
             }
 
         }

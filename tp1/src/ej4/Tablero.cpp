@@ -11,6 +11,7 @@ Tablero::Tablero(unsigned int rows, unsigned int cols){
         }
         this->m.push_back(fila);
     }
+    this->piezasColocadas.reserve(rows*cols);
 }
 
 Tablero::Tablero(const Tablero &otro){
@@ -30,6 +31,7 @@ Tablero::Tablero(const Matriz &matriz, unsigned int rows, unsigned int cols){
         }
         this->m.push_back(fila);
     }
+    this->piezasColocadas.reserve(rows*cols);
 }
 
 unsigned int Tablero::getRows() const{
@@ -158,7 +160,7 @@ bool Tablero::encaja(const Pieza &pieza, const Posicion &pos) const{
         for(unsigned int j = 0; j < pieza.getCols(); j++){
             p = make_pair(pos.first + i,pos.second + j);
             if((p.first < rows) && (p.second < cols) && (res)){
-                res = res && (m[p.first][p.second].first == pieza.getColor(i,j)) && (!ocupado(p));
+                res = res && (getColor(p) == pieza.getColor(i,j)) && (!ocupado(p));
             }
             else{
                 return false;
@@ -168,6 +170,14 @@ bool Tablero::encaja(const Pieza &pieza, const Posicion &pos) const{
     return res;
 }
 
+
+unsigned int Tablero::getColor(const Posicion &pos) const{
+    return m[pos.first][pos.second].first;
+}
+
+unsigned int Tablero::getColor(const unsigned int x, const unsigned int y) const{
+    return m[x][y].first;
+}
 
 bool Tablero::completo() const{
     bool res = true;
@@ -195,6 +205,7 @@ bool Tablero::cubreTodo(const vector<Pieza> &piezas) const{
 
     for(unsigned int i = 0; i < piezas.size(); i++){
         total = total - (piezas[i].getRows() * piezas[i].getCols());
+        if(total < 0) break;
     }
 
     res = (total == 0);
