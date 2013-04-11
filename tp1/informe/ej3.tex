@@ -78,15 +78,15 @@
 
 \subsubsection{Correctitud}
 
-\indent Sean $s$= ($x-{s}$,$y_{s}$) una coordenada entera que representa la esquina inferior izquierda de la caja, $P$ el conjunto de los puntos en el plano, $n$ la cantidad de puntos en el plano, $b$ la base de la caja y $h$ la altura de la caja. Y sea $P_{s}$={$p_{1}...p_{k}$} el conjunto de los puntos que quedan cubiertos por la caja cuya esquina inferior izquierda est\'a en $s$.\\
+\indent Sean $s$= ($x_{s}$,$y_{s}$) una coordenada entera que representa la esquina inferior izquierda de la caja, $P$ el conjunto de los puntos en el plano, $n$ la cantidad de puntos en el plano, $b$ la base de la caja y $h$ la altura de la caja. Y sea $P_{s}$=\{$p_{1}...p_{k}$\} el conjunto de los puntos que quedan cubiertos por la caja cuya esquina inferior izquierda est\'a en $s$.\\
 
-\indent Definimos una soluci\'on \'optima para este problema como aquel $s$ que cumple que $#(P_{s}) \geq #(P_{r}) $ para todo $r$ coordenada entera.\\
+\indent Definimos una soluci\'on \'optima para este problema como aquel $s$ que cumple que $\#(P_{s}) \geq \#(P_{r}) $ para todo $r$ coordenada entera.\\
 
 \indent En primer lugar, veamos que $\exists$ un $t$ soluci\'on \'optima tal que $t_{x} = e_{x}$ $\wedge$ $t_{y}=f_{y}$ para algunos $e,f \in P$ (no es necesario que $e=f$).\\
 
 \indent Para ello, veamos que siempre existe una soluci\'on \'optima con por lo menos un punto en el borde de la caja.\\
 
-\indent Sea $s$ una coordenada. Supongamos $P_{s}={$p_{1}...p_{k}$}\neq \emptyset$, es decir que la caja representada por $s$ cubre por lo menos un punto.
+\indent Sea $s$ una coordenada. Supongamos $P_{s}=\{$p_{1}...p_{k}$\}\neq \emptyset$, es decir que la caja representada por $s$ cubre por lo menos un punto.\\
 \indent Para todo $p \in P_{s}$ vale que \\
 \begin{center}
 $s_{x} \leq p_{x} \leq s_{x} + b$  $\wedge$ \\
@@ -132,21 +132,21 @@ $s'_{y} \leq p_{y} \leq s'_{y} + h$\\
 
 y eso quiero decir que para todo punto $p \in P_{s} $ vale que $ p \in P_{s'}$. \\
 \indent Luego, $P_{s} \subseteq P_{s'}.$\\
-\indent Es decir que $#P_{s} \leq P_{s'}$. \\
+\indent Es decir que $\#P_{s} \leq \#P_{s'}$. \\
 \indent Notar que no vale la vuelta, puesto que al reubicar la caja se pueden estar cubriendo puntos que antes no estaban cubiertos.\\
 									%Quiza un DIBUJITO 
-\indent En particular, si $s$ es una soluci\'on \'optima, vale que $#(P_{s}) \geq #(P_{r}) $ para todo $r$ coordenada entera (recordamos que en la plano hay por lo menos un punto y que necesariamente la soluci\'on \'optima tiene que cubrir por lo menos un punto).\\
-\indent Luego, $#P_{s} \geq P_{s'}$. Pero, como $#P_{s} \leq P_{s'}$, entonces:\\
+\indent En particular, si $s$ es una soluci\'on \'optima, vale que $\#(P_{s}) \geq \#(P_{r}) $ para todo $r$ coordenada entera (recordamos que en la plano hay por lo menos un punto y que necesariamente la soluci\'on \'optima tiene que cubrir por lo menos un punto).\\
+\indent Luego, $\#P_{s} \geq \#P_{s'}$. Pero como $\#P_{s} \leq \#P_{s'}$, entonces:\\
 
 \begin{center}
-$#P_{s} = P_{s'}$
+$\#P_{s} = \#P_{s'}$
 \end{center}\\
 
 y entonces $s'$ tambi\'en es soluci\'on \'optima. Como siempre se puede encontrar una soluci\'on \'optima $s$, entonces tambi\'en siempre se puede encontrar una soluci\'on \'optima $s'$. Es decir que hemos encontrado una soluci\'on \'optima que cumple que tiene por lo menos un punto en el borde.\\
 
 \indent Definamos ahora el conjunto de coordenadas\\
 \begin{center}
-$Z = {z | z_{x}= e_{x} para alg\'un e \in P  \wedge z_{y}= f_{y} para alg\'un f \in P}$
+$Z = \{z | z_{x}= e_{x} $ para alg\'un $e \in P$  $\wedge$ $z_{y}= f_{y}$ para alg\'un $f \in P\}$
 \end{center}\\
 
 \indent Es decir que $Z$ es el conjunto de coordenadas que cumplen que su componente $x$ se corresponde con el de alg\'un punto en el plano y que su componente $y$ se corresponde con la alg\'un punto en el plano (no necesariamente el mismo punto).\\
