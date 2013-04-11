@@ -154,19 +154,14 @@ $Z = \{z | z_{x}= e_{x} $ para alg\'un $e \in P$  $\wedge$ $z_{y}= f_{y}$ para a
 \indent Es fácil observar que de la manera en que lo definimos, $s' \in Z $.\\ 
 \indent Esto es porque $s'_{x} =  \min_{p \in P_{s'}}(p_{x})$  $\wedge$  $s'_{y} =  \min_{p \in P_{s'}}(p_{y})$. \\
 \indent  Adem\'as como siempre puedo encontrar un $s'$ con estas condiciones que sea soluci\'on \'optima, eso quiere decir que seguro existe una soluci\'on \'optima en $Z$.\\
-\indent Por lo tanto, $\exists$ un $t$ soluci\'on \'optima tal que $t_{x} = e_{x}$ $\wedge$ $t_{y}=f_{y}$ para algunos $e,f \in P$ (no es necesario que $e=f$), que es lo que quer\'iamos demostrar.\\
+\indent Por lo tanto, $\exists$ una coordenada $t$ soluci\'on \'optima tal que $t_{x} = e_{x}$ $\wedge$ $t_{y}=f_{y}$ para algunos $e,f \in P$ (no es necesario que $e=f$), que es lo que quer\'iamos demostrar.\\
 
 
-
-
-
-
-
-			
-
-
-
-
+\indent Ahora veamos como nuestro algoritmo encuentra una soluci\'on correcta.\\
+\indent Es f\'acil ver que en efecto el conjunto $Z$ se puede formar combinando las componentes $x$ de cada punto en el plano con las componentes $y$ de los todos puntos en el plano. Como ya hemos demostrado, en ese conjunto seguro hay alguna soluci\'on \'optima $s$ que en particular cumple que para todo $z \in Z$  $\#P_{s} \geq \#P_{z}$. \\
+\indent El algoritmo recorre entonces todos los elementos $z$ del conjunto $Z$. Mediante la funci\'on  $cuantosEntran$ se cuenta la cantidad de puntos que entran en la caja que tiene como esquina inferior izquierda a $z$, es decir que devuelve $\#P_{z}$  y lo conserva como soluci\'on parcial si y sólo si es la que mayor puntos cubre hasta ese momento.Es decir que en cada iteraci\'on la soluci\'on parcial (llam\'emosla $v$) cumple que $\#P_{v}$ es mayor que la todos los puntos $z$ que se evaluaron hasta ese momento.\\
+\indent Luego, cuando se iteraron todos los elementos de $Z$ la soluci\'on $s$ que tenemos cumple que $\#P_{s} \geq \#P_{z}$ para todo $z \in Z$.\\
+\indent Pero como sabemos que en ese conjunto existe una soluci\'on \'optima, entonces $s$ tambi\'en lo es. En particular, lo que puede ocurrir es que devuelva esa soluci\'on \'optima que demostramos que existe en el conjunto $Z$ (es decir la que tiene puntos en los bordes de la caja) o que devuelva otra que no cumpla con esa condici\'on, pero que al cumplir que $\#P_{s} \geq \#P_{z} $ tambi\'en es soluci\'on \'optima.\\
 
 
 
