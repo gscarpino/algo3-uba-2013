@@ -17,3 +17,9 @@ Sol::Sol(int id, int rotaciones, Posicion posicion){
 void Sol::imprimir() const{
     cout << "<" << this->id << "," << this->rotaciones << ",(" << this->posicion.first << "," << this->posicion.second << ")>";
 }
+
+
+ostream& operator<<(ostream& out, const Sol &s){
+    out << s.id << " " << s.rotaciones << " " << s.posicion.first << " " << s.posicion.second;
+    return out;
+}

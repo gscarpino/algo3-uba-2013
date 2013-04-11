@@ -120,6 +120,12 @@ int main(int argc, char *argv[]) {
             solucion[i].imprimir();
         }
         cout << "]" << endl;
+
+        outputFile << solucion.size();
+        for(int i = 0; i < solucion.size(); i++){
+            outputFile << endl;
+            outputFile << solucion[i];
+        }
     }
 
     inputFile.close();
@@ -269,10 +275,3 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
     }
     return res;
 }
-
-
-
-
-
-
-
