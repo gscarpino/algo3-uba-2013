@@ -8,7 +8,11 @@
 \indent A continuaci\'on se provee un ejemplo de una posible instancia del problema con una posible soluci\'on y que adem\'as sirve para mostrar las aclaraciones hechas anteriormente:\\
 
 
-							%DIBUJITO
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico1.png}
+	\caption{ Aqu\'i se observa como existe más de una soluci\'on \'optima para el problema, puesto que tanto $(-3,2)$ como $(2,3)$ cubren la m\'axima cantidad de puntos posibles, en este caso cuatro.}
+\end{figure}
 
 
 \indent Para resolver este problema hemos asumido que por lo menos se tiene alg\'un punto en el plano (es decir que $n>0$) y que adem\'as los puntos que se proveen por entrada no est\'an repetidos.\\
@@ -21,7 +25,12 @@
 \indent Una segunda aproximaci\'on consisti\'o en ir probando cada punto en los cuatro v\'ertices de la caja y evaluar cu\'antos de los dem\'as puntos entrar\'ian en ella. Sin embargo, esta idea no result\'o ser fruct\'ifera: solamente est\'abamos evaluando potenciales soluciones que cumpl\'ian con tener por lo menos un punto en el v\'ertice y no es cierto que siempre existe una soluci\'on \'optima que tenga por lo menos un punto en el v\'ertice.\\
 \indent Luego de analizar m\'as detenidamente el contexto del problema, se comprendi\'o que a partir de un posicionamiento de la esquina inferior izquierda de la caja con la condici\'on de que por lo menos un punto quedara cubierto por ella, uno podr\'ia encontrar otro posicionamiento que cumpliera que por lo menos un punto cubierto por ella se encuentre en el borde inferior de la caja y otro en el borde izquierdo de la caja (puede darse el caso que sean el mismo punto, si es así el punto estar\'ia ubicado en el v\'ertice inferior izquierdo de la caja) y que la cantidad de puntos dentro de la caja de este posicionamiento es mayor o igual que la cantidad del primer posicionamiento.\\
  								
- 								%DIBUJITO
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico2.png}
+	\caption{ Aqu\'i se observa como a partir de la posici\'on $(1,1)$ de una caja se puede hallar otra (la $(2,2)$ ) que tenga por lo menos un punto en el borde,los mismos puntos que la $(1,1)$ y que puede llegar a cubrir m\'as puntos. }
+\end{figure}
+
 
 \indent  De aqu\'i se extrae que siempre hay por lo menos una solución \'optima que cumpla con estos criterios, puesto que la soluci\'on \'optima debe cubrir por lo menos un punto. En particular, esa soluci\'on \'optima cumple con que el componente $x$ de su esquina inferior izquierda se corresponde con la coordenada $x$ de alguno de los puntos que se tienen en el plano y que el componente $y$ de su esquina inferior izquierda se corresponde con la coordenada $y$ de alguno de los puntos que se tienen en el plano (y que no necesariamente son el mismo punto).Una demostraci\'on de todo esto se puede encontrar en la secci\'on de Correctitud de este problema.\\
 \indent De esta manera hemos reducido el conjunto de posibles soluciones a uno m\'as pequeño y que sabemos con seguridad que contiene una soluci\'on \'optima.\\ 
