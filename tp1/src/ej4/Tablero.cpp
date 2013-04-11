@@ -42,8 +42,16 @@ unsigned int Tablero::getCols() const{
 
 
 void Tablero::imprimir() const{
-    for(unsigned int j = 0; j < cols; j++){
-        cout << "_";
+    for(unsigned int j = 0; j < 40; j++){
+        if(j == 16){
+            cout << " TABLERO ";
+        }
+        else if(j > 16 && j < 25){
+
+        }
+        else{
+            cout << "_";
+        }
     }
     cout << endl;
     for(unsigned int i = 0; i < rows; i++){
@@ -57,7 +65,7 @@ void Tablero::imprimir() const{
         }
         cout << endl;
     }
-    for(unsigned int j = 0; j < cols; j++){
+    for(unsigned int j = 0; j < 40; j++){
         cout << "_";
     }
     cout << endl;
@@ -65,10 +73,19 @@ void Tablero::imprimir() const{
 
 void Tablero::imprimirConFichas() const{
 
-    for(unsigned int j = 0; j < cols; j++){
-        cout << "_";
+    for(unsigned int j = 0; j < 40; j++){
+        if(j == 16){
+            cout << " TABLERO ";
+        }
+        else if(j > 16 && j < 25){
+
+        }
+        else{
+            cout << "_";
+        }
     }
     cout << endl;
+
     for(unsigned int i = 0; i < rows; i++){
         for(unsigned int j = 0; j < cols; j++){
             Posicion p = make_pair(i,j);
@@ -91,7 +108,7 @@ void Tablero::imprimirConFichas() const{
         }
         cout << endl;
     }
-    for(unsigned int j = 0; j < cols; j++){
+    for(unsigned int j = 0; j < 40; j++){
         cout << "_";
     }
     cout << endl;

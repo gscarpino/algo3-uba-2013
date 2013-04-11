@@ -16,12 +16,12 @@ Pieza::Pieza(const Pieza &otra){
 }
 
 void Pieza::imprimir() const{
-    for(unsigned int j = 0; j < cols; j++){
-        if(j == 0){
-            cout << this->id;
+    for(unsigned int j = 0; j < 11; j++){
+        if(j == 5){
+            cout << " " << this->id << " ";
         }
         else{
-            cout << "*";
+            cout << " * ";
         }
     }
     cout << endl;
@@ -36,11 +36,13 @@ void Pieza::imprimir() const{
         }
         cout << endl;
     }
-    for(unsigned int j = 0; j < cols; j++){
-        cout << "*";
+    for(unsigned int j = 0; j < 11; j++){
+        cout << " * ";
     }
     cout << endl;
 }
+
+
 
 unsigned int Pieza::getRows() const{
     return this->rows;

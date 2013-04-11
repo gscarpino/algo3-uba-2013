@@ -7,9 +7,6 @@
 #include "Pieza.h"
 
 
-
-
-//Seguro hay que modificar esto
 Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas);
 vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
 bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero, const int dimN, const int dimM, Solucion &sol);
@@ -18,29 +15,13 @@ vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
 
 
-void imprimirMatriz(const Matriz &m){
-    for(unsigned int i = 0; i < m.size(); i++){
-        for(unsigned int j = 0; j < m[0].size(); j++){
-            if(m[i][j]){
-                cout << " BLANCO ";
-            }
-            else{
-                cout << " NEGRO  ";
-            }
-        }
-        cout << endl;
-    }
-}
-
-
-
 int main(int argc, char *argv[]) {
 
     if(argc <= 1) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-
+//    argv[1] = "input.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -80,6 +61,7 @@ int main(int argc, char *argv[]) {
             }
             temp++;
         }
+        //Se va a ir cargando la matriz del tablero
         Vec fila(dimM);
         Matriz tablero;
         for(int i = 0; i < dimN; i++){
@@ -92,6 +74,7 @@ int main(int argc, char *argv[]) {
             tablero.push_back(fila);
         }
 
+        //Se va a ir cargando las piezas
         vector<Pieza> piezas;
         int id = 0;
         for(int i = 0; i < cantPiezas; i++){
@@ -117,15 +100,17 @@ int main(int argc, char *argv[]) {
             piezas.push_back(pieza);
         }
 
-        cout << "N: " << dimN << " - M: " << dimM << " - Piezas: " << cantPiezas << endl << endl;
-        cout << "Tablero: " << endl << endl;;
-        imprimirMatriz(tablero);
-        cout << endl << endl << "Piezas: " << endl;
-        for(int i = 0; i < cantPiezas; i++){
-            cout << endl << "- - -" << endl;
-            piezas[i].imprimir();
-            cout << "- - -" << endl;
-        }
+
+//        Tablero testTablero(tablero,dimN,dimM);
+//        testTablero.imprimir();
+//        testTablero.imprimirConFichas();
+//
+//        cout << endl << endl << "Piezas: " << endl;
+//        for(int i = 0; i < cantPiezas; i++){
+//            cout << endl << "- - -" << endl;
+//            piezas[i].imprimir();
+//            cout << "- - -" << endl;
+//        }
 
 
         Solucion solucion = buscarSol(tablero,dimN,dimM,piezas);
@@ -142,20 +127,44 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-
+//Se recorre linealmente de cantidad de subconjuntos de un conjunto si es solucion del problema
 Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas){
     Solucion res;
     bool haySol = false;
+
     for(unsigned int i = 1; i <= piezas.size(); i++){
+        cout << "Probando con " << i << " piezas" << endl;
         vector< vector<Pieza> > subConjuntos;
+        //se genera un conjunto de subconjuntos de tamanio fijo
 
-        subConjuntos = subConjuntosDeTam(piezas,i);
+        unsigned int tope = pow(2,piezas.size());
+        vector<int> numBin;
+        unsigned int valor = 1;
+        unsigned int sumaParcial = 0;
 
-        for(unsigned int j = 0; j < subConjuntos.size(); j++){
-                if(esSolucion(subConjuntos[j],tablero,dimN,dimM,res)){
+        while(valor < tope && !haySol){
+            vector<Pieza> subConj;
+            numBin = pasarBinario(valor);
+
+            for(unsigned int i = 0; i < numBin.size();i++){
+                sumaParcial = sumaParcial + numBin[i];
+            }
+
+            if(sumaParcial == i){
+
+                for(unsigned int i = 0; i < numBin.size();i++){
+                    if(numBin[numBin.size() - i - 1]){
+                        subConj.push_back(piezas[i]);
+                    }
+                }
+                if(esSolucion(subConj,tablero,dimN,dimM,res)){
                     haySol = true;
                     break;
                 }
+
+            }
+            valor++;
+            sumaParcial = 0;
         }
 
         if(haySol){
@@ -166,37 +175,7 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
 }
 
 
-vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio){
-    vector< vector<Pieza> > res;
-    unsigned int tope = pow(2,piezas.size());
-    vector<int> numBin;
-    unsigned int valor = 1;
-    int sumaParcial = 0;
-
-    while(valor < tope){
-        vector<Pieza> subConj;
-        numBin = pasarBinario(valor);
-
-        for(unsigned int i = 0; i < numBin.size();i++){
-            sumaParcial = sumaParcial + numBin[i];
-        }
-
-        if(sumaParcial == tamanio){
-
-            for(unsigned int i = 0; i < numBin.size();i++){
-                if(numBin[numBin.size() - i - 1]){
-                    subConj.push_back(piezas[i]);
-                }
-            }
-            res.push_back(subConj);
-
-        }
-        valor++;
-        sumaParcial = 0;
-    }
-    return res;
-}
-
+//Pasa un numero decima a binario y lo devuelve en un vector de enteros
 vector<int> pasarBinario(int n){
     vector<int> res;
     int temp;
@@ -212,25 +191,18 @@ vector<int> pasarBinario(int n){
     return res;
 }
 
-
+//Determina si un conjunto dado de piezas es solucion al problema
 bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM, Solucion &sol){
     bool res = false;
+
     vector<Pieza> copiaPiezas = piezas;
-
-    //cubreExactoElTablero poda pero no siempre son solucion
-
+    //Se crea el tablero vacio
     Tablero copiaTableroFija(tablero,dimN,dimM);
-    if(copiaTableroFija.cubreTodo(piezas)){
 
+    //Poda de que para que sea una solucion optima tiene que cubrir todo el tablero en superficie, ni mas ni menos
+    if(copiaTableroFija.cubreTodo(piezas)){
         Tablero copiaTablero = copiaTableroFija;
         res = resolverJuego(copiaPiezas,copiaTablero,sol);
-
-        //hacer para que recorrar todas las posibles permutaciones
-        while(next_permutation(copiaPiezas.begin(),copiaPiezas.end()) && !res){
-
-            copiaTablero = copiaTableroFija;
-            res = resolverJuego(copiaPiezas,copiaTablero,sol);
-        }
     }
     return res;
 }
@@ -248,9 +220,6 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
         Pieza sigPieza(piezas.back());
         piezas.pop_back();
 
-        Pieza sigPieza2 = sigPieza.rotar();
-        Pieza sigPieza3 = sigPieza2.rotar();
-        Pieza sigPieza4 = sigPieza3.rotar();
         vector<Posicion> posiciones;
 
         posiciones = tablero.posiblesPosiciones(sigPieza);
@@ -261,7 +230,11 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             if(res) break;
         }
 
+        //Poda de cuando rotar una pieza es igual que no rotarla
+        Pieza sigPieza2 = sigPieza.rotar();
         if(sigPieza != sigPieza2){
+            Pieza sigPieza3 = sigPieza2.rotar();
+            Pieza sigPieza4 = sigPieza3.rotar();
             posiciones = tablero.posiblesPosiciones(sigPieza2);
             for(auto p : posiciones){
                 Tablero nuevoTablero(tablero);
@@ -287,7 +260,6 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             }
 
         }
-
 
     }
     return res;

@@ -34,8 +34,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Pieza.cpp" />
+		<Unit filename="Pieza.h" />
+		<Unit filename="Redefs.h" />
 		<Unit filename="Sol.h" />
 		<Unit filename="Solucion.cpp" />
+		<Unit filename="Tablero.cpp" />
+		<Unit filename="Tablero.h" />
 		<Unit filename="ej4.cpp" />
 		<Extensions>
 			<DoxyBlocks>
