@@ -148,6 +148,12 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
 
             for(unsigned int i = 0; i < numBin.size();i++){
                 if(sumaParcial > tamanio) break;
+                //Si lo que falta para llegar a ese tamanio es mayor a lo que falta
+                //por recorrer entonces corto porque sumaParcial no va a llegar a tamanio
+                if((tamanio - sumaParcial) > (numBin.size() - i)){
+                    sumaParcial = tamanio + 1;
+                    break;
+                }
                 sumaParcial = sumaParcial + numBin[i];
             }
 
