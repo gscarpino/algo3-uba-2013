@@ -7,9 +7,9 @@
 #include "Pieza.h"
 
 
-Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas);
+Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas);
 vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
-bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero, const int dimN, const int dimM, Solucion &sol);
+bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &sol);
 bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM);
 vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-    argv[1] = "inputLargo.txt";
+    argv[1] = "inputCorto.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
         }
         //Se va a ir cargando la matriz del tablero
         Vec fila(dimM);
-        Matriz tablero;
+        Matriz tableroTemp;
         for(int i = 0; i < dimN; i++){
             getline(inputFile, linea);
             istringstream sLinea2(linea);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
                 sLinea2 >> n;
                 fila[j] = n;
             }
-            tablero.push_back(fila);
+            tableroTemp.push_back(fila);
         }
 
         //Se va a ir cargando las piezas
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
         }
 
 
-//        Tablero testTablero(tablero,dimN,dimM);
+        Tablero tablero(tableroTemp,dimN,dimM);
 //        testTablero.imprimir();
 //        testTablero.imprimirConFichas();
 //
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 //        }
 
 
-        Solucion solucion = buscarSol(tablero,dimN,dimM,piezas);
+        Solucion solucion = buscarSol(tablero,piezas);
         cout << "Tamanio de la solucion final: " << solucion.size() << endl;
         cout << "[";
         for(unsigned int i = 0; i < solucion.size(); i++){
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]) {
 }
 
 //Se recorre linealmente de cantidad de subconjuntos de un conjunto si es solucion del problema
-Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const vector<Pieza> &piezas){
+Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas){
     Solucion res;
     bool haySol = false;
 
@@ -164,7 +164,7 @@ Solucion buscarSol(const Matriz &tablero,const int dimN, const int dimM, const v
                         subConj.push_back(piezas[i]);
                     }
                 }
-                if(esSolucion(subConj,tablero,dimN,dimM,res)){
+                if(esSolucion(subConj,tablero,res)){
                     haySol = true;
                     break;
                 }
@@ -200,17 +200,12 @@ vector<int> pasarBinario(int n){
 }
 
 //Determina si un conjunto dado de piezas es solucion al problema
-bool esSolucion(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM, Solucion &sol){
+bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &sol){
     bool res = false;
 
-    vector<Pieza> copiaPiezas = piezas;
-    //Se crea el tablero vacio
-    Tablero copiaTableroFija(tablero,dimN,dimM);
-
     //Poda de que para que sea una solucion optima tiene que cubrir todo el tablero en superficie, ni mas ni menos
-    if(copiaTableroFija.cubreTodo(piezas)){
-        Tablero copiaTablero = copiaTableroFija;
-        res = resolverJuego(copiaPiezas,copiaTablero,sol);
+    if(tablero.cubreTodo(piezas)){
+        res = resolverJuego(piezas,tablero,sol);
     }
     return res;
 }
