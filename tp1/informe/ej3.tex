@@ -78,7 +78,7 @@
 
 \subsubsection{Correctitud}
 
-\indent Sean $s$= ($x_{s}$,$y_{s}$) una coordenada entera que representa la esquina inferior izquierda de la caja, $P$ el conjunto de los puntos en el plano, $n$ la cantidad de puntos en el plano, $b$ la base de la caja y $h$ la altura de la caja. Y sea $P_{s}$=\{$p_{1}...p_{k}$\} el conjunto de los puntos que quedan cubiertos por la caja cuya esquina inferior izquierda est\'a en $s$.\\
+\indent Sean $s$= ($s_{x}$,$s_{y}$) una coordenada entera que representa la esquina inferior izquierda de la caja, $P$ el conjunto de los puntos en el plano, $n$ la cantidad de puntos en el plano, $b$ la base de la caja y $h$ la altura de la caja. Y sea $P_{s}$=\{$p_{1}...p_{k}$\} el conjunto de los puntos que quedan cubiertos por la caja cuya esquina inferior izquierda est\'a en $s$.\\
 
 \indent Definimos una soluci\'on \'optima para este problema como aquel $s$ que cumple que $\#(P_{s}) \geq \#(P_{r}) $ para todo $r$ coordenada entera.\\
 
@@ -162,6 +162,8 @@ $Z = \{z | z_{x}= e_{x} $ para alg\'un $e \in P$  $\wedge$ $z_{y}= f_{y}$ para a
 \indent El algoritmo recorre entonces todos los elementos $z$ del conjunto $Z$. Mediante la funci\'on  $cuantosEntran$ se cuenta la cantidad de puntos que entran en la caja que tiene como esquina inferior izquierda a $z$, es decir que devuelve $\#P_{z}$  y lo conserva como soluci\'on parcial si y sólo si es la que mayor puntos cubre hasta ese momento.Es decir que en cada iteraci\'on la soluci\'on parcial (llam\'emosla $v$) cumple que $\#P_{v}$ es mayor que la todos los puntos $z$ que se evaluaron hasta ese momento.\\
 \indent Luego, cuando se iteraron todos los elementos de $Z$ la soluci\'on $s$ que tenemos cumple que $\#P_{s} \geq \#P_{z}$ para todo $z \in Z$.\\
 \indent Pero como sabemos que en ese conjunto existe una soluci\'on \'optima, entonces $s$ tambi\'en lo es. En particular, lo que puede ocurrir es que devuelva esa soluci\'on \'optima que demostramos que existe en el conjunto $Z$ (es decir la que tiene puntos en los bordes de la caja) o que devuelva otra que no cumpla con esa condici\'on, pero que al cumplir que $\#P_{s} \geq \#P_{z} $ tambi\'en es soluci\'on \'optima.\\
+
+\indent \indent \indent \indent \indent \indent \indent \indent \indent \indent \indent \indent \indent \indent  \indent \indent $\square$
 
 
 
