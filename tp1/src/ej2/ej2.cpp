@@ -15,10 +15,6 @@
 using namespace std;
 
 //********** TESTING *********
-typedef struct timespec {
-	time_t tv_sec; /* seconds */
-	long tv_nsec; /* nanoseconds */
-} tiempo;
 
 timespec diff(timespec start, timespec end)
 {
@@ -174,8 +170,8 @@ int main(int argc, char *argv[]) {
             }
             i++;
         }
-        tiempo comienzo;
-        tiempo terminacion;
+        timespec comienzo;
+        timespec terminacion;
         if(medDefectuosa >= sensores.size()){
 
 
@@ -202,7 +198,7 @@ int main(int argc, char *argv[]) {
 //        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
         cout << "Corrida " << corrida << endl;
         if(RESULTADOS){
-            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
+            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo.tv_nsec,terminacion.tv_nsec) << ";" << endl;
         }
         else{
             archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
