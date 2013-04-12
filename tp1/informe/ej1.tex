@@ -6,41 +6,28 @@ En una f\'abrica de quesos hay n m\'aquinas que trabajan en forma independiente,
 determinado tipo de queso. Una vez encendida, la m\'aquina i tarda $p_i$ minutos en finalizar su producci\'on.
 Por cuestiones de seguridad, las m\'aquinas comienzan el d\'ia con sus tanques de combustible totalmente vac\'ios, y
  luego de que se llene su tanque, tarea en la que se demora $c_i$ minutos, la maquin\'a i comienda a producir sin ningun otro tipo de intervenci\'on.
+Como se cuenta con un \'unico surtidor para todas las m\'aquinas, la carga de los tanques debe realizarse de manera secuencial.
+Sin embargo, el tiempo que se tarda en mover el surtidor de una maquin\'a a otra es despreciable.
 
-El problema es que se cuenta con un \'unico surtidor para todas las m\'aquinas, por lo que la carga de los tanques debe realizarse de manera secuencial.
-Sin embargo, no el tiempo que se tarda en mover el surtidor d euna maquin\'a a otra es despreciable.
-
-Lo que se desea es encontrar un ordenamiento para la carga de combustible de manera tal que la producci\'on completa de
-todas las m\'aquinas se termine lo antes posible. El algoritmo que resuelva el problema debe tener una comp`lejidad menor o igual a $O(n^2)$
+Lo que se desea es encontrar un orden para la carga de combustible de manera tal que la producci\'on completa de
+todas las m\'aquinas se termine lo antes posible. El algoritmo que resuelva el problema debe tener una complejidad menor o igual a $O(n^2)$
 
 \vspace{2em}
 \begin{figure}[h!]
     \begin{center}
-        \begin{minipage}[c]{\figurewidth}
-            \begin{center}
-                
-                \begin{subfigure}{1\textwidth}
-                    \centering
-                    \begin{tabular}[c]{|c|c|c|c|}
-                        \hline
-                        $P_i$ & 10 & 4 & 6 \\
-                        \hline
-                        $c_i$ &  1 & 2 & 4  \\
-                        \hline
-                        \rowcolor[gray]{.9}
-                        i & 1 & 2 & 3  \\
-                        \hline
-                    \end{tabular}
-                    \caption{ }
-                    \label{fig:ej1EjemploDecreciente}
-                \vspace{2ex}
-                \end{subfigure}
-                
-              \caption{\textbf{(\subref{fig:ej1EjemploDecreciente})} En esta intancia se puede observar el caso
-                                  \'estas la mayor es 6, que se obtiene de la compra en el d\'ia 1 o 3 y la venta en el d\'ia 4.}   
-                \label{fig:ej1Ejemplos}
-            \end{center}
-        \end{minipage}
+		\centering
+		\begin{tabular}[c]{|c|c|c|c|}
+		    \hline
+		    $P_i$ & 10 & 4 & 6 \\
+		    \hline
+		    $c_i$ &  1 & 2 & 4  \\
+		    \hline
+		    \rowcolor[gray]{.9}
+		    i & 1 & 2 & 3  \\
+		    \hline
+		\end{tabular}
+		\caption{Ejemplo de una instancia del problema. Se tiene tres m\'aquinas, con sus respectivos tiempos de produccion y carga.}   
+		\label{fig:ej1Ejemplos}
     \end{center}
 \end{figure}
  
@@ -112,9 +99,9 @@ Buscamos encontrar un orden O tal que minimice T(O).
                 \vspace{2ex}
                 \end{subfigure}
                 
-             \caption{En estas figuras se pueden observar dos posibles ordenes de carga de m\'aquinas. En \textbf{(\subref{fig:ej1nooptimo})} se
-             					sigue el orden O segun la numeracion de las m\'aquinas, con un resultado T(O) = 13. En cambio, en \textbf{(\subref{fig:ej1optimo})} 
-             					se muestra un orden O optimo, con resultado T(O) = 11.
+             \caption{En estas figuras se pueden observar dos posibles \'ordenes de carga de m\'aquinas. En \textbf{(\subref{fig:ej1nooptimo})} se
+             					sigue el orden O seg\'un la numeracion de las m\'aquinas, con un resultado T(O) = 13. En cambio, en \textbf{(\subref{fig:ej1optimo})} 
+             					se muestra un orden O \'optimo, con resultado T(O) = 11.
              					}   
              \label{fig:ej1Ejemplos}
             \end{center}
@@ -123,8 +110,8 @@ Buscamos encontrar un orden O tal que minimice T(O).
 \end{figure}
  
  
-La primera idea intuitiva que surge es tratar de tener la mayor cantidad de m\'aquinas funcionando en simultaneo.
-Asi, al momento de seleccionar cual es la siguiente maquin\'a que debe ser cargada, 
+La primera idea intuitiva que surge es tratar de tener la mayor cantidad de m\'aquinas funcionando en simult\'aneo.
+As\'i, al momento de seleccionar cual es la siguiente maquin\'a que debe ser cargada, 
 tomamos aquella que tiene mayor tiempo de producci\'on de manera
 que las m\'aquinas restantes lleven a cabo sus trabajos mientras esta se encuentra produciendo.
 
@@ -135,18 +122,20 @@ lo que buscamos es que la maquin\'a con mayor tiempo de producci\'on comience lo
 	\item decisi\'on golosa: seleccionar y cargar la maquin\'a con mayor $P_i$
 	\item ordenar las m\'aquinas todavia no cargadas de forma tal que la producci\'on completa de estas termine lo antes posible
 \end{itemize}
-A partir de aqui se puede plantear la solucion como una funcion recursiva
+A partir de aqu\'i se puede plantear la soluci\'on como una funcion recursiva
 $$ Orden(maquinas) = [seleccionGolosa(maquinas)] + Orden(maquinas - \{i\})$$
-donde $Orden$ devuelve un lista, $maquinas$ es un conjunto de m\'aquinas y $seleccionGolosa$ devuelve la m\'aquina cuyo tiempo de producci\'on es el mayor que entre los  las m\'aquinas del conjunto. En la seccion de correctitud veremos que  no es necesario considerar los tiempos de carga al tomar la decision golosa.
+donde $Orden$ devuelve un lista, $maquinas$ es un conjunto de m\'aquinas y $seleccionGolosa$ devuelve la m\'aquina cuyo tiempo de producci\'on es el mayor que entre los  las m\'aquinas del conjunto. En la secci\'on de correctitud veremos que  no es necesario considerar los tiempos de carga al tomar la decisi\'on golosa.
 
-Ahora, el resultado de esta idea equivale simplemente a ordenar las m\'aquinas de manera decreciente segun sus tiempos de producci\'on. Por esto, en lugar de desarrollar un algoritmo en particular, utilizaremos alguno de los algoritmos de sorting ya conocidos.
+Ahora, el resultado de esta idea equivale simplemente a ordenar las m\'aquinas de manera decreciente segun sus tiempos de producci\'on. Por esto, en lugar de desarrollar un algoritmo en particular, utilizaremos alguno de los algoritmos de sorting ya conocidos (en este caso, dado la complejidad requerida, cualquiera de ellos es v\'alido).
 
 \subsection{Algoritmo}
  
 El algoritmo $resolver$ toma como argumentos de entrada los tiempos de carga (c) y procesamiento (P), y como argumentos de salida,
-el orden (O, un vector de n elementos, donde O[i] = i) y el tiempo total (T), y utiliza la implementacion
-de sorting de la plataforma. El algoritmo $calcTiempo$, que calcula el tiempo $T(O)$, solo recorre el orden O
-calculando los tiempos $T_{O}(i)$, y devuelve el maximo de ellos. 
+el orden (O, un vector de n elementos, donde O[i] = i) y el tiempo total (T), y utiliza la implementaci\'on
+de sorting de la plataforma. 
+
+El algoritmo $calcTiempo$, que calcula el tiempo $T(O)$, solo recorre el orden O
+calculando los tiempos $T_{O}(i)$, y devuelve el m\'aximo de todos ellos. 
 
 
 \begin{algorithm}[H]
@@ -154,7 +143,7 @@ calculando los tiempos $T_{O}(i)$, y devuelve el maximo de ellos.
 \begin{codebox}
 \Procname{$\proc{resolver}(P, c, O, T)$}
 \li Ordenar O segun el ordenamiento descendiente de los elementos en, \\
- 			de manera que P[O[i]] $\leq$ P[O[i+1]] para i = 1..n-1P
+ 			de manera que P[O[i]] $\leq$ P[O[i+1]] para i = 1..n-1
 \li $T  \gets \proc{calcTiempo}(P, c, O)$
 \End
 \end{codebox}
@@ -180,22 +169,22 @@ calculando los tiempos $T_{O}(i)$, y devuelve el maximo de ellos.
 
 \subsubsection{Correctitud} 
 
-Como mencionamos anteriormente, el algoritmo se basa en una idea golosa. Para demostrar la correctitud de esta, observemos los siguientes puntos:
+Como mencionamos anteriormente, el algoritmo se basa en una idea golosa. Para demostrar la correctitud de \'esta, observemos los siguientes puntos:
  
 \begin{itemize}
-    \item EL problema presenta subestructura optima:\\
-        Como ya vimos, el problema de encontrar el orden optimo puede plantearse como uno en el que se realiza una eleccion, y se resuelve un subproblema 
+    \item EL problema presenta subestructura \'optima:\\
+        Como ya vimos, el problema de encontrar el orden \'optimo puede plantearse como uno en el que se realiza una elecci\'on, y se resuelve un subproblema 
         del mismo tipo pero de tamano menor. 
-        Ahora, supongamos que el orden O es una solucion optima al problema original; es decir, el valor de $T(O)$ es el menor posible.
-        Llamemos S = O[2..n] a la solucion del subproblema que queda al elegir el primer elemento de O, de forma que $O = O[1] + S$ . 
-        Si S no es un solucion optima para ese subproblema, podriamos encontrar algun otro orden S' que si lo fuera, tal que se cumpla $T(S') < T(S)$.
-        Consiremeos entonces una nueva solucion $O' = O[1] + S'$. 
+        Ahora, supongamos que el orden O es una soluci\'on \'optima al problema original; es decir, el valor de $T(O)$ es el menor posible.
+        Llamemos S = O[2..n] a la soluci\'on del subproblema que queda al elegir el primer elemento de O, de forma que $O = O[1] + S$ . 
+        Si S no es un soluci\'on \'optima para ese subproblema, podriamos encontrar algun otro orden S' que si lo fuera, tal que se cumpla $T(S') < T(S)$.
+        Consiremeos entonces una nueva soluci\'on $O' = O[1] + S'$. 
         Dado el caso en que $T_{O}(1) \leq T(S')$, al calcular $T(O')$ tendriamos 
         $$T(O) = max(O[1], T(S)) < max(O[1], T(S')) = T(O')$$
-        Sin embargo, esto no puede suceder pues supusimos O un orden optimo. Por lo tanto, la subsolucion S debe ser, tambien ella, optima.
+        Sin embargo, esto no puede suceder pues supusimos O un orden \'optimo. Por lo tanto, la subsoluci\'on S debe ser, tambien ella, \'optima.
 
-    \item Existe una solucion optima que tiene, como primera elecci\'on, la elecci\'on golosa que propone el algoritmo:\\
-        Supongamos que O es optimo, y sea $g$ la m\'aquina con mayor tiempo de producci\'on.\\
+    \item Existe una solucion \'optima que tiene, como primera elecci\'on, la elecci\'on golosa que propone el algoritmo:\\
+        Supongamos que O es \'optimo, y sea $g$ la m\'aquina con mayor tiempo de producci\'on.\\
         Si $O[1] = g$, entonces se cumple lo que buscabamos.\\
         Si $O[1] \not= g$, entonces debe existir algun otro j, $1 < j \leq n$ tal que $O[j] = g$.
         Supongamos que modificamos O intercambiando su primer elemento con el elemento j-esimo, obteniendo asi un
@@ -206,7 +195,7 @@ Como mencionamos anteriormente, el algoritmo se basa en una idea golosa. Para de
 								\item $O'[k] = O[k]$ para todo k distinto de 1 y j.
 							\end{itemize}
           
-          Queremos ver que O' sigue siendo optimo, o sea, que $T(O') \leq T(O)$.
+          Queremos ver que O' sigue siendo \'optimo, o sea, que $T(O') \leq T(O)$.
           Notemos, en primer lugar, que para todo k tal que $j < k \leq n$ se cumple $T_{O'}(k) =  T_{O}(k) $, pues, considerando que
           los primeros k elementos de O' son solo una permutacion de los primeros k elementos de O,
           $$ T_{O'}(k) = \sum_{i = 1}^{k}{c_{O'[i]}} + P_{O'[k]}
@@ -238,7 +227,7 @@ Como mencionamos anteriormente, el algoritmo se basa en una idea golosa. Para de
                     = T_{O}(j)$$
  
                 
-  %  \item La elecci\'on golosa, junto con una solucion optima al subproblema, llevan a una solucion optima del problema original:
+  %  \item La elecci\'on golosa, junto con una solucion \'optima al subproblema, llevan a una solucion \'optima del problema original:
            
  
 \end{itemize}
@@ -253,16 +242,30 @@ De esto se tiene que
 
 $$t + \sum_{ i = k }^{j}( c_i ) + p < t + \sum_{ i = k }^{j}( c_i ) + \sum_{ i = j}^{l}( c_i ) + p = t + \sum_{ i = k }^{l}( c_i ) + p$$
 
-Es decir, no importa como se permuten los valores $c_i$, un grupo de m\'aquinas con igual tiempo de producci\'on siempre tardara lo mismo en terminar, y este valor sera la suma de todos los tiempos de carga del grupo (y las m\'aquinas anteriores, si es que hay) mas el tiempo de producci\'on p.
+Es decir, no importa como se permuten los valores $c_i$, un grupo de m\'aquinas con igual tiempo de producci\'on siempre tardar\'a lo mismo en terminar, y este valor ser\'a la suma de todos los tiempos de carga del grupo (y las m\'aquinas anteriores, si es que hay) m\'as el tiempo de producci\'on p.
  
 
 \subsubsection{An\'alisis de complejidad}
  
  Sea n la cantidad de m\'aquinas.
  
- El algoritmo de sorting que se utiliza esta implementado en la STL de C++. Se asegura que el mismo tiene complejidad $O(n log(n))$.
- Por otro lado, el algoritmo $calcTiempo$ solo tiene un loop que itera n veces, dentro del cual todas las operaciones son de orden O(1), lo que resultan en una complejidad del orden O(n).
+ El algoritmo de sorting que se utiliza esta implementado en la STL de C++. Se asegura que el mismo tiene complejidad $O(n log(n))$ \footnote{http://www.sgi.com/tech/stl/sort.html}.
+ El algoritmo $calcTiempo$ solo tiene un loop que itera n veces, dentro del cual todas las operaciones son de orden O(1), lo que resultan en una complejidad final del orden de O(n).
  
 Por lo tanto, el algoritmo $resolver$ tiene complejidad $O(n log(n) + n) = O(n log(n))$, con lo que se cumple el requerimiento de encontrar una solucion en tiempo menor a $O(n^2)$
 
+\subsection{Pruebas}
+No distinguimos casos particulares que sean de inter\'es espec\'ifico en analizar, pues nuestra implementaci\'on depende de la implementaci\'on del algoritmo de sort de la STD, y se asegura que este no presenta casos patol\'ogicos.
+Por otra parte, a priori podr\'ia parecer \'util analizar casos como aquellos en los que se encuentran  uno o m\'as bloques de maquinas con los mismos tiempos de produccion, o probar distintas relaciones entre los tiempos de carga y producci\'on. Sin embargo, estos detalles no son tenidos en cuenta en el algoritmo en s\'i, por lo que utilizarlos para separar familias de pruebas resulta superfluo.
+Dicho esto, presentamos un gr\'afico donde se muestra como en la pr\'actica el algoritmo se ajusta a la la complejidad predicha.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{ej1-Test1.png}
+	\caption{ }
+\end{figure}
+
+
 \subsection{Conclusiones}
+En este ejercicio observamos como un problema, luego de ser analizado con un poco de detenimiento, puede convertirse en una instancia de otro problema para el cual pueden ya existir algoritmos satisfactorios. En ese caso, todo el proceso psoterior de implementaci\'on y an\'alisis se simplifica.
