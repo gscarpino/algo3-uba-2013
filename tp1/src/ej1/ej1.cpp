@@ -6,32 +6,77 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
+#include <time.h>
 
-//typedef vector<unsigned int> vec;
+#define TIEMPOS
 
 using namespace std;
+timespec diff(timespec start, timespec end);
 
 string mostrarVecInt(const vector<int> &x);
 void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out_i, int &out_tiempo);
 int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &orden);
 
+void crearTest(int n){
+        cout << "Creando tests..." << endl;
+        ofstream archTesting("test.txt");
+
+        if(archTesting.is_open()){
+            srand(time(NULL));
+            for(int i = 1; i <= n ; i++){
+                  archTesting << i << "\n";
+                  for(int j= 0; j < i; j++){
+                     int tiempo = 1 + rand() %200;
+                     archTesting  << tiempo << " ";
+                  }
+                  archTesting << endl;
+                  for(int j= 0; j < i; j++){
+                     int tiempo = 1 + rand() %200;
+                     archTesting  << tiempo << " ";
+                  }
+                  archTesting << endl;
+            }
+        archTesting << "#";
+        archTesting.close();
+
+        cout << "Tests creados." << endl;
+      }
+}
+
 int main(int argc, char *argv[]) {
 
     if(argc <= 1) {
-      cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
+      cout << "Modo de uso: ej1 archivoEntrada archivoSalida" << endl;
+#ifdef TIEMPOS
+      cout << "Para crear archivo de prueba: ej1 n, donde n es la cantidad de casos (casos de 1 a n maquinas con tiempos aleatorios).";
+#endif
       return 0;
     }
 
+#ifdef TIEMPOS
+    if(argc == 2) {
+      crearTest(atoi(argv[1]));
+      return 0;
+    }
+#endif
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
+        return -1;
     }
 
     ofstream outputFile(argv[2],  ios_base::trunc);
     if(!outputFile.is_open()){
         cerr << "Error al abrir/crear el archivo de salida." << endl;
+         return -1;
     }
 
+#ifdef TIEMPOS
+      ofstream timeFile(string(argv[1]) + "_tiempos", ios_base::trunc);
+       if(!timeFile.is_open()){
+           cerr << "Error al abrir el archivo de registro de tiempos." << endl;
+       };
+#endif
    string linea;
    int tiempoMinimo;
 
@@ -64,11 +109,27 @@ int main(int argc, char *argv[]) {
             c[i] = n;
         }
 
-        cout << "Tiempo de produccion          : " << mostrarVecInt(p) << endl;
-        cout << "Tiempo de carga de combustible: " << mostrarVecInt(c) << endl;
+       // cout << "Tiempo de produccion          : " << mostrarVecInt(p) << endl;
+       // cout << "Tiempo de carga de combustible: " << mostrarVecInt(c) << endl;
+
+#ifdef TIEMPOS
+      timespec comienzo;
+      timespec terminacion;
+      long tiempo = 0;
+      for(int t = 0; t < 1000; t++){
+         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+#endif
 
         resolver(p,c, orden, tiempoMinimo);
 
+#ifdef TIEMPOS
+         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+         tiempo += diff(comienzo,terminacion).tv_nsec;
+      }
+      tiempo = tiempo / 1000;
+      timeFile << cant << " " << tiempo << endl;
+
+#endif
 
         for(auto maquina : orden)
             outputFile << maquina << " ";
@@ -78,6 +139,10 @@ int main(int argc, char *argv[]) {
 
    inputFile.close();
    outputFile.close();
+
+#ifdef TIEMPOS
+   timeFile.close();
+#endif
    cout << endl << "Termino" << endl;
 	return 0;
 }
@@ -120,14 +185,32 @@ void resolver(const vector<int> &in_p, const vector<int> &in_c, vector<int> &out
 
 
 int calcTiempo(const vector<int> &p, const vector<int> &c, const vector<int> &orden){
-    int res = 0, inicio = 0, fin = 0;
-    vector<int> terminacion(orden.size());
+    int res = 0, inicio = 0, t_i = 0;
 
     for(int i : orden){
-        fin = inicio + c[i] + p[i];
+        t_i = inicio + c[i] + p[i];
+        if(res < t_i) res = t_i;
         inicio = inicio + c[i];
-        if(res < fin) res = fin;
     }
-    cout << "Tiempo: " << res << endl;
+
+    //cout << "Tiempo: " << res << endl;
     return res;
 }
+
+//********** TESTING *********
+
+timespec diff(timespec start, timespec end)
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
+}
+
+//********** TESTING *********
+
