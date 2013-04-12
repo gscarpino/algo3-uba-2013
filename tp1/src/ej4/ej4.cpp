@@ -232,9 +232,9 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
         vector<Posicion> posiciones;
 
         posiciones = tablero.posiblesPosiciones(sigPieza);
-        for(auto p : posiciones){
+        for(int i = 0; i < posiciones.size(); i++){
             Tablero nuevoTablero(tablero);
-            nuevoTablero.ubicarFicha(sigPieza,0,p);
+            nuevoTablero.ubicarFicha(sigPieza,0,posiciones[i]);
             res = resolverJuego(piezas,nuevoTablero,sol);
             if(res) break;
         }
@@ -245,26 +245,26 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             Pieza sigPieza3 = sigPieza2.rotar();
             Pieza sigPieza4 = sigPieza3.rotar();
             posiciones = tablero.posiblesPosiciones(sigPieza2);
-            for(auto p : posiciones){
+            for(int i = 0; i < posiciones.size(); i++){
                 Tablero nuevoTablero(tablero);
-                nuevoTablero.ubicarFicha(sigPieza2,1,p);
+                nuevoTablero.ubicarFicha(sigPieza2,1,posiciones[i]);
                 res = resolverJuego(piezas,nuevoTablero,sol);
                 if(res) break;
             }
             if(!res){
                 posiciones = tablero.posiblesPosiciones(sigPieza3);
-                for(auto p : posiciones){
+                for(int i = 0; i < posiciones.size(); i++){
                     Tablero nuevoTablero(tablero);
-                    nuevoTablero.ubicarFicha(sigPieza3,2,p);
+                    nuevoTablero.ubicarFicha(sigPieza3,2,posiciones[i]);
                     res = resolverJuego(piezas,nuevoTablero,sol);
                     if(res) break;
                 }
             }
             if(!res){
                 posiciones = tablero.posiblesPosiciones(sigPieza4);
-                for(auto p : posiciones){
+                for(int i = 0; i < posiciones.size(); i++){
                     Tablero nuevoTablero(tablero);
-                    nuevoTablero.ubicarFicha(sigPieza4,3,p);
+                    nuevoTablero.ubicarFicha(sigPieza4,3,posiciones[i]);
                     res = resolverJuego(piezas,nuevoTablero,sol);
                     if(res) break;
                 }
