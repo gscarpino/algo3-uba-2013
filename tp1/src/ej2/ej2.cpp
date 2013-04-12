@@ -204,21 +204,24 @@ int main(int argc, char *argv[]) {
             i++;
         }
 
-        tiempo comienzo;
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
-        make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
+        if(medDefectuosa >= sensores.size()){
 
-//        cout << endl << "Inicio:" << endl;
-//        mostrarVecIntTupla(tiemposHeap);
-        while(medicion < medDefectuosa){            // k - n iteraciones
-            proximoHeap = proxSensorHeap(tiemposHeap,sensores);
-//            cout << endl << endl << "Medicion " << medicion << ":" << endl;
-//            mostrarVecIntTupla(tiemposHeap);
-            medicionesHeap.push_back(proximoHeap + 1);
-            medicion++;
+//            tiempo comienzo;
+    //        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+            make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
+
+    //        cout << endl << "Inicio:" << endl;
+    //        mostrarVecIntTupla(tiemposHeap);
+            while(medicion < medDefectuosa){            // k - n iteraciones
+                proximoHeap = proxSensorHeap(tiemposHeap,sensores);
+    //            cout << endl << endl << "Medicion " << medicion << ":" << endl;
+    //            mostrarVecIntTupla(tiemposHeap);
+                medicionesHeap.push_back(proximoHeap + 1);
+                medicion++;
+            }
         }
-        tiempo terminacion;
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+//        tiempo terminacion;
+//        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
 
 //        cout << endl << "Sol 1: ";
 //        mostrarVecInt(mediciones);
@@ -228,7 +231,7 @@ int main(int argc, char *argv[]) {
 //        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
         cout << "Corrida " << corrida << endl;
         if(RESULTADOS){
-            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
+//            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
         }
         else{
             archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;

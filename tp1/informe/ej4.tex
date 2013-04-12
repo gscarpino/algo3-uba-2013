@@ -1,9 +1,115 @@
-\section{Problema 1}
+\section{Problema 4: Puzzle de casilleros}
 
 \subsection{Introducci\'on}
 
+\quad Para este tipo de problemas, se suele usar la t\'ecnica de \textit{backtracking}. No se conocen algoritmos polinomiales para resolver el problema. Tambi\'en se podr\'ia resolver con fuerza bruta pero la ventaja de esta t\'ecnica es que se busca armar e ir probando posibles soluciones. A medida de que se van construyendo, se puede determinar ciertos casos que no son posible soluci\'on, por lo que no se intentar\'ia resolver el problema en esos casos evitando ejecuciones innecesarias. En el peor caso, \textit{backtracking} es igual a intentar resolver por fuerza bruta.
+\quad Se nos pide encontrar, si existe, alguno de los menores subconjuntos de piezas de tal forma que cubran todo el tablero. 
+
 \subsection{Desarrollo}
+
+\quad Este ejercicio no es un problema solo. Para empezar, nos topamos con el problema de dado un conjunto armar todos los subconjuntos posibles. Se conoce como \textit{power set}. La complejidad de este problema es exponencial.
+
+\quad Reducimos el problema a generar todos los subconjuntos posibles de un tama\~no determinado. Para eso, vamos tomando todos los n\'umeros enteros (uno por vez) del 1 hasta 2 elevado a la cantidad de piezas. Definimos este l\'imite superior debido a que vamos a usar la representaci\'on binaria de los n\'umeros. Cada d\'igito binario representa si est\'a o no el \'indice del n\'umero pasado a binario en el conjunto. Nos quedamos con aquellos conjuntos donde la suma de sus d\'igitos binarios es igual al taman\~o deseado.
+
+
+\quad
+
+
+\textbf{Ejemplo:} Sea un conjunto de 3 nodos: $ \lbrace 0 , 1 , 2 \rbrace $
+
+\quad se usa una variable, en este caso \textit{valor}, que va a ir\'ia desde 1 a $ 2^3 - 1$
+
+\begin{itemize}
+\item valor = 1:
+
+\quad \quad $(valor)_{2} = 001$
+
+\quad \quad conjunto =$ \lbrace 0 \rbrace $
+
+\item valor = 2:
+
+\quad \quad $(valor)_{2} = 010$
+
+\quad \quad conjunto =$ \lbrace 1 \rbrace $
+
+\item valor = 3:
+
+\quad \quad $(valor)_{2} = 011$
+
+\quad \quad conjunto = $\lbrace 0 , 1 \rbrace$ 
+
+\item valor = 4:
+
+\quad \quad $(valor)_{2} = 100$
+
+\quad \quad conjunto = $\lbrace 2 \rbrace $
+
+\item valor = 5:
+
+\quad \quad $(valor)_{2} = 101$
+
+\quad \quad conjunto = $\lbrace 0 , 2 \rbrace $
+
+\item valor = 6:
+
+\quad \quad $(valor)_{2} = 110$
+
+\quad \quad conjunto =$ \lbrace 1 , 2 \rbrace $
+
+\item valor = 7:
+
+\quad \quad $(valor)_{2} = 111$
+
+\quad \quad conjunto =$ \lbrace 0 , 1 , 2 \rbrace $
+
+\end{itemize}
+
+\quad Para k = 2, los conjuntos parciales ser\'ian:
+
+\quad \quad \quad $\lbrace 0 , 1 \rbrace $ con valor = 3 = (011)$_2$
+
+\quad \quad \quad $\lbrace 1 , 2 \rbrace $ con valor = 6 = (110)$_2$
+
+\quad \quad \quad $\lbrace 0 , 2 \rbrace $ con valor = 5 = (101)$_2$
+
+
+\quad
+
+
+\quad Es muy importante tener en cuenta, que para poder utilizar este m\'etodo es necesario tener identificado los elementos del conjunto desde 0 hasta $(n-1)$, donde $n$ es la cantidad del conjunto.
+
+\quad Para resolver el problema principal, lo que hicimos fue ir probando cada uno de los subconjuntos con tama\~no desde 1 hasta la cantidad de piezas. Como punto de corte razonable, es haber encontrado alg\'un subconjunto como soluci\'on.
+
+\quad Para determinar si cierto subconjunto de piezas es soluci\'on, primero determinamos una poda. Esta consiste en que, al buscar una soluci\'on \'optima, el subconjunto de piezas deb\'ia de cubrir exactamente el tablero. Si la superficie de las fichas era menor al del tablero, entonces no era soluci\'on. En cambio, si era mayor, podr\'ia ser soluci\'on, pero si lo era, no era \'optima porque sobraba alguna pieza. 
+
+\quad Luego implementamos una funci\'on recursiva en la cual para cada ficha se buscaba sus posibles posiciones en el tablero. Para cada posici\'on, se creaba una instancia del tablero en la cual se la ubicaba ah\'i. Luego se llamaba devuelta a la funci\'on con ese tablero y sin esa pieza.
+
+\quad El caso base de la funci\'on es cuando no quedan m\'as piezas para ubicar. Entonces se fija en el tablero si est\'a completamente cubierto, en caso afirmativo, se encontr\'o una soluci\'on al problema.
+
+\quad La funci\'on tiene en cuenta las rotaciones de las piezas. Por lo que si no se encontr\'on soluci\'on, se rota la pieza. Si es id\'entica a la original, se corta esa rama. Caso contrario, se busca todas las posibles posiciones para esa pieza rotada, y se repite lo anterior.
+
+\quad Una vez que se encuentra soluci\'on, si existe, se devuelve el vector con la informaci\'on de las piezas colocadas en el tablero. \'Este vector, lo maneja la clase \textit{Tablero} que hicimos, al cual agrega una pieza cada vez que es posible ubicarla en el tablero.
+
+\quad En todo momento del desarrollo tuvimos que tener en cuenta generar todas las podas posibles para evitar ejecuciones innecesarias debido al tipo de problema.
+
+\quad Creamos las clases \textit{Tablero} y \textit{Pieza} para que cada se encargue de las funciones que les competen propiamente a dicha abstracci\'on. 
+
+\quad En la clase \textit{Tablero}, podemos crear un tablero con el tama\~no deseado, obtener las posibles posiciones de una pieza, si encaja la pieza en cierta posici\'on, si est\'a completo o no. Si cierto conjutno de piezas puede llegar a cubrir todo el tablero, obtener las piezas ubicadas, etc.
+
+\quad En la clase \textit{Pieza}, podemos crear una pieza de cierto tama\~no, rotarla, etc.
+
+\quad Utilizamos top-down y clases porque nos pareci\'o la mejor forma de organizar el programa para resolver el ejercicio, al hacer m\'as prolijo el c\'odigo y \textit{tirar} los problemas del tablero a su clase y el de la pieza a la misma.
+
+\subsubsection{Correctitud}
+
+\quad En cuanto la problema de la generaci\'on de todos los subconjuntos posibles de un conjunto, utilizamos un m\'etodo que dada la representaci\'on binaria
+
+-funcion que calcula superficie es poda  pero deja casos no posibles, aclarar
 
 \subsubsection{An\'alisis de complejidad}
 
+
+
 \subsection{Conclusiones}
+
+\quad Posibles mejoras: busqueda binaria dependiendo estudio de la entrada
