@@ -40,6 +40,7 @@
 \subsection{Algoritmo} 
 
 \indent Queremos hacer un par de aclaraciones: $n$, $b$ y $h$ son de tipo $int$ y representan la cantidad de puntos, la base de la caja y la altura de la caja respectivamente. A su vez, puntosX contiene en la posici\'on $i$ la coordenada $x$ del i-\'esimo punto de la entrada. An\'alogamente, puntosY contiene en la posici\'on $i$ la coordenada $y$ del i-\'esimo punto de la entrada. Por lo tanto, la longitud de ambos vectores es $n$, la cantidad de puntos en el plano.\\
+\indent Adem\'as queremos mencionar que, en caso de existir m\'as de una soluci\'on \'optima, la soluci\'on que devuelve el algoritmo est\'a fuertemente influenciada por el orden en el que se pasaron los puntos por la entrada. De esta manera se pueden pasar por entrada dos instancias iguales, con la \'unica diferencia del orden en el que se pasan los puntos, y el algoritmo devovlver dos soluciones distintas en cada instancia, siendo sin embargo las dos \'optimas.\\
 \indent El algoritmo recorre los candidatos a soluci\'on que cumplen que su coordenada $x$ coincide con la de alg\'un punto del sistema y que su coordenada $y$ coincide con la de alg\'un punto del sistema (que puede no ser el mismo que el de la coordenada $x$).\\
 \indent Esto se basa en el hecho de que en dicho conjunto de puntos seguro existe por lo menos una soluci\'on \'optima. Se provee la demostraci\'on de esta afirmaci\'on en la secci\'on Correctitud de este problema.\\
 
@@ -200,8 +201,42 @@ con lo cual tiene una complejidad temporal \textbf{O}(n), es decir lineal en la 
 con lo cual tiene un complejidad temporal de \textbf{O}($n^3$), es decir c\'ubica en la cantidad de puntos, cumpliendo entonces con la cota que se nos exigía en el enunciado del problema.\\
 
 
-\subsection{Pruebas}
+\subsection{Pruebas y Resultados}
+
+\indente Primero queremos realizar una aclaraci\'on. Por la manera en que implementamos el algoritmo, no es esperable un caso patol\'ogico. Esto es porque el algoritmo siempre itera en las $n^2$ combinaciones posibles que se obtienen de las componentes $x$ e $y$ de todos los puntos. Quiz\'a es oportuno mencionar que esto se podr\'ia optimizar generando un vector de combinaciones y quitando los elementos repetidos. En este caso, si para todo par de puntos de la entrada vale que tienen coordenadas $x$ e $y$ distintas, ese vector de combinaciones ser\'ia de tamaño $n^$.\\
+\indent Se realizaron casos de prueba de manera aleatoria. El programa permite la creaci\'on se estos casos de prueba si as\'i lo quisiese el usuario.  En particular, se crearon tres archivos de entrada generados de manera aleatoria que se pueden encontrar en la misma carpeta que el c\'odigo fuente. Cada uno de estos archivos contempla casos que contienen desde un punto hasta doscientos. A partir de estos tres archivos, y utilizando la funci\'on $get_clocktime()$, se lograron obtener los tiempos de ejecuci\'on para cada eso. Con estos datos se confeccionaron los siguientes gr\'aficos que relacionan el tiempo de ejecuci\'on del algoritmo con la cantidad de puntos en el plano:\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-test1.png}
+	\caption{Gr\'afico de tiempo de ejecuci\'on en funci\'on de la cantidad de puntos para el archivo de entrada $testingAzar1.txt$ comparada con la cota te\'orica O($n^3$) }
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-test2.png}
+	\caption{ Gr\'afico de tiempo de ejecuci\'on en funci\'on de la cantidad de puntos para el archivo de entrada $testingAzar2.txt$ comparada con la cota te\'orica O($n^3$)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-test3.png}
+	\caption{ Gr\'afico de tiempo de ejecuci\'on en funci\'on de la cantidad de puntos para el archivo de entrada $testingAzar3.txt$ comparada con la cota te\'orica O($n^3$)}
+\end{figure}
+
+\indent De estos gr\'aficos se puede extraer que los tres casos aleatorios parecen cumplir con la cota te\'orica c\'ubica que hab\'iamos conjeturado. Es decir que a partir de alg\'un valor de $n$ todos las mediciones de tiempo se ajustan de la curva $C*n^3$ que representa a la cota te\'orica.\\
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-compTestAzarEj3.png}
+	\caption{ Gr\'afico de comparativo del tiempo de ejecuci\'on en funci\'on de la cantidad de puntos para los archivos de entrada $testingAzar1.txt$ y $testingAzar2.txt$ comparada con la cota te\'orica O($n^3$)}
+\end{figure}
+
+\indent Este gr\'afico expone que fijado un $n$ los tiempos de ejecuci\'on para dos instancias del problema parecen comportarse en cuanto a tiempo de ejecuci\'on de maneras similares. No se provey\'o un gr\'afico que comparase los tres archivos de entradas aleatorias en favor de la visualizaci\'on del gr'afico.\\
 
 \subsection{Conclusiones}
+
+\indent Se concluye que el algoritmo parece responder de la forma esperada en cuanto a performance temporal se refiere, cumpliendo con la cota te\'orica \textbf{O}($n^3$). Además, a trav\'es de los casos de testing estudiados, se deduce que fijada una cantidad de puntos $n$ dos intancias con dicho valor de $n$ se ejecutan en tiempos similares.\\ 
 
 
