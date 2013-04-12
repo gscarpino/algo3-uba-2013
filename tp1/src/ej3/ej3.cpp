@@ -6,15 +6,16 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
+//#include <time.h>
 
-#define TESTING_AZAR 1
+//#define TESTING_AZAR 1
 
 using namespace std;
 
 int cuantosEntran(int n,int b, int h, int x, int y, const vector<int> &ptosx, const vector<int> &ptosy);
 void resolver(const int &n, const int &b, const int &h, const vector<int> &x, const vector<int> &y, int &resx, int &resy, int &ptos);
 bool estarep(const vector<int> &ptosx, const vector<int> &ptosy, int x, int y, int r);
-
+//timespec diff(timespec start, timespec end);
 
 
 int main(int argc, char *argv[]) {
@@ -35,16 +36,23 @@ int main(int argc, char *argv[]) {
     }
 
    string linea;
-   int tiempoMinimo;
-
+   char testear;
+   int cantidad;		
 
    cout << "Algoritmos y Estructuras de Datos III - 2013 C1" << endl << "TP1 - Ejercicio 3: La caja en el plano" << endl << endl;
 
+	cout<<"Desea crear casos de test aleatorios? y / n "<<endl;
+	
+	cin>>testear;
+		
 
+	
 
-	if(TESTING_AZAR){
-        cout << "Creando tests..." << endl;
-        int cantidad = 100;
+	if(testear=='y'){
+
+	cout<<"Cuantos casos desea crear? Nota: se crearan casos desde 1 hasta el entero que introduzca"<<endl;
+        cin>>cantidad;
+	cout << "Creando tests..." << endl;	
 	int base=0;
 	int altura=0;
 	vector<int> testx(cantidad);
@@ -102,7 +110,8 @@ int main(int argc, char *argv[]) {
 
 
     while(!inputFile.eof()){                  
-        getline(inputFile, linea);
+	     
+	getline(inputFile, linea);
         
         if(linea == "#"){
 		        getline(inputFile, linea);	        
@@ -157,13 +166,23 @@ int main(int argc, char *argv[]) {
             int resCajax;
             int resCajay;
             int resPtos;
+	   
+	
+	  //  timespec time1, time2;
+
+	  //  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
 
             resolver(cantPtos,  base,   altura,   puntosx,   puntosy, resCajax,  resCajay,  resPtos);
-
+	
+	  // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
+	
+	  // cout<<cantPtos<<" "<<diff(time1,time2).tv_sec<<"."<<diff(time1,time2).tv_nsec<<endl;
             outputFile<<resCajax<<" "<<resCajay<<" "<<resPtos<<endl;
          
 
         } 
+	
+	
     } 
 
 	cout<<"Fin del Programa"<<endl;
@@ -242,3 +261,16 @@ bool estarep(const vector<int> &ptosx, const vector<int> &ptosy, int x, int y, i
 	}
 	return esta;
 }
+
+/*timespec diff(timespec start, timespec end)  //AUTOR = http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
+}*/
