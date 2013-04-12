@@ -23,11 +23,13 @@
 
 \quad Cuando la secuencia alcanza el tama\~no igual al n\'umero de medici\'on que fall\'o, terminamos y el resultado es la \'ultima posici\'on de esa secuencia.
 
-
+\quad
 
 \textbf{Aclaraci\'on:} en la implementaci\'on del diccionario se usa directamente un min-Heap. M\'as adelante se explica el motivo de tal decisi\'on.
 
 
+
+\quad
 
 
 \textbf{Pseudoc\'odigo:}
@@ -49,24 +51,36 @@
 \end{algorithm}
 
 
+\quad
+
 
 \textbf{Donde}
 
 
 \quad \quad \quad medDefectuosa es el n\'umero de medici\'on que falla.
 
+\quad
+
 
 \quad \quad \quad diccTiempos es el diccionario que para cada sensor guarda el tiempo de su pr\'oxima medici\'on.
+
+\quad
 
 
 \quad \quad \quad sensores es el conjunto de sensores.
 
 
+\quad
+
 \quad \quad \quad medicion es el n\'umero de medici\'on parcial. Como al inicio hubo la cantidad de sensores, se inicializa con esa cantidad.
 
 
+\quad
+
 \quad \quad \quad mediciones es la secuencia de mediciones con los ids de los sensores.
 
+
+\quad
 
 \quad \quad \quad proxSensor es la funcion que devuelve el id del m\'inimo de los tiempos que est\'an presentes en el diccionario, y adem\'as actualiza el tiempo para la pr\'oxima medici\'on.
 
@@ -74,6 +88,10 @@
 \subsubsection{Correctitud}
 
 \quad En alguna instancia del problema, si tuvi\'eramos la siguiente tabla con los momentos $ t_i $ para la siguiente medici\'on de cada sensor $ s_i $ con \quad  $ (1 \leq i \leq n)$ \quad donde n es la cantidad total de sensores:
+
+
+\quad
+
 
 \begin{tabular}{| c | c | c | c | c |}
 \hline
@@ -86,6 +104,8 @@ $ t_1 $ & $ t_2 $ & ... & $ t_{n-1} $ & $ t_n $\\
 
 
 
+\quad
+
 
 \quad determinar el siguiente sensor que le toca realizar su medici\'on, ser\'ia elegir el de menor t. Caso contrario, se estar\'ia eligiendo un sensor con tiempo mayor, por lo que har\'ia una medici\'on anterior cuando en realidad le corresponder\'ia a un sensor con menos tiempo, generando una incongruencia en el orden de mediciones.
 
@@ -93,7 +113,15 @@ $ t_1 $ & $ t_2 $ & ... & $ t_{n-1} $ & $ t_n $\\
 
 \quad En el instante inicial, el diccionario contendr\'a los tiempos de intervalos de medici\'on ya que todos midieron de entrada. Para el primero, elegimos el m\'inimo de esos tiempos. Una vez que sabemos el id, lo agregamos a la secuencia de mediciones, y redefinimos en el diccionario su tiempo de la siguiente forma:
 
+
+\quad
+
+
 $ t'_{i} = t_{i} + intervalo(s_1) $
+
+
+\quad
+
 
 \quad es decir, que al tiempo que ya figuraba en el diccionario, se le agrega el tiempo de intervalo para determinar el tiempo de su pr\'oxima medici\'on. Por lo que, en cada paso donde se elige el sensor que mide, se actualiza el diccionario. De esta forma, se mantiene la correctitud del significado del diccionario una vez elegido el pr\'oximo sensor a medir.
 
@@ -117,12 +145,50 @@ $ t'_{i} = t_{i} + intervalo(s_1) $
 \quad Por lo tanto, la complejidad total del algoritmo termina siendo:
 
 
+\quad
+
+
 $ \displaystyle\sum_{i = k}^{n} log n = (k - n) * log n \leq k * n$
+
+
+\quad
+
 
 \quad Termina siendo estrictamente menor a O($ k*n $) como se ped\'ia en la consigna.
 
+
+\quad
+
+
 \subsection{Resultados}
 
+\quad Para analizar el comportamiento del nuestro algoritmo, decidimos generar un test aleatorio donde se va variando la cantidad de sensores. En el mismo nos queda una gr\'fica:
+
+
+\quad
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{ej2.jpg}
+	\caption{ Se compara el tiempo que tard\'o en promedio en obtener un resultado contra el tiempo te\'orico del peor caso}
+\end{figure}
+
+
+
+\quad Armamos el test de la siguiente manera. Vamos a hacer instancias que vayan de 10 sensores a 100 y por cada cantidad de sensores realizamos 1000 repeticiones. Decidimos que la falla se produzca en la medici\'on: \quad $20 * n + r $. Donde n es la cantidad de sensores y r un valor aleatorio entre 1 y n.
+
+\quad Para cada ejecuci\'on guardamos el tiempo que tard\'o usando la funci\'on \textit{clockgettime}
 
 
 \subsection{Conclusiones}
+
+\quad Como era de esperar, los resultados mostraron que el tiempo de ejecuci\'on es asint\'oticamente menor al tiempo te\'orico calculado para el peor caso. Siendo ese tiempo, menor al pedido por la consigna del trabajo pr\'actico.
+
+\quad
+
+\quad Analizar bien las posibles estructuras de datos a utilizar fue fundamental para volver m\'as eficiente el algoritmo. El problema de obtener en cada instante el m\'inimo de un conjunto de valores utilizando un minHeap logr\'o bajar la complejidad lineal a logar\'itmica.
+
+\quad
+
+\quad Luego, tambi\'en era necesario considerar la parte del problema en que todos los sensores realizan una medici\'on en el momento inicial. Lo que permite realizar n iteraciones menos de nuestro algoritmo, donde n es la cantidad de sensores.

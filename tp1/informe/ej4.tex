@@ -2,14 +2,14 @@
 
 \subsection{Introducci\'on}
 
-\quad Para este tipo de problemas, se suele usar la t\'ecnica de \textit{backtracking}. No se conocen algoritmos polinomiales para resolver el problema. Tambi\'en se podr\'ia resolver con fuerza bruta pero la ventaja de esta t\'ecnica es que se busca armar e ir probando posibles soluciones. A medida de que se van construyendo, se puede determinar ciertos casos que no son posible soluci\'on, por lo que no se intentar\'ia resolver el problema en esos casos evitando ejecuciones innecesarias. En el peor caso, \textit{backtracking} es igual a intentar resolver por fuerza bruta.
-\quad Se nos pide encontrar, si existe, alguno de los menores subconjuntos de piezas de tal forma que cubran todo el tablero. 
+\quad Para este tipo de problemas, se suele usar la t\'ecnica de \textit{backtracking}. No se conocen algoritmos polinomiales para resolver el problema. Tambi\'en se podr\'ia resolver con fuerza bruta pero la ventaja de esta t\'ecnica es que se busca armar e ir probando posibles soluciones. A medida de que se van construyendo, se puede determinar ciertos casos que no son posible soluci\'on, por lo que no se intentar\'ia resolver el problema en esos casos evitando ejecuciones innecesarias. En el peor caso, \textit{backtracking} es igual a intentar resolverlo por fuerza bruta.
+\quad Se nos pide encontrar, si existe, alguno de los menores subconjuntos de piezas de tal forma que cubran todo el tablero. Donde cada casillero del tablero es de color negro o blanco, y cada pieza de forma rectangular, posee casilleros de los mismos colores. La pieza para poder ubicarse en cierta posici\'on del tablero tiene que coincidir exactamente en el tablero y se la puede rotar. 
 
 \subsection{Desarrollo}
 
-\quad Este ejercicio no es un problema solo. Para empezar, nos topamos con el problema de dado un conjunto armar todos los subconjuntos posibles. Se conoce como \textit{power set}. La complejidad de este problema es exponencial.
+\quad Este ejercicio contiene varios problemas. Para empezar, nos encontramos con el requerimiento de dado un conjunto armar todos los subconjuntos posibles. Se conoce como \textit{power set}. La complejidad de este problema es exponencial, no se conocen algoritmos polinomiales hasta el momento.
 
-\quad Reducimos el problema a generar todos los subconjuntos posibles de un tama\~no determinado. Para eso, vamos tomando todos los n\'umeros enteros (uno por vez) del 1 hasta 2 elevado a la cantidad de piezas. Definimos este l\'imite superior debido a que vamos a usar la representaci\'on binaria de los n\'umeros. Cada d\'igito binario representa si est\'a o no el \'indice del n\'umero pasado a binario en el conjunto. Nos quedamos con aquellos conjuntos donde la suma de sus d\'igitos binarios es igual al taman\~o deseado.
+\quad Reducimos el problema a generar todos los subconjuntos posibles de un tama\~no determinado. Para eso, vamos tomando todos los n\'umeros enteros (uno por vez) del 1 hasta 2 elevado a la cantidad de piezas. Definimos este l\'imite superior debido a que vamos a usar la representaci\'on binaria de los n\'umeros de ese rango. Cada d\'igito binario, representa si est\'a o no presente en el conjunto, el \'indice del n\'umero que se est\'a mirando en el momento. Nos quedamos con aquellos conjuntos donde la suma de sus d\'igitos binarios es igual al taman\~o deseado.
 
 
 \quad
@@ -98,18 +98,42 @@
 
 \quad En la clase \textit{Pieza}, podemos crear una pieza de cierto tama\~no, rotarla, etc.
 
-\quad Utilizamos top-down y clases porque nos pareci\'o la mejor forma de organizar el programa para resolver el ejercicio, al hacer m\'as prolijo el c\'odigo y \textit{tirar} los problemas del tablero a su clase y el de la pieza a la misma.
+\quad Utilizamos top-down y clases porque nos pareci\'o la mejor forma de organizar el programa para resolver el ejercicio. Haciendo m\'as prolijo el c\'odigo y \textit{tirar} los problemas del tablero se encarga su clase y el de la pieza el de ella misma.
+
+
 
 \subsubsection{Correctitud}
 
-\quad En cuanto la problema de la generaci\'on de todos los subconjuntos posibles de un conjunto, utilizamos un m\'etodo que dada la representaci\'on binaria
-
--funcion que calcula superficie es poda  pero deja casos no posibles, aclarar
+\quad En cuanto la problema de la generaci\'on de todos los subconjuntos posibles de un conjunto, utilizamos un m\'etodo que dada la representaci\'on binaria de un n\'umero los elementos presentes en un conjunto son aquellos donde la posici\'on es igual al id del elemento y el bit est\'a en 1, es decir, es un elemento presente. Como se recorre desde el valor 1 hasta $ 2^{n} $ (n es cantidad de elementos), se recorre todas las posibles  combinaciones de elementos presentes y no presentes. Si bien esta forma sigue siendo un algoritmo exponencial, creemos que es m\'as eficiente que haber hecho una funci\'on recursiva que genere todos estos conjuntos.
 
 \subsubsection{An\'alisis de complejidad}
 
+Las funciones que utlizamos del tablero son:
 
+\begin{itemize}
+
+\item \textbf{getColor:} dada una posici\'on del tablero, devuelve el color, negro o blanco. Tiene un costo O(1) debido a que solo tiene que devolver un valor accediendo a una posici\'on de una matriz.
+
+\item \textbf{posiblesPosiciones:} recorre todo el tablero, fij\'andose en cada posici\'on, si es posible ubicar la pieza ah\'i. Para esto llama a la funci\'on encaja. Guarda en un vector resultado las posiciones posibles de ubicar la pieza. La complejidad termina siendo la cantidad de posiciones del tablero (filas por columnas) iteraciones de la funci\'on encaja: O(filas * columnas * filasPieza * columnasPieza)
+
+\item \textbf{encaja:} dada una pieza y una posici\'on, devuelve verdadero si es posible ubicar esa pieza en la posici\'on pasada por par\'ametro. Para esto, recorre toda la superficie de la pieza, por lo que cuesta O(filasPieza * columnasPieza)
+
+\item \textbf{ocupado:} dada una posici\'on, devuelve si ya está ocupada por una pieza o no. Se tiene que acceder a una matriz, por lo que cuesta O(1).
+
+\item \textbf{completo:} determina si el tablero est\'a totalmente cubierto por piezas. Para ello, tiene que recorrer todas las posiciones y llamar a la funci\'on ocupado. Tiene coste O(filas * columnas)
+
+\item \textbf{ubicarFicha:} dada una pieza y una posici\'on modifica la instancia de tablero, seteando las posiciones correspondientes para considerarlas ocupadas. Adema\'a, guarda en un vector el id de la pieza, el grado de rotaci\'on de la misma, y la posici\'on del extremo superior izquierdo. Tiene un costo O(filasPieza * columnasPieza)
+
+\item \textbf{obtenerPiezas:} la clase tablero guarda un vector con las piezas ubicadas en el mismo. Esta funci\'on devuelve una copia de ese vector. Tiene costo O(n) donde n es la cantidad de piezas.
+
+\item \textbf{cubreTodo:} es una funci\'on para podar casos no posibles de ser soluci\'on como se explic\'o anteriormente. Calcula la superficie del tablero. Recorre todas las piezas, restando a la superficie del tablero la superficie de la pieza. Para cubrirlo exactamente tiene que quedar en 0. Caso contrario, se poda. Tiene un costo de O(n) donde n es la cantidad de piezas.
+
+\end{itemize}
 
 \subsection{Conclusiones}
 
-\quad Posibles mejoras: busqueda binaria dependiendo estudio de la entrada
+\quad Considerando posibles mejoras ser\'ia que en vez de buscar \textit{linealmente} cual es la menor cantidad de piezas necesarias, se podr\'ia utilizar una busqueda binaria. Con linealmente nos referimos en el sentido de que probamos con una pieza, luego dos, y así sucesivamente hasta probar con todas las piezas. En cambio, con b\'usqueda lineal, se prueba con la mitad de piezas, si es soluci\'on, entonces existe una soluci\'on menor o igual a esa. Por lo que se busca una nueva soluci\'on entre la 1era mitad en cantidad de piezas. Sino, entonces era necesario m\'as piezas y se busca en la 2da mitad en cantidad de piezas.
+
+\quad Hay que tener en cuenta que al ser un problema que no se resuelve polinomialmente, intentar resolver con un valor grande en cantidad de piezas puede demorar demasiado en comparaci\'on si se hubiese hecho b\'usqueda lineal. Si se pudiera hacer un estudio sobre las piezas y el tablero y se conociera una estad\'istica sobre la entrada del problema, se podr\'ia determinar casos donde conviene utlizar uno u otro.
+
+\quad Con este problema, pudimos notar la importancia de determinar buenas podas o puntos de corte para tratar de realizar un backtracking eficiente. De esta forma, se puede llegar a resolver problemas dif\'iciles much\'isimo m\'as eficiente que si se hubiese realizado fuerza bruta.
