@@ -9,8 +9,8 @@
 #include <algorithm>
 #include <time.h>
 
-#define TESTING_AZAR 1
-#define RESULTADOS 1
+#define TESTING_AZAR 0
+#define RESULTADOS 0
 
 using namespace std;
 
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej2 archivoEntrada archivoSalida";
       return 1;
     }
-    argv[1] = "testingAzar.txt";
+
     ifstream arch(argv[1]);
     if(!arch.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
             archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << diff(comienzo,terminacion).tv_nsec << ";" << endl;
         }
         else{
-            archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
+            archSalida << medicionesHeap[medDefectuosa-1] << endl;
         }
 
         corrida++;
