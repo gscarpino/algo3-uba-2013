@@ -9,8 +9,7 @@
 #include <algorithm>
 #include <time.h>
 
-#define TESTING_AZAR 0
-#define TESTING_PAREJO 0  //FALTA
+#define TESTING_AZAR 1
 #define RESULTADOS 1
 
 using namespace std;
@@ -112,37 +111,9 @@ int main(int argc, char *argv[]) {
         archTesting.close();
 
         cout << "Tests creados." << endl;
-        return 0;
+//        return 0;
     }
 
-    if(TESTING_PAREJO){
-        cout << "Creando tests..." << endl;
-        int maxSensores = 100;
-        int repeticiones = 1000;
-        int minSensores = 50;
-        int tiempo = 0;
-        int falla = 0;
-        ofstream archTesting("testingParejo.txt");
-        if(archTesting.is_open()){
-            srand(time(NULL));
-            for(int s = minSensores; s < maxSensores;s++){
-                for(int r = 0; r < repeticiones; r++){
-                    falla = s + rand() % 500 + 1;
-                    archTesting << s << " " << falla;
-                    for(int i = 0; i < s; i++){
-                        tiempo = 1 + rand() % 20;
-                        archTesting << " " << tiempo;
-                    }
-                    archTesting << "\n";
-                }
-            }
-        }
-        archTesting << "#";
-        archTesting.close();
-
-        cout << "Tests creados." << endl;
-        return 0;
-    }
 
 
     if(argc <= 1) {
@@ -203,11 +174,12 @@ int main(int argc, char *argv[]) {
             }
             i++;
         }
-
+        tiempo comienzo;
+        tiempo terminacion;
         if(medDefectuosa >= sensores.size()){
 
-//            tiempo comienzo;
-    //        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
             make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
 
     //        cout << endl << "Inicio:" << endl;
@@ -219,10 +191,9 @@ int main(int argc, char *argv[]) {
                 medicionesHeap.push_back(proximoHeap + 1);
                 medicion++;
             }
-        }
-//        tiempo terminacion;
-//        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
 
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+        }
 //        cout << endl << "Sol 1: ";
 //        mostrarVecInt(mediciones);
 
@@ -231,7 +202,7 @@ int main(int argc, char *argv[]) {
 //        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
         cout << "Corrida " << corrida << endl;
         if(RESULTADOS){
-//            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
+            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
         }
         else{
             archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
