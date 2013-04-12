@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
 //        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
         cout << "Corrida " << corrida << endl;
         if(RESULTADOS){
-            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo.tv_nsec,terminacion.tv_nsec) << ";" << endl;
+            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << diff(comienzo,terminacion).tv_nsec << ";" << endl;
         }
         else{
             archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
