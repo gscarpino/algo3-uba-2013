@@ -7,11 +7,35 @@
 #include <cstring>
 #include <ctime>
 #include <algorithm>
+#include <time.h>
 
-#define TESTING_AZAR 1
+#define TESTING_AZAR 0
 #define TESTING_PAREJO 0  //FALTA
+#define RESULTADOS 1
 
 using namespace std;
+
+//********** TESTING *********
+typedef struct timespec {
+	time_t tv_sec; /* seconds */
+	long tv_nsec; /* nanoseconds */
+} tiempo;
+
+timespec diff(timespec start, timespec end)
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
+}
+
+//********** TESTING *********
+
 
 
 void  mostrarVecInt(const vector<int> &x){
@@ -66,7 +90,7 @@ int main(int argc, char *argv[]) {
         cout << "Creando tests..." << endl;
         int maxSensores = 100;
         int repeticiones = 1000;
-        int minSensores = 50;
+        int minSensores = 10;
         int tiempo = 0;
         int falla = 0;
         ofstream archTesting("testingAzar.txt");
@@ -74,7 +98,7 @@ int main(int argc, char *argv[]) {
             srand(time(NULL));
             for(int s = minSensores; s < maxSensores;s++){
                 for(int r = 0; r < repeticiones; r++){
-                    falla = s + rand() % 500 + 1;
+                    falla = s * 20 + rand() % s + 1;
                     archTesting << s << " " << falla;
                     for(int i = 0; i < s; i++){
                         tiempo = 1 + rand() % 20;
@@ -125,7 +149,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej2 archivoEntrada archivoSalida";
       return 1;
     }
-
+    argv[1] = "testingAzar.txt";
     ifstream arch(argv[1]);
     if(!arch.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -137,6 +161,11 @@ int main(int argc, char *argv[]) {
     }
 
     string linea;
+    if(RESULTADOS){
+        archSalida.close();
+        archSalida.open("resultados.csv");
+        archSalida << "Sensores;Falla;Sensor;Tiempo;" << endl;
+    }
 
     unsigned int corrida = 1;
     while(!arch.eof()){
@@ -175,6 +204,8 @@ int main(int argc, char *argv[]) {
             i++;
         }
 
+        tiempo comienzo;
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
         make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
 
 //        cout << endl << "Inicio:" << endl;
@@ -186,7 +217,8 @@ int main(int argc, char *argv[]) {
             medicionesHeap.push_back(proximoHeap + 1);
             medicion++;
         }
-
+        tiempo terminacion;
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
 
 //        cout << endl << "Sol 1: ";
 //        mostrarVecInt(mediciones);
@@ -195,13 +227,20 @@ int main(int argc, char *argv[]) {
 //        mostrarVecInt(medicionesHeap);
 //        cout << endl << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
         cout << "Corrida " << corrida << endl;
-        archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
+        if(RESULTADOS){
+            archSalida << cant << ";" << medDefectuosa << ";" << medicionesHeap[medDefectuosa-1] << ";" << difftime(comienzo,terminacion).tv_nsec << ";" << endl;
+        }
+        else{
+            archSalida << "Sensor que fallo en la medicion " << medDefectuosa << ": " << medicionesHeap[medDefectuosa-1] << endl;
+        }
+
         corrida++;
 
     }
 
     cout << endl << "Termino" << endl;
     arch.close();
+    archSalida.close();
     return 0;
 }
 
