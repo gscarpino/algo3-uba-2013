@@ -15,7 +15,7 @@ using namespace std;
 int cuantosEntran(int n,int b, int h, int x, int y, const vector<int> &ptosx, const vector<int> &ptosy);
 void resolver(const int &n, const int &b, const int &h, const vector<int> &x, const vector<int> &y, int &resx, int &resy, int &ptos);
 bool estarep(const vector<int> &ptosx, const vector<int> &ptosy, int x, int y, int r);
-//timespec diff(timespec start, timespec end);
+timespec diff(timespec start, timespec end);
 
 
 int main(int argc, char *argv[]) {
@@ -168,15 +168,15 @@ int main(int argc, char *argv[]) {
             int resPtos;
 	   
 	
-	  //  timespec time1, time2;
+	    //timespec time1, time2;
 
-	  //  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
+	    //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time1);
 
             resolver(cantPtos,  base,   altura,   puntosx,   puntosy, resCajax,  resCajay,  resPtos);
 	
-	  // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
+	   //clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &time2);
 	
-	  // cout<<cantPtos<<" "<<diff(time1,time2).tv_sec<<"."<<diff(time1,time2).tv_nsec<<endl;
+	   //cout<<cantPtos<<" "<<diff(time1,time2).tv_sec<<"."<<diff(time1,time2).tv_nsec<<endl;
             outputFile<<resCajax<<" "<<resCajay<<" "<<resPtos<<endl;
          
 
