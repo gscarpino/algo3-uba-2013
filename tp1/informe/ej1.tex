@@ -5,9 +5,9 @@ El problema que se plantea es el siguiente:
 En una f\'abrica de quesos hay n m\'aquinas que trabajan en forma independiente, cada una produciendo un
 determinado tipo de queso. Una vez encendida, la m\'aquina i tarda $p_i$ minutos en finalizar su producci\'on.
 Por cuestiones de seguridad, las m\'aquinas comienzan el d\'ia con sus tanques de combustible totalmente vac\'ios, y
- luego de que se llene su tanque, tarea en la que se demora $c_i$ minutos, la maquin\'a i comienda a producir sin ningun otro tipo de intervenci\'on.
+ luego de que se llene su tanque, tarea en la que se demora $c_i$ minutos, la m\'aquina i comienda a producir sin ningun otro tipo de intervenci\'on.
 Como se cuenta con un \'unico surtidor para todas las m\'aquinas, la carga de los tanques debe realizarse de manera secuencial.
-Sin embargo, el tiempo que se tarda en mover el surtidor de una maquin\'a a otra es despreciable.
+Sin embargo, el tiempo que se tarda en mover el surtidor de una m\'aquina a otra es despreciable.
 
 Lo que se desea es encontrar un orden para la carga de combustible de manera tal que la producci\'on completa de
 todas las m\'aquinas se termine lo antes posible. El algoritmo que resuelva el problema debe tener una complejidad menor o igual a $O(n^2)$
@@ -38,11 +38,11 @@ todas las m\'aquinas se termine lo antes posible. El algoritmo que resuelva el p
 Sea $O$ un orden en que las m\'aquinas son cargadas.
 Diremos que una m\'aquina i demora en terminar lo que se tarda en esperar a que sea su turno de ser cargada, m\'as su tiempo carga y de producci\'on.
 El tiempo de espera equivale a la suma de los tiempos de cargas de las m\'aquinas que son tratadas antes que ella. 
-Entonces, definimos $T_{O}(i)$, el tiempo total que demora en terminar la i-esima maquin\'a dentro del orden O, como 
+Entonces, definimos $T_{O}(i)$, el tiempo total que demora en terminar la i-esima m\'aquina dentro del orden O, como 
  
 $$ T_{O}(i) = \sum_{j = 1}^{i}{c_{O[j]}} + P_{O[i]}$$
  
-El tiempo que demora en terminar la producci\'on completa es equivalente al tiempo que demora en finalizar su producci\'on la ultima maquin\'a. Definimos, entonces, T(O) como
+El tiempo que demora en terminar la producci\'on completa es equivalente al tiempo que demora en finalizar su producci\'on la ultima m\'aquina. Definimos, entonces, T(O) como
 
 $$T(O) = {\displaystyle\max_{1 \leq i \leq n}\;  T_{O}(i)}$$
 
@@ -111,15 +111,15 @@ Buscamos encontrar un orden O tal que minimice T(O).
  
  
 La primera idea intuitiva que surge es tratar de tener la mayor cantidad de m\'aquinas funcionando en simult\'aneo.
-As\'i, al momento de seleccionar cual es la siguiente maquin\'a que debe ser cargada, 
+As\'i, al momento de seleccionar cual es la siguiente m\'aquina que debe ser cargada, 
 tomamos aquella que tiene mayor tiempo de producci\'on de manera
 que las m\'aquinas restantes lleven a cabo sus trabajos mientras esta se encuentra produciendo.
 
 Otra forma de verlo es la siguiente: como se quiere que todas las m\'aquinas terminen lo antes posible (de manera que la ultima en hacerlo lo haga lo antes posible), y considerando
-que, para comenzar su producci\'on, la i-esima maquin\'a debe esperar su tiempo de carga $c_i$ mas la suma de los tiempos de cargas de las m\'aquinas anteriores,
-lo que buscamos es que la maquin\'a con mayor tiempo de producci\'on comience lo antes posible (que tenga el menor tiempo de espera posible); es decir, que sea la primera en cargarse dentro del conjunto de m\'aquinas disponibles. Esta idea se ajusta claramente a la forma de un algoritmo goloso:
+que, para comenzar su producci\'on, la i-esima m\'aquina debe esperar su tiempo de carga $c_i$ mas la suma de los tiempos de cargas de las m\'aquinas anteriores,
+lo que buscamos es que la m\'aquina con mayor tiempo de producci\'on comience lo antes posible (que tenga el menor tiempo de espera posible); es decir, que sea la primera en cargarse dentro del conjunto de m\'aquinas disponibles. Esta idea se ajusta claramente a la forma de un algoritmo goloso:
 \begin{itemize}
-	\item decisi\'on golosa: seleccionar y cargar la maquin\'a con mayor $P_i$
+	\item decisi\'on golosa: seleccionar y cargar la m\'aquina con mayor $P_i$
 	\item ordenar las m\'aquinas todavia no cargadas de forma tal que la producci\'on completa de estas termine lo antes posible
 \end{itemize}
 A partir de aqu\'i se puede plantear la soluci\'on como una funcion recursiva
