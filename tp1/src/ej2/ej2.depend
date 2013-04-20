@@ -9,7 +9,23 @@
 	<cstring>
 	<algorithm>
 
+1364805671 >
+
 1365744169 source:c:\users\gino\desktop\algo3tps\tp1\src\ej2\ej2.cpp
+	<iostream>
+	<sstream>
+	<iterator>
+	<fstream>
+	<stdlib.h>
+	<vector>
+	<cstring>
+	<ctime>
+	<algorithm>
+	<time.h>
+
+1365744169 
+
+1366492266 source:/home/gino/Desktop/algo3/tp1/src/ej2/ej2.cpp
 	<iostream>
 	<sstream>
 	<iterator>

@@ -6,6 +6,8 @@
 #include "Tablero.h"
 #include "Pieza.h"
 
+#define TESTING 1
+
 
 Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas);
 vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
@@ -14,8 +16,46 @@ bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,con
 vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
 
+Tablero crearTableroAzar(const int w, const int h);
+vector<Pieza> obtenerPiezasAlAzar(const Tablero &t);
+void agregarPiezasAlAzar(vector<Pieza> &piezas);
 
 int main(int argc, char *argv[]) {
+
+    if(TESTING){
+        ofstream ftest("testingAzar.txt");
+        if(ftest.is_open()){
+            int repeticiones = 10;
+            int maxW=5,maxH=5;
+            for(int i = 1; i < maxW; i++){
+                for(int j = 1; j < maxH; j++){
+                    for(int r = 0; r < repeticiones; r++){
+                        Tablero tab = crearTableroAzar(i,j);
+                        vector<Pieza> pie = obtenerPiezasAlAzar(tab);
+                        agregarPiezasAlAzar(pie);
+                        ftest << i << " " << j << " " << pie.size() <<  endl;
+                        for(unsigned int r = 0; r < tab.getRows(); r++){
+                            ftest << tab.getColor(r,0);
+                            for(unsigned int f = 1; f < tab.getCols(); f++){
+                                ftest << " " << tab.getColor(r,f);
+                            }
+                            ftest << endl;
+                        }
+                        for(unsigned int p = 0; p < pie.size(); p++){
+                            ftest << pie[p].getRows() << " " << pie[p].getCols() << endl;
+                            for(unsigned int r = 0; r < pie[p].getRows(); r++){
+                                ftest << pie[p].getColor(r,0);
+                                for(unsigned int f = 1; f < pie[p].getCols(); f++){
+                                    ftest << " " << pie[p].getColor(r,f);
+                                }
+                                ftest << endl;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     if(argc <= 1) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
@@ -122,7 +162,7 @@ int main(int argc, char *argv[]) {
         cout << "]" << endl;
 
         outputFile << solucion.size();
-        for(int i = 0; i < solucion.size(); i++){
+        for(unsigned int i = 0; i < solucion.size(); i++){
             outputFile << endl;
             outputFile << solucion[i];
         }
@@ -232,7 +272,7 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
         vector<Posicion> posiciones;
 
         posiciones = tablero.posiblesPosiciones(sigPieza);
-        for(int i = 0; i < posiciones.size(); i++){
+        for(unsigned int i = 0; i < posiciones.size(); i++){
             Tablero nuevoTablero(tablero);
             nuevoTablero.ubicarFicha(sigPieza,0,posiciones[i]);
             res = resolverJuego(piezas,nuevoTablero,sol);
@@ -245,7 +285,7 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             Pieza sigPieza3 = sigPieza2.rotar();
             Pieza sigPieza4 = sigPieza3.rotar();
             posiciones = tablero.posiblesPosiciones(sigPieza2);
-            for(int i = 0; i < posiciones.size(); i++){
+            for(unsigned int i = 0; i < posiciones.size(); i++){
                 Tablero nuevoTablero(tablero);
                 nuevoTablero.ubicarFicha(sigPieza2,1,posiciones[i]);
                 res = resolverJuego(piezas,nuevoTablero,sol);
@@ -253,7 +293,7 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             }
             if(!res){
                 posiciones = tablero.posiblesPosiciones(sigPieza3);
-                for(int i = 0; i < posiciones.size(); i++){
+                for(unsigned int i = 0; i < posiciones.size(); i++){
                     Tablero nuevoTablero(tablero);
                     nuevoTablero.ubicarFicha(sigPieza3,2,posiciones[i]);
                     res = resolverJuego(piezas,nuevoTablero,sol);
@@ -262,7 +302,7 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
             }
             if(!res){
                 posiciones = tablero.posiblesPosiciones(sigPieza4);
-                for(int i = 0; i < posiciones.size(); i++){
+                for(unsigned int i = 0; i < posiciones.size(); i++){
                     Tablero nuevoTablero(tablero);
                     nuevoTablero.ubicarFicha(sigPieza4,3,posiciones[i]);
                     res = resolverJuego(piezas,nuevoTablero,sol);
@@ -275,3 +315,21 @@ bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
     }
     return res;
 }
+
+
+
+
+Tablero crearTableroAzar(const int w, const int h){
+    Tablero res(w,h);
+    return res;
+}
+
+vector<Pieza> obtenerPiezasAlAzar(const Tablero &t){
+    vector<Pieza> res;
+    return res;
+}
+
+void agregarPiezasAlAzar(vector<Pieza> &piezas){
+
+}
+

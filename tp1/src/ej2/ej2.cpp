@@ -10,7 +10,7 @@
 #include <time.h>
 
 #define TESTING_AZAR 0
-#define RESULTADOS 0
+#define RESULTADOS 1
 
 using namespace std;
 
@@ -82,13 +82,13 @@ int main(int argc, char *argv[]) {
     cout << "Ejercicio 2 - Sensores defectuosos" << endl << endl;
 
     if(TESTING_AZAR){
-        cout << "Creando tests..." << endl;
+        cout << "Creando tests con k fijo..." << endl;
         int maxSensores = 100;
-        int repeticiones = 1000;
+        int repeticiones = 100;
         int minSensores = 10;
         int tiempo = 0;
         int falla = 0;
-        ofstream archTesting("testingAzar.txt");
+        ofstream archTesting("testingAzarKfijo.txt");
         if(archTesting.is_open()){
             srand(time(NULL));
             for(int s = minSensores; s < maxSensores;s++){
@@ -107,7 +107,33 @@ int main(int argc, char *argv[]) {
         archTesting.close();
 
         cout << "Tests creados." << endl;
-//        return 0;
+
+        cout << "Creando tests con n fijo..." << endl;
+        int maxfalla;
+        archTesting.open("testingAzarNfijo.txt");
+        if(archTesting.is_open()){
+            srand(time(NULL));
+            //cant sensores baja:
+            vector<int> sens(10);
+            for(int i = 0; i < sens.size(); i++){
+                sens[i] = 1 + rand() % 20;
+            }
+            maxfalla = sens.size() * 50;
+            for(int falla = 1; falla < maxfalla;falla++){
+                for(int r = 0; r < repeticiones; r++){
+                    archTesting << sens.size() << " " << falla;
+                    for(int i = 0; i < sens.size(); i++){
+                        archTesting << " " << sens[i];
+                    }
+                    archTesting << "\n";
+                }
+            }
+        }
+        archTesting << "#";
+        archTesting.close();
+
+        cout << "Tests creados." << endl;
+        return 0;
     }
 
 
@@ -116,7 +142,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej2 archivoEntrada archivoSalida";
       return 1;
     }
-
+    argv[1] = "testingAzarNfijo.txt";
     ifstream arch(argv[1]);
     if(!arch.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -172,10 +198,10 @@ int main(int argc, char *argv[]) {
         }
         timespec comienzo;
         timespec terminacion;
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
         if(medDefectuosa >= sensores.size()){
 
 
-            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
             make_heap(tiemposHeap.begin(),tiemposHeap.end(),cmpHeap);   //O(3*n)
 
     //        cout << endl << "Inicio:" << endl;
@@ -188,8 +214,9 @@ int main(int argc, char *argv[]) {
                 medicion++;
             }
 
-        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
         }
+
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
 //        cout << endl << "Sol 1: ";
 //        mostrarVecInt(mediciones);
 
