@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <time.h>
 
-#define TESTING_AZAR 0
+#define TESTING_AZAR 1
 #define RESULTADOS 1
 
 using namespace std;
@@ -115,6 +115,37 @@ int main(int argc, char *argv[]) {
             srand(time(NULL));
             //cant sensores baja:
             vector<int> sens(10);
+            for(int i = 0; i < sens.size(); i++){
+                sens[i] = 1 + rand() % 20;
+            }
+            maxfalla = sens.size() * 50;
+            for(int falla = 1; falla < maxfalla;falla++){
+                for(int r = 0; r < repeticiones; r++){
+                    archTesting << sens.size() << " " << falla;
+                    for(int i = 0; i < sens.size(); i++){
+                        archTesting << " " << sens[i];
+                    }
+                    archTesting << "\n";
+                }
+            }
+
+            sens.resize(100);
+            for(int i = 0; i < sens.size(); i++){
+                sens[i] = 1 + rand() % 20;
+            }
+            maxfalla = sens.size() * 50;
+            for(int falla = 1; falla < maxfalla;falla++){
+                for(int r = 0; r < repeticiones; r++){
+                    archTesting << sens.size() << " " << falla;
+                    for(int i = 0; i < sens.size(); i++){
+                        archTesting << " " << sens[i];
+                    }
+                    archTesting << "\n";
+                }
+            }
+
+
+            sens.resize(1000);
             for(int i = 0; i < sens.size(); i++){
                 sens[i] = 1 + rand() % 20;
             }
