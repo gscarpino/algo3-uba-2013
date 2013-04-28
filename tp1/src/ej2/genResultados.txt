@@ -1,0 +1,14 @@
+echo "Generando resultados para testingAzarKfijo.txt"
+echo
+bin/Release/./ej2 testingAzarKfijo.txt resultadoAzarKfijo.csv > log.txt
+echo
+echo
+echo "Generando resultados para testingAzarNfijo_5.txt"
+echo
+bin/Release/./ej2 testingAzarNfijo_5.txt resultadoAzarNfijo_5.csv > log.txt
+echo
+echo "Generando resultados para testingAzarNfijo_50.txt"
+echo
+bin/Release/./ej2 testingAzarNfijo_50.txt resultadoAzarNfijo_50.csv > log.txt
+echo
+echo "Fin."
