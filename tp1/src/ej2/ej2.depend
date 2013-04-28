@@ -37,3 +37,15 @@
 	<algorithm>
 	<time.h>
 
+1367089913 source:/home/gino/Desktop/algo33/tp1/src/ej2/ej2.cpp
+	<iostream>
+	<sstream>
+	<iterator>
+	<fstream>
+	<stdlib.h>
+	<vector>
+	<cstring>
+	<ctime>
+	<algorithm>
+	<time.h>
+
