@@ -10,7 +10,7 @@
 #define MENOR <
 
 
-Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas);
+Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas);
 vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
 bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &sol);
 bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM);
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 }
 
 //Se recorre linealmente de cantidad de subconjuntos de un conjunto si es solucion del problema
-Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas){
+Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas){
     Solucion res;
     bool haySol = false;
 
@@ -339,7 +339,7 @@ void agregarPiezasAlAzar(vector<Pieza> &piezas){
 }
 
 void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero){
-    vector<int> IDborrables;
+    vector<unsigned int> IDborrables;
 
     for(unsigned int i = 0; i < piezas.size(); i++){
         if(!tablero.cabe(piezas[i])){
@@ -348,6 +348,11 @@ void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero){
     }
 
     for(unsigned int i = 0; i < IDborrables.size(); i++){
-        piezas.erase(IDborrables[i]);
+        for(unsigned int j = 0; j < piezas.size(); j++){
+            if(piezas[j].getID() == IDborrables[i]){
+                piezas.erase(piezas.begin() + j);
+                break;
+            }
+        }
     }
 }

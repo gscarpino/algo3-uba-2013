@@ -220,27 +220,27 @@ bool Tablero::cabe(const Pieza &pieza) const{
     bool res = false;
 
     vector<Posicion> posiciones;
-    posiciones = tablero.posiblesPosiciones(pieza);
+    posiciones = posiblesPosiciones(pieza);
     if(posiciones.size() > 0){
         res = true;
     }
     else{
         Pieza sigPieza2 = pieza.rotar();
-        if(sigPieza != sigPieza2){
+        if(pieza != sigPieza2){
             Pieza sigPieza3 = sigPieza2.rotar();
             Pieza sigPieza4 = sigPieza3.rotar();
-            posiciones = tablero.posiblesPosiciones(sigPieza2);
+            posiciones = posiblesPosiciones(sigPieza2);
             if(posiciones.size() > 0){
                 res = true;
             }
             if(!res){
-                posiciones = tablero.posiblesPosiciones(sigPieza3);
+                posiciones = posiblesPosiciones(sigPieza3);
                 if(posiciones.size() > 0){
                     res = true;
                 }
             }
             if(!res){
-                posiciones = tablero.posiblesPosiciones(sigPieza4);
+                posiciones = posiblesPosiciones(sigPieza4);
                 if(posiciones.size() > 0){
                     res = true;
                 }
