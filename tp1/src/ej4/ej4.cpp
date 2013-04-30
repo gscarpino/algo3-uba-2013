@@ -17,6 +17,7 @@ bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,con
 vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
 void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero);
+vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, unsigned int tam);
 
 Tablero crearTableroAzar(const int w, const int h);
 vector<Pieza> obtenerPiezasAlAzar(const Tablero &t);
@@ -188,67 +189,51 @@ Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas){
         vector< vector<Pieza> > subConjuntos;
         //se genera un conjunto de subconjuntos de tamanio fijo
 
-        unsigned int tope = pow(2,piezas.size());
-        vector<int> numBin;
-        unsigned int valor = 1;
-        unsigned int sumaParcial = 0;
+        subConjuntos = subConjuntosDeTam(piezas,tamanio);
 
-        while(valor < tope && !haySol){
-            vector<Pieza> subConj;
-            numBin = pasarBinario(valor);
-
-            for(unsigned int i = 0; i < numBin.size();i++){
-                if(sumaParcial > tamanio) break;
-                //Si lo que falta para llegar a ese tamanio es mayor a lo que falta
-                //por recorrer entonces corto porque sumaParcial no va a llegar a tamanio
-                if((tamanio - sumaParcial) > (numBin.size() - i)){
-                    sumaParcial = tamanio + 1;
-                    break;
-                }
-                sumaParcial = sumaParcial + numBin[i];
-            }
-
-            if(sumaParcial == tamanio){
-
-                for(unsigned int i = 0; i < numBin.size();i++){
-                    if(numBin[numBin.size() - i - 1]){
-                        subConj.push_back(piezas[i]);
-                    }
-                }
-                if(esSolucion(subConj,tablero,res)){
+        for(unsigned int j = 0; j < subConjuntos.size(); j++){
+                if(esSolucion(subConjuntos[j],tablero,res)){
                     haySol = true;
                     break;
                 }
-
-            }
-            valor++;
-            sumaParcial = 0;
+//            cout << "aaa" << endl;
+//            for(int k = 0; k < subConjuntos[j].size(); k++){
+//                cout  << "---" << endl;
+//                imprimirMatriz(subConjuntos[j][k].second);
+//                cout << endl << "---" << endl;
+//            }
+//
+//            cout << "aaa" << endl;
         }
 
         if(haySol){
+                cout << "Se encontro sol" << endl;
             break;
         }
     }
     return res;
 }
 
-
-//O(log n)
-//Pasa un numero decima a binario y lo devuelve en un vector de enteros
-vector<int> pasarBinario(int n){
-    vector<int> res;
-    int temp;
-
-    while(n > 0){
-       temp = n % 2;
-       n = n / 2;
-       res.push_back(temp);
-    }
-
-    reverse(res.begin(),res.end());
-
+vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, unsigned int tam){
+    vector<Pieza> p = piezas;
+    vector< vector<Pieza> >  res;
+    subConjuntosAux(p,res);
     return res;
 }
+
+vector< vector<Pieza> > subConjuntosAux(vector<Pieza> &piezas,vector< vector<Pieza> >  &res){
+    if(piezas.size() == 0) {
+        return true;
+    }
+    else{
+        Pieza p = piezas.back();
+        piezas.pop_back();
+        agregarATodos(p,res);
+        subConjuntosAux(piezas,res);
+
+    }
+}
+
 
 //Determina si un conjunto dado de piezas es solucion al problema
 bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &sol){
