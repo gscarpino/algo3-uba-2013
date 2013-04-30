@@ -28,6 +28,7 @@ class Tablero
         Solucion obtenerPiezas();
         unsigned int getColor(const Posicion &pos) const;
         unsigned int getColor(const unsigned int x, const unsigned int y) const;
+        bool cabe(const Pieza &pieza) const;
 
     private:
         vector<vector<pair< unsigned int, bool> > > m;

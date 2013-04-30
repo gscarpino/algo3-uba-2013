@@ -7,6 +7,7 @@
 #include "Pieza.h"
 
 #define TESTING 1
+#define MENOR <
 
 
 Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas);
@@ -15,6 +16,7 @@ bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &s
 bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,const int dimN, const int dimM);
 vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
+void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero);
 
 Tablero crearTableroAzar(const int w, const int h);
 vector<Pieza> obtenerPiezasAlAzar(const Tablero &t);
@@ -178,6 +180,9 @@ Solucion buscarSol(const Tablero &tablero, const vector<Pieza> &piezas){
     Solucion res;
     bool haySol = false;
 
+    //Primera poda
+    descartarPiezas(piezas,tablero);
+
     for(unsigned int tamanio = 1; tamanio <= piezas.size(); tamanio++){
         cout << "Probando con " << tamanio << " piezas" << endl;
         vector< vector<Pieza> > subConjuntos;
@@ -333,3 +338,16 @@ void agregarPiezasAlAzar(vector<Pieza> &piezas){
 
 }
 
+void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero){
+    vector<int> IDborrables;
+
+    for(unsigned int i = 0; i < piezas.size(); i++){
+        if(!tablero.cabe(piezas[i])){
+            IDborrables.push_back(piezas[i].getID());
+        }
+    }
+
+    for(unsigned int i = 0; i < IDborrables.size(); i++){
+        piezas.erase(IDborrables[i]);
+    }
+}
