@@ -6,8 +6,7 @@
 #include "Tablero.h"
 #include "Pieza.h"
 
-#define TESTING 1
-#define MENOR <
+#define TESTING 0
 
 
 Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas);
@@ -17,7 +16,11 @@ bool cubreExactoElTablero(const vector<Pieza> &piezas, const Matriz &tablero,con
 vector<int> pasarBinario(int n);
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol);
 void descartarPiezas(vector<Pieza> &piezas, const Tablero &tablero);
-vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, unsigned int tam);
+vector< vector<Pieza> > powerSet(const vector<Pieza> &piezas);
+void powerSetAux(vector<Pieza> &piezas,vector< vector<Pieza> >  &res);
+void duplicar(vector< vector<Pieza> >  &res);
+void agregarPrimerMitad(Pieza p, vector< vector<Pieza> >  &res);
+bool cmpSubsPowerSet(const vector<Pieza> &a, const vector<Pieza> &b);
 
 Tablero crearTableroAzar(const int w, const int h);
 vector<Pieza> obtenerPiezasAlAzar(const Tablero &t);
@@ -64,7 +67,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-    argv[1] = "inputCorto.txt";
+//    argv[1] = "input.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -100,7 +103,8 @@ int main(int argc, char *argv[]) {
             }
             else{
                 cout << "ERROR LEYENDO ENTRADA" << endl;
-                return 1;
+                break;
+//                return 1;
             }
             temp++;
         }
@@ -157,7 +161,7 @@ int main(int argc, char *argv[]) {
 
 
         Solucion solucion = buscarSol(tablero,piezas);
-        cout << "Tamanio de la solucion final: " << solucion.size() << endl;
+//        cout << "Tamanio de la solucion final: " << solucion.size() << endl;
         cout << "[";
         for(unsigned int i = 0; i < solucion.size(); i++){
             solucion[i].imprimir();
@@ -179,61 +183,76 @@ int main(int argc, char *argv[]) {
 //Se recorre linealmente de cantidad de subconjuntos de un conjunto si es solucion del problema
 Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas){
     Solucion res;
-    bool haySol = false;
 
     //Primera poda
     descartarPiezas(piezas,tablero);
+//    cout << endl << endl << "Piezas: " << endl;
+//    for(int i = 0; i < piezas.size(); i++){
+//        cout << endl << "- - -" << endl;
+//        piezas[i].imprimir();
+//        cout << "- - -" << endl;
+//    }
 
-    for(unsigned int tamanio = 1; tamanio <= piezas.size(); tamanio++){
-        cout << "Probando con " << tamanio << " piezas" << endl;
-        vector< vector<Pieza> > subConjuntos;
-        //se genera un conjunto de subconjuntos de tamanio fijo
+    vector< vector<Pieza> > subConjuntos;
 
-        subConjuntos = subConjuntosDeTam(piezas,tamanio);
-
-        for(unsigned int j = 0; j < subConjuntos.size(); j++){
-                if(esSolucion(subConjuntos[j],tablero,res)){
-                    haySol = true;
-                    break;
-                }
-//            cout << "aaa" << endl;
-//            for(int k = 0; k < subConjuntos[j].size(); k++){
-//                cout  << "---" << endl;
-//                imprimirMatriz(subConjuntos[j][k].second);
-//                cout << endl << "---" << endl;
-//            }
-//
-//            cout << "aaa" << endl;
-        }
-
-        if(haySol){
-                cout << "Se encontro sol" << endl;
-            break;
+    subConjuntos = powerSet(piezas);
+    sort(subConjuntos.begin(),subConjuntos.end(),cmpSubsPowerSet);
+    for(unsigned int j = 0; j < subConjuntos.size(); j++){
+        if(subConjuntos[j].size() > 0){
+            cout << "Probando con " <<  subConjuntos[j].size() << endl;
+            if(esSolucion(subConjuntos[j],tablero,res)){
+                cout << "Se encontro sol con " <<  subConjuntos[j].size() << " piezas." << endl;
+                break;
+            }
         }
     }
     return res;
 }
 
-vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, unsigned int tam){
-    vector<Pieza> p = piezas;
+vector< vector<Pieza> > powerSet(const vector<Pieza> &piezas){
+    vector<Pieza> copiaPiezas = piezas;
     vector< vector<Pieza> >  res;
-    subConjuntosAux(p,res);
+    powerSetAux(copiaPiezas,res);
     return res;
 }
 
-vector< vector<Pieza> > subConjuntosAux(vector<Pieza> &piezas,vector< vector<Pieza> >  &res){
+void powerSetAux(vector<Pieza> &piezas,vector< vector<Pieza> >  &res){
     if(piezas.size() == 0) {
-        return true;
+        //Se termina
     }
     else{
         Pieza p = piezas.back();
         piezas.pop_back();
-        agregarATodos(p,res);
-        subConjuntosAux(piezas,res);
-
+        duplicar(res);
+        agregarPrimerMitad(p,res);
+        powerSetAux(piezas,res);
     }
 }
 
+void duplicar(vector< vector<Pieza> >  &res){
+    if(res.size() == 0){
+        vector<Pieza> p1,p2;
+        res.push_back(p1);
+        res.push_back(p2);
+    }
+    else{
+        int tam = res.size();
+        for(int i = 0; i < tam; i++){
+            res.push_back(res[i]);
+        }
+    }
+}
+
+void agregarPrimerMitad(Pieza p, vector< vector<Pieza> >  &res){
+    for(int i = 0; i < (res.size() / 2); i++){
+        res[i].push_back(p);
+    }
+}
+
+
+bool cmpSubsPowerSet(const vector<Pieza> &a, const vector<Pieza> &b){
+    return a.size() < b.size();
+}
 
 //Determina si un conjunto dado de piezas es solucion al problema
 bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &sol){
@@ -248,7 +267,7 @@ bool esSolucion(const vector<Pieza> &piezas, const Tablero &tablero, Solucion &s
 
 
 bool resolverJuego(vector<Pieza> piezas, Tablero tablero, Solucion &sol){
-    bool res;
+    bool res= false;
     if(piezas.size() == 0){
         res = tablero.completo();
         if(res){
