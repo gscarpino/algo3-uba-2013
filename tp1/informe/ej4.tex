@@ -162,9 +162,9 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 
 \indent Es decir que $esSolucion$ tiene una complejidad de O($n + 4^{n}*k^{n+1}$), que es O($4^{n}*k^{n+1}$) puesto que $k$ es entero positivo.\\
 
-\indent Luego la complejidad total de $esSolucion$, que es la función que resuelve el problema es O($n* k^{2} + n^{2} + n * 2^{n} + 4^{n}*k^{n+1}$). O lo que es lo mismo:\\
+\indent Luego la complejidad total de $buscarSolucion$, que es la función que resuelve el problema es O($n* k^{2} + n^{2} + n * 2^{n} + 2^{n}*4^{n}*k^{n+1}$). O lo que es lo mismo:\\
 
-\indent O( $max [(n* k^{2} + n^{2} ) , ( $n * 2^{n}$ ) , ( $4^{n}*k^{n+1}$ ) ] ).\\
+\indent O( $max [(n* k^{2} + n^{2} ) , ( $n * 2^{n}$ ) , ( $ 2^{n}* 4^{n}*k^{n+1}$ ) ] ).\\
  
 \indent donde $k$ es filasTablero*columnasTablero y $n$ es la cantidad de piezas.\\
  
