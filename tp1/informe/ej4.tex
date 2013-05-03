@@ -11,8 +11,29 @@
 
 \quad La primera implementaci\'on del problema de power set consist\'ia en usar una m\'ascara de bits para determinar si un elemento estaba presente o no en un conjunto. Se recorr\'ian los n\'umeros desde el 1 hasta $ 2^{ \vert piezas\vert} $ formando as\'i todas las posibles combinaciones de subconjuntos. Era simple pero ten\'ia el problema de que pod\'ia producir overflow en arquitecturas donde ${\vert piezas\vert} $ sea mayor a la cantidad m\'axima de bits para alg\'un registro que sea utilizado como contador del procesador. Ej: con 40 piezas y un procesador de 32 bits.
 
-\quad Por lo tanto, decidimos implementar este problema mediante la recursi\'on.
+\quad Por lo tanto, decidimos implementar este problema mediante la recursi\'on. La funci\'on recursiva ser\'ia:
 
+\quad
+
+$ P(\oslash) = \lbrace\lbrace\rbrace\rbrace $
+
+\quad
+
+$ P(S) = P(T) \cup f(e,P(T)) $
+
+\quad
+
+\quad siendo e un elemento de S y $ T = S \setminus \lbrace e \rbrace $
+
+\quad
+
+\quad donde $ f(e,T) = \lbrace X \cup \lbrace e \rbrace \mid X \in T \rbrace $
+
+\quad
+
+\quad En nuestra implementaci\'on el caso base lo \'unico que hace es crear un vector de vectores con dos vectores vac\'ios. En los pasos recursivos, se obtiene el elemento \textit{e}, se duplica el vector de vectores, y a la primera mitad se agrega \textit{e}. Duplicar el vector har\'ia la uni\'on y agregar el elemento \textit{e} a la primera mitad ser\'ia la funci\'on \textit{f}.
+
+\quad Implementando estas funciones pudimos generar todas las posibles combinaciones de subconjuntos de piezas.
 
 %\quad Para resolver el problema principal, lo que hicimos fue ir probando cada uno de los subconjuntos con tama\~no desde 1 hasta la %cantidad de piezas. Como punto de corte razonable, es haber encontrado alg\'un subconjunto como soluci\'on.
 
@@ -164,12 +185,14 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 
 \indent Luego la complejidad total de $buscarSolucion$, que es la función que resuelve el problema es O($n* k^{2} + n^{2} + n * 2^{n} + 2^{n}*4^{n}*k^{n+1}$). O lo que es lo mismo:\\
 
-\indent O( $max [(n* k^{2} + n^{2} ) , ( $n * 2^{n}$ ) , ( $ 2^{n}* 4^{n}*k^{n+1}$ ) ] ).\\
+\indent O( $max [(n* k^{2} + n^{2}$ ) , ( $n * 2^{n}$ ) , ( $ 2^{n}* 4^{n}*k^{n+1}$ ) ] ).\\
  
 \indent donde $k$ es filasTablero*columnasTablero y $n$ es la cantidad de piezas.\\
  
 
 \subsection{Resultados}
+
+\quad Decidimos hacer casos de test donde se var\'ie el tama\~no del tablero y la cantidad de piezas quede fija, y otros casos de test donde las longitudes del tablero no var\'ie y la cantidad de piezas s\'i. Este \'ultimo, dado la complejidad del problema, no se pudo hacer con cantidades grandes de piezas. 
 
 \begin{figure}[H]
 	\centering
@@ -183,7 +206,7 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 	\caption{ En escala logar\'itmica}
 \end{figure}
 
-
+\quad Como se puede observar, los puntos tienen una tendencia lineal y creciente de ambos sets de datos. Al estar en escala logar\'itmica esto significa que crecen muy r\'apido, corroborando la complejidad te\'orica calculada anteriormente.
 
 \subsection{Conclusiones}
 
