@@ -7,6 +7,7 @@
 class Pieza
 {
     public:
+        Pieza();
         Pieza(const Matriz &p, const unsigned int id);
         Pieza(const Pieza &otra);
         unsigned int getRows() const;
@@ -15,6 +16,8 @@ class Pieza
         void imprimir() const;
         unsigned int getColor(const unsigned int x, const unsigned int y) const;
         unsigned int getColor(const Posicion &p) const;
+        void setColor(const unsigned int x, const unsigned int y, unsigned int color);
+        void setColor(const Posicion &p, unsigned int color);
         Pieza rotar() const;
         friend bool operator<(const Pieza &p1, const Pieza &p2);
         friend bool operator!=(const Pieza &p1, const Pieza &p2);

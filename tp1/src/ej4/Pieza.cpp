@@ -1,5 +1,9 @@
 #include "Pieza.h"
 
+Pieza::Pieza(){
+
+}
+
 Pieza::Pieza(const Matriz &p, const unsigned int id){
     //Requiere matriz no vacia
     this->m = p;
@@ -63,6 +67,15 @@ unsigned int Pieza::getColor(const unsigned int x, const unsigned int y) const{
 
 unsigned int Pieza::getColor(const Posicion &p) const{
     return m[p.first][p.second];
+}
+
+
+void Pieza::setColor(const unsigned int x, const unsigned int y, unsigned int color){
+    m[x][y] = color;
+}
+
+void Pieza::setColor(const Posicion &p, unsigned int color){
+    m[p.first][p.second] = color;
 }
 
 

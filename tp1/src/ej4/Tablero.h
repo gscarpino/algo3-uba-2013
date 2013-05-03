@@ -4,6 +4,7 @@
 
 #include "Redefs.h"
 #include "Pieza.h"
+#include <cstdlib>
 
 
 

@@ -5,12 +5,16 @@ Tablero::Tablero(unsigned int rows, unsigned int cols){
     this->rows = rows;
     this->cols = cols;
     vector<pair<unsigned int, bool> > fila(cols);
+    srand(time(NULL));
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
-            fila[j] = make_pair(0,false);
+            int color = (rand() % 2);
+            fila[j] = make_pair(color,false);
         }
         this->m.push_back(fila);
     }
+    //A lo sumo hay rows*cols fichas de 1x1
+    //Reservando memoria permite asegurar que push_back sea O(1)
     this->piezasColocadas.reserve(rows*cols);
 }
 
