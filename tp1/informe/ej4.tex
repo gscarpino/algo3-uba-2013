@@ -9,7 +9,7 @@
 
 \quad Este ejercicio contiene varios problemas. Para empezar, nos encontramos con el requerimiento de dado un conjunto armar todos los subconjuntos posibles. Se conoce como \textit{power set}. La complejidad de este problema es exponencial, no se conocen algoritmos polinomiales hasta el momento.
 
-\quad La primera implementaci\'on del problema de power set consist\'ia en usar una m\'ascara de bits para determinar si un elemento estaba presente o no en un conjunto. Se recorr\'ian los n\'umeros desde el 1 hasta $ 2^{ \vert piezas\vert} $ formando as\'i todas las posibles combinaciones de subconjuntos. Era simple pero ten\'ia el problema de que pod\'ia producir overflow en arquitecturas donde $\vert piezas\vert} $ sea mayor a la cantidad m\'axima de bits para alg\'un registro que sea utilizado como contador del procesador. Ej: con 40 piezas y un procesador de 32 bits.
+\quad La primera implementaci\'on del problema de power set consist\'ia en usar una m\'ascara de bits para determinar si un elemento estaba presente o no en un conjunto. Se recorr\'ian los n\'umeros desde el 1 hasta $ 2^{ \vert piezas\vert} $ formando as\'i todas las posibles combinaciones de subconjuntos. Era simple pero ten\'ia el problema de que pod\'ia producir overflow en arquitecturas donde ${\vert piezas\vert} $ sea mayor a la cantidad m\'axima de bits para alg\'un registro que sea utilizado como contador del procesador. Ej: con 40 piezas y un procesador de 32 bits.
 
 \quad Por lo tanto, decidimos implementar este problema mediante la recursi\'on...
 
@@ -68,6 +68,63 @@ Las funciones que utlizamos del tablero son:
 \item \textbf{cubreTodo:} es una funci\'on para podar casos no posibles de ser soluci\'on como se explic\'o anteriormente. Calcula la superficie del tablero. Recorre todas las piezas, restando a la superficie del tablero la superficie de la pieza. Para cubrirlo exactamente tiene que quedar en 0. Caso contrario, se poda. Tiene un costo de O(n) donde n es la cantidad de piezas.
 
 \end{itemize}
+
+\indent Vistas estas consideraciones, analicemos la complejidad de $resolverJuego$.  Lo haremos en función de la cantidad de piezas.\\
+\indent Primero hagamos una aclaración: si bien es cierto que muchas de la funciones que usa este métodos basan su complejidad en el tamaño de la pieza que está probando en ese momento, hemos decidido acotar la cantidad de filas de una pieza por la cantidad de filas del tablero y lo mismo para la cantidad de columnas. Esto es porque al momento de ejecutar $resolverJuego$ es esperable que todas las piezas que se analizan tienen dimensiones menores o iguales a las del tablero. Por lo tanto, la cota de complejidad que mostraremos en esta sección es quiźa burda.\\
+\indent Para esta análisis definiremos $k$ como las dimensiones del tablero. Es decir que $k$ es la cantidad de filas del tablero por la cantidad de columnas del tablero.\\
+
+\indent Como se puede observar, $resolverJuego$ es una función recursiva en la cantidad de piezas. En el caso en que la cantidad de piezas sea nula, lo único que se chequea es si el tablero está completo en tiempo O(k).
+\indent Si, en cambio, quedan piezas por analizar, el algoritmo chequea si se puede agregar al tablero alguna de las rotaciones de la pieza y luego se llama recursivamente a la función pero sin esa pieza. En el peor caso, lo que puede ocurrir es que se tenga que chequear las cuatro rotaciones de la pieza.\\
+\indent Adem\'as de llamarse recursivamente el algoritmo realiza algunas operaciones. Por cada rotaciones, se fija las posibles posiciones con un costo de $O(k*filasPieza*columnasPieza)$. Hemos dicho que vamos a acotar las filas y las columnas de la piezas por las del tablero. Luego, supongamos que buscar las posibles posiciones cuesta $O(k^{2})$.\\
+\indent Copiar la pieza que vamos a analizar cuesta O(filasPiezas*columnasPieza) y lo mismo para calcular cada rotación. Con la cota que dijimos antes cada una de estas operaciones cuesta O(k). Notemos que en el peor caso para cada pieza habría que chequear las cuatro rotaciones.\\
+\indent En el peor caso, las posibles posiciones de la pieza son todas las del tablero, es decir $k$. Se va a iterar en la cantidad de posibles posiciones.El costo de lo que está adentro del ciclo es O(k+ T(n-1)), siendo T(n-1) el costo de la siguiente llamada recursiva a la función.\\
+\indent Es decir que el costo de una llamada a la función con cantidad de piezas no nulas es de $4*[k + k^{2} + k* (k+T(n-1))]$, o lo que es lo mismo:\\
+$4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
+
+\indent Pasando en limpio de manera más formal:\\
+\indent $T(0)=k$\\
+\indent $T(n)=4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
+
+\indent Veamos más detenidamente $T(n)$:\\
+\begin{center}
+\indent $T(n)= T(n)=4*[k + k^{2} + k^{2} + k* T(n-1)] = 4*k + 4*k{2} + 4*k^{2} + 4*k * T(n-1)=$ \\
+\indent $= 4*k + 4*k^{2} + 4*k^{2} + 4*k *[4*k + 4*k^{2} + 4*k^{2} + 4*k * T(n-2)]=$\\
+\indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{2}*k^{2} * T(n-2)=$\\
+\indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{2}*k^{2} * [4*k + 4*k^{2} + 4*k^{2} + 4*k* T(n-3)]=$\\
+\indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{3}*k^{3} + 4^{3}*k^{4} + 4^{3}*k^{4} + 4^{3}*k^{3} * T(n-3)=$\\
+\indent $=....=$\\
+\indent $=  (4*k)^{n} * T(0) + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})=$ \\
+\indent $=  (4*k)^{n} * k + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$ \\
+\end{center}
+
+
+\indent Es decir que :\\
+
+\indent $T(0)=k$\\
+\indent $T(n)= 4^{n}* k^{n+1} + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
+
+\indent Conjeturamos que esto cuesta $O(4^{n}*k^{n+1})$. Veámoslo por inducción:\\
+\indent Queremos ver que existe un $d$ real positivo y $n_{0}$ natural positivo tales que para todo $n\geq n_{0} vale que T(n) \leq d * 4^{n}*k^{n+1}$.\\
+\indent Caso base: n=1 \\
+
+begin{center}
+\indent  $T(1)=4* k^{2} + 4*k + 2 * 4* k^{2} \leq 4* k^{2} + 4*k^{2} + 2 * 4* k^{2} \leq 4* (4*k^2)$\\
+\indent Es decir que para $n=1$ considerando un $d \geq 4 $ alcanza.\\
+end{center}
+
+\indent Paso inductivo: Supongo  que $T(n-1) \leq  d * 4^{n-1}* k^{n}$. Quiero ver que esto implica que  $T(n) \leq  d * 4^{n}* k^{n+1}$\\
+
+\begin{center}
+
+\indent $T(n)= 4*k + 4*k{2} + 4*k^{2} + 4*k * T(n-1) \leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq $\\
+\indent $\leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq 4*k + 4*k{2} + 4*k^{2} + 4^{n}* k^{n+1} \leq $ \\
+\indent $\leq 4^{n}*k^{n+1} + 4^{n}*k{n+1} + 4^{n}*k^{n+1} + 4^{n}* k^{n+1} \leq 4* 4^{n}* k^{n+1}$\\
+indent que es lo que queriamos ver.\\
+\end{center}
+
+
+\indent Luego, $resolverJuego$ cuesta O($4^{n}*k^{n+1}$).\\
+
 
 \subsection{Conclusiones}
 
