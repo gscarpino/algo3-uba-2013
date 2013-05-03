@@ -83,9 +83,11 @@ Las funciones que utlizamos del tablero son:
 
 \indent Vistas estas consideraciones, analicemos la complejidad de $resolverJuego$.  Lo haremos en función de la cantidad de piezas.\\
 \indent Primero hagamos una aclaración: si bien es cierto que muchas de la funciones que usa este métodos basan su complejidad en el tamaño de la pieza que está probando en ese momento, hemos decidido acotar la cantidad de filas de una pieza por la cantidad de filas del tablero y lo mismo para la cantidad de columnas. Esto es porque al momento de ejecutar $resolverJuego$ es esperable que todas las piezas que se analizan tienen dimensiones menores o iguales a las del tablero. Por lo tanto, la cota de complejidad que mostraremos en esta sección es quiźa burda.\\
-\indent Para esta análisis definiremos $k$ como las dimensiones del tablero. Es decir que $k$ es la cantidad de filas del tablero por la cantidad de columnas del tablero.\\
+\indent Para esta análisis definiremos $k$ como las dimensiones del tablero. Es decir que $k$ es la cantidad de filas del tablero por la cantidad de columnas del tablero.\\ 
 
-\indent Como se puede observar, $resolverJuego$ es una función recursiva en la cantidad de piezas. En el caso en que la cantidad de piezas sea nula, lo único que se chequea es si el tablero está completo en tiempo O(k).
+\indent Además, definiremos $n$ como la cantidad de piezas.\\
+
+\indent Como se puede observar, $resolverJuego$ es una función recursiva en la cantidad de piezas. En el caso en que la cantidad de piezas sea nula, lo único que se chequea es si el tablero está completo en tiempo O(k). 
 \indent Si, en cambio, quedan piezas por analizar, el algoritmo chequea si se puede agregar al tablero alguna de las rotaciones de la pieza y luego se llama recursivamente a la función pero sin esa pieza. En el peor caso, lo que puede ocurrir es que se tenga que chequear las cuatro rotaciones de la pieza.\\
 \indent Adem\'as de llamarse recursivamente el algoritmo realiza algunas operaciones. Por cada rotaciones, se fija las posibles posiciones con un costo de $O(k*filasPieza*columnasPieza)$. Hemos dicho que vamos a acotar las filas y las columnas de la piezas por las del tablero. Luego, supongamos que buscar las posibles posiciones cuesta $O(k^{2})$.\\
 \indent Copiar la pieza que vamos a analizar cuesta O(filasPiezas*columnasPieza) y lo mismo para calcular cada rotación. Con la cota que dijimos antes cada una de estas operaciones cuesta O(k). Notemos que en el peor caso para cada pieza habría que chequear las cuatro rotaciones.\\
@@ -164,6 +166,7 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 
 \indent O( $max [(n* k^{2} + n^{2} ) , ( $n * 2^{n}$ ) , ( $4^{n}*k^{n+1}$ ) ] ).\\
  
+\indent donde $k$ es filasTablero*columnasTablero y $n$ es la cantidad de piezas.\\
  
 
 \subsection{Resultados}
