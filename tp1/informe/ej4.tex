@@ -93,15 +93,15 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 \indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{2}*k^{2} * [4*k + 4*k^{2} + 4*k^{2} + 4*k* T(n-3)]=$\\
 \indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{3}*k^{3} + 4^{3}*k^{4} + 4^{3}*k^{4} + 4^{3}*k^{3} * T(n-3)=$\\
 \indent $=....=$\\
-\indent $=  (4*k)^{n} * T(0) + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})=$ \\
-\indent $=  (4*k)^{n} * k + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$ \\
+\indent $=  (4*k)^{n} * T(0) + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})=$ \\
+\indent $=  (4*k)^{n} * k + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})$ \\
 \end{center}
 
 
 \indent Es decir que :\\
 
 \indent $T(0)=k$\\
-\indent $T(n)= 4^{n}* k^{n+1} + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
+\indent $T(n)= 4^{n}* k^{n+1} + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
 
 \indent Conjeturamos que esto cuesta $O(4^{n}*k^{n+1})$. Veámoslo por inducción:\\
 
@@ -120,7 +120,7 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 \indent $T(n)= 4*k + 4*k{2} + 4*k^{2} + 4*k * T(n-1) \leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq $\\
 \indent $\leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq 4*k + 4*k{2} + 4*k^{2} + 4^{n}* k^{n+1} \leq $ \\
 \indent $\leq 4^{n}*k^{n+1} + 4^{n}*k{n+1} + 4^{n}*k^{n+1} + 4^{n}* k^{n+1} \leq 4* 4^{n}* k^{n+1}$\\
-indent que es lo que queriamos ver.\\
+\indent que es lo que queriamos ver.\\
 \end{center}
 
 
