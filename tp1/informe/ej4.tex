@@ -104,13 +104,14 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 \indent $T(n)= 4^{n}* k^{n+1} + \sum{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
 
 \indent Conjeturamos que esto cuesta $O(4^{n}*k^{n+1})$. Veámoslo por inducción:\\
-\indent Queremos ver que existe un $d$ real positivo y $n_{0}$ natural positivo tales que para todo $n\geq n_{0} vale que T(n) \leq d * 4^{n}*k^{n+1}$.\\
+
+\indent Queremos ver que existe un $d$ real positivo y $n_{0}$ natural positivo tales que para todo $n\geq n_{0}$ vale que $T(n) \leq d * 4^{n}*k^{n+1}$.\\
 \indent Caso base: n=1 \\
 
-begin{center}
+\begin{center}
 \indent  $T(1)=4* k^{2} + 4*k + 2 * 4* k^{2} \leq 4* k^{2} + 4*k^{2} + 2 * 4* k^{2} \leq 4* (4*k^2)$\\
 \indent Es decir que para $n=1$ considerando un $d \geq 4 $ alcanza.\\
-end{center}
+\end{center}
 
 \indent Paso inductivo: Supongo  que $T(n-1) \leq  d * 4^{n-1}* k^{n}$. Quiero ver que esto implica que  $T(n) \leq  d * 4^{n}* k^{n+1}$\\
 
