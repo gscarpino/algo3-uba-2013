@@ -136,9 +136,9 @@ $ t'_{i} = t_{i} + intervalo(s_1) $
 
 \quad En el caso que el n\'umero de medici\'on sea menor a la cantidad de sensores, el algoritmo termina devolviendo el valor del vector de mediciones seg\'un la posici\'on correspondiente a la medici\'on que falla.
 
-\quad Caso contrario, calculamos la secuencia de mediciones. Para ello necesitamos el ya mencionado diccionario. Decidimos utilizar un min-Heap como diccionario. Esto nos permitir\'ia obtener el m\'inimo valor de tiempo de pr\'oxima medici\'on en O(log n) siendo n la cantidad de sensores. Crear el minHeap tiene un costo de O($ 3*n $).
+\quad Caso contrario, calculamos la secuencia de mediciones. Para ello necesitamos el ya mencionado diccionario. Decidimos utilizar un min-Heap como diccionario. Esto nos permitir\'ia obtener el m\'inimo valor de tiempo de pr\'oxima medici\'on en O(log n) siendo n la cantidad de sensores. Crear el minHeap tiene un costo de O($ 3*n $).\footnote{http://www.sgi.com/tech/stl/make\_heap.html}.
 
-\quad Una vez creado el minHeap, comenzamos un ciclo donde se busca el siguiente sensor que mide. Como ya dijimos, al usar un minHeap, \'esto tiene un costo de O(log n). Luego, se agrega el id del sensor a la secuencia de mediciones con un costo constante.
+\quad Una vez creado el minHeap, comenzamos un ciclo donde se busca el siguiente sensor que mide. Al ser un minHeap, tiene costo O(1) pero luego hay que actualizar el valor y el diccionario utilizando \textit{push\_heap} y \textit{pop\_heap}, ambas con costo O($log n$)\footnote{http://www.sgi.com/tech/stl/push\_heap.html}\footnote{http://www.sgi.com/tech/stl/pop\_heap.html}. Como ya dijimos, al usar un minHeap, \'esto tiene un costo de O(log n). Luego, se agrega el id del sensor a la secuencia de mediciones con un costo constante.
 
 \quad La cantidad de iteraciones del ciclo es el n\'umero de medici\'on que falla menos la cantidad de sensores existentes. \'Esto se debe a que, en el momento inicial, todos los sensores realizan una medici\'on. Por lo que de entrada se tienen n mediciones.
 
