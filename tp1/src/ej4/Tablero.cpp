@@ -5,7 +5,7 @@ Tablero::Tablero(unsigned int rows, unsigned int cols){
     this->rows = rows;
     this->cols = cols;
     vector<pair<unsigned int, bool> > fila(cols);
-    srand(time(NULL));
+//    srand(time(NULL));
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             int color = (rand() % 2);

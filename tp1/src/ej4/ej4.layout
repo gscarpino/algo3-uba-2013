@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="Pieza.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="2250" topLine="84" />
+	<File name="Pieza.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="173" topLine="1" />
 	</File>
 	<File name="Pieza.h" open="1" top="0" tabpos="6">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="633" topLine="8" />
 	</File>
 	<File name="Redefs.h" open="1" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
@@ -14,15 +14,15 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="Solucion.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="98" topLine="0" />
+		<Cursor position="500" topLine="2" />
 	</File>
 	<File name="Tablero.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="6137" topLine="218" />
+		<Cursor position="192" topLine="0" />
 	</File>
 	<File name="Tablero.h" open="1" top="0" tabpos="4">
-		<Cursor position="909" topLine="6" />
+		<Cursor position="83" topLine="15" />
 	</File>
 	<File name="ej4.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="3942" topLine="99" />
+		<Cursor position="12043" topLine="95" />
 	</File>
 </CodeBlocks_layout_file>

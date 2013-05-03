@@ -6,8 +6,25 @@
 #include "Tablero.h"
 #include "Pieza.h"
 
-#define TESTING 1
+#define TESTING 0
+#define RESULTADOS 1
 
+//********** TESTING *********
+
+timespec diff(timespec start, timespec end)
+{
+        timespec temp;
+        if ((end.tv_nsec-start.tv_nsec)<0) {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+        } else {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+        }
+        return temp;
+}
+
+//********** TESTING *********
 
 Solucion buscarSol(const Tablero &tablero, vector<Pieza> &piezas);
 vector< vector<Pieza> > subConjuntosDeTam(const vector<Pieza> &piezas, int tamanio);
@@ -26,9 +43,9 @@ vector<Pieza> obtenerPiezas(const Tablero &t, int cant);
 void agregarPiezasAlAzar(const Tablero &t, vector<Pieza> &piezas, const unsigned int cant);
 
 int main(int argc, char *argv[]) {
-
+    srand(time(NULL));
     if(TESTING){
-        srand(time(NULL));
+
         cout << "Generando test azar con solucion" << endl;
         ofstream ftest("testAzarConSol.txt");
         if(ftest.is_open()){
@@ -39,7 +56,7 @@ int main(int argc, char *argv[]) {
                     for(int r = 0; r < repeticiones; r++){
                         Tablero tab(i,j);
                         vector<Pieza> pie = obtenerPiezas(tab,min(i,j));
-                        agregarPiezasAlAzar(tab,pie,4);
+                        agregarPiezasAlAzar(tab,pie,2);
                         ftest << i << " " << j << " " << pie.size() <<  endl;
                         for(unsigned int r = 0; r < tab.getRows(); r++){
                             ftest << tab.getColor(r,0);
@@ -66,18 +83,17 @@ int main(int argc, char *argv[]) {
         ftest.close();
         cout << "Tests creados." << endl;
 
-        cout << "Generando test azar con poca probabilidad de solucion" << endl;
-
-        ftest.open("testAzar.txt");
+        cout << "Generando test azar tablero variable piezas fijas" << endl;
+        ftest.open("testAzarTabVarPieFij.txt");
         if(ftest.is_open()){
-            int repeticiones = 100;
-            int maxW=5,maxH=5;
-            for(int i = 2; i <= maxW; i = i + 2){
-                for(int j = 2; j <= maxH; j = j + 2){
+            int repeticiones = 50;
+            int maxW=20,maxH=20;
+            for(int i = 1; i <= maxW; i++){
+                for(int j = 1; j <= maxH; j++){
                     for(int r = 0; r < repeticiones; r++){
                         Tablero tab(i,j);
                         vector<Pieza> pie;
-                        agregarPiezasAlAzar(tab,pie,max(rand() % 30 + 4,10));
+                        agregarPiezasAlAzar(tab,pie,8);
                         ftest << i << " " << j << " " << pie.size() <<  endl;
                         for(unsigned int r = 0; r < tab.getRows(); r++){
                             ftest << tab.getColor(r,0);
@@ -94,6 +110,49 @@ int main(int argc, char *argv[]) {
                                     ftest << " " << pie[p].getColor(r,f);
                                 }
                                 ftest << endl;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ftest << "#";
+        ftest.close();
+        cout << "Tests creados." << endl;
+
+        cout << "Generando test azar tablero fijo piezas variable" << endl;
+
+        ftest.open("testAzarTabFijPieVar.txt");
+        if(ftest.is_open()){
+            int repeticiones = 50;
+            int maxW=5,maxH=5;
+            int min_piezas = 1;
+            int max_piezas = 21;
+            for(int i = 5; i <= maxW; i++){
+                for(int j = 5; j <= maxH; j++){
+                    for(int r = 0; r < repeticiones; r++){
+
+                        for(int z = min_piezas; z < max_piezas; z++){
+                            Tablero tab(i,j);
+                            vector<Pieza> pie;
+                            agregarPiezasAlAzar(tab,pie,z);
+                            ftest << i << " " << j << " " << pie.size() <<  endl;
+                            for(unsigned int r = 0; r < tab.getRows(); r++){
+                                ftest << tab.getColor(r,0);
+                                for(unsigned int f = 1; f < tab.getCols(); f++){
+                                    ftest << " " << tab.getColor(r,f);
+                                }
+                                ftest << endl;
+                            }
+                            for(unsigned int p = 0; p < pie.size(); p++){
+                                ftest << pie[p].getRows() << " " << pie[p].getCols() << endl;
+                                for(unsigned int r = 0; r < pie[p].getRows(); r++){
+                                    ftest << pie[p].getColor(r,0);
+                                    for(unsigned int f = 1; f < pie[p].getCols(); f++){
+                                        ftest << " " << pie[p].getColor(r,f);
+                                    }
+                                    ftest << endl;
+                                }
                             }
                         }
                     }
@@ -109,7 +168,7 @@ int main(int argc, char *argv[]) {
       cout << "Modo de uso: ej1 archivoEntrada archivoSalida";
       return 0;
     }
-    argv[1] = "testAzar.txt";
+    argv[1] = "testAzarConSol.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -118,6 +177,11 @@ int main(int argc, char *argv[]) {
     ofstream outputFile(argv[2],  ios_base::trunc);
     if(!outputFile.is_open()){
         cerr << "Error al abrir/crear el archivo de salida." << endl;
+    }
+    ofstream archRes;
+    if(RESULTADOS){
+        archRes.open("resultado.csv");
+        archRes << "Piezas Filas Columnas Tiempo" << endl;
     }
 
     string linea;
@@ -201,8 +265,17 @@ int main(int argc, char *argv[]) {
 //            cout << "- - -" << endl;
 //        }
 
+        timespec comienzo;
+        timespec terminacion;
 
+        if(RESULTADOS){
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+        }
         Solucion solucion = buscarSol(tablero,piezas);
+        if(RESULTADOS){
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+            archRes << cantPiezas << " " << tablero.getRows() << " " << tablero.getCols() << " " << diff(comienzo,terminacion).tv_nsec << endl;
+        }
 //        cout << "Tamanio de la solucion final: " << solucion.size() << endl;
         cout << "[";
         for(unsigned int i = 0; i < solucion.size(); i++){
@@ -217,7 +290,9 @@ int main(int argc, char *argv[]) {
         }
         outputFile  << endl;
     }
-
+    if(RESULTADOS){
+        archRes.close();
+    }
     inputFile.close();
     outputFile.close();
     return 0;
@@ -442,7 +517,7 @@ vector<Pieza> obtenerPiezas(const Tablero &t, int cant){
 }
 
 void agregarPiezasAlAzar(const Tablero &t, vector<Pieza> &piezas, const unsigned int cant){
-    srand(time(NULL));
+//    srand(time(NULL));
     int x,y, minId = piezas.size();
     for(unsigned int i = 0; i < cant; i++){
         x = rand() % t.getRows() + 1;
