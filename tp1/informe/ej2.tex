@@ -138,7 +138,7 @@ $ t'_{i} = t_{i} + intervalo(s_1) $
 
 \quad Caso contrario, calculamos la secuencia de mediciones. Para ello necesitamos el ya mencionado diccionario. Decidimos utilizar un min-Heap como diccionario. Esto nos permitir\'ia obtener el m\'inimo valor de tiempo de pr\'oxima medici\'on en O(log n) siendo n la cantidad de sensores. Crear el minHeap tiene un costo de O($ 3*n $).\footnote{http://www.sgi.com/tech/stl/make\_heap.html}.
 
-\quad Una vez creado el minHeap, comenzamos un ciclo donde se busca el siguiente sensor que mide. Al ser un minHeap, tiene costo O(1) pero luego hay que actualizar el valor y el diccionario utilizando \textit{push\_heap} y \textit{pop\_heap}, ambas con costo O($log n$)\footnote{http://www.sgi.com/tech/stl/push\_heap.html}\footnote{http://www.sgi.com/tech/stl/pop\_heap.html}. Como ya dijimos, al usar un minHeap, \'esto tiene un costo de O(log n). Luego, se agrega el id del sensor a la secuencia de mediciones con un costo constante.
+\quad Una vez creado el minHeap, comenzamos un ciclo donde se busca el siguiente sensor que mide. Al ser un minHeap, tiene costo O(1) pero luego hay que actualizar el valor y el diccionario utilizando \textit{push\_heap} y \textit{pop\_heap}, ambas con costo O($log n$)\footnote{http://www.sgi.com/tech/stl/push\_heap.html}, \footnote{http://www.sgi.com/tech/stl/pop\_heap.html}. Como ya dijimos, al usar un minHeap, \'esto tiene un costo de O(log n). Luego, se agrega el id del sensor a la secuencia de mediciones con un costo constante.
 
 \quad La cantidad de iteraciones del ciclo es el n\'umero de medici\'on que falla menos la cantidad de sensores existentes. \'Esto se debe a que, en el momento inicial, todos los sensores realizan una medici\'on. Por lo que de entrada se tienen n mediciones.
 
@@ -162,33 +162,52 @@ $ \displaystyle\sum_{i = k}^{n} log n = (k - n) * log n \leq k * n$
 
 \subsection{Resultados}
 
-\quad Para analizar el comportamiento del nuestro algoritmo, decidimos generar un test aleatorio donde se va variando la cantidad de sensores. En el mismo nos queda una gr\'fica:
+\quad Para analizar el comportamiento del nuestro algoritmo, decidimos generar tests aleatorios donde en uno se va ir variando la cantidad de sensores mientras que el n\'umero de falla va a depender de esa cantidad. En el mismo nos queda una gr\'afica:
 
+
+\quad
 
 \quad
 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{ej2.jpg}
+	\includegraphics[scale=0.6]{ej2-grafico1.png}
 	\caption{ Se compara el tiempo que tard\'o en promedio en obtener un resultado contra el tiempo te\'orico del peor caso}
 \end{figure}
 
+\quad
+
+\quad Armamos el test de la siguiente manera. Vamos a hacer instancias que vayan de 1 sensores a 100 y por cada cantidad de sensores realizamos 1000 repeticiones. Decidimos que la falla se produzca en la medici\'on: \quad $4 * n + r $. Donde n es la cantidad de sensores y r un valor aleatorio entre 1 y n.
+
+\quad Para cada ejecuci\'on guardamos el tiempo que tard\'o usando la funci\'on \textit{clockgettime} y luego contrastamos con la cota te\'orica calculada anteriormente.
+
+\quad Para los dos siguientes test, fijamos la cantidad de sensores. En uno poca cantidad de sensores y en otro una cantidad considerable. El n\'umero de falla lo fuimos variando desde 1 hasta n * 50 donde n es la cantidad de sensores utilizados.
 
 
-\quad Armamos el test de la siguiente manera. Vamos a hacer instancias que vayan de 10 sensores a 100 y por cada cantidad de sensores realizamos 1000 repeticiones. Decidimos que la falla se produzca en la medici\'on: \quad $20 * n + r $. Donde n es la cantidad de sensores y r un valor aleatorio entre 1 y n.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej2-grafico2.png}
+	\caption{ }
+\end{figure}
 
-\quad Para cada ejecuci\'on guardamos el tiempo que tard\'o usando la funci\'on \textit{clockgettime}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej2-grafico3.png}
+	\caption{ }
+\end{figure}
 
+\quad Se decidi\'on arbitrariamente que los tiempos de los sensores entre 1 y 20 elegidos aleatoriamente.
 
 \subsection{Conclusiones}
 
 \quad Como era de esperar, los resultados mostraron que el tiempo de ejecuci\'on es asint\'oticamente menor al tiempo te\'orico calculado para el peor caso. Siendo ese tiempo, menor al pedido por la consigna del trabajo pr\'actico.
 
-\quad
 
 \quad Analizar bien las posibles estructuras de datos a utilizar fue fundamental para volver m\'as eficiente el algoritmo. El problema de obtener en cada instante el m\'inimo de un conjunto de valores utilizando un minHeap logr\'o bajar la complejidad lineal a logar\'itmica.
 
 \quad
 
 \quad Luego, tambi\'en era necesario considerar la parte del problema en que todos los sensores realizan una medici\'on en el momento inicial. Lo que permite realizar n iteraciones menos de nuestro algoritmo, donde n es la cantidad de sensores.
+
+\quad La implementaci\'on se podr\'ia mejorar evitando construir el vector de mediciones de los sensores. Basta con llevar un contador, que con cada medici\'on se incremente. Determinando as\'i el sensor que midi\'o err\'oneamente cuando el contador alcance el n\'umero de medici\'on fallida.
