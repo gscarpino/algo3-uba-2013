@@ -11,21 +11,27 @@
 
 \quad La primera implementaci\'on del problema de power set consist\'ia en usar una m\'ascara de bits para determinar si un elemento estaba presente o no en un conjunto. Se recorr\'ian los n\'umeros desde el 1 hasta $ 2^{ \vert piezas\vert} $ formando as\'i todas las posibles combinaciones de subconjuntos. Era simple pero ten\'ia el problema de que pod\'ia producir overflow en arquitecturas donde ${\vert piezas\vert} $ sea mayor a la cantidad m\'axima de bits para alg\'un registro que sea utilizado como contador del procesador. Ej: con 40 piezas y un procesador de 32 bits.
 
-\quad Por lo tanto, decidimos implementar este problema mediante la recursi\'on...
+\quad Por lo tanto, decidimos implementar este problema mediante la recursi\'on.
 
-\quad
- 
-\quad
 
-\quad Para resolver el problema principal, lo que hicimos fue ir probando cada uno de los subconjuntos con tama\~no desde 1 hasta la cantidad de piezas. Como punto de corte razonable, es haber encontrado alg\'un subconjunto como soluci\'on.
+%\quad Para resolver el problema principal, lo que hicimos fue ir probando cada uno de los subconjuntos con tama\~no desde 1 hasta la %cantidad de piezas. Como punto de corte razonable, es haber encontrado alg\'un subconjunto como soluci\'on.
 
-\quad Para determinar si cierto subconjunto de piezas es soluci\'on, primero determinamos una poda. Esta consiste en que, al buscar una soluci\'on \'optima, el subconjunto de piezas deb\'ia de cubrir exactamente el tablero. Si la superficie de las fichas era menor al del tablero, entonces no era soluci\'on. En cambio, si era mayor, podr\'ia ser soluci\'on, pero si lo era, no era \'optima porque sobraba alguna pieza. 
+\quad Lo primero que hace el algoritmo antes de comenzar a probar con ubicaciones es realizar una poda. Esta primera poda que se realiza es para descartar piezas que no podrían ubicarse en ninguna parte del tablero. Por ejemplo, en un caso extremo, si el tablero es completamente negro, una pieza con alguna parte blanca no puede ubicarse y por lo tanto no podría pertenecer jamás a la solución. Esta primera poda es clave, porque ya desde el principio nos evitamos analizar ramas que no son solución del problema.
 
-\quad Luego implementamos una funci\'on recursiva en la cual para cada ficha se buscaba sus posibles posiciones en el tablero. Para cada posici\'on, se creaba una instancia del tablero en la cual se la ubicaba ah\'i. Luego se llamaba devuelta a la funci\'on con ese tablero y sin esa pieza.
+\quad Una vez eliminadas estas piezas, se prosigue buscando todos los subconjuntos del conjunto de piezas, es decir se calcula el conjunto de partes (o powerset) del conjunto de piezas. De esta manera obtenemos todas las combinaciones posibles de las piezas que no fueron descartadas hasta el momento. A continuación, ordenamos el conjunto de partes, poniendo en primer lugar a los subconjuntos de menor cantidad de elementos.
 
-\quad El caso base de la funci\'on es cuando no quedan m\'as piezas para ubicar. Entonces se fija en el tablero si est\'a completamente cubierto, en caso afirmativo, se encontr\'o una soluci\'on al problema.
+\quad Luego, se iterará sobre la cantidad de subconjuntos, y apenas se encuentre una solución se dejará de ciclar y se la devolverá. Como el conjunto está ordenado, se garantiza de esta manera que se encontró la solución con la menor cantidad de piezas, que es la que queríamos devolver (esto es porque todos los conjuntos que se evaluaron antes no solucionaron el problema).
 
-\quad La funci\'on tiene en cuenta las rotaciones de las piezas. Por lo que si no se encontr\'on soluci\'on, se rota la pieza. Si es id\'entica a la original, se corta esa rama. Caso contrario, se busca todas las posibles posiciones para esa pieza rotada, y se repite lo anterior.
+
+\quad Para determinar si cierto subconjunto de piezas es soluci\'on, determinamos una nueva poda. Esta consiste en que, al buscar una soluci\'on \'optima, el subconjunto de piezas debe de cubrir exactamente el tablero. Si la superficie de las piezas del subconjunto es menor al del tablero, entonces no puede ser soluci\'on porque no cubriría el tablero. En cambio, si es mayor, podr\'ia ser soluci\'on, pero si lo era, no era \'optima porque sobraba alguna pieza.
+
+
+
+\quad Luego implementamos una funci\'on recursiva en la cual para cada pieza se busca sus posibles posiciones en el tablero. Para cada posici\'on, se crea una instancia del tablero en la cual se ubica dicha pieza. Luego se llama recursivamente a la funci\'on con ese tablero y sin esa pieza.
+
+\quad El caso base de la funci\'on es cuando no quedan m\'as piezas por ubicar. Entonces se chequea si el tablero est\'a completamente cubierto, en caso afirmativo, se encontr\'o una soluci\'on al problema.
+
+\quad La funci\'on tiene en cuenta las rotaciones de las piezas. Por lo que si no se encontr\'on soluci\'on, se rota la pieza. Si es id\'entica a la original, se poda esa rama. Caso contrario, se busca todas las posibles posiciones para esa pieza rotada, y se repite lo anterior.
 
 \quad Una vez que se encuentra soluci\'on, si existe, se devuelve el vector con la informaci\'on de las piezas colocadas en el tablero. \'Este vector, lo maneja la clase \textit{Tablero} que hicimos, al cual agrega una pieza cada vez que es posible ubicarla en el tablero.
 
@@ -43,7 +49,13 @@
 
 \subsubsection{Correctitud}
 
-\quad En cuanto la problema de la generaci\'on de todos los subconjuntos posibles de un conjunto, utilizamos un m\'etodo que dada la representaci\'on binaria de un n\'umero los elementos presentes en un conjunto son aquellos donde la posici\'on es igual al id del elemento y el bit est\'a en 1, es decir, es un elemento presente. Como se recorre desde el valor 1 hasta $ 2^{n} $ (n es cantidad de elementos), se recorre todas las posibles  combinaciones de elementos presentes y no presentes. Si bien esta forma sigue siendo un algoritmo exponencial, creemos que es m\'as eficiente que haber hecho una funci\'on recursiva que genere todos estos conjuntos.
+%\quad En cuanto la problema de la generaci\'on de todos los subconjuntos posibles de un conjunto, utilizamos un m\'etodo que dada la representaci\'on binaria de un n\'umero los elementos presentes en un conjunto son aquellos donde la posici\'on es igual al id del elemento y el bit est\'a en 1, es decir, es un elemento presente. Como se recorre desde el valor 1 hasta $ 2^{n} $ (n es cantidad de elementos), se recorre todas las posibles  combinaciones de elementos presentes y no presentes. Si bien esta forma sigue siendo un algoritmo exponencial, creemos que es m\'as eficiente que haber hecho una funci\'on recursiva que genere todos estos conjuntos.
+
+\quad Recorremos todas las posibles combinaciones de las fichas. Luego para cada subconjunto nos fijamos si es solución. En caso de existir solución, es esperable que esta supere todas las podas que hemos determinado. Es decir que el tamaño de la suma de las piezas del subconjunto coincide con el tablero y que cada pieza del subconjunto puede ubicarse en el tablero, que en el fondo son propiedades necesarias pero no suficientes que debe cumplir una solución. Es decir que no estamos podando piezas que podrían pertenecer al conjunto solución. Esta es la ventaja del backtracking, que se podría caractizar como fuerza bruta un poco más inteligente, al ahorrarse operaciones que no tiene sentido realizar. 
+\quad Teniendo en cuenta que a lo mejor se nos escapó agregar alguna otra poda, lo que queremos remarcar es que estamos recorriendo subconjuntos que pueden o no ser solución y que recortamos ramas con potencial para serlo. De esta manera, aunque se pudiesen agregar podas, se estarían analizando todas las potenciales soluciones.
+
+\quad Como además recorremos los subconjuntos de menor a mayor cantidad de elementos y dado que el algoritmo deja de iterar en los subconjuntos una vez que halle una solución, se está garantizando que la solución devuelta (en caso de exisir) es una solución óptima en el sentido de que se completa el tablero con la menor cantidad de piezas posibles, que es lo que efectivamente se debe devolver.
+\quad 
 
 \subsubsection{An\'alisis de complejidad}
 
@@ -88,20 +100,28 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 \indent Veamos más detenidamente $T(n)$:\\
 \begin{center}
 \indent $T(n)= T(n)=4*[k + k^{2} + k^{2} + k* T(n-1)] = 4*k + 4*k{2} + 4*k^{2} + 4*k * T(n-1)=$ \\
+
 \indent $= 4*k + 4*k^{2} + 4*k^{2} + 4*k *[4*k + 4*k^{2} + 4*k^{2} + 4*k * T(n-2)]=$\\
+
 \indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{2}*k^{2} * T(n-2)=$\\
+
 \indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{2}*k^{2} * [4*k + 4*k^{2} + 4*k^{2} + 4*k* T(n-3)]=$\\
+
 \indent $=4*k + 4*k^{2} + 4*k^{2} + 4^{2}*k^{2} + 4^{2}*k^{3} + 4^{2}*k^{3}+ 4^{3}*k^{3} + 4^{3}*k^{4} + 4^{3}*k^{4} + 4^{3}*k^{3} * T(n-3)=$\\
+
 \indent $=....=$\\
-\indent $=  (4*k)^{n} * T(0) + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})=$ \\
-\indent $=  (4*k)^{n} * k + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})$ \\
+
+\indent $=  (4*k)^{n} * T(0) + \sum_{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})=$ \\
+
+\indent $=  (4*k)^{n} * k + \sum_{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$ \\
+
 \end{center}
 
 
 \indent Es decir que :\\
 
 \indent $T(0)=k$\\
-\indent $T(n)= 4^{n}* k^{n+1} + \sum{i=1}^n (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
+\indent $T(n)= 4^{n}* k^{n+1} + \sum_{i=1}^{n} (4*k)^{i} + 2 * (4^{i}* k^{i+1})$\\
 
 \indent Conjeturamos que esto cuesta $O(4^{n}*k^{n+1})$. Veámoslo por inducción:\\
 
@@ -118,13 +138,33 @@ $4*[k + k^{2} + k^{2} + k* T(n-1)]$\\
 \begin{center}
 
 \indent $T(n)= 4*k + 4*k{2} + 4*k^{2} + 4*k * T(n-1) \leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq $\\
+
 \indent $\leq 4*k + 4*k{2} + 4*k^{2} + 4*k * 4^{n-1}* k^{n} \leq 4*k + 4*k{2} + 4*k^{2} + 4^{n}* k^{n+1} \leq $ \\
+
 \indent $\leq 4^{n}*k^{n+1} + 4^{n}*k{n+1} + 4^{n}*k^{n+1} + 4^{n}* k^{n+1} \leq 4* 4^{n}* k^{n+1}$\\
+
 \indent que es lo que queriamos ver.\\
 \end{center}
 
 
 \indent Luego, $resolverJuego$ cuesta O($4^{n}*k^{n+1}$).\\
+
+\indent Veamos ahora la complejidad de $buscarSol$.\\
+\indent  Esta función lo que hace es llamar a $descartarPiezas$, que se encarga de eliminar del vector de piezas a aquellas que no podrían entrar en el tablero porque no coinciden con ningún área de este. Esta función se vale de la función de Tablero $cabe$ que chequea si una pieza en particular entra en el tablero y que tiene una complejida de O($k*filasPiezas*columnasPieza$). Acotándolo como mencionamos anteriormente nos queda O($k^{2}$).\\
+\indent  Luego, $descartarPiezas$ cuesta O($n* k^{2} + n^{2}$).\\
+
+\indent Además, se genera el power set del vector luego de descartar las piezas. En el peor caso, no se descartó ninguna pieza. Entonces generar el conjunto de partes tiene un costo de O($n * 2^{n}$).\\
+\indent  Ordenar este subconjunto tiene un costo de O($n * 2^{n}$), que se obtiene de la cota O($2^{n} * log(2^{n})$) que cuesta ordenar un vector de $2^{n}$ elementos (que es la cantidad de elementos que tiene el conjunto de partes o power set).\\
+
+\indent Luego, $buscarSol$ itera en la cantidad de elementos del conjunto de partes. En el peor caso dijimos que son $2^{n}$ subconjuntos. Por cada iteración se llama a $esSolucion$ que chequea si las piezas cubren todo el tablero con un costo de O(n). Si lo hacen se llama a $resolverJuego$.\\
+
+\indent Es decir que $esSolucion$ tiene una complejidad de O($n + 4^{n}*k^{n+1}$), que es O($4^{n}*k^{n+1}$) puesto que $k$ es entero positivo.\\
+
+\indent Luego la complejidad total de $esSolucion$, que es la función que resuelve el problema es O($n* k^{2} + n^{2} + n * 2^{n} + 4^{n}*k^{n+1}$). O lo que es lo mismo:\\
+
+\indent O( $max [(n* k^{2} + n^{2} ) , ( $n * 2^{n}$ ) , ( $4^{n}*k^{n+1}$ ) ] ).\\
+ 
+ 
 
 \subsection{Resultados}
 
