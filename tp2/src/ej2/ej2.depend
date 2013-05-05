@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1367789235 source:c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.cpp
+	"Grafo.h"
+
+1367789242 c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.h
+	<iostream>
+	<vector>
+
+1367790566 source:c:\users\gino\desktop\algo3\tp2\src\ej2\disjointset.cpp
+	"DisjointSet.h"
+
+1367790571 c:\users\gino\desktop\algo3\tp2\src\ej2\disjointset.h
+	<map>
+
+1367790591 source:c:\users\gino\desktop\algo3\tp2\src\ej2\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstdlib>
+	<vector>
+	"Grafo.h"
+
