@@ -14,13 +14,6 @@ Grafo::Grafo(const Grafo& other)
     this->aristas = other.aristas;
 }
 
-Grafo& Grafo::operator=(const Grafo& rhs)
-{
-    if (this == &rhs) return *this; // handle self assignment
-    //assignment operator
-    return *this;
-}
-
 
 unsigned int Grafo::getNodos(){
     return this->nodos;
@@ -47,37 +40,36 @@ unsigned int Grafo::cantAristas() const{
     return this->aristas.size();
 }
 
-bool Grafo::cmpCamino(Camino &a, Camino &b){
-    if(a.second.first == b.second.first){
-        if(a.second.first){
-            return a.second.second < b.second.second;
-        }
-        else{
-            return a.second.second > b.second.second;
-        }
-    }
-    else{
-        return a.second.first;
-    }
-}
-
 Grafo Grafo::AGM(){
     Grafo res(nodos);
-//    DisjointSet ds(this->nodos);
+    DisjointSet ds(this->nodos);
 //    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        cout << "(" << this->aristas[i].first.first << "," << this->aristas[i].first.second << "," << this->aristas[i].second.first << "," << this->aristas[i].second.second << ") ";
+//        this->aristas[i].imprimir();
+//        cout << endl;
 //    }
-//    cout << endl;
 
-    sort(this->aristas.begin(),this->aristas.end(),cmpCamino);
-
-//    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        cout << "(" << this->aristas[i].first.first << "," << this->aristas[i].first.second << "," << this->aristas[i].second.first << "," << this->aristas[i].second.second << ") ";
-//    }
-//    cout << endl;
     //ordenar aristas grafo
     //e == 1 entonces de mayor a menor, e==0 entonces de menor a mayor
+
+    sort(this->aristas.begin(),this->aristas.end());
+//    cout << endl;
+//    for(unsigned int i = 0; i < this->aristas.size(); i++){
+//        this->aristas[i].imprimir();
+//        cout << endl;
+//    }
+
     //generar agm
+    for(unsigned int i = 0; i < this->aristas.size(); i++){
+        unsigned int c1 = this->aristas[i].getCiudad1();
+        unsigned int c2 = this->aristas[i].getCiudad2();
+        if(!ds.buscar(c1,c2)){
+            Camino camino(c1,c2,this->aristas[i].getExiste(),this->aristas[i].getCosto());
+            res.agregarArista(camino);
+//            camino.imprimir();
+            ds.unir(c1,c2);
+            //Se puede agregar punto de corte m = n-1 pues es arbol
+        }
+    }
 
     return res;
 }

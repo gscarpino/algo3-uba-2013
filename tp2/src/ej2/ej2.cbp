@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="input.txt output.txt" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -32,6 +33,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Camino.cpp" />
+		<Unit filename="Camino.h" />
+		<Unit filename="DisjointSet.cpp" />
+		<Unit filename="DisjointSet.h" />
+		<Unit filename="Grafo.cpp" />
+		<Unit filename="Grafo.h" />
+		<Unit filename="Redefs.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

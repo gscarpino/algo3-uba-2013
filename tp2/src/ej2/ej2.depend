@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1367789235 source:c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.cpp
+1367811913 source:c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.cpp
 	"Grafo.h"
 
-1367806139 c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.h
+1367811029 c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.h
 	<iostream>
 	<vector>
 	<algorithm>
@@ -15,15 +15,23 @@
 	<iostream>
 	<map>
 
-1367796285 source:c:\users\gino\desktop\algo3\tp2\src\ej2\main.cpp
+1367811352 source:c:\users\gino\desktop\algo3\tp2\src\ej2\main.cpp
 	<iostream>
 	<fstream>
 	<sstream>
 	<cstdlib>
 	<vector>
 	"Redefs.h"
+	"Camino.h"
 	"Grafo.h"
 
-1367797152 c:\users\gino\desktop\algo3\tp2\src\ej2\redefs.h
+1367812174 c:\users\gino\desktop\algo3\tp2\src\ej2\redefs.h
+	"Camino.h"
+	"DisjointSet.h"
+
+1367812012 source:c:\users\gino\desktop\algo3\tp2\src\ej2\camino.cpp
+	"Camino.h"
+
+1367812494 c:\users\gino\desktop\algo3\tp2\src\ej2\camino.h
 	<iostream>
 

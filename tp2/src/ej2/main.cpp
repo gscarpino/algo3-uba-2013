@@ -5,6 +5,7 @@
 #include <vector>
 #include "Redefs.h"
 
+#include "Camino.h"
 #include "Grafo.h"
 
 
@@ -50,8 +51,10 @@ int main(int argc, char * argv[])
             sLinea >> c2;
             sLinea >> e;
             sLinea >> p;
-            ciudades.agregarArista(make_pair(make_pair(c1,c2),make_pair(e,p)));
+            Camino c(c1,c2,e,p);
+            ciudades.agregarArista(c);
         }
+
 
         Grafo ciudadesModificadas = ciudades.AGM();
 

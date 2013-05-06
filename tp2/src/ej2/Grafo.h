@@ -6,6 +6,8 @@
 #include <algorithm>
 
 #include "Redefs.h"
+
+
 using namespace std;
 //
 //typedef vector< pair<bool, unsigned int> > Vec;
@@ -18,20 +20,19 @@ class Grafo
 
         Grafo(unsigned int cantNodos);
         Grafo(const Grafo& other);
-        Grafo& operator=(const Grafo& other);
         unsigned int getNodos();
         vector< Camino > getAristas();
 //        void agregarArista(unsigned int n1, unsigned int n2, pair<bool,unsigned int> a);
         void agregarArista(const Camino &c);
         unsigned int cantAristas() const;
         Grafo AGM();
+        bool cmpCamino(Camino &a, Camino &b);
 
     private:
         unsigned int nodos;
         vector< Camino > aristas;
 
 
-        bool cmpCamino(Camino &a, Camino &b);
 };
 
 #endif // GRAFO_H
