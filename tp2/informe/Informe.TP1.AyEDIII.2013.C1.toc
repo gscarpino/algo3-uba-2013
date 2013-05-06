@@ -1,0 +1,25 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Problema 1: Mutaciones bacteriales}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Introducci\'on}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Desarrollo}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Algoritmo}{3}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1}Correctitud}{3}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}An\'alisis de complejidad}{3}{subsubsection.1.3.2}
+\contentsline {subsection}{\numberline {1.4}Pruebas}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Conclusiones}{3}{subsection.1.5}
+\contentsline {section}{\numberline {2}Problema 2: Reconfiguraci\'on de rutas}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Introducci\'on}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Desarrollo}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Algoritmo}{4}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Correctitud}{4}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}An\'alisis de complejidad}{4}{subsubsection.2.3.2}
+\contentsline {subsection}{\numberline {2.4}Resultados}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Conclusiones}{4}{subsection.2.5}
+\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introducci\'on}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Algoritmo}{5}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{5}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{5}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{5}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{5}{subsection.3.5}
