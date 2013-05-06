@@ -3,6 +3,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <vector>
+#include "Redefs.h"
+
 #include "Grafo.h"
 
 
@@ -48,7 +50,7 @@ int main(int argc, char * argv[])
             sLinea >> c2;
             sLinea >> e;
             sLinea >> p;
-            ciudades.agregarArista(c1,c2,make_pair(e,p));
+            ciudades.agregarArista(make_pair(make_pair(c1,c2),make_pair(e,p)));
         }
 
         Grafo ciudadesModificadas = ciudades.AGM();
