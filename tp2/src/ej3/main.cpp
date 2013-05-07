@@ -57,6 +57,7 @@ int main(int argc, char * argv[]){
 
         Grafo investigadores(cantInv);
         unsigned int contagiables = 0;
+        unsigned int aa = 0;
         for(unsigned int i = 0; i < cantInv; i++){
             unsigned int temp;
             getline(inputFile, linea);
@@ -66,6 +67,15 @@ int main(int argc, char * argv[]){
                 sLinea >> temp;
                 investigadores.agregarArista(make_pair(i,temp));
             }
+        }
+
+        cout << "Investigadores: " << investigadores.getNodos() << endl;
+        cout << "Cant aristas: " << investigadores.cantAristas() << endl;
+
+        vector<unsigned int> grupo(investigadores.grupoDeRiesgo());
+        cout << "Cantidad del grupo de riesgo: " << grupo.size() << endl;
+        for(unsigned int i = 0; i < grupo.size(); i++){
+            cout << grupo[i] << " ";
         }
 
 //        timespec comienzo;

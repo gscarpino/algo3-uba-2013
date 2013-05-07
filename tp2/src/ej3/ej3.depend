@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1367936246 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafo.cpp
+	"Grafo.h"
+
+1367934442 c:\users\gino\desktop\algo3\tp2\src\ej3\grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+	"Redefs.h"
+
+1367931565 c:\users\gino\desktop\algo3\tp2\src\ej3\redefs.h
+
+1367936216 source:c:\users\gino\desktop\algo3\tp2\src\ej3\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstdlib>
+	<ctime>
+	<vector>
+	"Grafo.h"
+
