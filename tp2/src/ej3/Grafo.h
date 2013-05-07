@@ -9,10 +9,6 @@
 
 
 using namespace std;
-//
-//typedef vector< pair<bool, unsigned int> > Vec;
-//typedef vector<Vec> Matriz;
-//typedef pair<pair<unsigned int, unsigned int>, pair<bool, unsigned int> > Camino;
 
 class Grafo
 {
@@ -21,15 +17,13 @@ class Grafo
         Grafo(unsigned int cantNodos);
         Grafo(const Grafo& other);
         unsigned int getNodos();
-        vector< vector< bool > > getAristas();
-        void agregarArista(const unsigned int a, const unsigned int b);
+        vector< pair< unsigned int, unsigned int > > getAristas();
+        void agregarArista(const pair< unsigned int, unsigned int > &c);
         unsigned int cantAristas() const;
-        Grafo AGM();
 
     private:
         unsigned int nodos;
-        unsigned int cantArist;
-        vector< vector< bool > > aristas;
+        vector< pair< unsigned int, unsigned int > > aristas;
 
 
 };

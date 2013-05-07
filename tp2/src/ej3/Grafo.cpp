@@ -19,7 +19,7 @@ unsigned int Grafo::getNodos(){
     return this->nodos;
 }
 
-vector< Camino > Grafo::getAristas(){
+vector< pair< unsigned int, unsigned int > > Grafo::getAristas(){
     return this->aristas;
 }
 
@@ -32,47 +32,12 @@ vector< Camino > Grafo::getAristas(){
 //    }
 //}
 
-void Grafo::agregarArista(const Camino &c){
+void Grafo::agregarArista(const pair< unsigned int, unsigned int > &c){
     this->aristas.push_back(c);
 }
 
 unsigned int Grafo::cantAristas() const{
     return this->aristas.size();
 }
-
-Grafo Grafo::AGM(){
-    Grafo res(nodos);
-    DisjointSet ds(this->nodos);
-//    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        this->aristas[i].imprimir();
-//        cout << endl;
-//    }
-
-    //ordenar aristas grafo
-    //e == 1 entonces de mayor a menor, e==0 entonces de menor a mayor
-
-    sort(this->aristas.begin(),this->aristas.end());
-//    cout << endl;
-//    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        this->aristas[i].imprimir();
-//        cout << endl;
-//    }
-
-    //generar agm
-    for(unsigned int i = 0; i < this->aristas.size(); i++){
-        unsigned int c1 = this->aristas[i].getCiudad1();
-        unsigned int c2 = this->aristas[i].getCiudad2();
-        if(!ds.buscar(c1,c2)){
-            Camino camino(c1,c2,this->aristas[i].getExiste(),this->aristas[i].getCosto());
-            res.agregarArista(camino);
-//            camino.imprimir();
-            ds.unir(c1,c2);
-            //Se puede agregar punto de corte m = n-1 pues es arbol
-        }
-    }
-
-    return res;
-}
-
 
 

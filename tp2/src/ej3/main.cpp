@@ -64,22 +64,20 @@ int main(int argc, char * argv[]){
             sLinea >> contagiables;
             for(unsigned int j = 0; j < contagiables; j++){
                 sLinea >> temp;
-                investigadores.agregarArista(i,temp);
+                investigadores.agregarArista(make_pair(i,temp));
             }
-
-
         }
 
-        timespec comienzo;
-        timespec terminacion;
-        if(RESULTADOS){
-            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
-        }
-//        Grafo ciudadesModificadas(ciudades.AGM());
-        if(RESULTADOS){
-            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
-            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
-        }
+//        timespec comienzo;
+//        timespec terminacion;
+//        if(RESULTADOS){
+//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+//        }
+////        Grafo ciudadesModificadas(ciudades.AGM());
+//        if(RESULTADOS){
+//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+//            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
+//        }
 
     }
     archRes.close();
