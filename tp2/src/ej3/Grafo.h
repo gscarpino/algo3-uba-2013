@@ -20,7 +20,7 @@ class Grafo
         void agregarArista(const pair< unsigned int, unsigned int > &c);
         unsigned int cantAristas() const;
         vector<unsigned int> vecinosDe(unsigned int nodo);
-        vector<unsigned int> grupoDeRiesgo();
+        vector< vector<unsigned int> > grupoDeRiesgoMaximales();
 
     private:
         unsigned int nodos;
@@ -30,7 +30,11 @@ class Grafo
 
         void marcarNodos(unsigned int nodo, vector<unsigned int> &nodosMarcados);
         bool todosMarcados(const vector<unsigned int> &v);
-
+        bool pertenece(const unsigned int n, const vector<unsigned int> &v) const;
+        bool contagia(const unsigned int n, const vector<unsigned int> &v) const;
+        bool loContagian(const unsigned int n, const vector<unsigned int> &v) const;
+        void borrarDuplicados(vector< vector<unsigned int> > &grupos);
+        bool iguales(const vector<unsigned int> &v1,const vector<unsigned int> &v2);
 };
 
 #endif // GRAFO_H

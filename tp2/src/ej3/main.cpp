@@ -26,8 +26,7 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-//    argv[1] = "testsPocasRutasExistentes.txt";
-
+    argv[1] = "input2.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -57,7 +56,6 @@ int main(int argc, char * argv[]){
 
         Grafo investigadores(cantInv);
         unsigned int contagiables = 0;
-        unsigned int aa = 0;
         for(unsigned int i = 0; i < cantInv; i++){
             unsigned int temp;
             getline(inputFile, linea);
@@ -70,12 +68,15 @@ int main(int argc, char * argv[]){
         }
 
         cout << "Investigadores: " << investigadores.getNodos() << endl;
-        cout << "Cant aristas: " << investigadores.cantAristas() << endl;
 
-        vector<unsigned int> grupo(investigadores.grupoDeRiesgo());
-        cout << "Cantidad del grupo de riesgo: " << grupo.size() << endl;
-        for(unsigned int i = 0; i < grupo.size(); i++){
-            cout << grupo[i] << " ";
+        vector< vector< unsigned int > > grupos(investigadores.grupoDeRiesgoMaximales());
+        cout << "Cantidades de grupos de riesgo maximales: " << grupos.size() << endl;
+        for(unsigned int i = 0; i < grupos.size(); i++){
+            cout << "Grupo " << i << endl;
+            for(unsigned int j = 0; j < grupos[i].size(); j++){
+                cout << grupos[i][j] << " ";
+            }
+            cout << endl << endl;
         }
 
 //        timespec comienzo;

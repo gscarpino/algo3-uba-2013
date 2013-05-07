@@ -56,37 +56,89 @@ vector<unsigned int> Grafo::vecinosDe(unsigned int nodo){
 }
 
 
-vector<unsigned int> Grafo::grupoDeRiesgo(){
-    vector<unsigned int> res;
+vector< vector<unsigned int> > Grafo::grupoDeRiesgoMaximales(){
+    vector< vector<unsigned int> > res;
+
     for(unsigned int i = 0; i < nodos; i++){
-        vector<unsigned int> nodosMarcados(nodos,0);
-        marcarNodos(i,nodosMarcados);
-        if(todosMarcados(nodosMarcados)){
-            res.push_back(i);
+        vector<unsigned int> unitario(1,i);
+        res.push_back(unitario);
+    }
+
+    for(unsigned int i = 0; i < nodos; i++){
+        for(unsigned int j = 0; j < res.size(); j++){
+            if(!pertenece(i,res[j])){
+                if(contagia(i,res[j]) && loContagian(i,res[j])){
+                    res[j].push_back(i);
+                }
+            }
         }
     }
+
+    borrarDuplicados(res);
 
     return res;
 }
 
-bool Grafo::todosMarcados(const vector<unsigned int> &v){
-    bool res = true;
+bool Grafo::pertenece(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
     for(unsigned int i = 0; i < v.size(); i++){
-        if(v[i] == 0){
-            res = false;
+        if(n == v[i]){
+            res = true;
             break;
         }
     }
     return res;
 }
 
-void Grafo::marcarNodos(unsigned int nodo, vector<unsigned int> &nodosMarcados){
-    nodosMarcados[nodo] = 1;
-    vector<unsigned int> vecinos(this->vecinosDe(nodo));
 
-    for(unsigned int i = 0; i < vecinos.size(); i++){
-        if(nodosMarcados[vecinos[i]] == 0){
-            marcarNodos(vecinos[i],nodosMarcados);
+bool Grafo::contagia(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
+    for(unsigned int i = 0; i < v.size(); i++){
+        if(aristas[n][v[i]] == 1){
+            res = true;
+            break;
         }
     }
+    return res;
+}
+
+bool Grafo::loContagian(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
+    for(unsigned int i = 0; i < v.size(); i++){
+        if(aristas[v[i]][n] == 1){
+            res = true;
+            break;
+        }
+    }
+    return res;
+}
+
+void Grafo::borrarDuplicados(vector< vector<unsigned int> > &grupos){
+    vector<unsigned int> ids;
+    for(unsigned int i = 0; i < grupos.size() - 1; i++){
+        for(unsigned int j = i + 1; j < grupos.size(); j++){
+            if(iguales(grupos[i], grupos[j])){
+                if(!pertenece(j,ids)){
+                    ids.push_back(j);
+                }
+            }
+        }
+    }
+    for(unsigned int i = 0; i < ids.size(); i++){
+        grupos.erase(grupos.begin() + ids[i]-i);
+    }
+}
+
+bool Grafo::iguales(const vector<unsigned int> &v1,const vector<unsigned int> &v2){
+    for(unsigned int i = 0; i < v1.size();i++){
+        if(!pertenece(v1[i],v2)){
+            return false;
+        }
+    }
+    for(unsigned int i = 0; i < v2.size();i++){
+        if(!pertenece(v2[i],v1)){
+            return false;
+        }
+    }
+    return true;
 }
