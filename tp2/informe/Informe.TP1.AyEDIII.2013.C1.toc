@@ -10,16 +10,15 @@
 \contentsline {section}{\numberline {2}Problema 2: Reconfiguraci\'on de rutas}{4}{section.2}
 \contentsline {subsection}{\numberline {2.1}Introducci\'on}{4}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Desarrollo}{4}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Algoritmo}{4}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Correctitud}{4}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}An\'alisis de complejidad}{4}{subsubsection.2.3.2}
-\contentsline {subsection}{\numberline {2.4}Resultados}{4}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Conclusiones}{4}{subsection.2.5}
-\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Introducci\'on}{5}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Desarrollo}{5}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Algoritmo}{5}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{5}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{5}{subsubsection.3.3.2}
-\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{5}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Conclusiones}{5}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {2.2.1}Correctitud}{5}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}An\'alisis de complejidad}{6}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Resultados}{6}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Conclusiones}{6}{subsection.2.4}
+\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introducci\'on}{7}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Algoritmo}{7}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{7}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{7}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{7}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{7}{subsection.3.5}
