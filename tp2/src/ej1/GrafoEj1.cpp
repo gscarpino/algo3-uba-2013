@@ -40,12 +40,12 @@ unsigned int Grafo::cantidadNodos(){
 	return cantNodos;
 }
 
-unsigned int Grafo::cantidadNodos(){
+unsigned int Grafo::cantidadAristas(){
 
 	return cantAristas;
 }
 
-vector<unsigned int> Grafo::hijos(nodo){
+vector<unsigned int> Grafo::hijos(unsigned int nodo){
 
 	return this->aristas[nodo-1];
 }

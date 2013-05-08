@@ -25,7 +25,7 @@ class Grafo{
         bool tieneHijos (unsigned int nodo); //para saber si es terminal
         unsigned int cantidadNodos();
         unsigned int cantidadAristas();
-        vector<unsigned int> hijos(nodo);
+        vector<unsigned int> hijos(unsigned int nodo);
 
 	private:
 			unsigned int cantNodos; 
