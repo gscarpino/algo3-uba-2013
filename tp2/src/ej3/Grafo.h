@@ -33,8 +33,8 @@ class Grafo
         bool pertenece(const unsigned int n, const vector<unsigned int> &v) const;
         bool contagia(const unsigned int n, const vector<unsigned int> &v) const;
         bool loContagian(const unsigned int n, const vector<unsigned int> &v) const;
-        void borrarDuplicados(vector< vector<unsigned int> > &grupos);
-        bool iguales(const vector<unsigned int> &v1,const vector<unsigned int> &v2);
+        void borrarDuplicadosYnoMaximales(vector< vector<unsigned int> > &grupos);
+        unsigned int relacion(const vector<unsigned int> &v1,const vector<unsigned int> &v2);
 };
 
 #endif // GRAFO_H

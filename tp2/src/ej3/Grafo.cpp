@@ -74,7 +74,7 @@ vector< vector<unsigned int> > Grafo::grupoDeRiesgoMaximales(){
         }
     }
 
-    borrarDuplicados(res);
+    borrarDuplicadosYnoMaximales(res);
 
     return res;
 }
@@ -113,32 +113,57 @@ bool Grafo::loContagian(const unsigned int n, const vector<unsigned int> &v) con
     return res;
 }
 
-void Grafo::borrarDuplicados(vector< vector<unsigned int> > &grupos){
+void Grafo::borrarDuplicadosYnoMaximales(vector< vector<unsigned int> > &grupos){
     vector<unsigned int> ids;
     for(unsigned int i = 0; i < grupos.size() - 1; i++){
         for(unsigned int j = i + 1; j < grupos.size(); j++){
-            if(iguales(grupos[i], grupos[j])){
+            unsigned int rel = relacion(grupos[i], grupos[j]);
+            //rel == 0 entonces son distintos y ninguno incluido en el otro
+            if(rel == 2){
+                //son iguales
                 if(!pertenece(j,ids)){
                     ids.push_back(j);
                 }
             }
+            else if(rel == 1){
+                //grupos[j] incluido en grupos[i]
+                if(!pertenece(j,ids)){
+                    ids.push_back(j);
+                }
+            }
+            else if(rel == 3){
+                //grupos[i] incluido en grupos[j]
+                if(!pertenece(i,ids)){
+                    ids.push_back(i);
+                }
+            }
         }
     }
+
     for(unsigned int i = 0; i < ids.size(); i++){
         grupos.erase(grupos.begin() + ids[i]-i);
     }
 }
 
-bool Grafo::iguales(const vector<unsigned int> &v1,const vector<unsigned int> &v2){
+unsigned int Grafo::relacion(const vector<unsigned int> &v1,const vector<unsigned int> &v2){
+    unsigned int res = 2;
     for(unsigned int i = 0; i < v1.size();i++){
         if(!pertenece(v1[i],v2)){
-            return false;
+            res--;
+            break;
         }
     }
     for(unsigned int i = 0; i < v2.size();i++){
         if(!pertenece(v2[i],v1)){
-            return false;
+            if(res == 2){
+                res = 3;
+            }
+            else{
+                res--;
+            }
+            break;
         }
     }
-    return true;
+    return res;
 }
+
