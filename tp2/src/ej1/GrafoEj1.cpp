@@ -49,3 +49,25 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 
 	return this->aristas[nodo-1];
 }
+
+vector<unsigned int> Grafo::padres(unsigned int nodo){
+	
+	vector<unsigned int> res;
+	unsigned int tam=this->cantNodos;
+	unsigned int j=0;
+	
+	for (unsigned int i=0; i< tam; i++){
+
+		j=this->aristas[i].size();
+
+		for(unsigned int f=0; f<j; f++){
+
+			if(this->aristas[i][j]==nodo){
+				res.push_back(i+1);
+				break;
+			}
+		}
+	}
+
+	return res;
+}

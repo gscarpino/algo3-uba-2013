@@ -26,6 +26,7 @@ class Grafo{
         unsigned int cantidadNodos();
         unsigned int cantidadAristas();
         vector<unsigned int> hijos(unsigned int nodo);
+        vector<unsigned int> padres(unsigned int nodo);
 
 	private:
 			unsigned int cantNodos; 
