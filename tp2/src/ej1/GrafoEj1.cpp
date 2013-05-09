@@ -1,8 +1,4 @@
 #include "GrafoEj1.h"
-#include <stack>
-#define BLANCO -1
-#define GRIS 0
-#define NEGRO 1
 
 
 Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de nodos que vamos a poner
@@ -11,11 +7,9 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 
 	vector<unsigned int> vacio;
 	this->aristas.reserve(cant);
-	this->colores.reserve(cant);
 
 	for(unsigned int i=0; i< cant; i++) {
 		this->aristas.push_back(vacio);
-      this->colores.push_back(BLANCO);
 	}
 
 	this->cantAristas=0;
@@ -28,21 +22,20 @@ Grafo::Grafo(const Grafo& other){ //constructor por copia
 	this->cantNodos = other.cantNodos;
 	this->aristas = other.aristas;
 	this->cantAristas = other.cantAristas;
-    this->colores= other.colores;
 
 }
 
 
 void Grafo::agregarArista(const unsigned int u, const unsigned int v){  //requiere u >0
 
-	this->aristas[u-1].push_back(v);
+	this->aristas[u].push_back(v);
 	this->cantAristas++;
 
 }
 
 bool Grafo::tieneHijos (unsigned int nodo){ 	//requiere nodo>0  (en este ejercicio tiene sentido esperar nodo>0)
 
-		return !(this->aristas[nodo-1].empty());
+		return !(this->aristas[nodo].empty());
 }
 
 unsigned int Grafo::cantidadNodos(){
@@ -54,7 +47,7 @@ unsigned int Grafo::cantidadAristas(){
 }
 
 vector<unsigned int> Grafo::hijos(unsigned int nodo){
-	return this->aristas[nodo-1];
+	return this->aristas[nodo];
 }
 
 vector<unsigned int> Grafo::padres(unsigned int nodo){
@@ -83,31 +76,54 @@ vector<unsigned int> Grafo::padres(unsigned int nodo){
 // raiz: nodo considerado como raiz
 // order: parametro de salida. valido solo si la funcion retorna true
 //       order[i] = nodo en la posicion i correspondiente al orden topologico lineal
-bool Grafo::ordenTopologico(unsigned int raiz, vector<unsigned int> &order)
+bool Grafo::ordenTopologico(unsigned int raiz, list<unsigned int> &nodosOrdenados)
 {
-      stack<unsigned int> S;
-      S.push(1); // empezamos en el nodo inicial
-      unsigned int t;
-      while(!S.empty()){
-         t = S.top();
-         this->colores[t-1] = GRIS;
-         S.pop();
-         this->colores[t-1] = NEGRO;
-         order.push_back(t);
-
-         for(unsigned int u : this->hijos(t))
-         {
-            if (this->colores[u-1] == NEGRO)
-            {
-               return false; // Hay un ciclo, no es DAG
+      //0: novisitado, 1: marca temporal, 2: marca permanente
+      vector<unsigned int> nodosMarcados(cantNodos,0);
+      int seleccionado = 0;
+      while(seleccionado != -1){
+        seleccionado = buscarNodoNoMarcado(nodosMarcados);
+        if(seleccionado != -1){
+            if(!visitar(seleccionado,nodosMarcados,nodosOrdenados)){
+                return false;
             }
-            else if (this->colores[u-1] == BLANCO)
-            {
-               this->colores[u-1] = GRIS;
-               S.push(u);
-            }
-         }
+        }
       }
+      list<unsigned int> copiaOrden(nodosOrdenados);
+      cout << "Orden: " << endl;
+      for(unsigned int i = 0; i < copiaOrden.size();i++){
+        cout << copiaOrden.front() << " ";
+        copiaOrden.pop_front();
+      }
+      cout << endl;
       return true;
 }
 
+bool Grafo::visitar(const unsigned int nodo, vector<unsigned int> &nodosMarcados,list<unsigned int> &nodosOrdenados){
+    if(nodosMarcados[nodo] == 1){
+        //termino
+        return false;
+    }
+    else if(nodosMarcados[nodo] == 0){
+        nodosMarcados[nodo] = 1;
+        for(unsigned int i = 0; i < this->aristas[nodo].size(); i++){
+            if(!visitar(aristas[nodo][i],nodosMarcados,nodosOrdenados)){
+                return false;
+            }
+        }
+        nodosMarcados[nodo] = 2;
+        nodosOrdenados.push_front(nodo);
+    }
+    return true;
+}
+
+
+int Grafo::buscarNodoNoMarcado(const vector<unsigned int> &nodosMarcados){
+    int res = -1;
+    for(unsigned int i = 0; i < nodosMarcados.size(); i++){
+        if(nodosMarcados[i] == 0){
+            res = i;
+        }
+    }
+    return res;
+}
