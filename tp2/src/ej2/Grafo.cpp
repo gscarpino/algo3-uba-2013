@@ -67,7 +67,9 @@ Grafo Grafo::AGM(){
             res.agregarArista(camino);
 //            camino.imprimir();
             ds.unir(c1,c2);
-            //Se puede agregar punto de corte m = n-1 pues es arbol
+        }
+        if(res.cantAristas() == (res.getNodos()-1)){
+            break;
         }
     }
 

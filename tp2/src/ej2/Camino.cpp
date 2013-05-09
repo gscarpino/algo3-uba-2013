@@ -25,6 +25,10 @@ unsigned int Camino::getCiudad1() const{
 }
 
 unsigned int Camino::getCiudad2() const{
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{ej2-grafico1.png}
+\end{figure}
     return ciudad2;
 }
 

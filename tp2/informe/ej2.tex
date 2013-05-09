@@ -68,18 +68,51 @@ Pero entonces, $ T' = T - e \cup \lbrace e_{\ell(T)} \rbrace $ es un \'arbol gen
 
 \end{quotation} 
 
-
-\quad 
-
 \end{itemize}
 
 \subsubsection{An\'alisis de complejidad}
 
+\quad Implementamos una clase \textit{Grafo}, la cual tiene internamente una variable entera que almacena la cantidad de nodos presentes en el grafo y las aristas en un vector de elementos del tipo \textit{Camino}. \'Este es una clase que creamos con el objetivo de hacer m\'as legible el c\'odigo. Es un \textit{wrapper} para una tupla de la siguiente forma: $ \langle Natural Ciudad1, Natural Ciudad2, Booleano Existente, Natural Costo $. Donde \textit{Ciudad1} es el id del nodo que simboliza ese n\'umero de ciudad, an\'alogo con \textit{Ciudad2}. El booleano \textit{Existente}, determina si es una ruta nueva o ya presente en esquema de conexi\'on entre las ciudades. Costo es dependiente del valor del booleano, si es de construcci\'on o destruicci\'on. 
 
+\quad
+
+\quad La clase \textit{Camino} tiene operaciones de costo constante ya que son solo asignaciones o obtenci\'on de valor de variables enteras.
+
+\quad
+
+\quad Se implementa la clase \textit{DisjointSet}. El constructor de la clase toma como un par\'ametro un entero x para crear x particiones. Usa un vector de enteros que recorre asignando a cada posici\'on el valor del \'indice. Tiene costo O(x).
+
+\quad La funci\'on \textit{buscar()}, dado dos n\'umeros de nodos se fija en el \textit{vector} si tienen el mismo identificador de clase. De ser as\'i, entonces pertenecen a la misma clase. Es decir, que los nodos est\'an conectados, existe un camino entre esos nodos, lo cual, agregar una arista que una 
+directamente esos nodos generar\'ia un ciclo. Al ser un vector, acceder a un elemento es costo constante, entonces \textit{buscar()} es \textit{O(1)}.
+
+\quad La funci\'on \textit{unir()}, dado dos identificadores de nodo, une ambas clases de esos nodos. Como se dijo anteriormente, se elige un identificador de clase de alguno de los dos nodos y a la otra se le reemplaza su identificador por este. Para esto, se recorren todos los nodos del grafo y adentro del ciclo se usan funciones con costo \textit{O(1)}, por lo tanto \textit{unir()} cuesta \textit{O($ \sharp nodos $)}. 
+
+
+\quad La clase \textit{Grafo} tiene las siguientes operaciones:
+
+\begin{itemize}
+\item \textbf{Constructor($ \sharp nodos $):} Se guarda la cantidad de nodos y se reserva espacio suficiente para evitar realocaci\'on de memoria. O($ \sharp nodos^{2} $)
+
+
+\item \textbf{agregarArista(Camino c):} Se agrega al vector de aristas una copia del elemento c. O($ 1 $)
+
+\item \textbf{AGM():} devuelve un grafo generador m\'inimo del grafo. Primero crea un grafo de n nodos...
+
+\end{itemize}
 
 
 \subsection{Resultados}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej2-grafico1.png}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej2-grafico2.png}
+\end{figure}
 
 
 \subsection{Conclusiones}

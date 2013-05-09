@@ -98,5 +98,39 @@ int main(int argc, char * argv[]){
 }
 
 void genTests(){
-
+//    cout << "Creando tests pocas rutas existentes." << endl;
+//    ofstream outputFile("testsPocasRutasExistentes.txt",  ios_base::trunc);
+//    if(!outputFile.is_open()){
+//        cerr << "Error al abrir/crear el archivo de salida." << endl;
+//        exit(1);
+//    }
+//    srand(time(NULL));
+//    unsigned int maxNodos = 250;
+//    unsigned int repeticiones = 50;
+//    unsigned int costo;
+////    bool existe;
+//    for(unsigned int i = 4; i <= maxNodos; i++){
+//        for(unsigned int r = 0; r < repeticiones; r++){
+//            outputFile << i << endl;
+//            for(unsigned int a = 0; a < i; a++){
+//                for(unsigned int b = a+1; b < i; b++){
+//                    costo = rand() % 10000 + 500;
+//                    if(a==0 && b==1){
+//                        outputFile << a << " " << b << " " << 1 << " " << costo << endl;
+//                    }
+//                    else{
+//                        if(rand()%100 < 20){
+//                            outputFile << a << " " << b << " " << 1 << " " << costo << endl;
+//                        }
+//                        else{
+//                            outputFile << a << " " << b << " " << 0 << " " << costo << endl;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    outputFile << "#";
+//    outputFile.close();
 }

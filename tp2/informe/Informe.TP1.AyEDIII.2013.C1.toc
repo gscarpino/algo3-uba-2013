@@ -12,13 +12,13 @@
 \contentsline {subsection}{\numberline {2.2}Desarrollo}{4}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Correctitud}{5}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}An\'alisis de complejidad}{6}{subsubsection.2.2.2}
-\contentsline {subsection}{\numberline {2.3}Resultados}{6}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Conclusiones}{6}{subsection.2.4}
-\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Introducci\'on}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Desarrollo}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Algoritmo}{7}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{7}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{7}{subsubsection.3.3.2}
-\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{7}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Conclusiones}{7}{subsection.3.5}
+\contentsline {subsection}{\numberline {2.3}Resultados}{8}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Conclusiones}{8}{subsection.2.4}
+\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{9}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introducci\'on}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Algoritmo}{9}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{9}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{9}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{9}{subsection.3.5}

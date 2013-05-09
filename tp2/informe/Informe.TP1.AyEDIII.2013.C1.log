@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.5.7)  8 MAY 2013 16:07
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.5.7)  9 MAY 2013 17:17
 entering extended mode
 **Informe.TP1.AyEDIII.2013.C1.tex
 (C:\Users\Gino\Desktop\algo3\tp2\informe\Informe.TP1.AyEDIII.2013.C1.tex
@@ -988,8 +988,21 @@ File: DisjointSets.png Graphic file (type png)
 Package pdftex.def Info: DisjointSets.png used on input line 23.
 (pdftex.def)             Requested size: 263.1836pt x 129.4839pt.
 
-[4] [5 <C:/Users/Gino/Desktop/algo3/tp2/informe/DisjointSets.png>]) [6]
-(C:\Users\Gino\Desktop\algo3\tp2\informe\ej3.tex) [7]
+[4] [5 <C:/Users/Gino/Desktop/algo3/tp2/informe/DisjointSets.png>] [6]
+<ej2-grafico1.png, id=169, 642.4pt x 481.8pt>
+File: ej2-grafico1.png Graphic file (type png)
+ <use ej2-grafico1.png>
+Package pdftex.def Info: ej2-grafico1.png used on input line 104.
+(pdftex.def)             Requested size: 385.44298pt x 289.08221pt.
+ [7]
+<ej2-grafico2.png, id=175, 642.4pt x 481.8pt>
+File: ej2-grafico2.png Graphic file (type png)
+ <use ej2-grafico2.png>
+Package pdftex.def Info: ej2-grafico2.png used on input line 110.
+(pdftex.def)             Requested size: 385.44298pt x 289.08221pt.
+) [8 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej2-grafico1.png> <C:/Users/Gino/
+Desktop/algo3/tp2/informe/ej2-grafico2.png>]
+(C:\Users\Gino\Desktop\algo3\tp2\informe\ej3.tex) [9]
 
 AED: lastpage setting LastPage
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 66.
@@ -1003,13 +1016,13 @@ nged.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
  ) 
 Here is how much of TeX's memory you used:
- 10312 strings out of 493921
- 145866 string characters out of 3150494
- 253260 words of memory out of 3000000
- 13387 multiletter control sequences out of 15000+200000
+ 10327 strings out of 493921
+ 146116 string characters out of 3150494
+ 255260 words of memory out of 3000000
+ 13396 multiletter control sequences out of 15000+200000
  13886 words of font info for 53 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 53i,12n,92p,823b,547s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,13n,92p,833b,541s stack positions out of 5000i,500n,10000p,200000b,50000s
 <D:/Programas/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><D:/Programas/
 MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/Programas/MiKTeX/fonts/typ
 e1/public/amsfonts/cm/cmmi12.pfb><D:/Programas/MiKTeX/fonts/type1/public/amsfon
@@ -1022,9 +1035,9 @@ gramas/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><D:/Programas/MiKTeX/
 fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Programas/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmsy8.pfb><D:/Programas/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 ti12.pfb><D:/Programas/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe.TP1.AyEDIII.2013.C1.pdf (7 pages, 586241 bytes).
+Output written on Informe.TP1.AyEDIII.2013.C1.pdf (9 pages, 614653 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
- 200 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 247 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 210 words of extra memory for PDF output out of 10000 (max. 10000000)
 

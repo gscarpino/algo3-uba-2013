@@ -18,17 +18,17 @@ using namespace std;
 void genTests();
 bool estaEn(const vector< Camino > &caminos, const Camino &c);
 
-timespec diff(timespec start, timespec end){
-        timespec temp;
-        if ((end.tv_nsec-start.tv_nsec)<0) {
-                temp.tv_sec = end.tv_sec-start.tv_sec-1;
-                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
-        } else {
-                temp.tv_sec = end.tv_sec-start.tv_sec;
-                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
-        }
-        return temp;
-}
+//timespec diff(timespec start, timespec end){
+//        timespec temp;
+//        if ((end.tv_nsec-start.tv_nsec)<0) {
+//                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+//                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+//        } else {
+//                temp.tv_sec = end.tv_sec-start.tv_sec;
+//                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+//        }
+//        return temp;
+//}
 
 int main(int argc, char * argv[]){
 
@@ -86,15 +86,15 @@ int main(int argc, char * argv[]){
             ciudades.agregarArista(c);
         }
 
-        timespec comienzo;
-        timespec terminacion;
+//        timespec comienzo;
+//        timespec terminacion;
         if(RESULTADOS){
-            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
         }
         Grafo ciudadesModificadas(ciudades.AGM());
         if(RESULTADOS){
-            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
-            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
+//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+//            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
         }
 
         if(ciudadesModificadas.cantAristas() == 0){
