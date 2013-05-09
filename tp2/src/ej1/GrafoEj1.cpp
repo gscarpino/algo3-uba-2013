@@ -40,7 +40,7 @@ void Grafo::agregarArista(const unsigned int u, const unsigned int v){  //requie
 
 bool Grafo::tieneHijos (unsigned int nodo){ 	//requiere nodo>0  (en este ejercicio tiene sentido esperar nodo>0)
 
-		return (this->aristas[nodo-1].empty());
+		return !(this->aristas[nodo-1].empty());
 }
 
 unsigned int Grafo::cantidadNodos(){
