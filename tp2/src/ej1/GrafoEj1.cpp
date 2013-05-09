@@ -10,6 +10,8 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 	this->cantNodos=cant;		//cantidad de nodos
 
 	vector<unsigned int> vacio;
+	this->aristas.reserve(cant);
+	this->colores.reserve(cant);
 
 	for(unsigned int i=0; i< cant; i++) {
 		this->aristas.push_back(vacio);
@@ -26,7 +28,7 @@ Grafo::Grafo(const Grafo& other){ //constructor por copia
 	this->cantNodos = other.cantNodos;
 	this->aristas = other.aristas;
 	this->cantAristas = other.cantAristas;
-   this->colores= other.colores;
+    this->colores= other.colores;
 
 }
 
@@ -44,17 +46,14 @@ bool Grafo::tieneHijos (unsigned int nodo){ 	//requiere nodo>0  (en este ejercic
 }
 
 unsigned int Grafo::cantidadNodos(){
-
 	return cantNodos;
 }
 
 unsigned int Grafo::cantidadAristas(){
-
 	return cantAristas;
 }
 
 vector<unsigned int> Grafo::hijos(unsigned int nodo){
-
 	return this->aristas[nodo-1];
 }
 
