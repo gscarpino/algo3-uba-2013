@@ -1,16 +1,23 @@
 #include "GrafoEj1.h"
+#include <stack>
+#define BLANCO -1
+#define GRIS 0
+#define NEGRO 1
+
 
 Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de nodos que vamos a poner
 
 	this->cantNodos=cant;		//cantidad de nodos
-	
+
 	vector<unsigned int> vacio;
-	
-	for(int i=0; i< cant; i++) {
+
+	for(unsigned int i=0; i< cant; i++) {
 		this->aristas.push_back(vacio);
+      this->colores.push_back(BLANCO);
 	}
 
 	this->cantAristas=0;
+
 
 }
 
@@ -18,7 +25,8 @@ Grafo::Grafo(const Grafo& other){ //constructor por copia
 
 	this->cantNodos = other.cantNodos;
 	this->aristas = other.aristas;
-	this-> cantAristas = other.cantAristas;
+	this->cantAristas = other.cantAristas;
+   this->colores= other.colores;
 
 }
 
@@ -51,11 +59,11 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 }
 
 vector<unsigned int> Grafo::padres(unsigned int nodo){
-	
+
 	vector<unsigned int> res;
 	unsigned int tam=this->cantNodos;
 	unsigned int j=0;
-	
+
 	for (unsigned int i=0; i< tam; i++){
 
 		j=this->aristas[i].size();
@@ -71,3 +79,36 @@ vector<unsigned int> Grafo::padres(unsigned int nodo){
 
 	return res;
 }
+
+//Si el grafo es DAG, devuelve true y en el parametro de salida devuielve los nodos en orden topologico
+// raiz: nodo considerado como raiz
+// order: parametro de salida. valido solo si la funcion retorna true
+//       order[i] = nodo en la posicion i correspondiente al orden topologico lineal
+bool Grafo::ordenTopologico(unsigned int raiz, vector<unsigned int> &order)
+{
+      stack<unsigned int> S;
+      S.push(1); // empezamos en el nodo inicial
+      unsigned int t;
+      while(!S.empty()){
+         t = S.top();
+         this->colores[t-1] = GRIS;
+         S.pop();
+         this->colores[t-1] = NEGRO;
+         order.push_back(t);
+
+         for(unsigned int u : this->hijos(t))
+         {
+            if (this->colores[u-1] == NEGRO)
+            {
+               return false; // Hay un ciclo, no es DAG
+            }
+            else if (this->colores[u-1] == BLANCO)
+            {
+               this->colores[u-1] = GRIS;
+               S.push(u);
+            }
+         }
+      }
+      return true;
+}
+
