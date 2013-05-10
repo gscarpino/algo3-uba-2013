@@ -23,14 +23,6 @@ vector< Camino > Grafo::getAristas(){
     return this->aristas;
 }
 
-//void Grafo::agregarArista(unsigned int n1, unsigned int n2, pair<bool,unsigned int> a){
-//    if(n1 > this->nodos || n2 > this->nodos){
-//        cerr << "Error: algun nodo no existente en el grafo" << endl;
-//    }
-//    else{
-//        this->aristas.push_back(a);
-//    }
-//}
 
 void Grafo::agregarArista(const Camino &c){
     this->aristas.push_back(c);
@@ -43,20 +35,10 @@ unsigned int Grafo::cantAristas() const{
 Grafo Grafo::AGM(){
     Grafo res(nodos);
     DisjointSet ds(this->nodos);
-//    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        this->aristas[i].imprimir();
-//        cout << endl;
-//    }
 
     //ordenar aristas grafo
     //e == 1 entonces de mayor a menor, e==0 entonces de menor a mayor
-
     sort(this->aristas.begin(),this->aristas.end());
-//    cout << endl;
-//    for(unsigned int i = 0; i < this->aristas.size(); i++){
-//        this->aristas[i].imprimir();
-//        cout << endl;
-//    }
 
     //generar agm
     for(unsigned int i = 0; i < this->aristas.size(); i++){
@@ -65,7 +47,6 @@ Grafo Grafo::AGM(){
         if(!ds.buscar(c1,c2)){
             Camino camino(c1,c2,this->aristas[i].getExiste(),this->aristas[i].getCosto());
             res.agregarArista(camino);
-//            camino.imprimir();
             ds.unir(c1,c2);
         }
         if(res.cantAristas() == (res.getNodos()-1)){

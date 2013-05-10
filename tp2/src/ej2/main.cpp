@@ -9,7 +9,7 @@
 #include "Camino.h"
 #include "Grafo.h"
 
-#define TESTING 0
+#define TESTING 1
 #define RESULTADOS 1
 
 
@@ -163,7 +163,7 @@ void genTests(){
         exit(1);
     }
     srand(time(NULL));
-    unsigned int maxNodos = 250;
+    unsigned int maxNodos = 200;
     unsigned int repeticiones = 50;
     unsigned int costo;
 //    bool existe;
