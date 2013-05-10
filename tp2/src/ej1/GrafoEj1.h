@@ -29,7 +29,7 @@ class Grafo{
       unsigned int cantidadAristas();
       vector<unsigned int> hijos(unsigned int nodo);
       vector<unsigned int> padres(unsigned int nodo);
-      bool ordenTopologico(unsigned int nodo, vector<unsigned int> &nodosOrdenados);
+      bool ordenTopologico(vector<unsigned int> &nodosOrdenados);
       int caminoMaximo(vector<unsigned int> &camino);
 
 	private:

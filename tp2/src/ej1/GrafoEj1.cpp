@@ -51,10 +51,9 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 }
 
 //Si el grafo es DAG, devuelve true y en el parametro de salida devuielve los nodos en orden topologico
-// raiz: nodo considerado como raiz
 // order: parametro de salida. valido solo si la funcion retorna true
 //       order[i] = nodo en la posicion i correspondiente al orden topologico lineal
-bool Grafo::ordenTopologico(unsigned int raiz, vector<unsigned int> &nodosOrdenados)
+bool Grafo::ordenTopologico(vector<unsigned int> &nodosOrdenados)
 {
       vector<unsigned int> colores(cantNodos,BLANCO);
       list<unsigned int> nodosOrdenadosTemp(cantNodos);
@@ -69,6 +68,8 @@ bool Grafo::ordenTopologico(unsigned int raiz, vector<unsigned int> &nodosOrdena
          }
       }
 
+    // Transformamos la lista en un vector, por practicidad en
+    // los algoritmos que usan este resultado
       for(unsigned int i = 0; i < nodosOrdenadosTemp.size();i++){
         nodosOrdenados[i] = (nodosOrdenadosTemp.front());
         nodosOrdenadosTemp.pop_front();
@@ -114,7 +115,7 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
    vector<int> dist(n);
    uint hijo;
 
-   if(this->ordenTopologico(0, orden)){
+   if(this->ordenTopologico(orden)){
       for(int i = n-1; i >= 0; i--){
          uint v = orden[i];
          dist[v] = 0;
