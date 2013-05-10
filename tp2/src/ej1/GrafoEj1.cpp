@@ -127,7 +127,7 @@ int Grafo::buscarNodoBlanco(const vector<unsigned int> &nodosMarcados){
     return res;
 }
 
-unsigned int Grafo::caminoMaximo(vector<unsigned int> &camino){
+int Grafo::caminoMaximo(vector<unsigned int> &camino){
    int n = this->cantNodos;
    vector<unsigned int> orden(n);
    // dist[i] es la longitud del camino simple mas largo entre el nodo incial

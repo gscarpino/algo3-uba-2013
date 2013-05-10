@@ -29,7 +29,7 @@ int main()
    grafo.agregarArista(6,7);
    grafo.agregarArista(7,8);
    grafo.agregarArista(8,9);
-   //grafo.agregarArista(9,7);
+  // grafo.agregarArista(9,7);
 
    // Creamos las aristas entre el nodo artificial y el resto de los nodos
    for(unsigned int i = 1; i< n ; i++)
@@ -38,7 +38,7 @@ int main()
    vector<unsigned int> camino(n); // camino[i] = siguiente nodo en el camino mas largo desde i (0 indica fin)
    vector<unsigned int> orden(n);
 
-   uint longitud = grafo.caminoMaximo(camino);
+   int longitud = grafo.caminoMaximo(camino);
    if(longitud >= 0)
    {
       cout << longitud;

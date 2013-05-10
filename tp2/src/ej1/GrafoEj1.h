@@ -30,7 +30,7 @@ class Grafo{
       vector<unsigned int> hijos(unsigned int nodo);
       vector<unsigned int> padres(unsigned int nodo);
       bool ordenTopologico(unsigned int nodo, vector<unsigned int> &nodosOrdenados);
-      unsigned int caminoMaximo(vector<unsigned int> &camino);
+      int caminoMaximo(vector<unsigned int> &camino);
 
 	private:
       unsigned int cantNodos;
