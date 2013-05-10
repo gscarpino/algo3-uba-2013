@@ -132,7 +132,7 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
    vector<unsigned int> orden(n);
    // dist[i] es la longitud del camino simple mas largo entre el nodo incial
    // y el nodo i
-   vector<uint> dist(n);
+   vector<int> dist(n);
    uint hijo;
 
    if(this->ordenTopologico(0, orden)){
@@ -152,7 +152,7 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
             }
       }
 
-      uint maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
+      int maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
       return maxDist;
    }
    else
