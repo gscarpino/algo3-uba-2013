@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.26)  10 MAY 2013 11:15
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.26)  10 MAY 2013 12:25
 entering extended mode
  %&-line parsing enabled.
 **Informe.TP1.AyEDIII.2013.C1.tex
@@ -986,42 +986,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--32
 
  []
 
-) [4] (./ej2.tex <DisjointSets.png, id=150, 328.97906pt x 161.85469pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--47
+
+ []
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 50.
+[4]
+Warning: Indentation ends at level -1 in codebox on page 5.
+) [5] (./ej2.tex <DisjointSets.png, id=157, 328.97906pt x 161.85469pt>
 File: DisjointSets.png Graphic file (type png)
 
-<use DisjointSets.png> [5] [6 <./DisjointSets.png>] [7]
-<ej2-grafico1.png, id=173, 642.4pt x 481.8pt>
+<use DisjointSets.png> [6] [7 <./DisjointSets.png>] [8]
+<ej2-grafico1.png, id=180, 642.4pt x 481.8pt>
 File: ej2-grafico1.png Graphic file (type png)
- <use ej2-grafico1.png> [8]
-<ej2-grafico2.png, id=178, 642.4pt x 481.8pt>
+ <use ej2-grafico1.png> [9]
+<ej2-grafico2.png, id=185, 642.4pt x 481.8pt>
 File: ej2-grafico2.png Graphic file (type png)
- <use ej2-grafico2.png>) [9 <./ej2-grafico1.png (PNG copy)> <./ej2-grafico2.png
- (PNG copy)>] (./ej3.tex) [10]
-AED: lastpage setting LastPage (./Informe.TP1.AyEDIII.2013.C1.aux) ) 
+ <use ej2-grafico2.png>) [10 <./ej2-grafico1.png (PNG copy)> <./ej2-grafico2.pn
+g (PNG copy)>] (./ej3.tex)
+[11] AED: lastpage setting LastPage (./Informe.TP1.AyEDIII.2013.C1.aux) ) 
 Here is how much of TeX's memory you used:
- 9294 strings out of 495061
- 129215 string characters out of 1182621
+ 9306 strings out of 495061
+ 129373 string characters out of 1182621
  234289 words of memory out of 3000000
- 12221 multiletter control sequences out of 15000+50000
- 13278 words of font info for 51 fonts, out of 3000000 for 9000
+ 12229 multiletter control sequences out of 15000+50000
+ 14181 words of font info for 54 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  53i,12n,92p,885b,539s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share
-/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
-cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texm
-f-texlive/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texmf-texlive/f
-onts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-texlive/fonts/type1/
-public/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
-msy8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe.TP1.AyEDIII.2013.C1.pdf (10 pages, 612670 bytes).
+</usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/
+public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy8.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/s
+hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Informe.TP1.AyEDIII.2013.C1.pdf (11 pages, 626815 bytes).
 PDF statistics:
- 247 PDF objects out of 1000 (max. 8388607)
- 40 named destinations out of 1000 (max. 500000)
+ 258 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
  210 words of extra memory for PDF output out of 10000 (max. 10000000)
 

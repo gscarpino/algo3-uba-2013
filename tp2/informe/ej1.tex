@@ -40,6 +40,12 @@
 
 \subsection{Algoritmo}
 
+\indent En las funciones $ordenTopologico$ y $visitar$ consideramos a los nodos de la siguiente manera:\\
+\indent Un nodo es BLANCO si todavía no se lo ha visitado. Si se lo visitó, pero todavía no se recorrió todas sus ramas, el nodo será GRIS. En cambio, cuando se recorrió todo la rama del nodo, éste será NEGRO.\\
+\indent Antes de llamar a $ordenTopologico$ todos los nodos están en BLANCO. \\
+\indent Como se puede observar, $ordenTopologico$ es un DFS modificado, en el sentido que a medida que el algoritmo recorre los nodos, los agrega en una lista manteniendo el orden topológico.\\
+
+
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
@@ -56,18 +62,18 @@
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{visitar}(nodo$ $n$ $lista$ $nodosOrdenados)$}
-\li \If n es GRIS 
-\li 	 Terminar
+\Procname{$\proc{visitar}(nodo$ $n$, $lista$ $nodosOrdenados)$}
+\li \If n es GRIS \Do
+\li 	 Terminar pues hay ciclo
 \li \End
 \li \If n es BLANCO \Do
-\li	marcar n GRIS
-\li	\For cada hijo m de n \Do
-\li		visitar(m)			
-\li	\End
-\li	marcar n NEGRO
-\li 	insertar n al principio de $nodosOrdenados$
-\li 	 Terminar
+\li 	marcar n GRIS
+\li		\For cada hijo m de n \Do
+\li			visitar(m)			
+\li		\End
+\li		marcar n NEGRO
+\li 		insertar n al principio de $nodosOrdenados$
+\li 		Terminar
 \li \End
 
 \End
