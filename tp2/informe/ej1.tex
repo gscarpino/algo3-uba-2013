@@ -30,15 +30,49 @@
 
 \indent $F(0) - \{0\}$\\
 
-\indent Le quitamos el nodo 0 porque lo agregamos nosotros, es decir que no pertenece al problema original.
+\indent Le quitamos el nodo 0 porque lo agregamos nosotros, es decir que no pertenece al problema original.\\
 
-
+\quad Lo que hacemos en el algoritmo es, una vez que se determinó la existencia de ciclos y se obtuvo el orden topológico en una lista, iterar desde el final de dicha lista hasta el principio, aplicando la función explicada en párrafos anteriores. Dada las garantías del ordenamiento topológico, en cada iteración se utilizan datos que ya han sido calculados.
 
 
 
  
 
 \subsection{Algoritmo}
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{ordenTopologico}(lista$ $nodosOrdenados)$}
+\li \While existen nodos BLANCO \Do
+\li	$n \gets$ seleccionar nodo BLANCO
+\li	visitar(n, nodosOrdenados)
+
+\End
+\end{codebox}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{visitar}(nodo$ $n$ $lista$ $nodosOrdenados)$}
+\li \If n es GRIS 
+\li 	 Terminar
+\li \End
+\li \If n es BLANCO \Do
+\li	marcar n GRIS
+\li	\For cada hijo m de n \Do
+\li		visitar(m)			
+\li	\End
+\li	marcar n NEGRO
+\li 	insertar n al principio de $nodosOrdenados$
+\li 	 Terminar
+\li \End
+
+\End
+\end{codebox}
+\end{algorithm}
  
 
 \subsubsection{Correctitud} 
