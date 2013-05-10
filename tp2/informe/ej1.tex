@@ -2,41 +2,57 @@
  
 \subsection{Introducci\'on}
 
-\quad Dada una bacteria y sabiendo las posibles cepas a las que puede pertenecer y las posibilidades de mutación de la bacteria dependiendo de la cepa, se desea saber cuál es la máxima cantidad de mutaciones por las que la bacteria puede atravesar antes de convertirse en una cepa terminal, es decir una cepa a partir de la cual deja de mutar, y cuáles son esas mutaciones.
+Nos encontramos estudiando el proceso de mutaciones de un conjunto de bacterias, el cual puede describirse de la siguiente manera:
+una bacteria nace perteneciendo a una cepa determinada;
+durante el transcurso de su vida, la bacteria puede mutar de una cepa a otra hasta que en
+algun momento alcanza una cepa terminal desde la cual yo no puede seguir mutando. 
+Este paso entre cepas define una cadena de mutaciones.
 
-\quad En el caso en el que la bacteria mute infinitamente, es decir que no alcance jamás una cepa terminal, basta con reconocer la existencia de la no terminalidad de la evolución.
- 
+Se sabe que una bacteria en una determinada cepa no puede mutar directamente a cualquier otra cepa y que, ademas, las mutaciones entre cepas estan regidas por probabilidades.
+Notemos que en este escenario podr\'ia suceder el caso de una cadena infinita de mutaciones.
+
+El problema presentado consiste en identificar la cadena de mutaciones m\'as larga que una bacteria podr\'ia seguir dentro de un conjunto de cepas, dado que se conocen las probabilidades de mutaci\'on entre las cepas. Adem\'as, se desea identificar si dicho conjunto de cepas puede llevar que una bacteria mute infinitamente (aunque para este caso no necesitamos determinar la cadena de mutaciones).
+
+
 \subsection{Desarrollo}
- 
-\quad Desde el comienzo, hemos observado que se puede modelar el problema utilizando grafos dirigidos, correspondiendo cada nodo del grafo con una cepa y cada arista con la mutación de una cepa a otra. De esta manera, una bacteria que mute infinitamente se representa mediante un ciclo en el grafo. Como además se nos dice que cada cepa participa de por lo menos de una mutación, esto implica en el modelado que en el caso de ser un grafo no conexo, cada componente conexa tiene por lo menos dos nodos y por lo menos una arista.
-
-\quad Para evitar trabajar con grafos no conexos, a la hora de implementar el problema se tomó la decisión de agregar un nodo inicial. Este nodo dirige sus aristar a cada uno de los demás nodos (que son los que representan a las cepas), convirtiendo al grafo en uno conexo. Queremos hacer notar que agregar este nodo no altera significamente la solución del problema. Si en el grafo sin dicho nodo existe solución, es decir que no hay ciclos en el grafo, esta solución será la misma en el nuevo grafo con la diferencia que se agrega este nodo $virtual$ a la secuencia. Por lo tanto, es válida calcular la solución de esta manera mientras se tenga en cuenta quitar este nodo de la solución final, y además simplifica muchas cuestiones porque nos permite asumir que el grafo es conexo.
-
-\quad Para determinar la existencia de ciclos en el grafo se decidió utilizar un algoritmo de recorrido o búsqueda \tetbf{DFS} (Depth First Search o búsqueda en profundidad). Lo implementamos de manera tal que además de determinar la existencia de ciclos, nos permite ordenar topológicamente los nodos en caso de un grafo acíclico en una lista o vector, algo de lo que nos valdremos a la hora de efectivamente calcular el máximo camino. Recordamos que podemos asumir sin riesgo que el gráfico que recorreremos con este algoritmo es conexo.
-
-\quad Un ordenamiento topológico de un grafo es aquél que al linealizar los nodos garantiza que en la lista o vector donde se guardó el orden para todo nodo tal que está en la posición $i$ del vector o lista vale que sus hijos están en alguna posición $j$ del vector con $j>i$. Coloquialmente, garantiza que para todo nodo, todos sus hijos están guardados más a la $derecha$ en el vector o lista. Por ejemplo, en nuestro caso, en el ordenamiento topológico el nodo $virtual$ que agregamos debería ser el primero del vector, dado que todos los demás nodos son sus hijos. Queremos mencionar que el ordenamiento topológico de un grafo no siempre es único. Nosotros garantizamos que proveemos uno que cumple con las características anteriormente expuestas, y que son suficientes para el uso que le vamos a dar.
 
 
-\quad Para calcular el camino simple máximo, es decir la máxima cantidad de mutaciones por las que pasa una bacteria antes de ser una cepa terminal, utilizaremos la siguiente función:
+Comenzamos modelando el escenario del problema como un grafo dirigido donde cada nodo representa una cepa y cada arista, la mutación de una cepa a otra.
+A partir de aqui, podemos traducir el problema original en una problema sobre grafos: encontrar la secuencia mas larga de mutaciones equivale a hallar el camino simple mas largo dentro del digrafo propuesto. En principio, este camino puede partir de cualquier nodo; más adelante veremos una forma de salvar este detalle.
 
-\quad Sea $F(v)$ el camino simple más largo que comienza en el nodo $v$.
+Nos enfocamos, a partir de ahora, al problema de hallar el camino simple m\'as largo dentro de un digrafo. 
+El caso que nos interesa es el de digrafos aciclicos (DAG), por lo que al referirnos a digrafos estaremos suponiendo que estos son DAGs.
 
-\quad Definimos :\\	
+Comencemos pensando en como encontrar el camino simple mas largo con origen en un nodo en particular. 
+Supongamos que partimos del nodo A. El camino m\'as largo que podemos hallar desde A a cualquier otro nodo en el DAG necesariamente
+debe pasar por alguno de los nodos alcanzables directamente desde A.
+Pero entonces, el camino mas largo a partir de A debe ser el camino mas largo a partir de uno de sus nodos alcanzable, mas A.
+Es decir, la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño (lo que vale pues estamos trabajando sobre un DAG).
+Esto nos lleva a pensar en aplicar la tecnica de programacion dinamica en la resolucion del problema.
 
-\indent $F(v)= max_{u \in hijos(v)} (\#F(u))$ U $\{v\}$  \indent \indent si $v$ tiene por lo menos un hijo\\
-\indent  $F(v)=\{\}$ \indent \indent \indent \indent \indent \indent \indent \indent  en caso contrario\\
+Definamos, entonces, $F(v)$ como la longitud del camino simple más largo que comienza en el nodo $v$.
 
-\indent  Si definimos al nodo virtual que agregamos como el nodo 0, resolver el problema sería aplicar:\\
+$$F(v)= \max_{u\;\in\;N_{o}(v)} \{F(u)\; + \; 1\}$$
 
-\indent $F(0) - \{0\}$\\
+donde $N_{o}(v)$ es la vecindad de salida del nodo v (el conjunto de nodos alcanzables desde v). 
+En esta definici\'on consideramos que el m\'aximo de un conjunto vac\'io es 0.
 
-\indent Le quitamos el nodo 0 porque lo agregamos nosotros, es decir que no pertenece al problema original.\\
+En lugar de proponer una funcion recursiva (inmediata a partir de la definicion de F), veamos llegar a un
+algoritmo itereativo: al calcular la solucion para un nodo i, solo necesitamos tener las subsoluciones de sus nodos "`hijos"'.
+Por lo tanto, iremos calculando las F(i) siguiendo un ordenamiento topologico lineal inverso. 
+Un ordenamiento topologico de los nodos de un digrafo es aquel en el que ningun nodo hijo aparece antes que su padre (los DAG siempre tiene un orden topologico). Debemos notar que el ordenamiento topológico de un grafo no siempre es único.
 
-\quad Lo que hacemos en el algoritmo es, una vez que se determinó la existencia de ciclos y se obtuvo el orden topológico en una lista, iterar desde el final de dicha lista hasta el principio, aplicando la función explicada en párrafos anteriores. Dada las garantías del ordenamiento topológico, en cada iteración se utilizan datos que ya han sido calculados.
+Entonces, mantendremos un arreglo de longitudes, sea L, donde L[i] representa la longitud del camino simple mas largo que nace en el nodo i, y lo llenaremos siguiendo el ordenamiento previamente explicado. Ademas, mantendremos un arreglo S donde S[i] es es el nodo hijo de i que se eligio como subsolucion optima. De esta manera, al terminar el llenado de los arreglos podremos reconstuir el camino simple de mayor longitud que parte de cada nodo.
+
+Para calcular el ordenamiento topologico lineal, seguimos la idea planteadas en [Cormen] y utilizamos el algoritmo de recorrido \tetbf{DFS} (Depth First Search o búsqueda en profundidad). El algoritmo se modifico levemente, de manera de que guarde el orden a medida que va cerrando los nodos (en lugar de armar el ordenamiento una vez que DFS termina y marca los timestamp de finalizacion de cada nodo), y chequee que al visitar un nodo, si este esta siendo explorado (su color es GRIS), entonces finalice indicando que se encontr\'o un ciclo.
+De esta forma, para decidimos si el digrafo es un DAG y armamos los datos necesarios para proceder con el algoritmo dinamico en un unico paso inicial. Cabe aclarar que un digrafo es DAG si y solo si puede encontrarse un ordenamiento topologico para sus nodos.  
+
+Ahora volvamos al problema original. En primer lugar, si queremos hallar el camino simple mas largo, deberiamos ejecutar el algoritmo en cada nodo sin aristas entrantes. Ademas, el grafo armado por las relaciones entre las cepas puede ser disconexo. 
+Para sortear estos detalles, a la hora de implementar el problema se tomó la decisión de agregar un nodo inicial. Este nodo dirige sus aristar a cada uno de los demás nodos del digrafo original, por lo que el digrafo resultante resulta ser conexo. Notemos que agregar este nodo no altera la solución del problema. Si en el grafo original no hay ciclos, como las aristas que se agregan solo van del nuevo nodo inicial al resto y nunca al reves, el grafo resultante tampo contendra ciclos. De igual manera se ve que si el grafo original contenia un cico, agregar el nodo artificial no eliminar\'a el o los ciclos preexistentes. 
+
+La solucion final del problema, entonces, es calcular el camino simple mas largo que tiene como origen al nodo artificial: S[nodoArtifial], con distancia L[nodoArtifial].
 
 
-
- 
 
 \subsection{Algoritmo}
 
