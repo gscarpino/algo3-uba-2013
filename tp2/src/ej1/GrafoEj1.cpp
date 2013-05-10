@@ -79,7 +79,7 @@ bool Grafo::ordenTopologico(vector<unsigned int> &nodosOrdenados)
 
 bool Grafo::visitar(const unsigned int nodo, vector<unsigned int> &colores,list<unsigned int> &nodosOrdenados){
     if(colores[nodo] == GRIS){
-        //termino
+        //hay un ciclo
         return false;
     }
     else if(colores[nodo] == BLANCO){
@@ -139,7 +139,7 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
 		camino.push_back(i);
 		}
 
-	  int maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
+	  int maxDist = dist[0];
       return maxDist;
    }
    else
