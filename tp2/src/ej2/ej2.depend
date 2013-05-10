@@ -2,7 +2,7 @@
 1368107841 source:c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.cpp
 	"Grafo.h"
 
-1367812494 
+1367854991 
 
 1367931564 c:\users\gino\desktop\algo3\tp2\src\ej2\grafo.h
 	<iostream>
@@ -13,7 +13,7 @@
 1367931564 source:c:\users\gino\desktop\algo3\tp2\src\ej2\disjointset.cpp
 	"DisjointSet.h"
 
-1367812174 et.h"
+1367854991 et.h"
 
 1367931564 c:\users\gino\desktop\algo3\tp2\src\ej2\disjointset.h
 	<iostream>
@@ -67,6 +67,43 @@
 	"DisjointSet.h"
 
 1367865719 source:/home/gino/Desktop/algo3/tp2/src/ej2/main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstdlib>
+	<ctime>
+	<vector>
+	"Redefs.h"
+	"Camino.h"
+	"Grafo.h"
+
+1367854991 source:/home/gino/Desktop/algo3/tp2/src/ej2/DisjointSet.cpp
+	"DisjointSet.h"
+
+1367854991 /home/gino/Desktop/algo3/tp2/src/ej2/DisjointSet.h
+	<iostream>
+	<map>
+
+1368207895 source:/home/gino/Desktop/algo3/tp2/src/ej2/Camino.cpp
+	"Camino.h"
+
+1367854991 /home/gino/Desktop/algo3/tp2/src/ej2/Camino.h
+	<iostream>
+
+1368207895 source:/home/gino/Desktop/algo3/tp2/src/ej2/Grafo.cpp
+	"Grafo.h"
+
+1367854991 /home/gino/Desktop/algo3/tp2/src/ej2/Grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+	"Redefs.h"
+
+1367854991 /home/gino/Desktop/algo3/tp2/src/ej2/Redefs.h
+	"Camino.h"
+	"DisjointSet.h"
+
+1368209047 source:/home/gino/Desktop/algo3/tp2/src/ej2/main.cpp
 	<iostream>
 	<fstream>
 	<sstream>

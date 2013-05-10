@@ -9,7 +9,7 @@
 #include "Camino.h"
 #include "Grafo.h"
 
-#define TESTING 1
+#define TESTING 0
 #define RESULTADOS 1
 
 
@@ -18,17 +18,17 @@ using namespace std;
 void genTests();
 bool estaEn(const vector< Camino > &caminos, const Camino &c);
 
-//timespec diff(timespec start, timespec end){
-//        timespec temp;
-//        if ((end.tv_nsec-start.tv_nsec)<0) {
-//                temp.tv_sec = end.tv_sec-start.tv_sec-1;
-//                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
-//        } else {
-//                temp.tv_sec = end.tv_sec-start.tv_sec;
-//                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
-//        }
-//        return temp;
-//}
+timespec diff(timespec start, timespec end){
+        timespec temp;
+        if ((end.tv_nsec-start.tv_nsec)<0) {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+        } else {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+        }
+        return temp;
+}
 
 int main(int argc, char * argv[]){
 
@@ -86,15 +86,15 @@ int main(int argc, char * argv[]){
             ciudades.agregarArista(c);
         }
 
-//        timespec comienzo;
-//        timespec terminacion;
+        timespec comienzo;
+        timespec terminacion;
         if(RESULTADOS){
-//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
         }
         Grafo ciudadesModificadas(ciudades.AGM());
         if(RESULTADOS){
-//            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
-//            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+            archRes << cantCiudades << " " << contRutasExistentes << " " << diff(comienzo,terminacion).tv_nsec << endl;
         }
 
         if(ciudadesModificadas.cantAristas() == 0){
@@ -108,7 +108,7 @@ int main(int argc, char * argv[]){
         unsigned int costoTotal = 0;
         vector< Camino > caminos(ciudades.getAristas());
         for(unsigned int i = 0; i < caminos.size(); i++){
-            caminos[i].imprimir();
+//            caminos[i].imprimir();
             if(caminos[i].getExiste()){
                 if(!estaEn(ciudadesModificadas.getAristas(),caminos[i])){
                     costoTotal = costoTotal + caminos[i].getCosto();
@@ -123,11 +123,12 @@ int main(int argc, char * argv[]){
 
         outputFile << costoTotal << " " << ciudadesModificadas.cantAristas();
         caminos = ciudadesModificadas.getAristas();
-        cout << endl;
+//        cout << endl;
         for(unsigned int i = 0; i < caminos.size(); i++){
-            caminos[i].imprimir();
+//            caminos[i].imprimir();
             outputFile << " " << caminos[i].getCiudad1() << " " << caminos[i].getCiudad2();
         }
+        outputFile << endl;
 
 
     }
