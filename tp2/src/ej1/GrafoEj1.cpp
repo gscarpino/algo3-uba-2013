@@ -76,49 +76,48 @@ vector<unsigned int> Grafo::padres(unsigned int nodo){
 // raiz: nodo considerado como raiz
 // order: parametro de salida. valido solo si la funcion retorna true
 //       order[i] = nodo en la posicion i correspondiente al orden topologico lineal
-bool Grafo::ordenTopologico(unsigned int raiz, list<unsigned int> &nodosOrdenados)
+bool Grafo::ordenTopologico(unsigned int raiz, vector<unsigned int> &nodosOrdenados)
 {
-      //0: novisitado, 1: marca temporal, 2: marca permanente
-      vector<unsigned int> nodosMarcados(cantNodos,0);
+      vector<unsigned int> colores(cantNodos,BLANCO);
+      list<unsigned int> nodosOrdenadosTemp(cantNodos);
       int seleccionado = 0;
+
       while(seleccionado != -1){
-        seleccionado = buscarNodoNoMarcado(nodosMarcados);
-        if(seleccionado != -1){
-            if(!visitar(seleccionado,nodosMarcados,nodosOrdenados)){
-                return false;
+         seleccionado = buscarNodoBlanco(colores);
+         if(seleccionado != -1){
+            if(!visitar(seleccionado,colores,nodosOrdenadosTemp)){
+               return false;
             }
-        }
+         }
       }
-      list<unsigned int> copiaOrden(nodosOrdenados);
-      cout << "Orden: " << endl;
-      for(unsigned int i = 0; i < copiaOrden.size();i++){
-        cout << copiaOrden.front() << " ";
-        copiaOrden.pop_front();
+
+      for(unsigned int i = 0; i < nodosOrdenadosTemp.size();i++){
+        nodosOrdenados[i] = (nodosOrdenadosTemp.front());
+        nodosOrdenadosTemp.pop_front();
       }
-      cout << endl;
       return true;
 }
 
-bool Grafo::visitar(const unsigned int nodo, vector<unsigned int> &nodosMarcados,list<unsigned int> &nodosOrdenados){
-    if(nodosMarcados[nodo] == 1){
+bool Grafo::visitar(const unsigned int nodo, vector<unsigned int> &colores,list<unsigned int> &nodosOrdenados){
+    if(colores[nodo] == GRIS){
         //termino
         return false;
     }
-    else if(nodosMarcados[nodo] == 0){
-        nodosMarcados[nodo] = 1;
+    else if(colores[nodo] == BLANCO){
+        colores[nodo] = GRIS;
         for(unsigned int i = 0; i < this->aristas[nodo].size(); i++){
-            if(!visitar(aristas[nodo][i],nodosMarcados,nodosOrdenados)){
+            if(!visitar(aristas[nodo][i],colores,nodosOrdenados)){
                 return false;
             }
         }
-        nodosMarcados[nodo] = 2;
+        colores[nodo] = NEGRO;
         nodosOrdenados.push_front(nodo);
     }
     return true;
 }
 
 
-int Grafo::buscarNodoNoMarcado(const vector<unsigned int> &nodosMarcados){
+int Grafo::buscarNodoBlanco(const vector<unsigned int> &nodosMarcados){
     int res = -1;
     for(unsigned int i = 0; i < nodosMarcados.size(); i++){
         if(nodosMarcados[i] == 0){
@@ -126,4 +125,38 @@ int Grafo::buscarNodoNoMarcado(const vector<unsigned int> &nodosMarcados){
         }
     }
     return res;
+}
+
+unsigned int Grafo::caminoMaximo(vector<unsigned int> &camino){
+   int n = this->cantNodos;
+   vector<unsigned int> orden(n);
+   // dist[i] es la longitud del camino simple mas largo entre el nodo incial
+   // y el nodo i
+   vector<uint> dist(n);
+   uint hijo;
+
+   if(this->ordenTopologico(0, orden)){
+      for(int i = n-1; i >= 0; i--){
+         uint v = orden[i];
+         dist[v] = 0;
+         camino[v] = 0; // Si el nodo no tiene hijos (no entra en el siguiente ciclo), es fin de camino.
+
+         // calculamos la distancia buscando la maxima distancia de los anteriores
+         for (unsigned int j = 0; j < (this->aristas[v]).size(); j++){
+            hijo = this->aristas[v][j];
+            if((dist[hijo] + 1) > dist[v])
+               {
+               dist[v] = dist[hijo] + 1;
+               camino[v] =  hijo;
+               }
+            }
+      }
+
+      uint maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
+      return maxDist;
+   }
+   else
+   {
+      return -1;
+   }
 }
