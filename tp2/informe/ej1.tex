@@ -2,10 +2,39 @@
  
 \subsection{Introducci\'on}
 
+\quad Dada una bacteria y sabiendo las posibles cepas a las que puede pertenecer y las posibilidades de mutación de la bacteria dependiendo de la cepa, se desea saber cuál es la máxima cantidad de mutaciones por las que la bacteria puede atravesar antes de convertirse en una cepa terminal, es decir una cepa a partir de la cual deja de mutar, y cuáles son esas mutaciones.
 
+\quad En el caso en el que la bacteria mute infinitamente, es decir que no alcance jamás una cepa terminal, basta con reconocer la existencia de la no terminalidad de la evolución.
  
 \subsection{Desarrollo}
  
+\quad Desde el comienzo, hemos observado que se puede modelar el problema utilizando grafos dirigidos, correspondiendo cada nodo del grafo con una cepa y cada arista con la mutación de una cepa a otra. De esta manera, una bacteria que mute infinitamente se representa mediante un ciclo en el grafo. Como además se nos dice que cada cepa participa de por lo menos de una mutación, esto implica en el modelado que en el caso de ser un grafo no conexo, cada componente conexa tiene por lo menos dos nodos y por lo menos una arista.
+
+\quad Para evitar trabajar con grafos no conexos, a la hora de implementar el problema se tomó la decisión de agregar un nodo inicial. Este nodo dirige sus aristar a cada uno de los demás nodos (que son los que representan a las cepas), convirtiendo al grafo en uno conexo. Queremos hacer notar que agregar este nodo no altera significamente la solución del problema. Si en el grafo sin dicho nodo existe solución, es decir que no hay ciclos en el grafo, esta solución será la misma en el nuevo grafo con la diferencia que se agrega este nodo "virtual" a la secuencia. Por lo tanto, es válida calcular la solución de esta manera mientras se tenga en cuenta quitar este nodo de la solución final, y además simplifica muchas cuestiones porque nos permite asumir que el grafo es conexo.
+
+\quad Para determinar la existencia de ciclos en el grafo se decidió utilizar un algoritmo de recorrido o búsqueda \tetbf{DFS} (Depth First Search o búsqueda en profundidad). Lo implementamos de manera tal que además de determinar la existencia de ciclos, nos permite ordenar topológicamente los nodos en caso de un grafo acíclico en una lista o vector, algo de lo que nos valdremos a la hora de efectivamente calcular el máximo camino. Recordamos que podemos asumir sin riesgo que el gráfico que recorreremos con este algoritmo es conexo.
+
+\quad Un ordenamiento topológico de un grafo es aquél que al linealizar los nodos garantiza que en la lista o vector donde se guardó el orden para todo nodo tal que está en la posición $i$ del vector o lista vale que sus hijos están en alguna posición $j$ del vector con $j>i$. Coloquialmente, garantiza que para todo nodo, todos sus hijos están guardados más a la "derecha" en el vector o lista. Por ejemplo, en nuestro caso, en el ordenamiento topológico el nodo "virtual" que agregamos debería ser el primero del vector, dado que todos los demás nodos son sus hijos. Queremos mencionar que el ordenamiento topológico de un grafo no siempre es único. Nosotros garantizamos que proveemos uno que cumple con las características anteriormente expuestas, y que son suficientes para el uso que le vamos a dar.
+
+
+\quad Para calcular el camino simple máximo, es decir la máxima cantidad de mutaciones por las que pasa una bacteria antes de ser una cepa terminal, utilizaremos la siguiente función:
+
+\quad Sea $F(v)$ el camino simple más largo que comienza en el nodo $v$.
+
+\quad Definimos :
+
+\quad $F(v)= max_{u \in hijos(v)} (\#F(u))$ U $\{v\}$ si $v$ tiene por lo menos un hijo
+\quad $F(v)=\{\}$
+\quad Si definimos al nodo virtual que agregamos como el nodo 0, resolver el problema sería aplicar:
+
+\quad $F(0) - \{0\}$
+
+\quad Le quitamos el nodo 0 porque lo agregamos nosotros, es decir que no pertenece al problema original.
+
+
+
+
+
  
 
 \subsection{Algoritmo}
