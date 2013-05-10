@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.26)  10 MAY 2013 12:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.26)  10 MAY 2013 13:22
 entering extended mode
  %&-line parsing enabled.
 **Informe.TP1.AyEDIII.2013.C1.tex
@@ -901,7 +901,7 @@ driver: pdftex
 \paperheight 845.04684pt
 \textwidth  434.74548pt
 \textheight 671.66733pt
-\oddsidemargin  58.74939pt
+\oddsidemargin  46.99951pt
 \evensidemargin -32.43631pt
 \topmargin  -14.22636pt
 \headheight 20.0pt
@@ -1000,21 +1000,21 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 50.
 [4]
 Warning: Indentation ends at level -1 in codebox on page 5.
-) [5] (./ej2.tex <DisjointSets.png, id=157, 328.97906pt x 161.85469pt>
+[5]) [6] (./ej2.tex <DisjointSets.png, id=162, 328.97906pt x 161.85469pt>
 File: DisjointSets.png Graphic file (type png)
 
-<use DisjointSets.png> [6] [7 <./DisjointSets.png>] [8]
-<ej2-grafico1.png, id=180, 642.4pt x 481.8pt>
+<use DisjointSets.png> [7] [8 <./DisjointSets.png>] [9]
+<ej2-grafico1.png, id=185, 642.4pt x 481.8pt>
 File: ej2-grafico1.png Graphic file (type png)
- <use ej2-grafico1.png> [9]
-<ej2-grafico2.png, id=185, 642.4pt x 481.8pt>
+ <use ej2-grafico1.png> [10]
+<ej2-grafico2.png, id=190, 642.4pt x 481.8pt>
 File: ej2-grafico2.png Graphic file (type png)
- <use ej2-grafico2.png>) [10 <./ej2-grafico1.png (PNG copy)> <./ej2-grafico2.pn
+ <use ej2-grafico2.png>) [11 <./ej2-grafico1.png (PNG copy)> <./ej2-grafico2.pn
 g (PNG copy)>] (./ej3.tex)
-[11] AED: lastpage setting LastPage (./Informe.TP1.AyEDIII.2013.C1.aux) ) 
+[12] AED: lastpage setting LastPage (./Informe.TP1.AyEDIII.2013.C1.aux) ) 
 Here is how much of TeX's memory you used:
- 9306 strings out of 495061
- 129373 string characters out of 1182621
+ 9308 strings out of 495061
+ 129393 string characters out of 1182621
  234289 words of memory out of 3000000
  12229 multiletter control sequences out of 15000+50000
  14181 words of font info for 54 fonts, out of 3000000 for 9000
@@ -1034,9 +1034,9 @@ c/amsfonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
 s/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy8.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/s
 hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe.TP1.AyEDIII.2013.C1.pdf (11 pages, 626815 bytes).
+Output written on Informe.TP1.AyEDIII.2013.C1.pdf (12 pages, 629608 bytes).
 PDF statistics:
- 258 PDF objects out of 1000 (max. 8388607)
- 43 named destinations out of 1000 (max. 500000)
+ 263 PDF objects out of 1000 (max. 8388607)
+ 45 named destinations out of 1000 (max. 500000)
  210 words of extra memory for PDF output out of 10000 (max. 10000000)
 

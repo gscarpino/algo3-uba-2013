@@ -3,22 +3,22 @@
 \contentsline {subsection}{\numberline {1.1}Introducci\'on}{3}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}Desarrollo}{3}{subsection.1.2}
 \contentsline {subsection}{\numberline {1.3}Algoritmo}{4}{subsection.1.3}
-\contentsline {subsubsection}{\numberline {1.3.1}Correctitud}{5}{subsubsection.1.3.1}
-\contentsline {subsubsection}{\numberline {1.3.2}An\'alisis de complejidad}{5}{subsubsection.1.3.2}
-\contentsline {subsection}{\numberline {1.4}Pruebas}{5}{subsection.1.4}
-\contentsline {subsection}{\numberline {1.5}Conclusiones}{5}{subsection.1.5}
-\contentsline {section}{\numberline {2}Problema 2: Reconfiguraci\'on de rutas}{6}{section.2}
-\contentsline {subsection}{\numberline {2.1}Introducci\'on}{6}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Desarrollo}{6}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Correctitud}{7}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}An\'alisis de complejidad}{8}{subsubsection.2.2.2}
-\contentsline {subsection}{\numberline {2.3}Resultados}{10}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Conclusiones}{10}{subsection.2.4}
-\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{11}{section.3}
-\contentsline {subsection}{\numberline {3.1}Introducci\'on}{11}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Desarrollo}{11}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Algoritmo}{11}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{11}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{11}{subsubsection.3.3.2}
-\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{11}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Conclusiones}{11}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {1.3.1}Correctitud}{6}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}An\'alisis de complejidad}{6}{subsubsection.1.3.2}
+\contentsline {subsection}{\numberline {1.4}Pruebas}{6}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Conclusiones}{6}{subsection.1.5}
+\contentsline {section}{\numberline {2}Problema 2: Reconfiguraci\'on de rutas}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}Introducci\'on}{7}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Desarrollo}{7}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Correctitud}{8}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}An\'alisis de complejidad}{9}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Resultados}{11}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Conclusiones}{11}{subsection.2.4}
+\contentsline {section}{\numberline {3}Problema 3: Laboratorio farmacol\'ogico}{12}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introducci\'on}{12}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo}{12}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Algoritmo}{12}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Correctitud}{12}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}An\IeC {\'a}lisis de Complejidad}{12}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Pruebas y Resultados}{12}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{12}{subsection.3.5}

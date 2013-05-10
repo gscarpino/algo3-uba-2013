@@ -82,10 +82,10 @@
  
 
 
-begin{algorithm}[H]
+\begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{caminoMaximo}(vector< int >$ camino )$}
+\Procname{$\proc{caminoMaximo}(vector< int >$ camino )}
 \li $n \gets \# nodos $
 \li vector$<int>$ siguienteEnCamino(n)
 \li vector$<int>$ orden(n)
@@ -110,8 +110,11 @@ begin{algorithm}[H]
 \li	\End
 \li 	int maxDist $\gets$ dist[0]
 \li 	\Return maxDist , camino	
-\li \End	  	
+\li \End
+\li \Else \Do
+\li \Return -1
 \End
+
 \end{codebox}
 \end{algorithm}
 
