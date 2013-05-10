@@ -50,28 +50,6 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 	return this->aristas[nodo];
 }
 
-vector<unsigned int> Grafo::padres(unsigned int nodo){
-
-	vector<unsigned int> res;
-	unsigned int tam=this->cantNodos;
-	unsigned int j=0;
-
-	for (unsigned int i=0; i< tam; i++){
-
-		j=this->aristas[i].size();
-
-		for(unsigned int f=0; f<j; f++){
-
-			if(this->aristas[i][j]==nodo){
-				res.push_back(i+1);
-				break;
-			}
-		}
-	}
-
-	return res;
-}
-
 //Si el grafo es DAG, devuelve true y en el parametro de salida devuielve los nodos en orden topologico
 // raiz: nodo considerado como raiz
 // order: parametro de salida. valido solo si la funcion retorna true
@@ -117,10 +95,10 @@ bool Grafo::visitar(const unsigned int nodo, vector<unsigned int> &colores,list<
 }
 
 
-int Grafo::buscarNodoBlanco(const vector<unsigned int> &nodosMarcados){
+int Grafo::buscarNodoBlanco(const vector<unsigned int> &colores){
     int res = -1;
-    for(unsigned int i = 0; i < nodosMarcados.size(); i++){
-        if(nodosMarcados[i] == 0){
+    for(unsigned int i = 0; i < colores.size(); i++){
+        if(colores[i] == BLANCO){
             res = i;
         }
     }
@@ -129,6 +107,7 @@ int Grafo::buscarNodoBlanco(const vector<unsigned int> &nodosMarcados){
 
 int Grafo::caminoMaximo(vector<unsigned int> &camino){
    int n = this->cantNodos;
+   vector<unsigned int> siguienteEnCamino(n); // siguienteEnCamino[i] = siguiente nodo en el camino mas largo desde i (0 indica fin)
    vector<unsigned int> orden(n);
    // dist[i] es la longitud del camino simple mas largo entre el nodo incial
    // y el nodo i
@@ -139,7 +118,7 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
       for(int i = n-1; i >= 0; i--){
          uint v = orden[i];
          dist[v] = 0;
-         camino[v] = 0; // Si el nodo no tiene hijos (no entra en el siguiente ciclo), es fin de camino.
+         siguienteEnCamino[v] = 0; // Si el nodo no tiene hijos (no entra en el siguiente ciclo), es fin de camino.
 
          // calculamos la distancia buscando la maxima distancia de los anteriores
          for (unsigned int j = 0; j < (this->aristas[v]).size(); j++){
@@ -147,12 +126,19 @@ int Grafo::caminoMaximo(vector<unsigned int> &camino){
             if((dist[hijo] + 1) > dist[v])
                {
                dist[v] = dist[hijo] + 1;
-               camino[v] =  hijo;
+               siguienteEnCamino[v] =  hijo;
                }
             }
       }
 
-      int maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
+      int i = 0; // El camino mas largo comienza en el nodo inicial artificial
+	  while(siguienteEnCamino[i] != 0)
+		{
+		i = siguienteEnCamino[i];
+		camino.push_back(i);
+		}
+
+	  int maxDist = dist[0] - 1; // Restamos el eje que une los nodos con el nodo inicial artificial
       return maxDist;
    }
    else
