@@ -81,6 +81,40 @@
 \end{algorithm}
  
 
+
+begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{caminoMaximo}(vector< int >$ camino )$}
+\li $n \gets \# nodos $
+\li vector$<int>$ siguienteEnCamino(n)
+\li vector$<int>$ orden(n)
+\li vector$<int>$ dist(n)
+\li ordenTopologico(orden)
+\li \If no hay ciclo \Do
+\li 	\For i desde n-1 hasta 1 \Do
+\li		int v $\gets$ orden[i]
+\li		dist[v] $\gets$ 0
+\li 		siguienteEnCamino[v] $\gets$ 0
+\li		\For cada hijo de v \Do
+\li		  	\If dist[hijo] + 1 $>$ dist[v] \Do
+\li				dist[v] $\gets$ dist[hijo]+ 1
+\li				siguienteEnCamino[v] $\gets$ hijo
+\li			\End
+\li		\End
+\li	\End
+\li	int f $\gets$ 0
+\li	\While siguienteEnCamino[i] distinto de 0 \Do
+\li		i $\gets$ siguienteEnCamino[i]
+\li		agregar i al final de $camino$
+\li	\End
+\li 	int maxDist $\gets$ dist[0]
+\li 	\Return maxDist , camino	
+\li \End	  	
+\End
+\end{codebox}
+\end{algorithm}
+
 \subsubsection{Correctitud} 
 
 
