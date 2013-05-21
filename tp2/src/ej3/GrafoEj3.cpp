@@ -56,12 +56,13 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 
 
 
-vector<vector<unsigned int> > resolver(Grafo g){
+vector<vector<unsigned int> >Grafo::resolver(){
 
 	stack<unsigned int> s;
 	vector<vector<unsigned int> > list;
 	int indice=0;
-	tarjanAlgorithm(g,0,list,s,indice);
+	vector<unsigned int> closed (this->cantNodos,0);
+	this.tarjanAlgorithm(0,list,s,indice, closed);
 
 	for(int i=0; i<list.size; i++){ 	//tengo que sacar el nodo virtual que agregue (el nodo 0)
 
@@ -76,37 +77,51 @@ vector<vector<unsigned int> > resolver(Grafo g){
 
 	}
 
+	return list;
 
 }
 
 
 
-void tarjanAlgorithm(Grafo &g, unsigned int nodo,vector<vector<unsigned int> > &list, stack<unsigned int> &s, int &indice){
+void Grafo::tarjanAlgorithm(unsigned int nodo,vector<vector<unsigned int> > &list, stack<unsigned int> &s, int &indice, vector<unsigned int> closed){
 
-	g.index[nodo]=indice; 		//acá ya lo marco como visitado
-	g.lowIndex[nodo]=indice;
+	this->index[nodo]=indice; 		//acá ya lo marco como visitado
+	this->lowIndex[nodo]=indice;
 	indice++;
 
 	s.push(nodo);
 
-	for(int i=0; i<g.aristas[nodo].size();i++){
-		int hijo = g.aristas[nodo][i];
-		if(g.index[hijo]==-1){ //si el hijo no habia sido visitado
-			tarjanAlgorithm(g,hijo,list,s,indice);	
-			g.lowIndex[nodo]=min(g.lowIndex[nodo], g.lowIndex[hijo]);	//actualizo el lowIndex del padre;
+	for(int i=0; i<this->aristas[nodo].size();i++){
+		int hijo = this->aristas[nodo][i];
+		if(this->index[hijo]==-1){ //si el hijo no habia sido visitado
+			tarjanAlgorithm(hijo,list,s,indice);	
+			this->lowIndex[nodo]=min(this->lowIndex[nodo], this->lowIndex[hijo]);	//actualizo el lowIndex del padre;
 		}
 		else {
 
-			if()
+			if(closed[hijo]==0){
+				this->lowIndex[nodo]=min(this->lowIndex[nodo], this->index[hijo]);
+			}
 		}
 	}
 
+	if (this->lowIndex[nodo]==this->index[nodo]){
+
+		vector<unsigned int> componente;
+		unsigned int n=s.pop();
+		closed[n]=1;
+		componente.push_back(n);
+
+		while(n != nodo){
+			unsigned int n=s.pop();
+			closed[n]=1;
+			componente.push_back(n);
+		}
+
+		list.push_back(componente);
 
 
 
-
-
-
-
+	}
 
 }

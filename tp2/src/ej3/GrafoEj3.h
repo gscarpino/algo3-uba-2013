@@ -31,7 +31,9 @@ class Grafo{
       unsigned int cantidadAristas();
       vector<unsigned int> hijos(unsigned int nodo);
       vector<unsigned int> padres(unsigned int nodo);
-
+      void tarjanAlgorithm(unsigned int nodo,vector<vector<unsigned int> > &list, stack<unsigned int> &s, int &indice, vector<unsigned int> closed);
+      vector<vector<unsigned int> >Grafo::resolver();
+      
 	private:
       unsigned int cantNodos;
       vector< vector<unsigned int> > aristas;
