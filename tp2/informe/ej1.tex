@@ -2,8 +2,8 @@
  
 \subsection{Introducci\'on}
 
-Nos encontramos estudiando el proceso de mutaciones de un conjunto de bacterias, el cual puede describirse de la siguiente manera:
-una bacteria nace perteneciendo a una cepa determinada;
+Nos encontramos estudiando el proceso de mutaciones de un conjunto de bacterias:
+una bacteria nace perteneciendo a una cepa determinada, y
 durante el transcurso de su vida, la bacteria puede mutar de una cepa a otra hasta que en
 algun momento alcanza una cepa terminal desde la cual yo no puede seguir mutando. 
 Este paso entre cepas define una cadena de mutaciones.
@@ -18,37 +18,36 @@ El problema presentado consiste en identificar la cadena de mutaciones m\'as lar
 
 
 Comenzamos modelando el escenario del problema como un grafo dirigido donde cada nodo representa una cepa y cada arista, la mutación de una cepa a otra.
-A partir de aqui, podemos traducir el problema original en una problema sobre grafos: encontrar la secuencia mas larga de mutaciones equivale a hallar el camino simple mas largo dentro del digrafo propuesto. En principio, este camino puede partir de cualquier nodo; más adelante veremos una forma de salvar este detalle.
+A partir de aqui, podemos traducir el problema original en una problema sobre grafos: encontrar la secuencia mas larga de mutaciones equivale a hallar el camino simple m\'as largo dentro del digrafo propuesto. En principio, este camino partir de cualquier nodo; más adelante veremos una forma de salvar este detalle.
 
-Nos enfocamos, a partir de ahora, al problema de hallar el camino simple m\'as largo dentro de un digrafo. 
-El caso que nos interesa es el de digrafos aciclicos (DAG), por lo que al referirnos a digrafos estaremos suponiendo que estos son DAGs.
+Nos enfocamos, a partir de ahora, en el problema de hallar el camino simple m\'as largo dentro de un digrafo. 
+Los casos en los que nos interesa encontrar este camino son aquellos en los que no existen secuencias infinitas de mutaciones; es decir, nos interesan solo los digrafos ac\'iclicos (DAG).
+Empecemos entonces pensando en como encontrar el camino simple m\'as largo con origen en un nodo en particular. 
+Supongamos que partimos del nodo A. 
+El camino m\'as largo que podemos hallar desde A a cualquier otro nodo en el DAG necesariamente
+debe pasar por alguno de los nodos sucesores de A.
+Por lo tanto, el camino m\'as largo a partir de A debe ser el camino m\'as largo a partir de alguno de sus nodos sucesores, m\'as la arista que une a A con el sucesor que sea inicio de ese subcamino m\'as largo.
+Esta idea revela una subestructura \'optima: la soluci\'on del problema se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño. Esto \'ultimo vale porque, dado que estamos trabajando sobre un DAG, al tratar de encontrar el camino m\'aximo desde los nodos sucesores de A, sabemos que no podemos volver a pasar por A o alguno de sus predecesores (puesto que esto implicar\'ia tener un ciclo, lo que no es posible por definici\'on), por lo que la subinstancia a resolver debe ser menor.
+Esto nos lleva a pensar en aplicar la t\'ecnica de programaci\'on din\'amica en la resoluci\'on del problema.
 
-Comencemos pensando en como encontrar el camino simple mas largo con origen en un nodo en particular. 
-Supongamos que partimos del nodo A. El camino m\'as largo que podemos hallar desde A a cualquier otro nodo en el DAG necesariamente
-debe pasar por alguno de los nodos alcanzables directamente desde A.
-Pero entonces, el camino mas largo a partir de A debe ser el camino mas largo a partir de uno de sus nodos alcanzable, mas A.
-Es decir, la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño (lo que vale pues estamos trabajando sobre un DAG).
-Esto nos lleva a pensar en aplicar la tecnica de programacion dinamica en la resolucion del problema.
+Definamos, entonces, dado un G=(V, E) un DAG, la funci\'on recursiva $F(v)$ como la longitud del camino simple más largo que comienza en el nodo $v$, 
 
-Definamos, entonces, $F(v)$ como la longitud del camino simple más largo que comienza en el nodo $v$.
+$$F(v)= \max_{(v, u)\;\in\;E} \{F(u)\; + \; 1\}$$
 
-$$F(v)= \max_{u\;\in\;N_{o}(v)} \{F(u)\; + \; 1\}$$
-
-donde $N_{o}(v)$ es la vecindad de salida del nodo v (el conjunto de nodos alcanzables desde v). 
 En esta definici\'on consideramos que el m\'aximo de un conjunto vac\'io es 0.
 
-En lugar de proponer una funcion recursiva (inmediata a partir de la definicion de F), veamos llegar a un
-algoritmo itereativo: al calcular la solucion para un nodo i, solo necesitamos tener las subsoluciones de sus nodos "`hijos"'.
-Por lo tanto, iremos calculando las F(i) siguiendo un ordenamiento topologico lineal inverso. 
-Un ordenamiento topologico de los nodos de un digrafo es aquel en el que ningun nodo hijo aparece antes que su padre (los DAG siempre tiene un orden topologico). Debemos notar que el ordenamiento topológico de un grafo no siempre es único.
+En lugar de implementar una funci\'on recursiva (inmediata a partir de la definici\'on de F), nos centraemos directamente en un
+algoritmo itereativo. Para esto, debemos enterder en que orden debemos resolver los subproblemas, de manera de tener los datos necesarios ya calculados al momento de necesitarlos. De la definici\'on de F podemos ver que, al calcular la soluci\'on para un nodo i, solo necesitamos tener las subsoluciones de sus nodos sucesores. 
+Para lograr esto, podemos proceder calculando las subsoluciones de los nodos seg\'un un ordenamiento topol\'ogico invertido.
+Un ordenamiento topol\'ogico de los nodos de un digrafo es aquel en el que ning\'un nodo sucesor aparece antes que su predecesor (es decir, si un digrafo G contiene un eje (u, v), entonces u aparece antes que v en el ordenamiento [Cormen]). Notemos que un digrafo tiene ordenamiento topol\'ogico si y solo si es ac\'iclico, y que este ordenamiento no siempre es único. 
 
-Entonces, mantendremos un arreglo de longitudes, sea L, donde L[i] representa la longitud del camino simple mas largo que nace en el nodo i, y lo llenaremos siguiendo el ordenamiento previamente explicado. Ademas, mantendremos un arreglo S donde S[i] es es el nodo hijo de i que se eligio como subsolucion optima. De esta manera, al terminar el llenado de los arreglos podremos reconstuir el camino simple de mayor longitud que parte de cada nodo.
+Para calcular el ordenamiento topol\'ogico, seguimos la idea planteada en [Cormen] y utilizamos el algoritmo de recorrido \textbf{DFS} (Depth First Search o búsqueda en profundidad). El algoritmo se modific\'o levemente, de manera de que guarde el orden a medida que va cerrando los nodos (en lugar de armar el ordenamiento una vez que DFS termina y marca los timestamp de finalizaci\'on de cada nodo, como se presenta en [Cormen]), y chequee que al visitar un nodo, si este esta siendo explorado (su color es GRIS), entonces finalice indicando que se encontr\'o un ciclo.
+De esta forma, en un \'unico paso inicial decidimos si el digrafo es ac\'iclico mientras que obtenemos la informaci\'on necesaria para proceder. 
 
-Para calcular el ordenamiento topologico lineal, seguimos la idea planteadas en [Cormen] y utilizamos el algoritmo de recorrido \tetbf{DFS} (Depth First Search o búsqueda en profundidad). El algoritmo se modifico levemente, de manera de que guarde el orden a medida que va cerrando los nodos (en lugar de armar el ordenamiento una vez que DFS termina y marca los timestamp de finalizacion de cada nodo), y chequee que al visitar un nodo, si este esta siendo explorado (su color es GRIS), entonces finalice indicando que se encontr\'o un ciclo.
-De esta forma, para decidimos si el digrafo es un DAG y armamos los datos necesarios para proceder con el algoritmo dinamico en un unico paso inicial. Cabe aclarar que un digrafo es DAG si y solo si puede encontrarse un ordenamiento topologico para sus nodos.  
+Para el algoritmo iterativo de programaci\'on din\'amica mantendremos un arreglo de longitudes, sea L, tal que L[i] represente la longitud del camino simple mas largo que nace en el nodo i, y lo llenaremos siguiendo el ordenamiento previamente explicado. Ademas, mantendremos un arreglo S, donde S[i] es es el nodo hijo de i que se eligi\'o como subsoluci\'on \'optima. De esta manera, al terminar el llenado de los arreglos podremos reconstuir el camino simple de mayor longitud que parte de cada nodo.
 
-Ahora volvamos al problema original. En primer lugar, si queremos hallar el camino simple mas largo, deberiamos ejecutar el algoritmo en cada nodo sin aristas entrantes. Ademas, el grafo armado por las relaciones entre las cepas puede ser disconexo. 
-Para sortear estos detalles, a la hora de implementar el problema se tomó la decisión de agregar un nodo inicial. Este nodo dirige sus aristar a cada uno de los demás nodos del digrafo original, por lo que el digrafo resultante resulta ser conexo. Notemos que agregar este nodo no altera la solución del problema. Si en el grafo original no hay ciclos, como las aristas que se agregan solo van del nuevo nodo inicial al resto y nunca al reves, el grafo resultante tampo contendra ciclos. De igual manera se ve que si el grafo original contenia un cico, agregar el nodo artificial no eliminar\'a el o los ciclos preexistentes. 
+Ahora volvamos al problema original. En primer lugar, si queremos hallar el camino simple mas largo, deberiamos ejecutar el algoritmo en cada nodo sin aristas entrantes. Por otro lado, el grafo generado por las relaciones entre las cepas puede ser disconexo. 
+Para manejar estos detalles, a la hora de implementar el problema agregamos un nodo inicial ficticio. Este nodo dirige sus aristas a cada uno de los demás nodos del digrafo original (aunque bastar\'ia que se generaran aristas solo hacia a los nodos sin aristas entrantes), por lo que el digrafo resultante resulta ser conexo. Notemos que agregar este nodo no altera la solución del problema: si en el grafo original no hay ciclos, como las aristas que se agregan solo van del nuevo nodo inicial al resto y nunca al reves, el grafo resultante tampo contendra ciclos. De igual manera se ve que si el grafo original conten\'ia ciclos, agregar el nodo artificial no eliminar\'a los ciclos preexistentes. 
 
 La solucion final del problema, entonces, es calcular el camino simple mas largo que tiene como origen al nodo artificial: S[nodoArtifial], con distancia L[nodoArtifial].
 
