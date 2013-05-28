@@ -7,13 +7,15 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 
 	vector<unsigned int> vacio;
 	this->aristas.reserve(cant);
+	this->indice.reserve(cant);
+	this->bajoIndice.reserve(cant);
 
-	
+
 
 	for(unsigned int i=0; i< cant; i++) {
 		this->aristas.push_back(vacio);
-		this->index.push_back(-1);
-		this->lowIndex.push_back(-1);
+		this->indice.push_back(-1);
+		this->bajoIndice.push_back(-1);
 	}
 
 	this->cantAristas=0;
@@ -24,8 +26,10 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 Grafo::Grafo(const Grafo& other){ //constructor por copia
 
 	this->cantNodos = other.cantNodos;
-	this->aristas = other.aristas;
 	this->cantAristas = other.cantAristas;
+	this->aristas = other.aristas;
+	this->indice = other.indice;
+	this->bajoIndice = other.bajoIndice;
 
 }
 
@@ -37,10 +41,7 @@ void Grafo::agregarArista(const unsigned int u, const unsigned int v){  //requie
 
 }
 
-/*bool Grafo::tieneHijos (unsigned int nodo){ 	//requiere nodo>0  (en este ejercicio tiene sentido esperar nodo>0)
 
-		return !(this->aristas[nodo].empty());
-}*/
 
 unsigned int Grafo::cantidadNodos(){
 	return cantNodos;
@@ -55,73 +56,178 @@ vector<unsigned int> Grafo::hijos(unsigned int nodo){
 }
 
 
+vector<vector<unsigned int> > Grafo::grupoDeRiesgoMaximalesLineal(){
+    vector<vector<unsigned int> > res(1);
+    unsigned int index = 0;
+    stack<unsigned int> pila;
 
-vector<vector<unsigned int> >Grafo::resolver(){
+    for(unsigned int i = 0; i < this->cantNodos; i++){
+        if(indice[i] == -1){
+            tarjanAlgorithm(index,pila,i,res);
+        }
+    }
+    res.pop_back();
+    return res;
+}
 
-	stack<unsigned int> s;
-	vector<vector<unsigned int> > list;
-	int indice=0;
-	vector<unsigned int> closed (this->cantNodos,0);
-	this.tarjanAlgorithm(0,list,s,indice, closed);
+void Grafo::tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsigned int nodo, vector<vector<unsigned int> > &componentes){
+    this->indice[nodo] = index;
+    this->bajoIndice[nodo] = index;
+    index++;
+    pila.push(nodo);
 
-	for(int i=0; i<list.size; i++){ 	//tengo que sacar el nodo virtual que agregue (el nodo 0)
+    for(unsigned int i = 0; i < aristas[nodo].size(); i++){
+        unsigned int nodo_temp = this->aristas[nodo][i];
+        if(this->indice[nodo_temp] == -1){
+            tarjanAlgorithm(index,pila,nodo_temp,componentes);
+            this->bajoIndice[nodo] = min(this->bajoIndice[nodo],this->bajoIndice[nodo_temp]);
+        }
+        else{
+            if(pertenecePila(pila,nodo_temp)){
+                this->bajoIndice[nodo] = min(this->bajoIndice[nodo],this->indice[nodo_temp]);
+            }
+        }
+    }
 
-		if(list[i].size==1){
+    if(this->bajoIndice[nodo] == this->indice[nodo]){
+        while(nodo != pila.top()){
+            componentes[componentes.size()-1].push_back(pila.top());
+            pila.pop();
+        }
+        componentes[componentes.size()-1].push_back(pila.top());
+        pila.pop();
+        vector<unsigned int> temp;
+        componentes.push_back(temp);
+    }
 
-			if	(list[0]==0){
+}
 
-				list.erase(list.begin()+i);
-			}
-
-		}
-
-	}
-
-	return list;
-
+bool Grafo::pertenecePila(stack<unsigned int> pila, unsigned int nodo){
+    bool res = false;
+    while(!pila.empty() && !res){
+        if(pila.top() == nodo){
+            res = true;
+        }
+        pila.pop();
+    }
+    return res;
 }
 
 
 
-void Grafo::tarjanAlgorithm(unsigned int nodo,vector<vector<unsigned int> > &list, stack<unsigned int> &s, int &indice, vector<unsigned int> closed){
+vector< vector<unsigned int> > Grafo::grupoDeRiesgoMaximalesNoLineal(){
+    vector< vector<unsigned int> > res;
 
-	this->index[nodo]=indice; 		//acá ya lo marco como visitado
-	this->lowIndex[nodo]=indice;
-	indice++;
+    for(unsigned int i = 0; i < cantNodos; i++){
+        vector<unsigned int> unitario(1,i);
+        res.push_back(unitario);
+    }
 
-	s.push(nodo);
+    for(unsigned int i = 0; i < cantNodos; i++){
+        for(unsigned int j = 0; j < res.size(); j++){
+            if(!pertenece(i,res[j])){
+                if(contagia(i,res[j]) && loContagian(i,res[j])){
+                    res[j].push_back(i);
+                }
+            }
+        }
+    }
 
-	for(int i=0; i<this->aristas[nodo].size();i++){
-		int hijo = this->aristas[nodo][i];
-		if(this->index[hijo]==-1){ //si el hijo no habia sido visitado
-			tarjanAlgorithm(hijo,list,s,indice);	
-			this->lowIndex[nodo]=min(this->lowIndex[nodo], this->lowIndex[hijo]);	//actualizo el lowIndex del padre;
-		}
-		else {
+    borrarDuplicadosYnoMaximales(res);
 
-			if(closed[hijo]==0){
-				this->lowIndex[nodo]=min(this->lowIndex[nodo], this->index[hijo]);
-			}
-		}
-	}
-
-	if (this->lowIndex[nodo]==this->index[nodo]){
-
-		vector<unsigned int> componente;
-		unsigned int n=s.pop();
-		closed[n]=1;
-		componente.push_back(n);
-
-		while(n != nodo){
-			unsigned int n=s.pop();
-			closed[n]=1;
-			componente.push_back(n);
-		}
-
-		list.push_back(componente);
-
-
-
-	}
-
+    return res;
 }
+
+bool Grafo::pertenece(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
+    for(unsigned int i = 0; i < v.size(); i++){
+        if(n == v[i]){
+            res = true;
+            break;
+        }
+    }
+    return res;
+}
+
+
+bool Grafo::contagia(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
+    for(unsigned int i = 0; i < v.size(); i++){
+        for(unsigned int j = 0; j < aristas[n].size(); j++){
+            if(aristas[n][j] == v[i]){
+                res = true;
+                break;
+            }
+        }
+    }
+    return res;
+}
+
+bool Grafo::loContagian(const unsigned int n, const vector<unsigned int> &v) const{
+    bool res = false;
+    for(unsigned int i = 0; i < v.size(); i++){
+        for(unsigned int j = 0; j < aristas[v[i]].size(); j++){
+            if(aristas[v[i]][j] == n){
+                res = true;
+                break;
+            }
+        }
+    }
+    return res;
+}
+
+void Grafo::borrarDuplicadosYnoMaximales(vector< vector<unsigned int> > &grupos){
+    vector<unsigned int> ids;
+    for(unsigned int i = 0; i < grupos.size() - 1; i++){
+        for(unsigned int j = i + 1; j < grupos.size(); j++){
+            unsigned int rel = relacion(grupos[i], grupos[j]);
+            //rel == 0 entonces son distintos y ninguno incluido en el otro
+            if(rel == 2){
+                //son iguales
+                if(!pertenece(j,ids)){
+                    ids.push_back(j);
+                }
+            }
+            else if(rel == 1){
+                //grupos[j] incluido en grupos[i]
+                if(!pertenece(j,ids)){
+                    ids.push_back(j);
+                }
+            }
+            else if(rel == 3){
+                //grupos[i] incluido en grupos[j]
+                if(!pertenece(i,ids)){
+                    ids.push_back(i);
+                }
+            }
+        }
+    }
+
+    for(unsigned int i = 0; i < ids.size(); i++){
+        grupos.erase(grupos.begin() + ids[i]-i);
+    }
+}
+
+unsigned int Grafo::relacion(const vector<unsigned int> &v1,const vector<unsigned int> &v2){
+    unsigned int res = 2;
+    for(unsigned int i = 0; i < v1.size();i++){
+        if(!pertenece(v1[i],v2)){
+            res--;
+            break;
+        }
+    }
+    for(unsigned int i = 0; i < v2.size();i++){
+        if(!pertenece(v2[i],v1)){
+            if(res == 2){
+                res = 3;
+            }
+            else{
+                res--;
+            }
+            break;
+        }
+    }
+    return res;
+}
+
+

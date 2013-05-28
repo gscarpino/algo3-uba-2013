@@ -33,8 +33,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Grafo.cpp" />
-		<Unit filename="Grafo.h" />
+		<Unit filename="GrafoEj3.cpp" />
+		<Unit filename="GrafoEj3.h" />
 		<Unit filename="Redefs.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

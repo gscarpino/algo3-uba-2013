@@ -9,39 +9,38 @@
 
 using namespace std;
 
-/*----------------------- DISCLAIMER:---------------------------------
-*
-* Esta implementacion se basa fuertemente en el ejercicio 1 del tp.
-* Por lo tanto,por ejemplo, no se provee manera de quitar un nodo.
-*
-*---------------------------------------------------------------------*/
-#define BLANCO 0
-#define GRIS 1
-#define NEGRO 2
-#define uint unsigned int
-
 class Grafo{
 
-	public:
-      Grafo(unsigned int cant);
-      Grafo(const Grafo& other);
-      void agregarArista(const unsigned int u, const unsigned int v); //agrega la arista dirigida
-      //bool tieneHijos (unsigned int nodo); //para saber si es terminal
-      unsigned int cantidadNodos();
-      unsigned int cantidadAristas();
-      vector<unsigned int> hijos(unsigned int nodo);
-      vector<unsigned int> padres(unsigned int nodo);
-      void tarjanAlgorithm(unsigned int nodo,vector<vector<unsigned int> > &list, stack<unsigned int> &s, int &indice, vector<unsigned int> closed);
-      vector<vector<unsigned int> >Grafo::resolver();
-      
+    public:
+        Grafo(unsigned int cant);
+        Grafo(const Grafo& other);
+        void agregarArista(const unsigned int u, const unsigned int v); //agrega la arista dirigida
+        unsigned int cantidadNodos();
+        unsigned int cantidadAristas();
+        vector<unsigned int> hijos(unsigned int nodo);
+
+        vector< vector<unsigned int> > grupoDeRiesgoMaximalesNoLineal();
+        vector< vector<unsigned int> > grupoDeRiesgoMaximalesLineal();
+
 	private:
-      unsigned int cantNodos;
-      vector< vector<unsigned int> > aristas;
-      unsigned int cantAristas;
-      vector<int> index;
-      vector<int> lowIndex;
-      //bool visitar(const unsigned int nodo, vector<unsigned int> &nodosMarcados,list<unsigned int> &nodosOrdenados);
-      //int buscarNodoBlanco(const vector<unsigned int> &nodosMarcados);
+        unsigned int cantNodos;
+        unsigned int cantAristas;
+        vector< vector<unsigned int> > aristas;
+        vector<unsigned int> indice;
+        vector<unsigned int> bajoIndice;
+
+        //No Lineal
+        bool pertenece(const unsigned int n, const vector<unsigned int> &v) const;
+        bool contagia(const unsigned int n, const vector<unsigned int> &v) const;
+        bool loContagian(const unsigned int n, const vector<unsigned int> &v) const;
+        void borrarDuplicadosYnoMaximales(vector< vector<unsigned int> > &grupos);
+        unsigned int relacion(const vector<unsigned int> &v1,const vector<unsigned int> &v2);
+
+        //Linea
+        void tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsigned int nodo, vector<vector<unsigned int> > &componentes);
+        bool pertenecePila(stack<unsigned int> pila, unsigned int nodo);
+
+
 };
 
 #endif // GRAFO_H

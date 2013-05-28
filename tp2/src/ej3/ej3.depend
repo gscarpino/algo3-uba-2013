@@ -10,12 +10,22 @@
 
 1367931565 c:\users\gino\desktop\algo3\tp2\src\ej3\redefs.h
 
-1368021679 source:c:\users\gino\desktop\algo3\tp2\src\ej3\main.cpp
+1369773948 source:c:\users\gino\desktop\algo3\tp2\src\ej3\main.cpp
 	<iostream>
 	<fstream>
 	<sstream>
 	<cstdlib>
 	<ctime>
 	<vector>
-	"Grafo.h"
+	"GrafoEj3.h"
+
+1369774540 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.cpp
+	"GrafoEj3.h"
+
+1369772391 c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.h
+	<iostream>
+	<vector>
+	<list>
+	<algorithm>
+	<stack>
 

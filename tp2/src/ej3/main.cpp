@@ -5,10 +5,10 @@
 #include <ctime>
 #include <vector>
 
-#include "Grafo.h"
+#include "GrafoEj3.h"
 
 #define TESTING 0
-#define RESULTADOS 1
+#define RESULTADOS 0
 
 void genTests();
 
@@ -26,7 +26,7 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-    argv[1] = "input2.txt";
+    argv[1] = "input.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -53,7 +53,6 @@ int main(int argc, char * argv[]){
             break;
         }
         unsigned int cantInv = atoi(linea.c_str());
-
         Grafo investigadores(cantInv);
         unsigned int contagiables = 0;
         for(unsigned int i = 0; i < cantInv; i++){
@@ -63,20 +62,33 @@ int main(int argc, char * argv[]){
             sLinea >> contagiables;
             for(unsigned int j = 0; j < contagiables; j++){
                 sLinea >> temp;
-                investigadores.agregarArista(make_pair(i,temp));
+//                investigadores.agregarArista(make_pair(i,temp));
+                investigadores.agregarArista(i,temp);
             }
         }
 
-        cout << "Investigadores: " << investigadores.getNodos() << endl;
-
-        vector< vector< unsigned int > > grupos(investigadores.grupoDeRiesgoMaximales());
-        cout << "Cantidades de grupos de riesgo maximales: " << grupos.size() << endl;
-        for(unsigned int i = 0; i < grupos.size(); i++){
-            cout << "Grupo " << i << endl;
-            for(unsigned int j = 0; j < grupos[i].size(); j++){
-                cout << grupos[i][j] << " ";
+//        cout << "Investigadores: " << investigadores.getNodos() << endl;
+//
+        vector< vector< unsigned int > > gruposLineal(investigadores.grupoDeRiesgoMaximalesLineal());
+        cout << "Cantidades de grupos de riesgo maximales: " << gruposLineal.size() << endl;
+        for(unsigned int i = 0; i < gruposLineal.size(); i++){
+            cout << "Grupo " << i << ": ";
+            for(unsigned int j = 0; j < gruposLineal[i].size(); j++){
+                cout << gruposLineal[i][j] << " ";
             }
-            cout << endl << endl;
+            cout << endl;
+        }
+
+
+            cout << endl;
+        vector< vector< unsigned int > > gruposNoLineal(investigadores.grupoDeRiesgoMaximalesNoLineal());
+        cout << "Cantidades de grupos de riesgo maximales: " << gruposNoLineal.size() << endl;
+        for(unsigned int i = 0; i < gruposNoLineal.size(); i++){
+            cout << "Grupo " << i << ": ";
+            for(unsigned int j = 0; j < gruposNoLineal[i].size(); j++){
+                cout << gruposNoLineal[i][j] << " ";
+            }
+            cout << endl;
         }
 
 //        timespec comienzo;
