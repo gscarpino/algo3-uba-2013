@@ -10,7 +10,7 @@
 
 1367931565 c:\users\gino\desktop\algo3\tp2\src\ej3\redefs.h
 
-1369775106 source:c:\users\gino\desktop\algo3\tp2\src\ej3\main.cpp
+1370117509 source:c:\users\gino\desktop\algo3\tp2\src\ej3\main.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -19,10 +19,10 @@
 	<vector>
 	"GrafoEj3.h"
 
-1369775331 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.cpp
+1370117446 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.cpp
 	"GrafoEj3.h"
 
-1369775352 c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.h
+1370117436 c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.h
 	<iostream>
 	<vector>
 	<list>

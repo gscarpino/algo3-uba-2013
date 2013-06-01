@@ -27,10 +27,11 @@ class Grafo{
         vector< vector<unsigned int> > aristas;
         vector<unsigned int> indice;
         vector<unsigned int> bajoIndice;
+        vector<bool> presente;
 
         //Aux
         void tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsigned int nodo, vector<vector<unsigned int> > &componentes);
-        bool pertenecePila(stack<unsigned int> pila, unsigned int nodo);
+//        bool pertenecePila(stack<unsigned int> pila, unsigned int nodo);
 
 
 };

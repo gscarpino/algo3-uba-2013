@@ -26,7 +26,7 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-    argv[1] = "tests.txt";
+    argv[1] = "input.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;

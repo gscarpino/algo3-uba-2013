@@ -9,6 +9,7 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 	this->aristas.reserve(cant);
 	this->indice.reserve(cant);
 	this->bajoIndice.reserve(cant);
+	this->presente.reserve(cant);
 
 
 
@@ -16,6 +17,7 @@ Grafo::Grafo(unsigned int cant){	//constructor vacio, requiere la cantidad de no
 		this->aristas.push_back(vacio);
 		this->indice.push_back(-1);
 		this->bajoIndice.push_back(-1);
+		this->presente.push_back(false);
 	}
 
 	this->cantAristas=0;
@@ -75,6 +77,7 @@ void Grafo::tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsi
     this->bajoIndice[nodo] = index;
     index++;
     pila.push(nodo);
+    this->presente[nodo] = true;
 
     for(unsigned int i = 0; i < aristas[nodo].size(); i++){
         unsigned int nodo_temp = this->aristas[nodo][i];
@@ -83,7 +86,7 @@ void Grafo::tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsi
             this->bajoIndice[nodo] = min(this->bajoIndice[nodo],this->bajoIndice[nodo_temp]);
         }
         else{
-            if(pertenecePila(pila,nodo_temp)){
+            if(this->presente[nodo_temp]){
                 this->bajoIndice[nodo] = min(this->bajoIndice[nodo],this->indice[nodo_temp]);
             }
         }
@@ -91,24 +94,15 @@ void Grafo::tarjanAlgorithm(unsigned int &index, stack<unsigned int> &pila, unsi
 
     if(this->bajoIndice[nodo] == this->indice[nodo]){
         while(nodo != pila.top()){
+            this->presente[pila.top()] = false;
             componentes[componentes.size()-1].push_back(pila.top());
             pila.pop();
         }
+        this->presente[pila.top()] = false;
         componentes[componentes.size()-1].push_back(pila.top());
         pila.pop();
         vector<unsigned int> temp;
         componentes.push_back(temp);
     }
 
-}
-
-bool Grafo::pertenecePila(stack<unsigned int> pila, unsigned int nodo){
-    bool res = false;
-    while(!pila.empty() && !res){
-        if(pila.top() == nodo){
-            res = true;
-        }
-        pila.pop();
-    }
-    return res;
 }
