@@ -33,6 +33,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add option="-lrt" />
+		</Linker>
 		<Unit filename="GrafoEj3.cpp" />
 		<Unit filename="GrafoEj3.h" />
 		<Unit filename="Redefs.h" />

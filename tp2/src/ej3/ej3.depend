@@ -2,6 +2,8 @@
 1368021590 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafo.cpp
 	"Grafo.h"
 
+1368022968 
+
 1368022968 c:\users\gino\desktop\algo3\tp2\src\ej3\grafo.h
 	<iostream>
 	<vector>
@@ -19,6 +21,8 @@
 	<vector>
 	"GrafoEj3.h"
 
+1370385244 h"
+
 1370385244 source:c:\users\gino\desktop\algo3\tp2\src\ej3\grafoej3.cpp
 	"GrafoEj3.h"
 
@@ -28,4 +32,25 @@
 	<list>
 	<algorithm>
 	<stack>
+
+1370117436 >
+
+1370538574 source:/home/gino/Desktop/algo3/tp2/src/ej3/GrafoEj3.cpp
+	"GrafoEj3.h"
+
+1370538574 /home/gino/Desktop/algo3/tp2/src/ej3/GrafoEj3.h
+	<iostream>
+	<vector>
+	<list>
+	<algorithm>
+	<stack>
+
+1370540349 source:/home/gino/Desktop/algo3/tp2/src/ej3/main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstdlib>
+	<ctime>
+	<vector>
+	"GrafoEj3.h"
 
