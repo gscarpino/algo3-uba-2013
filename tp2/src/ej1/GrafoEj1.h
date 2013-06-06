@@ -14,9 +14,9 @@ using namespace std;
 * Por lo tanto,por ejemplo, no se provee manera de quitar un nodo.
 *
 *---------------------------------------------------------------------*/
-#define BLANCO 0
-#define GRIS 1
-#define NEGRO 2
+#define ABIERTO 0
+#define PROCESADO 1
+#define CERRADO 2
 #define uint unsigned int
 class Grafo{
 
@@ -37,7 +37,7 @@ class Grafo{
       vector< vector<unsigned int> > aristas;
       unsigned int cantAristas;
       bool visitar(const unsigned int nodo, vector<unsigned int> &nodosMarcados,list<unsigned int> &nodosOrdenados);
-      int buscarNodoBlanco(const vector<unsigned int> &nodosMarcados);
+      int buscarNodoAbierto(const vector<unsigned int> &nodosMarcados);
 };
 
 #endif // GRAFO_H

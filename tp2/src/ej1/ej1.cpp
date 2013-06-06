@@ -13,52 +13,57 @@ using namespace std;
 
 int main()
 {
-   // Vamos a trabajar con un grafo con un nodo extra
-   // Solo debemos recordarlo al momento de generar la salida
+    // Vamos a trabajar con un grafo con un nodo extra
+    // Solo debemos recordarlo al momento de generar la salida
 
-   uint n, m, u, v;
-   
-   string linea;
-   while(!cin.eof()){
-   /*Inicio de lectura de entrada*/
-	   cin >> linea;
-      if(linea == "#")
-         { break; }
+    uint n, m, u, v;
 
-      istringstream sLinea(linea);
-      sLinea >> n; // cantidad de cepas (nodos)
-      cin >> m; // cantidad de mutaciones (ejes orientados)
+    string linea;
+    while(!cin.eof())
+    {
+        /*Inicio de lectura de entrada*/
+        cin >> linea;
+        if(linea == "#")
+        {
+            break;
+        }
 
-      n += 1;
+        istringstream sLinea(linea);
+        sLinea >> n; // cantidad de cepas (nodos)
+        cin >> m; // cantidad de mutaciones (ejes orientados)
 
-      Grafo grafo(n);
+        n += 1;
 
-      for(int i = 0; i < m; i++){
-         cin >> u >> v;
-         grafo.agregarArista(u, v);
-      }
+        Grafo grafo(n);
 
-	/*Fin de lectura de entrada*/
-	
-	// Creamos las aristas entre el nodo artificial y el resto de los nodos
-	for(unsigned int i = 1; i< n ; i++)
-		grafo.agregarArista(0,i);
+        for(int i = 0; i < m; i++)
+        {
+            cin >> u >> v;
+            grafo.agregarArista(u, v);
+        }
 
-	vector<unsigned int> camino; 
-	vector<unsigned int> orden(n);
+        /*Fin de lectura de entrada*/
 
-	int longitud = grafo.caminoMaximo(camino);
+        // Creamos las aristas entre el nodo artificial y el resto de los nodos
+        for(unsigned int i = 1; i< n ; i++)
+            grafo.agregarArista(0,i);
 
-	cout << longitud;
+        vector<unsigned int> camino;
+        vector<unsigned int> orden(n);
 
-	// Si existe un camino, lo mostramos
-	if(longitud >= 0)
-	{
-		for(unsigned int i = 0; i < camino.size(); i++){
-			cout << " " << camino[i];
-		}
-		cout << endl;
-	}
-	}
-	return 0;
+        int longitud = grafo.caminoMaximo(camino);
+
+        cout << longitud;
+
+        // Si existe un camino, lo mostramos
+        if(longitud >= 0)
+        {
+            for(unsigned int i = 0; i < camino.size(); i++)
+            {
+                cout << " " << camino[i];
+            }
+            cout << endl;
+        }
+    }
+    return 0;
 }
