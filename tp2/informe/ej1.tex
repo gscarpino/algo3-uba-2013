@@ -78,9 +78,10 @@ Antes de llamar a $ordenTopologico$ todos los nodos son marcados como ABIERTO.
 
 \begin{algorithm}[H]
 \caption{} 
+\label{pseudocodigo_ordenTopologico}
 \begin{codebox}
-\Procname{$\proc{ordenTopologico}(lista$ nodosOrdenados$)$}
-\li \While existe nodo ABIERTO \Do
+\Procname{$\proc{ordenTopologico}(grafo$ G$)$}
+\li \While existe nodo ABIERTO en G\Do
 \li		n $\gets$ seleccionar nodo ABIERTO
 \li		\If visitar(n, nodosOrdenados) igual a HAY CICLO 	\Do 
 \li				\Return HAY CICLO
@@ -119,10 +120,10 @@ Antes de llamar a $ordenTopologico$ todos los nodos son marcados como ABIERTO.
 \label{pseudocodigo_caminoMaximo}
 \begin{codebox}
 \Procname{$\proc{caminoMaximo}(digrafo$ G$)$}
-\li Verificar si hay ciclo en G
-\li \If no hay ciclo \Do
-\li   Obtener orden topologico de los nodos de G
-\li		\For cada nodo v en el orden topologico invertido \Do
+\li \Comment{ Verificar si hay ciclo en G y obtener orden topologico de sus nodos, si es posible}
+\li orden $\gets$ ordentTopologico
+\li \If orden es un orden topologico valido (no hay ciclo) \Do
+\li		\For cada nodo v en orden invertido\Do
 \li			L[v] $\gets$ 0
 \li 		S[v] $\gets$ 0
 \li			\For cada w sucesor de v \Do
@@ -145,6 +146,7 @@ Antes de llamar a $ordenTopologico$ todos los nodos son marcados como ABIERTO.
 
 \begin{algorithm}[H]
 \caption{} 
+\label{pseudocodigo_armarCamino}
 \begin{codebox}
 \Procname{$\proc{armarCamino}(lista$ L , $lista$ S)}
 \li camino $\gets$ lista vacia
@@ -166,25 +168,20 @@ Podemos afirmar que los tamaños de las subinstancias ser\'an menores porque, da
 Adem\'as, las subsoluciones deben ser \'optimas: supongamos que tenemos una soluci\'on \'optima que usa una subsoluci\'on no \'optima de un subproblema dado (y que a\'un as\'i la soluci\'on de este subproblema resulta ser la mejor elecci\'on entre las subsoluciones consideradas). Supongamos adem\'as que conocemos una subsoluci\'on \'optima, de manera que el largo de este camino es estrictamente mayor que el de la subsoluci\'on usada. Si reemplazamos, en la soluci\'on, la subsoluci\'on no \'optima por la nueva subsoluci\'on \'optima, entonces obtendremos un camino de mayor longitud que el \'optimo, lo que es absurdo.
 
 Veamos ahora que el algoritmo propuesto calcula el camino m\'as largo. 
-Para esto, debemos mostrar que, al finalizar,  el ciclo de las lineas 4 a 10 del Algoritmo \ref{pseudocodigo_caminoMaximo} carga los arreglos L y S de manera que L[v] es la longitud del camino simple m\'as largo desde v a cualquier otro nodo w, y que el recorrido generado siguiendo los ejes (v, S[v]) (mientras que S[v] est\'e definido) es dicho camino simple. 
-Si v no tiene sucesores, entonces no existen caminos de v a ning\'un otro nodo. 
-Por lo tanto, L[v] = 0 es el valor correcto y no se considera niguna arista ( (v, S[v]) = (v, indefinido) no es un eje existente). 
-Si v tiene sucesores, supongamos que los valores de L para estos son correctos (es decir, si $(v, w) \in  E(G)$ entonces L[w] es la longitud del camino m\'as largo de w a cualquier otro nodo alcanzable desde w):
-dado que vamos calculando L siguiendo un ordenamiento topol\'ogico le\'ido de derecha a izquierda, los valores de L para los sucesores de v ya habr\'an sido calculados al momento de llegar a v. 
-Como ya vimos, para llegar a cualquier nodo alcanzable desde v debemos pasar por alguno de los sucesores de v.  Entonces, la distancia maxima de v a cualquier otro nodo depende de la distancia maxima de sus sucesores a cualquier otro nodo: en el algoritmo, el subciclo de las lineas 7-10 elige el sucesor w con mayor L[w] y se guarda w en S[v].
-El recorrido vS[v]S[S[v]]...S[...S[v]]...0 es un camino simple, pues al ser el digrafo ac\'iclico, ning\'un nodo puede tener como sucesor a alguno de los anteriores.
-
-
-
-la correctitud de la funcion recursia $F(v)$. 
-Procederemos mediante inducci\'on en la cantidad de nodos del digrafo.
-
-Como caso base, consideremos un digrafo con un \'unico nodo v.
-En tal situaci\'on, no existe ningun camino simple en el digrafo, lo cual es coherente con el valor F(v) = 0.
+Para esto, debemos mostrar que, al finalizar,  el ciclo de las lineas 4 a 10 del Algoritmo \ref{pseudocodigo_caminoMaximo} carga los arreglos $L$ y $S$ de manera que $L[v]$ es la longitud del camino simple m\'as largo desde $v$ a cualquier otro nodo $w$, y que el recorrido generado siguiendo los ejes $(v, S[v])$ (mientras que $S[v]$ est\'e definido) es dicho camino simple. 
+Si $v$ no tiene sucesores, entonces no existen caminos de v a ning\'un otro nodo. 
+Por lo tanto, $L[v] = 0 = F(v)$ es el valor correcto y no se considera niguna arista ( $(v, S[v]) = (v, indefinido)$ no es un eje existente). 
+Si $v$ tiene sucesores, supongamos que los valores de L para estos son correctos (es decir, si $(v, w) \in  E(G)$ entonces $L[w] = F(w)$):
+dado que vamos calculando L siguiendo un ordenamiento topol\'ogico le\'ido de derecha a izquierda, los valores de L para los sucesores de v ya habr\'an sido calculados al momento de llegar a $v$. 
+Como ya vimos, para llegar a cualquier nodo alcanzable desde $v$ debemos pasar por alguno de los sucesores de $v$.  Entonces, la distancia maxima de $v$ a cualquier otro nodo depende de la distancia m\'axima de sus sucesores a cualquier otro nodo: en el algoritmo, el subciclo de las lineas 7-10 elige el sucesor $w$ con mayor $L[w]$ y se guarda $w$ en $S[v]$. Asi, $L[v] = \max_{(v,w) \in E(G)}{L[w]+1} = \max_{(v,w) \in E(G)}{F(w) +1} = F(v) $
+El recorrido $vS[v]S[S[v]]...S[...S[v]]...0$ es un camino simple, pues al ser el digrafo ac\'iclico, ning\'un nodo puede tener como sucesor a alguno de los anteriores.
 
 
 \subsubsection{An\'alisis de complejidad}
  
+El Algoritmo \ref{pseudocodigo_ordenTopologico}, al ser \textbf{DFS}, tiene orden O(|E|+|V|).
+El Algoritmo \ref{pseudocodigo_armarCamino} recorre un arreglo con O(|V|) posiciones, y dado que se asume que no existen ciclos, a lo sumo pasa una vez por cada posici\'on. Por lo tanto, es del orden O(|V|).
+En el Algoritmo \ref{pseudocodigo_caminoMaximo} se recorren todos los nodos del grafo una \'unica vez (en el ciclo de las l\'ineas 4-12), y por cada uno, se recorren todas sus aristas tambien una \'unica vez (en el ciclo de las l\'ineas 7-10), por lo que el el ciclo mayor tiene complejidad en el orden de O(|E|+|V|). Adem\'as, se llama a cada una de las dos funciones previamente mencionadas una \'unica vez: en total, la complejidad del algoritmo resulta en el orden de O(|E|+|V|).
  
 
 \subsection{Pruebas}

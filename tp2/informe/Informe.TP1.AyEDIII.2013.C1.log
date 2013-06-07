@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.9.15)  7 JUN 2013 09:28
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.9.15)  7 JUN 2013 09:52
 entering extended mode
 **E:/Users/Raul/Documents/Facultad/2013C1/Algoritmos*y*Esctructuras*de*Datos*II
 I/svn/tp2/informe/Informe.TP1.AyEDIII.2013.C1.tex
@@ -998,15 +998,20 @@ put line 80.
 
 Warning: Indentation ends at level -1 in codebox on page 5.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 99.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 100.
 Warning: Indentation ends at level -1 in codebox on page 5.
 Warning: Indentation ends at level -1 in codebox on page 5.
+
+Overfull \hbox (17.01157pt too wide) in paragraph at lines 143--143
+| [] 
+ []
+
 [5]
 Warning: Indentation ends at level -1 in codebox on page 6.
 [6]) [7]
 ("E:\Users\Raul\Documents\Facultad\2013C1\Algoritmos y Esctructuras de Datos II
 I\svn\tp2\informe\ej2.tex"
-<DisjointSets.png, id=169, 328.97906pt x 161.85469pt>
+<DisjointSets.png, id=172, 328.97906pt x 161.85469pt>
 File: DisjointSets.png Graphic file (type png)
  <use DisjointSets.png>
 Package pdftex.def Info: DisjointSets.png used on input line 25.
@@ -1014,13 +1019,13 @@ Package pdftex.def Info: DisjointSets.png used on input line 25.
 
 [8] [9 <E:/Users/Raul/Documents/Facultad/2013C1/Algoritmos y Esctructuras de Da
 tos III/svn/tp2/informe/DisjointSets.png>] [10] [11] [12]
-<ej2-grafico1.png, id=204, 642.4pt x 481.8pt>
+<ej2-grafico1.png, id=207, 642.4pt x 481.8pt>
 File: ej2-grafico1.png Graphic file (type png)
  <use ej2-grafico1.png>
 Package pdftex.def Info: ej2-grafico1.png used on input line 190.
 (pdftex.def)             Requested size: 385.44298pt x 289.08221pt.
 
-<ej2-grafico2.png, id=205, 642.4pt x 481.8pt>
+<ej2-grafico2.png, id=208, 642.4pt x 481.8pt>
 File: ej2-grafico2.png Graphic file (type png)
  <use ej2-grafico2.png>
 Package pdftex.def Info: ej2-grafico2.png used on input line 196.
@@ -1407,10 +1412,10 @@ nged.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
  ) 
 Here is how much of TeX's memory you used:
- 10275 strings out of 494045
- 148968 string characters out of 3145972
+ 10278 strings out of 494045
+ 149039 string characters out of 3145972
  258354 words of memory out of 3000000
- 13321 multiletter control sequences out of 15000+200000
+ 13324 multiletter control sequences out of 15000+200000
  15148 words of font info for 57 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  53i,13n,92p,1322b,712s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1433,9 +1438,9 @@ eX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX
 9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe.TP1.AyEDIII.2013.C1.pdf (18 pages, 702257 bytes).
+Output written on Informe.TP1.AyEDIII.2013.C1.pdf (18 pages, 703989 bytes).
 PDF statistics:
- 319 PDF objects out of 1000 (max. 8388607)
+ 322 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
  210 words of extra memory for PDF output out of 10000 (max. 10000000)
 
