@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.5.7)  7 JUN 2013 13:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.5.7)  7 JUN 2013 15:26
 entering extended mode
 **Informe.TP1.AyEDIII.2013.C1.tex
 (C:\Users\Gino\Desktop\algo3\tp2\informe\Informe.TP1.AyEDIII.2013.C1.tex
@@ -1028,7 +1028,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
  [15] [16]
 Warning: Indentation ends at level -1 in codebox on page 17.
 Warning: Indentation ends at level -1 in codebox on page 17.
-[17] [18] <ej3-grafico3.png, id=248, 803.0pt x 602.25pt>
+[17] [18] <ej3-grafico3.png, id=250, 803.0pt x 602.25pt>
 File: ej3-grafico3.png Graphic file (type png)
 
 <use ej3-grafico3.png>
@@ -1039,7 +1039,7 @@ Overfull \hbox (47.05824pt too wide) in paragraph at lines 132--133
  [][] 
  []
 
-<ej3-grafico3-b.png, id=249, 803.0pt x 602.25pt>
+[19] <ej3-grafico3-b.png, id=256, 803.0pt x 602.25pt>
 File: ej3-grafico3-b.png Graphic file (type png)
  <use ej3-grafico3-b.png>
 Package pdftex.def Info: ej3-grafico3-b.png used on input line 139.
@@ -1049,8 +1049,8 @@ Overfull \hbox (47.05824pt too wide) in paragraph at lines 139--140
  [][] 
  []
 
-[19 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico3.png>]
-<ej3-grafico4.png, id=257, 803.0pt x 602.25pt>
+[20 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico3.png>]
+<ej3-grafico4.png, id=263, 803.0pt x 602.25pt>
 File: ej3-grafico4.png Graphic file (type png)
  <use ej3-grafico4.png>
 Package pdftex.def Info: ej3-grafico4.png used on input line 150.
@@ -1060,20 +1060,31 @@ Overfull \hbox (47.05824pt too wide) in paragraph at lines 150--151
  [][] 
  []
 
-[20 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico3-b.png>]
-<ej3-grafico1.png, id=264, 642.4pt x 481.8pt>
+[21 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico3-b.png>]
+<ej3-grafico1.png, id=270, 803.0pt x 602.25pt>
 File: ej3-grafico1.png Graphic file (type png)
  <use ej3-grafico1.png>
 Package pdftex.def Info: ej3-grafico1.png used on input line 165.
-(pdftex.def)             Requested size: 385.44298pt x 289.08221pt.
- [21 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico4.png>]
-<ej3-grafico2.png, id=272, 642.4pt x 481.8pt>
+(pdftex.def)             Requested size: 481.80373pt x 361.35278pt.
+
+Overfull \hbox (47.05824pt too wide) in paragraph at lines 165--166
+ [][] 
+ []
+
+[22 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico4.png>]
+<ej3-grafico2.png, id=278, 803.0pt x 602.25pt>
 File: ej3-grafico2.png Graphic file (type png)
  <use ej3-grafico2.png>
 Package pdftex.def Info: ej3-grafico2.png used on input line 174.
-(pdftex.def)             Requested size: 385.44298pt x 289.08221pt.
- [22 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico1.png> <C:/Users/Gino/
-Desktop/algo3/tp2/informe/ej3-grafico2.png>]) [23] 
+(pdftex.def)             Requested size: 481.80373pt x 361.35278pt.
+
+Overfull \hbox (47.05824pt too wide) in paragraph at lines 174--175
+ [][] 
+ []
+
+[23 <C:/Users/Gino/Desktop/algo3/tp2/informe/ej3-grafico1.png>]) [24 <C:/Users/
+Gino/Desktop/algo3/tp2/informe/ej3-grafico2.png>]
+
 AED: lastpage setting LastPage
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 66.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 66.
@@ -1083,13 +1094,17 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 66.
 Package rerunfilecheck Info: File `Informe.TP1.AyEDIII.2013.C1.out' has not cha
 nged.
 (rerunfilecheck)             Checksum: 5FF24FEBF46A1D703253603AFA05F758;1572.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 66.
  ) 
 Here is how much of TeX's memory you used:
- 10447 strings out of 493921
- 147763 string characters out of 3150494
+ 10454 strings out of 493921
+ 147847 string characters out of 3150494
  258260 words of memory out of 3000000
- 13475 multiletter control sequences out of 15000+200000
+ 13480 multiletter control sequences out of 15000+200000
  15485 words of font info for 58 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  53i,13n,92p,1222b,718s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1110,9 +1125,9 @@ fonts/cm/cmssbx10.pfb><D:/Programas/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy1
 as/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Programas/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmti12.pfb><D:/Programas/MiKTeX/fonts/type1/public/amsf
 onts/cm/cmtt12.pfb>
-Output written on Informe.TP1.AyEDIII.2013.C1.pdf (23 pages, 758497 bytes).
+Output written on Informe.TP1.AyEDIII.2013.C1.pdf (24 pages, 768232 bytes).
 PDF statistics:
- 365 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
+ 371 PDF objects out of 1000 (max. 8388607)
+ 71 named destinations out of 1000 (max. 500000)
  235 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -105,13 +105,20 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Correctitud}
-
-
 
 \subsubsection{Análisis de Complejidad}
 
+\quad Como se dijo anteriormente, se resuelve en tiempo lineal a la cantidad de nodos y aristas presentes en el grafo. Básicamente, es un \textit{DFS} adaptado a grafos dirigidos. Por cada vértice que se visita con DFS, se calcula índice, bajoIndice (lowLink), se lo ubica en la pila una vez, y se lo saca una sola vez. Determinar si se encuentra en la pila se obtiene con costo constante porque usamos un arreglo de booleanos. Las demás operaciones son constantes.
 
+\quad Es muy importante tener implementado el grafo con lista de adyacencias así obtener los vecinos de un nodo se puede realizar en O(1).
+
+\quad
+
+\quad Robert Tarjan lo explica detalladamente en cuando presentó su solución en \textit{SIAM Journal on Computing}. \footnote{ Tarjan, R. E. (1972), "Depth-first search and linear graph algorithms", SIAM Journal on Computing 1: 146–160 Teorema 13}
+
+\subsubsection{Correctitud}
+
+\quad Robert Tarjan demuestra \footnote{ Tarjan, R. E. (1972), "Depth-first search and linear graph algorithms", SIAM Journal on Computing 1: 146–160 Teorema 14} la correctitud de su algoritmo en el mismo artículo mencionado anteriormente. Para ello, por inducción, demuestra que se calcula correctamente el valor de $ bajoIndice $ para cada nodo. Haciendo esto, determinar si un nodo es la la \textit{raiz} de la componen fuertemente conexa es correcto para todos los vértices. Una vez encontrada la raíz, en esa componente los vértices estan en la parte superior de la pila. Se los saca y se los guarda en una componente fuertemente conexa.
 
 \subsection{Pruebas y Resultados}
 
@@ -154,7 +161,7 @@
 
 \item  \textbf{Digrafos con cantidad de nodos fija y variando la cantidad de aristas.}
 
-\quad Como en los casos anteriores siempre se varía los nodos, decidimos hacer estos casos donde la cantidad de nodos es fija y se va variando constantemente la cantidad de aristas para cada nodo, desde 0 hasta $ \vert V - 1 \vert $
+\quad Como en los casos anteriores siempre se varía los nodos, decidimos hacer estos casos donde la cantidad de nodos es fija y se va variando constantemente la cantidad de aristas para cada nodo, desde 0 hasta $ \vert V - 1 \vert $. Como la cantidad de nodos es fija, la complejidad teórica en el peor caso queda: O($ C * \vert E \vert $)
 
 \begin{itemize}
 
@@ -182,4 +189,4 @@
 
 \subsection{Conclusiones}
 
-
+\quad Estudiando el problema y viendo sus posibles soluciones notamos que \textit{Depth First Search} aparece en las dos más conocidas, la de Kosaraju y la de Tarjan, entre otros. Destacamos que es crucial para poder realizar una solución lineal al problema de detectar las componentes fuertemente conexas. Llama la atención que un algoritmo simple pueda ser de gran utilidad para este y otros problemas, que hasta no muchos años no se conocia una solución lineal.
