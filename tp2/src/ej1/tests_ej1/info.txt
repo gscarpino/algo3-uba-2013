@@ -1,0 +1,8 @@
+Para generar las pruebas, correr
+python generar.py nombre_salida [dig|dag] n m
+	
+	nombre_salida : nombre del fichero de salida
+	[dig|dag] : dig (generar digrafos no necesariamente aciclicos), dag (generar digrafos aciclicos)
+	n : numero de nodos, es fijo
+	m: numero de aristas, se generaran grafos de 1 a m aristas
+	
