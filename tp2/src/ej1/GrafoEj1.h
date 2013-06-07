@@ -15,7 +15,7 @@ using namespace std;
 *
 *---------------------------------------------------------------------*/
 #define ABIERTO 0
-#define PROCESADO 1
+#define DESCUBIERTO 1
 #define CERRADO 2
 #define uint unsigned int
 class Grafo{
@@ -24,20 +24,21 @@ class Grafo{
       Grafo(unsigned int cant);
       Grafo(const Grafo& other);
       void agregarArista(const unsigned int u, const unsigned int v); //agrega la arista dirigida
-      bool tieneHijos (unsigned int nodo); //para saber si es terminal
       unsigned int cantidadNodos();
       unsigned int cantidadAristas();
       vector<unsigned int> hijos(unsigned int nodo);
       vector<unsigned int> padres(unsigned int nodo);
       bool ordenTopologico(vector<unsigned int> &nodosOrdenados);
       int caminoMaximo(vector<unsigned int> &camino);
+      vector<unsigned int> marcas;
 
 	private:
       unsigned int cantNodos;
       vector< vector<unsigned int> > aristas;
       unsigned int cantAristas;
-      bool visitar(const unsigned int nodo, vector<unsigned int> &nodosMarcados,list<unsigned int> &nodosOrdenados);
-      int buscarNodoAbierto(const vector<unsigned int> &nodosMarcados);
+      bool visitar(const unsigned int nodo, list<unsigned int> &nodosOrdenados);
+      int buscarNodoAbierto();
+
 };
 
 #endif // GRAFO_H

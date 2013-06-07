@@ -13,9 +13,6 @@ using namespace std;
 
 int main()
 {
-    // Vamos a trabajar con un grafo con un nodo extra
-    // Solo debemos recordarlo al momento de generar la salida
-
     uint n, m, u, v;
 
     string linea;
@@ -32,11 +29,9 @@ int main()
         sLinea >> n; // cantidad de cepas (nodos)
         cin >> m; // cantidad de mutaciones (ejes orientados)
 
-        n += 1;
-
         Grafo grafo(n);
 
-        for(int i = 0; i < m; i++)
+        for(uint i = 0; i < m; i++)
         {
             cin >> u >> v;
             grafo.agregarArista(u, v);
@@ -44,26 +39,29 @@ int main()
 
         /*Fin de lectura de entrada*/
 
-        // Creamos las aristas entre el nodo artificial y el resto de los nodos
-        for(unsigned int i = 1; i< n ; i++)
-            grafo.agregarArista(0,i);
-
         vector<unsigned int> camino;
-        vector<unsigned int> orden(n);
 
         int longitud = grafo.caminoMaximo(camino);
 
-        cout << longitud;
+        // Descomentar la siguiente linea si se necesita mostar la longitud junto con el camino
+        //cout << longitud;
 
         // Si existe un camino, lo mostramos
         if(longitud >= 0)
         {
             for(unsigned int i = 0; i < camino.size(); i++)
             {
-                cout << " " << camino[i];
+                cout << camino[i] << " ";
             }
-            cout << endl;
+
         }
+        else
+        {
+            cout << "-1";
+        }
+
+        cout << endl;
+
     }
     return 0;
 }

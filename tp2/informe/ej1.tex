@@ -31,11 +31,8 @@ El camino m\'as largo que podemos hallar desde A a cualquier otro nodo en el DAG
 debe pasar por alguno de los nodos sucesores de A. Sea B el nodo sucesor de A tal que el camino m\'as largo con inicio en B es el mayor entre los caminos con inicio en algun nodo sucesor de A:
 el camino m\'as largo a partir de A debe ser el camino m\'as largo a partir de B, m\'as la arista que une a A con B.
 
-Esta idea revela una subestructura \'optima sobre la cual tratar el problema: la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño. 
-Podemos afirmar que los tamaños de las subinstancias ser\'an menores porque, dado que estamos trabajando sobre un DAG, al tratar de encontrar el camino m\'aximo desde los nodos sucesores de A sabemos que no podemos volver a pasar por A o alguno de sus predecesores puesto que esto implicar\'ia tener un ciclo, lo que no es posible por definici\'on. 
-Adem\'as, las subsoluciones deben ser \'optimas: supongamos que tenemos una soluci\'on \'optima que usa una subsoluci\'on no \'optima de un subproblema dado (y que a\'un as\'i la soluci\'on de este subproblema resulta ser la mejor elecci\'on entre las subsoluciones consideradas). Supongamos adem\'as que conocemos una subsoluci\'on \'optima, de manera que el largo de este camino es estrictamente mayor que el de la subsoluci\'on usada. Si reemplazamos, en la soluci\'on, la subsoluci\'on no \'optima por la nueva subsoluci\'on \'optima, entonces obtendremos un camino de mayor longitud que el \'optimo, lo que es absurdo.
-Por otro lado, como varios nodos pueden compartir sucesores, se produce un solapamiento de los subproblemas a resolver.  
-Esto nos lleva a pensar en aplicar la t\'ecnica de programaci\'on din\'amica en la resoluci\'on del problema.
+Esta idea revela una subestructura \'optima sobre la cual tratar el problema (en la secci\'on de Correctiud revisaremos esto). Por otro lado, como varios nodos pueden compartir sucesores, se produce un solapamiento de los subproblemas a resolver.  
+Esto nos lleva naturalmente a pensar en aplicar la t\'ecnica de programaci\'on din\'amica en la resoluci\'on del problema.
 
 Definamos, entonces, dado G=(V, E) un DAG, la funci\'on recursiva $F(v)$ como la longitud del camino simple más largo que comienza en el nodo $v$, 
 
@@ -47,13 +44,15 @@ En lugar de implementar una funci\'on recursiva (inmediata a partir de la defini
 algoritmo iterativo. 
 Para esto, debemos entender en que orden debemos resolver los subproblemas, de manera de tener los datos necesarios ya calculados al momento de necesitarlos. 
 De la definici\'on de F podemos ver que, al calcular la soluci\'on para un nodo i, solo necesitamos tener las subsoluciones de sus nodos sucesores. 
-Para lograr esto, podemos proceder calculando las subsoluciones de los nodos seg\'un un ordenamiento topol\'ogico invertido.
+Para lograr esto, podemos proceder calculando las subsoluciones de los nodos seg\'un un ordenamiento topol\'ogico invertido (es decir, un ordenamiento topol\'ogico recorrido de derecha a izquierda).
 Un ordenamiento topol\'ogico de los nodos de un digrafo es aquel en el que ning\'un nodo sucesor aparece antes que su predecesor (es decir, si un digrafo G contiene un eje (u, v), entonces u aparece antes que v en el ordenamiento [Cormen]). Notemos que un digrafo tiene ordenamiento topol\'ogico si y solo si es ac\'iclico, y que este ordenamiento no siempre es único. Por lo tanto, siguiendo el orden propuesto, primero calcularemos los nodos que no tienen sucesores, luego los que tiene como sucesores a los primeros, y as\'i sucesivamente hasta llegar a los nodos que no tienen antecesores.
 
 El algoritmo iterativo de programaci\'on din\'amica mantendr\'a un arreglo $L$, tal que $L[i]$ represente la longitud del camino simple mas largo que nace en el nodo $i$, y lo llenaremos siguiendo el ordenamiento previamente explicado. 
 Adem\'as, mantendremos un arreglo $S$, donde $S[i]$ es es el nodo hijo de $i$ que se eligi\'o como subsoluci\'on \'optima al problema de encontrar el camino m\'as largo desde $i$. De esta manera, al terminar el llenado de los arreglos podremos reconstuir el camino simple de mayor longitud que parte de cada nodo.
 
-Calcularemos el ordenamiento topol\'ogico del digrafo siguiendo la idea planteada en [Cormen], el cual propone la utilizaci\'on del algoritmo de recorrido \textbf{DFS} (Depth First Search o búsqueda en profundidad). Dado que durante la corrida de DFS, un nodo que esta siendo explorado aparecer\'a como vecino de alg\'un sucesor solo si existe un ciclo, modificamos levemente dicho algoritmo para poder decidir si el grafo de entrada es un DAG o no.
+Calcularemos el ordenamiento topol\'ogico del digrafo siguiendo la idea planteada en [Cormen], el cual propone la utilizaci\'on del algoritmo de recorrido \textbf{DFS} (Depth First Search o búsqueda en profundidad). 
+Una ventaja de dicho algoritmo es que procesa digrafo conexos y no conexos sin necesitar hacer distinci\'on, por lo que quedamos exentos de tener decidir si los datos de entrada generan un digrafo de un tipo o del otro. 
+Dado que durante la corrida de DFS un nodo $v$ que est\'a siendo explorado aparecer\'a como vecino de alg\'un sucesor $w$ (es decir, $w$ tiene un $back-edge$ a $v$) solo si existe un ciclo, incluimos una verificaci\'on que implica el corte de la ejecuci\'on si un ciclo es detectado, y no afecta al resto de la l\'ogica.
 De esta forma, en un \'unico paso inicial decidimos si el digrafo es ac\'iclico mientras que obtenemos la informaci\'on necesaria para proceder con el algoritmo de programaci\'on din\'amica. 
 
 Ahora volvamos al problema original. 
@@ -63,33 +62,32 @@ Usando el algoritmo previamente explicado, podemos calcular, para cada nodo $v$,
 %Por un lado, si el grado de entrada de $v_i$ es distinto de cero, entonces debe existir alg\'un otro nodo $v_{i-1}$ tal que $v_{i-1}$ no se encuentra en $C$ (por ser el grafo un DAG) y $v_{i-1}$$v_i$ es una arista del digrafo analizado. 
 %Pero, siendo este el caso, podr\'iamos agregar tal arista al camino $C$, obteniendo un camino $C' = v_{i-1}v_i...v_j$ de mayor longitud que $C$, lo cual es absurdo pues supusimo $C$ un camino simple de longitud m\'axima.    
 %Por otro lado, si el grado de salida de $v_{j}$ es distinto de cero, entonces debe existir alg\'un otro nodo $v_{j+1}$ tal que $v_{j+1}$ no se encuentra en $C$ (por ser el grafo un DAG) y $v_{j}$$v_{j+1}$ es una arista del digrafo analizado. De nuevo, si este el caso, podr\'iamos agregar tal arista al camino $C$, obteniendo un camino $C' = v_i...v_jv_{j+1}$ de mayor longitud que $C$, lo cual es absurdo pues supusimo $C$ un camino simple de longitud m\'axima.
-Se desprende que la longitud del camino m\'as largo ser\'a la m\'ayor de todas estas soluciones.
-
-En primer lugar, si queremos hallar el camino simple mas largo, deber\'iamos ejecutar el algoritmo en cada nodo sin aristas entrantes. Por otro lado, el grafo generado por las relaciones entre las cepas puede ser disconexo. 
-Para manejar estos detalles, a la hora de implementar el problema agregamos un nodo inicial ficticio. Este nodo dirige sus aristas a cada uno de los demás nodos del digrafo original (aunque bastar\'ia que se generaran aristas solo hacia a los nodos sin aristas entrantes), por lo que el digrafo resultante resulta ser conexo. 
-Notemos que agregar este nodo no altera la solución del problema: si en el grafo original no hay ciclos, como las aristas que se agregan solo van del nuevo nodo inicial al resto y nunca al rev\'es, el grafo resultante tampoco contendr\'a ciclos. De igual manera se ve que si el grafo original conten\'ia ciclos, agregar el nodo artificial no eliminar\'a los ciclos preexistentes. 
-
-La solucion final del problema, entonces, es calcular el camino simple mas largo que tiene como origen al nodo artificial: S[nodoArtifial], con distancia L[nodoArtifial].
+Se desprende que el camino m\'as largo ser\'a el m\'ayor de todas estas soluciones. En el caso en que exista m\'as de un candidato, devolveremos aquel camino que comience en el nodo de menor \'indice. 
 
 
 
 \subsection{Algoritmo}
+Como ya mencionamos, el algoritmo para generar el orden topol\'ogico est\'a explicado en [Cormen, p603-614]
+Las funciones $ordenTopologico$ y $visitar$ consideran a un nodo de la siguiente manera:
+ABIERTO, si todavía no se fue visitado; 
+DESCUBIERTO, si se lo ha visitado pero todavía no se recorrieron todos sus vecinos;
+CERRADO, una vez que se recorrió todos sus vecinos.
 
-\indent En las funciones $ordenTopologico$ y $visitar$ consideramos a los nodos de la siguiente manera:\\
-\indent Un nodo es BLANCO si todavía no se lo ha visitado. Si se lo visitó, pero todavía no se recorrió todas sus ramas, el nodo será GRIS. En cambio, cuando se recorrió todo la rama del nodo, éste será NEGRO.\\
-\indent Antes de llamar a $ordenTopologico$ todos los nodos están en BLANCO. \\
-\indent Como se puede observar, $ordenTopologico$ es un DFS modificado, en el sentido que a medida que el algoritmo recorre los nodos, los agrega en una lista manteniendo el orden topológico.\\
+Antes de llamar a $ordenTopologico$ todos los nodos son marcados como ABIERTO. 
 
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{ordenTopologico}(lista$ $nodosOrdenados)$}
-\li \While existen nodos BLANCO \Do
-\li	$n \gets$ seleccionar nodo BLANCO
-\li	visitar(n, nodosOrdenados)
-
-\End
+\Procname{$\proc{ordenTopologico}(lista$ nodosOrdenados$)$}
+\li \While existe nodo ABIERTO \Do
+\li		n $\gets$ seleccionar nodo ABIERTO
+\li		\If visitar(n, nodosOrdenados) igual a HAY CICLO 	\Do 
+\li				\Return HAY CICLO
+			\End
+		\End
+\li	\Return nodosOrdenados	  
+	\End
 \end{codebox}
 \end{algorithm}
 
@@ -97,64 +95,92 @@ La solucion final del problema, entonces, es calcular el camino simple mas largo
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{visitar}(nodo$ $n$, $lista$ $nodosOrdenados)$}
-\li \If n es GRIS \Do
-\li 	 Terminar pues hay ciclo
-\li \End
-\li \If n es BLANCO \Do
-\li 	marcar n GRIS
-\li		\For cada hijo m de n \Do
+\Procname{$\proc{visitar}(nodo$ n, $lista$ nodosOrdenados$)$}
+\li \Comment{El siguiente If es la unica modificacion al algoritmo de Cormen}	
+\li \If n es DESCUBIERTO \Do
+\li 	 \Return HAY CICLO
+ 		\End
+\li \If n es ABIERTO \Do
+\li 	marcar n como DESCUBIERTO
+\li		\For cada m sucesor de n \Do
 \li			visitar(m)			
-\li		\End
-\li		marcar n NEGRO
+			\End	
+\li		marcar n como CERRADO
 \li 		insertar n al principio de $nodosOrdenados$
-\li 		Terminar
-\li \End
-
-\End
+\li 	\Return
+ 		\End
+	\End
 \end{codebox}
 \end{algorithm}
  
 
+\begin{algorithm}[H]
+\caption{} 
+\label{pseudocodigo_caminoMaximo}
+\begin{codebox}
+\Procname{$\proc{caminoMaximo}(digrafo$ G$)$}
+\li Verificar si hay ciclo en G
+\li \If no hay ciclo \Do
+\li   Obtener orden topologico de los nodos de G
+\li		\For cada nodo v en el orden topologico invertido \Do
+\li			L[v] $\gets$ 0
+\li 		S[v] $\gets$ 0
+\li			\For cada w sucesor de v \Do
+\li		  	\If L[w] + 1 $>$ L[v] \Do
+\li				L[v] $\gets$ L[w]+ 1
+\li				S[v] $\gets$ w
+					\End
+				\End
+			\End
+\li 	camino $\gets$ armarCamino(L, S)
+\li 	\Return longitud(camino), camino
+		\End
+\li \Else \Do
+\li 	\Return -1
+		\End
+	\End
+\end{codebox}
+\end{algorithm}
+
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{caminoMaximo}(vector< int >$ camino )}
-\li $n \gets \# nodos $
-\li vector$<int>$ siguienteEnCamino(n)
-\li vector$<int>$ orden(n)
-\li vector$<int>$ dist(n)
-\li ordenTopologico(orden)
-\li \If no hay ciclo \Do
-\li 	\For i desde n-1 hasta 1 \Do
-\li		int v $\gets$ orden[i]
-\li		dist[v] $\gets$ 0
-\li 		siguienteEnCamino[v] $\gets$ 0
-\li		\For cada hijo de v \Do
-\li		  	\If dist[hijo] + 1 $>$ dist[v] \Do
-\li				dist[v] $\gets$ dist[hijo]+ 1
-\li				siguienteEnCamino[v] $\gets$ hijo
-\li			\End
-\li		\End
-\li	\End
-\li	int f $\gets$ 0
-\li	\While siguienteEnCamino[i] distinto de 0 \Do
-\li		i $\gets$ siguienteEnCamino[i]
-\li		agregar i al final de $camino$
-\li	\End
-\li 	int maxDist $\gets$ dist[0]
-\li 	\Return maxDist , camino	
-\li \End
-\li \Else \Do
-\li \Return -1
-\End
-
+\Procname{$\proc{armarCamino}(lista$ L , $lista$ S)}
+\li camino $\gets$ lista vacia
+\li v $\gets$ indice maximo valor en L
+\li Agregar v al fin de camino 
+\li	\While S[v] distinto de 0 \Do
+\li		v $\gets$ S[v]
+\li		Agregar v al fin de camino
+	\End
+\li \Return camino	
+	\End
 \end{codebox}
 \end{algorithm}
 
 \subsubsection{Correctitud} 
 
+Dijimos que el problema presenta un subestructura \'optima. Para ver esto, observemos que la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño. 
+Podemos afirmar que los tamaños de las subinstancias ser\'an menores porque, dado que estamos trabajando sobre un DAG, al tratar de encontrar el camino m\'aximo desde los nodos sucesores de A sabemos que no podemos volver a pasar por A o alguno de sus predecesores puesto que esto implicar\'ia tener un ciclo, lo que no es posible por definici\'on. 
+Adem\'as, las subsoluciones deben ser \'optimas: supongamos que tenemos una soluci\'on \'optima que usa una subsoluci\'on no \'optima de un subproblema dado (y que a\'un as\'i la soluci\'on de este subproblema resulta ser la mejor elecci\'on entre las subsoluciones consideradas). Supongamos adem\'as que conocemos una subsoluci\'on \'optima, de manera que el largo de este camino es estrictamente mayor que el de la subsoluci\'on usada. Si reemplazamos, en la soluci\'on, la subsoluci\'on no \'optima por la nueva subsoluci\'on \'optima, entonces obtendremos un camino de mayor longitud que el \'optimo, lo que es absurdo.
+
+Veamos ahora que el algoritmo propuesto calcula el camino m\'as largo. 
+Para esto, debemos mostrar que, al finalizar,  el ciclo de las lineas 4 a 10 del Algoritmo \ref{pseudocodigo_caminoMaximo} carga los arreglos L y S de manera que L[v] es la longitud del camino simple m\'as largo desde v a cualquier otro nodo w, y que el recorrido generado siguiendo los ejes (v, S[v]) (mientras que S[v] est\'e definido) es dicho camino simple. 
+Si v no tiene sucesores, entonces no existen caminos de v a ning\'un otro nodo. 
+Por lo tanto, L[v] = 0 es el valor correcto y no se considera niguna arista ( (v, S[v]) = (v, indefinido) no es un eje existente). 
+Si v tiene sucesores, supongamos que los valores de L para estos son correctos (es decir, si $(v, w) \in  E(G)$ entonces L[w] es la longitud del camino m\'as largo de w a cualquier otro nodo alcanzable desde w):
+dado que vamos calculando L siguiendo un ordenamiento topol\'ogico le\'ido de derecha a izquierda, los valores de L para los sucesores de v ya habr\'an sido calculados al momento de llegar a v. 
+Como ya vimos, para llegar a cualquier nodo alcanzable desde v debemos pasar por alguno de los sucesores de v.  Entonces, la distancia maxima de v a cualquier otro nodo depende de la distancia maxima de sus sucesores a cualquier otro nodo: en el algoritmo, el subciclo de las lineas 7-10 elige el sucesor w con mayor L[w] y se guarda w en S[v].
+El recorrido vS[v]S[S[v]]...S[...S[v]]...0 es un camino simple, pues al ser el digrafo ac\'iclico, ning\'un nodo puede tener como sucesor a alguno de los anteriores.
+
+
+
+la correctitud de la funcion recursia $F(v)$. 
+Procederemos mediante inducci\'on en la cantidad de nodos del digrafo.
+
+Como caso base, consideremos un digrafo con un \'unico nodo v.
+En tal situaci\'on, no existe ningun camino simple en el digrafo, lo cual es coherente con el valor F(v) = 0.
 
 
 \subsubsection{An\'alisis de complejidad}
