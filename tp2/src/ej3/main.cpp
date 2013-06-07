@@ -231,8 +231,8 @@ void genTests(){
     outputFile.close();
     cout << "Tests creados." << endl;
 
-    cout << "Creando tests digrafos con 500 nodos..." << endl;
-    outputFile.open("testsDigrafos500Nodos.txt",  ios_base::trunc);
+    cout << "Creando tests digrafos con 250 nodos..." << endl;
+    outputFile.open("testsDigrafos250Nodos.txt",  ios_base::trunc);
     if(!outputFile.is_open()){
         cerr << "Error al abrir/crear el archivo de salida." << endl;
         exit(1);
