@@ -120,6 +120,18 @@
 
 \quad Robert Tarjan demuestra \footnote{ Tarjan, R. E. (1972), "Depth-first search and linear graph algorithms", SIAM Journal on Computing 1: 146–160 Teorema 14} la correctitud de su algoritmo en el mismo artículo mencionado anteriormente. Para ello, por inducción, demuestra que se calcula correctamente el valor de $ bajoIndice $ para cada nodo. Haciendo esto, determinar si un nodo es la la \textit{raiz} de la componen fuertemente conexa es correcto para todos los vértices. Una vez encontrada la raíz, en esa componente los vértices estan en la parte superior de la pila. Se los saca y se los guarda en una componente fuertemente conexa.
 
+\quad De alguna manera, el algoritmo se basa en alguna característica que tienen en común todos los nodos de una componente fuertemente conexa. En este caso se trata del nodo raíz que como mencionamos anteriormente hace referencia al nodo de la componente fuertemente conexa con el menor valor de índice al recorrer el grafo con el algoritmo, que, por como definimos el índice, se trata del nodo primer nodo de la componente fuertemente conexa en ser visitado. 
+
+\quad Recordamos que una componente fuertemente conexa de un grafo dirigido es el subgrafo máximo fuertemente conexo. Es decir que para todo par de nodos $u$ y $v$ de dicho subgrafo se puede hallar un camino desde $u$ hacia $v$ y un camino desde $v$ hacia $u$.
+
+\quad Por como se recorre el grafo (haciendo uso de DFS), cuando llegamos a un nodo seguro que pasamos por el nodo raíz de la componente fuertemente conexa a la que pertenece (que podría ser el mismo nodo en el caso de una componente fuertemente conexa con un sólo elemento). De esta manera se verifica la primera parte de la definición de componente fuertemente conexa, es decir que se halló un camino desde el nodo raíz hasta el nodo en cuestión.
+
+\quad Habíamos definido que el lowIndex o bajo índice de un nodo representa al nodo con el menor valor de índice al que  se puede llegar desde dicho nodo. Dijimos además, que para todos los nodos de una componente fuertemente conexa su lowIndex es igual y que se correponde con el que denominamos nodo raíz. Luego, cuando para cada nodo calculamos su lowIndex, estamos demostrando la segunda parte de la definición de componente fuertemente conexa, es decir que se halló un camino desde el nodo en cuestión hasta el nodo raíz.
+
+\quad Es fácil observar ahora que para dos nodos $a$ y $b$ con el mismo lowIndex (para los cuales por lo explicado en párrafos anteriores se encontró un camino de ida y vuelta con el nodo raíz) se puede hallar un camino de ida y vuelta entre ambos nodos. Basta sólo ver el camino de $a$ hacia $b$ que pasa por el nodo raíz y el camino de $b$ hacia $a$ que pasa por el nodo raíz. De esta manera, estamos demostrando que dos nodos con el mismo lowIndex pertenecen a la misma componente fuertemente conexa.
+
+\quad Como el algoritmo de Tarjan recorre todos los nodos y calcula correctamente sus lowIndex, estamos en condiciones de afirmar que este algoritmo calcula todas las componentes fuertemente conexas del grafo, que es lo que queríamos demostrar.
+
 \subsection{Pruebas y Resultados}
 
 
