@@ -1,6 +1,7 @@
 Para generar las pruebas, correr
-python generar.py nombre_salida [dig|dag] n m
-	
+python generar_sobre_[m|n].py nombre_salida [dig|dag] n m
+
+	[m|n]: es el parametro variable, el otro queda fijo
 	nombre_salida : nombre del fichero de salida
 	[dig|dag] : dig (generar digrafos no necesariamente aciclicos), dag (generar digrafos aciclicos)
 	n : numero de nodos, es fijo
