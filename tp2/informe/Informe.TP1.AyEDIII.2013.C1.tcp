@@ -6,7 +6,7 @@ Version=4
 MainFile=Informe.TP1.AyEDIII.2013.C1.tex
 UseBibTeX=1
 UseMakeIndex=1
-ActiveProfile=LaTeX => PDF
+ActiveProfile=LaTeX ⇨ PDF
 ProjectLanguage=en
 ProjectDialect=US
 

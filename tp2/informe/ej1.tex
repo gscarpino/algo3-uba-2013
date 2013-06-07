@@ -163,8 +163,8 @@ Antes de llamar a $ordenTopologico$ todos los nodos son marcados como ABIERTO.
 
 \subsubsection{Correctitud} 
 
-Dijimos que el problema presenta un subestructura \'optima. Para ver esto, observemos que la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tamaño. 
-Podemos afirmar que los tamaños de las subinstancias ser\'an menores porque, dado que estamos trabajando sobre un DAG, al tratar de encontrar el camino m\'aximo desde los nodos sucesores de A sabemos que no podemos volver a pasar por A o alguno de sus predecesores puesto que esto implicar\'ia tener un ciclo, lo que no es posible por definici\'on. 
+Dijimos que el problema presenta un subestructura \'optima. Para ver esto, observemos que la soluci\'on se basa en subsoluciones a subproblemas de igual tipo pero menor tama\~no. 
+Podemos afirmar que los tama\~nos de las subinstancias ser\'an menores porque, dado que estamos trabajando sobre un DAG, al tratar de encontrar el camino m\'aximo desde los nodos sucesores de A sabemos que no podemos volver a pasar por A o alguno de sus predecesores puesto que esto implicar\'ia tener un ciclo, lo que no es posible por definici\'on. 
 Adem\'as, las subsoluciones deben ser \'optimas: supongamos que tenemos una soluci\'on \'optima que usa una subsoluci\'on no \'optima de un subproblema dado (y que a\'un as\'i la soluci\'on de este subproblema resulta ser la mejor elecci\'on entre las subsoluciones consideradas). Supongamos adem\'as que conocemos una subsoluci\'on \'optima, de manera que el largo de este camino es estrictamente mayor que el de la subsoluci\'on usada. Si reemplazamos, en la soluci\'on, la subsoluci\'on no \'optima por la nueva subsoluci\'on \'optima, entonces obtendremos un camino de mayor longitud que el \'optimo, lo que es absurdo.
 
 Veamos ahora que el algoritmo propuesto calcula el camino m\'as largo. 
@@ -179,13 +179,104 @@ El recorrido $vS[v]S[S[v]]...S[...S[v]]...0$ es un camino simple, pues al ser el
 
 \subsubsection{An\'alisis de complejidad}
  
-El Algoritmo \ref{pseudocodigo_ordenTopologico}, al ser \textbf{DFS}, tiene orden O(|E|+|V|).
-El Algoritmo \ref{pseudocodigo_armarCamino} recorre un arreglo con O(|V|) posiciones, y dado que se asume que no existen ciclos, a lo sumo pasa una vez por cada posici\'on. Por lo tanto, es del orden O(|V|).
-En el Algoritmo \ref{pseudocodigo_caminoMaximo} se recorren todos los nodos del grafo una \'unica vez (en el ciclo de las l\'ineas 4-12), y por cada uno, se recorren todas sus aristas tambien una \'unica vez (en el ciclo de las l\'ineas 7-10), por lo que el el ciclo mayor tiene complejidad en el orden de O(|E|+|V|). Adem\'as, se llama a cada una de las dos funciones previamente mencionadas una \'unica vez: en total, la complejidad del algoritmo resulta en el orden de O(|E|+|V|).
+El Algoritmo \ref{pseudocodigo_ordenTopologico}, al ser \textbf{DFS}, tiene orden O($\left|{E}\right|$+$\left|{V}\right|$).
+El Algoritmo \ref{pseudocodigo_armarCamino} recorre un arreglo con O($\left|{V}\right|$) posiciones, y dado que se asume que no existen ciclos, a lo sumo pasa una vez por cada posici\'on. Por lo tanto, es del orden O$\left|{V}\right|$).
+En el Algoritmo \ref{pseudocodigo_caminoMaximo} se recorren todos los nodos del grafo una \'unica vez (en el ciclo de las l\'ineas 4-12), y por cada uno, se recorren todas sus aristas tambien una \'unica vez (en el ciclo de las l\'ineas 7-10), por lo que el el ciclo mayor tiene complejidad en el orden de O($\left|{E}\right|$+$\left|{V}\right|$). Adem\'as, se llama a cada una de las dos funciones previamente mencionadas una \'unica vez: en total, la complejidad del algoritmo resulta en el orden de O($\left|{E}\right|$+$\left|{V}\right|$).
  
 
 \subsection{Pruebas}
+Para las pruebas de correctitud utilizamos grafos peque\~nos que pueden resolverse f\'acilmente a mano. 
+Los casos que elegimos fueron digrafos con ciclos y sin ciclos, tanto de una \'unica componente conexa como m\'as de una.
 
 
+Para probar la performance del algoritmo, armamos casos de digrafos aleatorios (que pueden o no contener ciclos) y DAGs. Probamos casos separados por n\'umero de nodos fijos (sobre los que variamos la cantidad de aristas) y n\'umero de aristas fijo (donde variamos la cantidad de nodos). 
+No encontramos familias de casos que tuvieran un comportamiento distinto al esperado.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio, n = 100, m variable}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio, n = 1000, m variable}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio, n = 10000, m variable}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio, n = 100, m variable}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio, n = 1000, m variable}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio, n = 10000, m variable}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio,  n variable, m = 100}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio, n variable, m = 500}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{Digrafo aleatorio, n variable, m = 1000}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio,  n variable, m = 100}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio, n variable, m = 500}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{blank.png}
+	\caption{DAG aleatorio, n variable, m = 1000}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Conclusiones}
+
+La resoluci\'on del problema planteado en este ejercicio es un claro ejemplo de la importancia de t\'ecnicas como Programaci\'on din\'amica y algoritmos gen\'ericos sobre grafos: no solo se obtuvo un algoritmo competente en cuanto a performance (por ser de orden lineal tanto en tiempo de ejecucion como almacenaiento de datos en memoria), sino que tambien resulta ser sencillo y f\'acil de comprender.
+
+A pesar de no estar presentes, hubiera sido interesante agregar casos de test donde variasemos la cantidad de componente conexas dejando fijas la cantidad de nodo y aristas, o la suma de ambos valores. En este caso, esperariamos que el grafico estuviera acotado por una funci\'on constante.
+
