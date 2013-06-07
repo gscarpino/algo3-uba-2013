@@ -28,9 +28,9 @@
 
 \subsection{Algoritmo} 
 
-\quad Como mencionamos anteriormente hemos decidido implementar el algoritmo de Tarjan para resolver el problema. La idea del algoritmo de Tarjan es ir recorriendo a partir de un nodo el grafo. De acuerdo al orden en el que se visitan los nodos se les asigna un índice que va aumentando en uno por cada nodo recorrido. El algoritmo nunca visita de vuelta nodos que ya han sido visitados. Para determinar las componentes fuertemente conexas, la idea es encontrar el nodo $raíz$ de la componente. Un nodo $raíz$ de una componente fuertemente conexa es aquél que se visitó en primer lugar. Es menester mencionar que el concepto de nodo $raíz$ sólo tiene sentido en la apĺicación del algoritmo y no fuera de éste: en realidad una componente fuertemente conexa no tiene nodo raíz. La particularidad de un nodo $raíz$ es que al ser el primero de la componente fuertemente conexa en ser visitado su índice será menor o igual que el de todos los demás nodos de dicha componente. Luego, determinaremos que para todos los nodos de una componente fuertemente conexa vale que se puede hallar un camino simple ida y vuelta entre dicho nodo y el nodo $raíz$. 
+\quad Como mencionamos anteriormente hemos decidido implementar el algoritmo de Tarjan para resolver el problema. La idea del algoritmo de Tarjan es ir recorriendo a partir de un nodo el grafo. De acuerdo al orden en el que se visitan los nodos se les asigna un índice que va aumentando en uno por cada nodo recorrido. El algoritmo nunca visita de vuelta nodos que ya han sido visitados. Para determinar las componentes fuertemente conexas, la idea es encontrar el nodo $raiz$ de la componente. Un nodo $raiz$ de una componente fuertemente conexa es aquél que se visitó en primer lugar. Es menester mencionar que el concepto de nodo $raiz$ sólo tiene sentido en la apĺicación del algoritmo y no fuera de éste: en realidad una componente fuertemente conexa no tiene nodo raíz. La particularidad de un nodo $raiz$ es que al ser el primero de la componente fuertemente conexa en ser visitado su índice será menor o igual que el de todos los demás nodos de dicha componente. Luego, determinaremos que para todos los nodos de una componente fuertemente conexa vale que se puede hallar un camino simple ida y vuelta entre dicho nodo y el nodo $raiz$. 
 
-\quad Recorremos con DFS cada subgrafo y guardamos para cada nodo un valor que hace referencia al nodo de menor índice al que se puede acceder desde él y que se llamará lowIndex (y que para cada componente fuertemente conexa se correponde con el nodo $raíz$) y se van  agregando los nodos a una pila en el orden en el que fueron recorridos. Luego, determinaremos los elementos de cada componente fuertemente conexa del grafo haciendo uso del lowIndex calculado: todos los nodos con el mismo valor de lowIndex pertenecen a la misma componente fuertemente conexa. Cuando se determinó que ya se recorrió toda la componente conexa se van desapilando los nodos de la pila y se los agrega a un vector, que contiene a todos los elementos de la componente fuertemente conexa. Este vector a su vez se agrega a una vector de vectores, que contiene las componenetes fuertemente conexas calculadas hasta ese momento.  Como esto se hace para todos los nodos, podemos estar seguros que se obtienen de esta manera todas las componentes fuertemente conexas del grafo dirigido.
+\quad Recorremos con DFS cada subgrafo y guardamos para cada nodo un valor que hace referencia al nodo de menor índice al que se puede acceder desde él y que se llamará lowIndex (y que para cada componente fuertemente conexa se correponde con el nodo $raiz$) y se van  agregando los nodos a una pila en el orden en el que fueron recorridos. Luego, determinaremos los elementos de cada componente fuertemente conexa del grafo haciendo uso del lowIndex calculado: todos los nodos con el mismo valor de lowIndex pertenecen a la misma componente fuertemente conexa. Cuando se determinó que ya se recorrió toda la componente conexa se van desapilando los nodos de la pila y se los agrega a un vector, que contiene a todos los elementos de la componente fuertemente conexa. Este vector a su vez se agrega a una vector de vectores, que contiene las componenetes fuertemente conexas calculadas hasta ese momento.  Como esto se hace para todos los nodos, podemos estar seguros que se obtienen de esta manera todas las componentes fuertemente conexas del grafo dirigido.
 
 \quad Queremos hacer un pequeño comentario acerca de la implementación. Dentro de la estructura que representa a un Grafo para este ejericio, definimos tres vectores de tamaño igual a la cantidad de nodos del grafo. Sabiendo de antemano que a cada nodo le corresponde un entero, definimos los vectores de la siguiente manera:
 
@@ -52,9 +52,9 @@
 \caption{} 
 \begin{codebox}
 \Procname{$\proc{grupoDeRiesgoMaximales}()$}
-\li vector$<vector>>$ $res$
+\li vector$<vector<unsigned int>>$ $res$
 \li unsigned int $index$
-\li stack<unsigned int> $pila$
+\li $stack<unsigned int> pila$
 \li
 \li \For $i$ desde 0 hasta CantNodos \Do
 \li	\If nodo $i$ no fue visitado \Do
@@ -69,7 +69,7 @@
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{tarjansAlgorithm} $(unsigned int index, stack$<$unsigned int$>$ $>$ pila$, \\ $unsigned int nodo$, $vector$<$vector$<$unsigned int$>>$ componentes)}$
+\Procname{$\proc{tarjansAlgorithm} $(unsigned int index, stack$<$unsigned int$>$ $>$ pila$, \\ $unsigned int nodo$, $vector$<$vector$<$unsigned int$>>$ componentes)}
 \li $indice[nodo] \gets index$
 \li $bajoIndice[nodo] \gets index$
 \li index++
@@ -115,6 +115,70 @@
 
 \subsection{Pruebas y Resultados}
 
+
+\quad Para realizar casos de test, decidimos armar diferentes tipos tratando de la siguiente manera:
+
+\begin{itemize}
+\item \textbf{Digrafos al azar con cantidad de componentes fuertemente conexas variable y de distintos tamaños}
+
+\quad Decidimos utilizar un criterio que dependiendo de la cantidad de nodos, se generan distintos componentes. Para cada nodo de una componente, se determina aleatoriamente con probabilidad de $ \frac{1}{2} $ si tiene arista de salida hacia cada uno del resto de los nodos de la misma componente. Generando que esa componente sea altamente probable una componente \textit{débilmente conexa} y con una probabilidad considerable de que sea \textit{fuertemente conexa}. Si bien no estimamos la probabilidad, la cantidad de componentes fuertemente conexas son alrededor de $ \frac{\vert  V \vert}{10} $.
+
+\quad
+
+\quad Variamos la cantidad de nodos de 3 nodos a 300 y por cada cantidad de nodos hacemos 100 repeticiones. La cantidad de aristas para un grafo de \textit{n} nodos fue obtenida en promedio ya que al ser aleatorio variaba considerablemente la cantidad. El tiempo obtenido en función de la cantidad de nodos y aristas quedó asi:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico3.png}
+\end{figure}
+
+\quad Se observa que los costos obtenidos no superan la cota teórica obtenida en el eje z. Presentamos el siguiente gráfico a modo de aclaración de que los puntos de los costos teóricos y prácticos son los mismo en los ejes de aristas y nodos:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico3-b.png}
+\end{figure}
+
+\quad Para cada valor obtenido en la curva obtenida empíricamente tiene los mismas \textit{coordenadas} en el plano de aristas y nodos, que la curva teórica podemos decir que se cumple la cota de complejidad del peor caso.
+
+\item  \textbf{Digrafos completos, es decir, que cada nodo tiene aristas de salida a todos los otros nodos}
+
+\quad Si bien para el ejercicio es una solución trivial, probamos como se comporta el algoritmo al tener siempre la máxima cantidad de aristas dirigidas. Por lo visto en la teórica, $ \vert E \vert = \frac{\vert V \vert * \vert V - 1 \vert}{2}$ por lo que la complejidad podría ser directamente $ C * \vert E \vert $.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico4.png}
+\end{figure}
+
+\quad Nuevamente, los datos obtenidos empíricamente resultan menores a la cota teórica del peor caso.
+
+\item  \textbf{Digrafos con cantidad de nodos fija y variando la cantidad de aristas.}
+
+\quad Como en los casos anteriores siempre se varía los nodos, decidimos hacer estos casos donde la cantidad de nodos es fija y se va variando constantemente la cantidad de aristas para cada nodo, desde 0 hasta $ \vert V - 1 \vert $
+
+\begin{itemize}
+
+\item Con 50 nodos:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico1.png}
+\end{figure}
+
+\quad Si bien se observa que no supera la cota lineal teórica, decidimos realizar otro test con mayor cantidad de nodos para poder obtener una mejor tendencia de los datos empíricos.
+
+\item Con 250 nodos:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{ej3-grafico2.png}
+\end{figure}
+
+\quad Al ya poder observar el comportamiento del algoritmo y ver que no supera la complejidad obtenida sumado a que el test pesa 2.58 GB decidimos que esa cantidad de nodos era sufiente. Si se comprimi el test ocupa 2.24 MB.
+
+
+\end{itemize}
+\end{itemize}
 
 \subsection{Conclusiones}
 
