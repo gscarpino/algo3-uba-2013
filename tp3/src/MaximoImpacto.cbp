@@ -35,6 +35,8 @@
 		</Compiler>
 		<Unit filename="Grafo.cpp" />
 		<Unit filename="Grafo.h" />
+		<Unit filename="exacto.cpp" />
+		<Unit filename="exacto.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

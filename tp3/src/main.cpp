@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "Grafo.h"
+#include "exacto.h"
 
 using namespace std;
 
@@ -70,7 +71,7 @@ int main(int argc, char * argv[]){
             grafoH.agregarArista(nodo1,nodo2);
         }
 
-        grafoG.maximoImpactoExacto(grafoH);
+        maximoImpactoExacto(grafoG,grafoH);
 
     }
 

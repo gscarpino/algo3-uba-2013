@@ -19,7 +19,7 @@ class Grafo
 
         Grafo(unsigned int cantNodos);
         Grafo(const Grafo& other);
-        unsigned int getNodos();
+        unsigned int cantNodos() const;
         void agregarArista(unsigned int n1, unsigned int n2);
         unsigned int cantAristas() const;
 

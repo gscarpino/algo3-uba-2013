@@ -15,7 +15,7 @@ Grafo::Grafo(const Grafo& other)
 }
 
 
-unsigned int Grafo::getNodos(){
+unsigned int Grafo::cantNodos() const{
     return this->nodos;
 }
 

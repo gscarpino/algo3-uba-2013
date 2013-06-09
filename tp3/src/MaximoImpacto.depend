@@ -1,9 +1,28 @@
 # depslib dependency file v1.0
-1370801194 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
+1370816755 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
 	"Grafo.h"
 
-1370800784 c:\users\gino\desktop\algo3\tp3\src\grafo.h
+1370816745 c:\users\gino\desktop\algo3\tp3\src\grafo.h
 	<iostream>
 	<vector>
 	<algorithm>
+
+1370819316 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+	"exacto.h"
+
+1370819335 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<sstream>
+	"Grafo.h"
+	"exacto.h"
+
+1370819316 c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+	"exacto.h"
+
+1370821114 c:\users\gino\desktop\algo3\tp3\src\exacto.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
 
