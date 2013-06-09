@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1370801194 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
+	"Grafo.h"
+
+1370800784 c:\users\gino\desktop\algo3\tp3\src\grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+
