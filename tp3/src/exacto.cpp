@@ -1,13 +1,11 @@
 #include "exacto.h"
 
 
-vector<unsigned int> maximoImpactoExacto(const Grafo &grafoG, const Grafo &grafoH){
-    vector<unsigned int> res(grafoG.cantNodos() + 1);
-    Grafo G(grafoG);
-    Grafo H(grafoH);
+vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
+    vector<unsigned int> res(G.cantNodos() + 1);
 
-    vector<int> coloreo(grafoG.cantNodos());
-    vector<unsigned int> colores(grafoG.cantNodos());
+    vector<int> coloreo(G.cantNodos());
+    vector<unsigned int> colores(G.cantNodos());
 
 
     //Creo la lista de colores posibles
@@ -17,35 +15,29 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &grafoG, const Grafo &grafo
     }
 
     unsigned int visitados = 0;
-    vector<vector<int> > conjColoreos;
-    RecursiveColorAssignment(0,G,coloreo,colores,visitados,conjColoreos);
     res[0] = 0;
-    for(unsigned int i = 0; i < conjColoreos.size(); i++){
-        unsigned int temp;
-        temp = calcularImpacto(H,conjColoreos[i]);
-//        if(temp == 0){
-//            mostrarColoreo(conjColoreos[i]);
-//        }
-        if(temp > res[0]){
-            res[0] = temp;
-            for(unsigned int c = 0; c < conjColoreos[i].size(); c++){
-                res[c + 1] = conjColoreos[i][c];
-            }
-        }
-    }
+    RecursiveColorAssignment(0,G,H,coloreo,colores,visitados,res);
+
     return res;
 }
 
-void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector<vector<int> > &conjColoreos){
+void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G,const Grafo &H, const vector<int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector< unsigned int> &res){
     for(unsigned int c = 0; c < colores.size(); c++){
         if(esLegal(nodo,G,coloreo,c)){
             vector<int> nuevoColoreo(coloreo);
             nuevoColoreo[nodo] = c;
             if((visitados + 1) >= G.cantNodos()){
-                conjColoreos.push_back(nuevoColoreo);
+                unsigned int temp;
+                temp = calcularImpacto(H,nuevoColoreo);
+                if(temp > res[0]){
+                    res[0] = temp;
+                    for(unsigned int c = 0; c < nuevoColoreo.size(); c++){
+                        res[c + 1] = nuevoColoreo[c];
+                    }
+                }
             }
             else{
-                RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,nuevoColoreo,colores,visitados + 1,conjColoreos);
+                RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,nuevoColoreo,colores,visitados + 1,res);
             }
         }
     }
