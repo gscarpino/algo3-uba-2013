@@ -19,7 +19,6 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-    argv[1] = "input.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -56,8 +55,8 @@ int main(int argc, char * argv[]){
             unsigned int nodo2;
             sAristas >> nodo1;
             sAristas >> nodo2;
-            cout << "Nodo 1: " << nodo1 << " - Nodo 2: " << nodo2 << endl;
-            grafoG.agregarArista(nodo1,nodo2);
+//            cout << "Nodo 1: " << nodo1 << " - Nodo 2: " << nodo2 << endl;
+            grafoG.agregarArista(nodo1-1,nodo2-1);
         }
 
         for(unsigned int i = 0; i < aristasH; i++){
@@ -67,11 +66,16 @@ int main(int argc, char * argv[]){
             unsigned int nodo2;
             sAristas >> nodo1;
             sAristas >> nodo2;
-            cout << "Nodo 1: " << nodo1 << " - Nodo 2: " << nodo2 << endl;
-            grafoH.agregarArista(nodo1,nodo2);
+//            cout << "Nodo 1: " << nodo1 << " - Nodo 2: " << nodo2 << endl;
+            grafoH.agregarArista(nodo1-1,nodo2-1);
         }
 
-        maximoImpactoExacto(grafoG,grafoH);
+        vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
+        outputFile << impactoExacto[0];
+        for(unsigned int i = 1; i < impactoExacto.size(); i++){
+            outputFile << " " << impactoExacto[i];
+        }
+        outputFile << endl;
 
     }
 
