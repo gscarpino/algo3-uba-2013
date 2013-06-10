@@ -20,11 +20,13 @@ class Grafo
         Grafo(unsigned int cantNodos);
         Grafo(const Grafo& other);
         unsigned int cantNodos() const;
-        void agregarArista(unsigned int n1, unsigned int n2);
         unsigned int cantAristas() const;
+        void agregarArista(unsigned int n1, unsigned int n2);
+        vector<unsigned int> vecinosDe(const unsigned int nodo) const;
 
     private:
         unsigned int nodos;
+        unsigned int ejes;
         vector< vector <unsigned int> > aristas;
 
 

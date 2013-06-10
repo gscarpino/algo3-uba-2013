@@ -1,11 +1,11 @@
 #include "exacto.h"
 
 
-void maximoImpactoExacto(const Grafo &grafoG, const Grafo &grafoH){
+unsigned int maximoImpactoExacto(const Grafo &grafoG, const Grafo &grafoH){
+    unsigned int res = 0;
     Grafo G(grafoG);
     Grafo H(grafoH);
 
-    //
     vector<int> coloreo(grafoG.cantNodos());
     vector<unsigned int> colores(grafoG.cantNodos());
 
@@ -16,35 +16,59 @@ void maximoImpactoExacto(const Grafo &grafoG, const Grafo &grafoH){
         coloreo[i] = -1;
     }
 
-    for(unsigned int n = 0; n < G.cantNodos(); n++){
-        RecursiveColorAssignment(n,G,coloreo,colores);
-    }
+    unsigned int visitados = 0;
+    vector<vector<int> > conjColoreos;
+    RecursiveColorAssignment(0,G,coloreo,colores,visitados,conjColoreos);
 
-}
-
-void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const vector<unsigned int> &colores){
-    for(unsigned int c = 0; c < colores.size(); c++){
-
-        vector<int> nuevoColoreo(coloreo);
-        if(esLegal(nodo,G,nuevoColoreo,c)){
-            nuevoColoreo[nodo] = c;
-        }
-        if(nodo == (G.cantNodos() - 1)){
-            calcularImpacto();
-        }
-        else{
-            RecursiveColorAssignment(nodo+1,G,nuevoColoreo,colores);
+    for(unsigned int i = 0; i < conjColoreos.size(); i++){
+        unsigned int temp;
+        temp = calcularImpacto(H,conjColoreos[i]);
+        if(temp > res){
+            res = temp;
         }
     }
-
-}
-
-bool esLegal(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const unsigned int color ){
-    bool res = true;
-
+    cout << "Res: " << res << endl;
     return res;
 }
 
-void calcularImpacto(){
+void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector<vector<int> > &conjColoreos){
+    for(unsigned int c = 0; c < colores.size(); c++){
+        if(esLegal(nodo,G,coloreo,c)){
+            vector<int> nuevoColoreo(coloreo);
+            nuevoColoreo[nodo] = c;
+            if((visitados + 1) >= G.cantNodos()){
+                conjColoreos.push_back(nuevoColoreo);
+            }
+            else{
+                RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,nuevoColoreo,colores,visitados + 1,conjColoreos);
+            }
+        }
+    }
+}
 
+bool esLegal(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const int color){
+    bool res = true;
+    vector<unsigned int> vecinos(G.vecinosDe(nodo));
+
+    for(unsigned int i = 0; i < vecinos.size(); i++){
+        if(coloreo[vecinos[i]] == color){
+            res = false;
+            break;
+        }
+    }
+    return res;
+}
+
+unsigned int calcularImpacto(const Grafo &H, const vector<int> coloreo){
+    unsigned int res = 0;
+    for(unsigned int i = 0; i < H.cantNodos(); i++){
+        vector<unsigned int> vecinos(H.vecinosDe(i));
+        for(unsigned int j = 0; j < vecinos.size(); j++){
+            if(coloreo[i] == coloreo[j]){
+                res++;
+            }
+        }
+    }
+    res /=2;
+    return res;
 }

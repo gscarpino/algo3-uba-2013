@@ -1,17 +1,21 @@
 #include "Grafo.h"
 
-
-
 Grafo::Grafo(unsigned int cantNodos){
     this->nodos = cantNodos;
-    //evitamos realocacion de memoria
-    this->aristas.reserve(cantNodos*cantNodos);
+    this->ejes = 0;
+    vector<unsigned int> temp;
+    temp.reserve(cantNodos);
+
+    for(unsigned int i = 0; i < cantNodos; i++){
+        this->aristas.push_back(temp);
+    }
+
 }
 
-Grafo::Grafo(const Grafo& other)
-{
+Grafo::Grafo(const Grafo& other){
     this->nodos = other.nodos;
     this->aristas = other.aristas;
+    this->ejes = other.ejes;
 }
 
 
@@ -21,9 +25,16 @@ unsigned int Grafo::cantNodos() const{
 
 
 void Grafo::agregarArista(unsigned int n1, unsigned int n2){
-
+    this->aristas[n1].push_back(n2);
+    this->aristas[n2].push_back(n1);
+    this->ejes++;
 }
 
 unsigned int Grafo::cantAristas() const{
-    return this->aristas.size();
+    return this->ejes;
+}
+
+
+vector<unsigned int> Grafo::vecinosDe(const unsigned int nodo) const{
+    return this->aristas[nodo];
 }
