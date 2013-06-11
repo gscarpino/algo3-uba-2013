@@ -38,3 +38,15 @@ unsigned int Grafo::cantAristas() const{
 vector<unsigned int> Grafo::vecinosDe(const unsigned int nodo) const{
     return this->aristas[nodo];
 }
+
+unsigned int Grafo::gradoMaximo() const{
+    unsigned int res = 0;
+
+    for(unsigned int i = 0; i < this->aristas.size(); i++){
+        if(res < this->aristas[i].size()){
+            res = this->aristas[i].size();
+        }
+    }
+
+    return res;
+}
