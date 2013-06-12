@@ -30,6 +30,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-O3" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
@@ -37,6 +38,8 @@
 		<Unit filename="Grafo.h" />
 		<Unit filename="exacto.cpp" />
 		<Unit filename="exacto.h" />
+		<Unit filename="goloso.cpp" />
+		<Unit filename="goloso.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -4,12 +4,10 @@ unsigned long long int contador = 0;
 
 vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
     vector<unsigned int> res(G.cantNodos() + 1);
+    res[0] = 0;
 
     vector<int> coloreo(G.cantNodos(),-1);
     vector<unsigned int> colores(G.gradoMaximo());
-    cout << G.gradoMaximo() << endl;
-
-    cin >> contador;
 
     //Creo la lista de colores posibles
     for(unsigned int i = 0; i < colores.size(); i++){
@@ -18,7 +16,6 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
 
 
     unsigned int visitados = 0;
-    res[0] = 0;
     RecursiveColorAssignment(0,G,H,coloreo,colores,visitados,res);
 
     return res;
