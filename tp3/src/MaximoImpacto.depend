@@ -7,24 +7,35 @@
 	<vector>
 	<algorithm>
 
-1370975249 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+1371137627 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1370893690 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
+1371154314 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
 	<sstream>
+	<ctime>
+	<cmath>
 	"Grafo.h"
 	"exacto.h"
+	"goloso.h"
 
 1370819316 c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1370896355 c:\users\gino\desktop\algo3\tp3\src\exacto.h
+1371133085 c:\users\gino\desktop\algo3\tp3\src\exacto.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
 
 1370870297 c:\users\gino\desktop\algo3\tp3\src\general.h
+
+1371152540 source:c:\users\gino\desktop\algo3\tp3\src\goloso.cpp
+	"goloso.h"
+
+1371151961 c:\users\gino\desktop\algo3\tp3\src\goloso.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
 
