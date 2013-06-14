@@ -50,3 +50,43 @@ unsigned int Grafo::gradoMaximo() const{
 
     return res;
 }
+
+
+unsigned int Grafo::impacto(const vector<int> &coloreo) const{
+    unsigned int res = 0;
+    for(unsigned int i = 0; i < this->nodos; i++){
+        for(unsigned int j = 0; j < this->aristas[i].size(); j++){
+            if(coloreo[i] == coloreo[this->aristas[i][j]]){
+                res++;
+            }
+        }
+    }
+    res /=2;
+    return res;
+}
+
+
+bool Grafo::colorLegalDeNodo(const unsigned int nodo, const vector<int> &coloreo, const int color) const{
+    bool res = true;
+
+    for(unsigned int i = 0; i < this->aristas[nodo].size(); i++){
+        if(coloreo[this->aristas[nodo][i]] == color){
+            res = false;
+            break;
+        }
+    }
+
+    return res;
+}
+
+
+bool Grafo::coloreoLegal(const vector<int> &coloreo) const{
+    bool res = true;
+    for(unsigned int i = 0; i < this->nodos; i++){
+        res = this->colorLegalDeNodo(i,coloreo,coloreo[i]);
+        if(!res){
+            break;
+        }
+    }
+    return res;
+}

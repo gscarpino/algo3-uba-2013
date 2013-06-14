@@ -6,7 +6,6 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
     res[0] = 0;
 
     vector<int> coloreo(G.cantNodos(),1);
-//    vector<unsigned int> colores(G.gradoMaximo()+1);
     vector<unsigned int> colores(G.gradoMaximo()+1);
 
     //Creo la lista de colores posibles
@@ -16,10 +15,10 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
 
     vector<bool> modificados(H.cantNodos(),false);
     unsigned int nodo;
-    while(!coloreoLegal(G,coloreo)){
-        nodo = siguienteModificable(G,H,modificados);
+    while(!G.coloreoLegal(coloreo)){
+        nodo = siguienteModificable(H,coloreo,modificados);
         for(unsigned int c = 0; c < colores.size(); c++){
-            if(esLegalGoloso(nodo,G,coloreo,colores[c])){
+            if(G.colorLegalDeNodo(nodo,coloreo,colores[c])){
                 coloreo[nodo] = colores[c];
                 break;
             }
@@ -27,69 +26,48 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
         modificados[nodo] = true;
     }
 
-    res[0] = calcularImpactoGoloso(H,coloreo);
+    res[0] = H.impacto(coloreo);
     return res;
 }
 
-unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<bool> &modificados){
+unsigned int siguienteModificable(const Grafo &H, const vector<int> &coloreo, const vector<bool> &modificados){
     vector< pair<unsigned int, unsigned int > > posibles;
-    for(unsigned int i = 0; i < G.cantNodos(); i++){
+    for(unsigned int i = 0; i < H.cantNodos(); i++){
         if(!modificados[i]){
-            posibles.push_back(make_pair(H.vecinosDe(i).size(),i));
-//            posibles.push_back(make_pair(G.vecinosDe(i).size(),i));
+            posibles.push_back(make_pair(impactoNodo(i,H,coloreo),i));
         }
     }
 
+//    sort(posibles.begin(),posibles.end(),cmpSiguiente);
     sort(posibles.begin(),posibles.end());
 
+    return posibles[0].second;
 //    return posibles[posibles.size()-1].second;
-    return posibles[posibles.size()/6].second;
 }
 
+//bool cmpSiguiente(const pair<unsigned int, unsigned int > &a, const pair<unsigned int, unsigned int > &b) const{
+//    if(a.first < b.first){
+//        return true;
+//    }
+//    else if(a.first > b.first){
+//        return false;
+//    }
+//    else{
+//
+//    }
+//}
 
-unsigned int calcularImpactoGoloso(const Grafo &H, const vector<int> &coloreo){
+unsigned int impactoNodo(unsigned int nodo, const Grafo &H, const vector<int> &coloreo){
     unsigned int res = 0;
-    for(unsigned int i = 0; i < H.cantNodos(); i++){
-        vector<unsigned int> vecinos(H.vecinosDe(i));
-        for(unsigned int j = 0; j < vecinos.size(); j++){
-            if(coloreo[i] == coloreo[vecinos[j]]){
-                res++;
-            }
-        }
-    }
-    res /=2;
-    return res;
-}
-
-bool esLegalGoloso(const unsigned int nodo, const Grafo &G, const vector<int> &coloreo, const int color){
-    bool res = true;
-    vector<unsigned int> vecinos(G.vecinosDe(nodo));
-
+    vector<unsigned int> vecinos(H.vecinosDe(nodo));
     for(unsigned int i = 0; i < vecinos.size(); i++){
-        if(coloreo[vecinos[i]] == color){
-            res = false;
-            break;
+        if(coloreo[nodo] == coloreo[vecinos[i]]){
+            res++;
         }
     }
     return res;
 }
 
-bool coloreoLegal(const Grafo &G, const vector<int> &coloreo){
-    bool res = true;
-    for(unsigned int i = 0; i < G.cantNodos(); i++){
-        vector<unsigned int> vecinos(G.vecinosDe(i));
-        for(unsigned int j = 0; j < vecinos.size(); j++){
-            if(coloreo[i] == coloreo[vecinos[j]]){
-                res = false;
-                break;
-            }
-        }
-        if(!res){
-            break;
-        }
-    }
-    return res;
-}
 
 void imprimirPosibles(vector< pair<unsigned int, unsigned int > > &posibles){
     for(unsigned int i = 0; i < posibles.size();i++){

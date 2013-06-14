@@ -9,7 +9,7 @@
 #include "exacto.h"
 #include "goloso.h"
 
-#define TESTING 0
+#define TESTING 1
 
 using namespace std;
 
@@ -34,7 +34,7 @@ int main(int argc, char * argv[]){
 
 //    argv[1] = "testAzar.txt";
 //    argv[1] = "GyHdensos.txt";
-//    argv[1] = "conHcomplemento.txt";
+    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
         cerr << "Error al abrir el archivo de entrada." << endl;
@@ -91,11 +91,13 @@ int main(int argc, char * argv[]){
         }
 
         cont++;
+        cout << "C: " << cont << endl;
 //        vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
 //        cout << "*Exacto: " << impactoExacto[0] << "*";
         vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH));
-        cout << "*Goloso: " << impactoGoloso[0] << "*";
-//        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 1) efectividadGoloso++;
+//        cout << "*Goloso: " << impactoGoloso[0] << "*";
+//        outputFile << impactoGoloso[0];
+//        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 0) efectividadGoloso++;
 //         << " - Goloso: " << impactoGoloso[0] << endl;
 //        for(unsigned int i = 1; i < impactoGoloso.size(); i++){
 //            outputFile << " " << impactoGoloso[i];
@@ -116,7 +118,7 @@ void genTests(){
 
     ofstream outputFile;
     unsigned int minNodos = 3;
-    unsigned int maxNodos = 8;
+    unsigned int maxNodos = 100;
     unsigned int repeticiones = 100;
     int prob = 40;
 
@@ -156,7 +158,6 @@ void genTests(){
     cout << "Test creado." << endl;
 
     prob = 85;
-    maxNodos = 8;
 
     cout << "Creando test G y H densos" << endl;
     outputFile.open("GyHdensos.txt",  ios_base::trunc);

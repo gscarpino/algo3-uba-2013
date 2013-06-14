@@ -24,6 +24,9 @@ class Grafo
         void agregarArista(unsigned int n1, unsigned int n2);
         vector<unsigned int> vecinosDe(const unsigned int nodo) const;
         unsigned int gradoMaximo() const;
+        unsigned int impacto(const vector<int> &coloreo) const;
+        bool colorLegalDeNodo(const unsigned int nodo, const vector<int> &coloreo, const int color ) const;
+        bool coloreoLegal(const vector<int> &coloreo) const;
 
     private:
         unsigned int nodos;
