@@ -33,8 +33,8 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-//    argv[1] = "testAzar.txt";
-    argv[1] = "GyHdensos.txt";
+    argv[1] = "testAzar.txt";
+//    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
@@ -96,7 +96,7 @@ int main(int argc, char * argv[]){
         }
 
         cont++;
-        cout << "C: " << cont << endl;
+        cout << "Rep: " << cont << endl;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
 //        cout << "*Exacto: " << impactoExacto[0] << "*";
         vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH));
@@ -131,10 +131,10 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 9;
-    unsigned int maxNodos = 9;
-    unsigned int repeticiones = 1000;
-    int prob = 40;
+    unsigned int minNodos = 14;
+    unsigned int maxNodos = 14;
+    unsigned int repeticiones = 100;
+    int prob = 50;
 
     cout << "Creando test G y H al azar" << endl;
     outputFile.open("testAzar.txt",  ios_base::trunc);
@@ -208,7 +208,7 @@ void genTests(){
     outputFile.close();
     cout << "Test creado." << endl;
 
-    prob = 40;
+    prob = 50;
 
     cout << "Creando test H complemento de G" << endl;
     outputFile.open("conHcomplemento.txt",  ios_base::trunc);

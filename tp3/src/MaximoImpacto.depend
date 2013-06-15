@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1371225733 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
+1371337709 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
 	"Grafo.h"
 
-1371225933 c:\users\gino\desktop\algo3\tp3\src\grafo.h
+1371335912 c:\users\gino\desktop\algo3\tp3\src\grafo.h
 	<iostream>
 	<vector>
 	<algorithm>
 
-1371225873 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+1371338816 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1371266882 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
+1371337721 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -25,14 +25,14 @@
 1370819316 c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1371225128 c:\users\gino\desktop\algo3\tp3\src\exacto.h
+1371338651 c:\users\gino\desktop\algo3\tp3\src\exacto.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
 
 1370870297 c:\users\gino\desktop\algo3\tp3\src\general.h
 
-1371267185 source:c:\users\gino\desktop\algo3\tp3\src\goloso.cpp
+1371337486 source:c:\users\gino\desktop\algo3\tp3\src\goloso.cpp
 	"goloso.h"
 
 1371245617 c:\users\gino\desktop\algo3\tp3\src\goloso.h

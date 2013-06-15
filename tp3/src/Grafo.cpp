@@ -56,8 +56,10 @@ unsigned int Grafo::impacto(const vector<int> &coloreo) const{
     unsigned int res = 0;
     for(unsigned int i = 0; i < this->nodos; i++){
         for(unsigned int j = 0; j < this->aristas[i].size(); j++){
-            if(coloreo[i] == coloreo[this->aristas[i][j]]){
-                res++;
+            if(coloreo[i] != -1){
+                if(coloreo[i] == coloreo[this->aristas[i][j]]){
+                    res++;
+                }
             }
         }
     }
@@ -85,6 +87,18 @@ bool Grafo::coloreoLegal(const vector<int> &coloreo) const{
     for(unsigned int i = 0; i < this->nodos; i++){
         res = this->colorLegalDeNodo(i,coloreo,coloreo[i]);
         if(!res){
+            break;
+        }
+    }
+    return res;
+}
+
+
+bool Grafo::sonVecinos(unsigned int n1, unsigned int n2) const{
+    bool res = false;
+    for(unsigned int e = 0; e < this->aristas[n1].size(); e++){
+        if(aristas[n1][e] == n2){
+            res = true;
             break;
         }
     }
