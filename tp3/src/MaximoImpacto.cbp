@@ -40,6 +40,8 @@
 		<Unit filename="exacto.h" />
 		<Unit filename="goloso.cpp" />
 		<Unit filename="goloso.h" />
+		<Unit filename="grasp.cpp" />
+		<Unit filename="grasp.h" />
 		<Unit filename="local.cpp" />
 		<Unit filename="local.h" />
 		<Unit filename="main.cpp" />

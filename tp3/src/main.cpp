@@ -9,6 +9,7 @@
 #include "exacto.h"
 #include "goloso.h"
 #include "local.h"
+#include "grasp.h"
 
 #define TESTING 0
 

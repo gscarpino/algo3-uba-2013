@@ -104,3 +104,8 @@ bool Grafo::sonVecinos(unsigned int n1, unsigned int n2) const{
     }
     return res;
 }
+
+
+unsigned int Grafo::gradoDe(const unsigned int nodo) const{
+    return this->aristas[nodo].size();
+}

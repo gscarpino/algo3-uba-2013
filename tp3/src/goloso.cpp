@@ -1,7 +1,7 @@
 #include "goloso.h"
 
 
-vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
+vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H, double porcentaje){
     vector<unsigned int> res(G.cantNodos() + 1);
     res[0] = 0;
 
@@ -16,7 +16,7 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
     vector<bool> modificados(H.cantNodos(),false);
     unsigned int nodo;
     while(!G.coloreoLegal(coloreo)){
-        nodo = siguienteModificable(G,H,coloreo,modificados);
+        nodo = siguienteModificable(G,H,coloreo,modificados,porcentaje);
         for(unsigned int c = 0; c < colores.size(); c++){
             if(G.colorLegalDeNodo(nodo,coloreo,colores[c])){
                 coloreo[nodo] = colores[c];
@@ -33,7 +33,7 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H){
     return res;
 }
 
-unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<int> &coloreo, const vector<bool> &modificados){
+unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<int> &coloreo, const vector<bool> &modificados, double porcentaje){
     vector< pair<unsigned int, unsigned int > > posibles;
     for(unsigned int i = 0; i < H.cantNodos(); i++){
         if(!modificados[i] && (H.vecinosDe(i).size() > 0)){
@@ -54,11 +54,11 @@ unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<i
     for(unsigned int i = 0; i < posibles.size()-1; i++){
         for(unsigned int j = i + 1; j < posibles.size(); j++){
             if(posibles[i].first == posibles[j].first){
-                if(G.vecinosDe(posibles[i].second) < G.vecinosDe(posibles[j].second)){
+                if(G.gradoDe(posibles[i].second) < G.gradoDe(posibles[j].second)){
                     swap(posibles[i],posibles[j]);
                 }
-                else if(G.vecinosDe(posibles[i].second) == G.vecinosDe(posibles[j].second)){
-                    if(H.vecinosDe(posibles[j].second) < H.vecinosDe(posibles[i].second)){
+                else if(G.gradoDe(posibles[i].second) == G.gradoDe(posibles[j].second)){
+                    if(H.gradoDe(posibles[j].second) < H.gradoDe(posibles[i].second)){
                         swap(posibles[i],posibles[j]);
                     }
                 }
@@ -68,7 +68,12 @@ unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<i
 //    imprimirPosibles(posibles);
 //    exit(0);
 
-    return posibles[0].second;
+    unsigned int res = 0;
+
+    res = rand()%(posibles.size()*porcentaje);
+
+    return posibles[res].second;
+//    return posibles[0].second;
 //    return posibles[posibles.size()-1].second;
 }
 
