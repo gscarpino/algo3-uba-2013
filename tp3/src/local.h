@@ -4,6 +4,7 @@
 #include "goloso.h"
 
 
-vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H);
+vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, double porcentaje);
+vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, const vector<unsigned int> &solGolosa);
 
 #endif // LOCAL_H

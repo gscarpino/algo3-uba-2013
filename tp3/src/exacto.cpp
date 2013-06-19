@@ -29,7 +29,7 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
 void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G,const Grafo &H, const vector<int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector< unsigned int> &res){
     for(unsigned int c = 0; c < colores.size(); c++){
         if(!encontrado){
-            if(H.gradoDe(nodo) == 0){
+            if(visitados < G.cantNodos() && H.gradoDe(nodo) == 0){
                 RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,coloreo,colores,visitados + 1,res);
             }
             else{
@@ -47,7 +47,7 @@ void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G,const Graf
                         }
                         if(res[0] == maxImpactoPosible) encontrado = true;
     //                    if(contador == 100000)
-                            cout << ++contador << endl;
+//                            cout << ++contador << endl;
                     }
                     else{
                         RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,nuevoColoreo,colores,visitados + 1,res);
