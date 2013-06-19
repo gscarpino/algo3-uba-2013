@@ -5,7 +5,7 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H, double 
     vector<unsigned int> res(G.cantNodos() + 1);
     res[0] = 0;
 
-    vector<int> coloreo(G.cantNodos(),1);
+    vector<unsigned int> coloreo(G.cantNodos(),1);
     vector<unsigned int> colores(G.gradoMaximo()+1);
 
     //Creo la lista de colores posibles
@@ -33,7 +33,7 @@ vector<unsigned int> maximoImpactoGoloso(const Grafo &G, const Grafo &H, double 
     return res;
 }
 
-unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<int> &coloreo, const vector<bool> &modificados, double porcentaje){
+unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<unsigned int> &coloreo, const vector<bool> &modificados, double porcentaje){
     vector< pair<unsigned int, unsigned int > > posibles;
     for(unsigned int i = 0; i < H.cantNodos(); i++){
         if(!modificados[i] && (H.vecinosDe(i).size() > 0)){
@@ -89,7 +89,7 @@ unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<i
 //    }
 //}
 
-unsigned int impactoNodo(unsigned int nodo, const Grafo &H, const vector<int> &coloreo){
+unsigned int impactoNodo(unsigned int nodo, const Grafo &H, const vector<unsigned int> &coloreo){
     unsigned int res = 0;
     vector<unsigned int> vecinos(H.vecinosDe(nodo));
     for(unsigned int i = 0; i < vecinos.size(); i++){

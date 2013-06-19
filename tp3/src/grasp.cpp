@@ -4,7 +4,7 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     vector<unsigned int> res(G.cantNodos() + 1);
     res[0] = 0;
 
-    vector<int> coloreo(G.cantNodos(),1);
+    vector<unsigned int> coloreo(G.cantNodos(),1);
 
     //Criterios de parada
     unsigned int maxIteraciones = 250;

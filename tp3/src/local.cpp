@@ -3,7 +3,7 @@
 vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, double porcentaje){
     vector<unsigned int> impactoGoloso(maximoImpactoGoloso(G,H,porcentaje));
     unsigned int impactoParcial = impactoGoloso[0];
-    vector<int> coloreo;
+    vector<unsigned int> coloreo;
 //    for(unsigned int i = 0; i < impactoGoloso.size(); i++){
 //        cout << impactoGoloso[i] << " ";
 //    }
@@ -23,7 +23,7 @@ vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, double p
         for(unsigned int n = 0; n < vecinos.size(); n++){
             unsigned int color = coloreo[vecinos[n]];
             if(G.colorLegalDeNodo(i,coloreo,color)){
-                vector<int> nuevoColoreo(coloreo);
+                vector<unsigned int> nuevoColoreo(coloreo);
                 nuevoColoreo[i] = color;
                 nuevoImpacto = H.impacto(nuevoColoreo);
                 if(nuevoImpacto > impactoParcial){
@@ -48,7 +48,7 @@ vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, double p
 vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, const vector<unsigned int> &solGolosa){
     vector<unsigned int> impactoGoloso(solGolosa);
     unsigned int impactoParcial = impactoGoloso[0];
-    vector<int> coloreo;
+    vector<unsigned int> coloreo;
 //    for(unsigned int i = 0; i < impactoGoloso.size(); i++){
 //        cout << impactoGoloso[i] << " ";
 //    }
@@ -68,7 +68,7 @@ vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, const ve
         for(unsigned int n = 0; n < vecinos.size(); n++){
             unsigned int color = coloreo[vecinos[n]];
             if(G.colorLegalDeNodo(i,coloreo,color)){
-                vector<int> nuevoColoreo(coloreo);
+                vector<unsigned int> nuevoColoreo(coloreo);
                 nuevoColoreo[i] = color;
                 nuevoImpacto = H.impacto(nuevoColoreo);
                 if(nuevoImpacto > impactoParcial){

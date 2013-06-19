@@ -26,9 +26,9 @@ class Grafo
         unsigned int gradoDe(const unsigned int nodo) const;
         bool sonVecinos(unsigned int n1, unsigned int n2) const;
         unsigned int gradoMaximo() const;
-        unsigned int impacto(const vector<int> &coloreo) const;
-        bool colorLegalDeNodo(const unsigned int nodo, const vector<int> &coloreo, const int color ) const;
-        bool coloreoLegal(const vector<int> &coloreo) const;
+        unsigned int impacto(const vector<unsigned int> &coloreo) const;
+        bool colorLegalDeNodo(const unsigned int nodo, const vector<unsigned int> &coloreo, unsigned int color ) const;
+        bool coloreoLegal(const vector<unsigned int> &coloreo) const;
 
     private:
         unsigned int nodos;

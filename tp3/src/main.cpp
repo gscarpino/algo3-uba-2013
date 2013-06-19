@@ -12,7 +12,7 @@
 #include "grasp.h"
 
 #define TESTING 0
-#define RES_EFECTIVIDAD 1
+#define RES_EFECTIVIDAD 0
 #define RES_TIMING 0
 
 using namespace std;
@@ -36,7 +36,8 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-    argv[1] = "testAzar.txt";
+    argv[1] = "input.in";
+//    argv[1] = "testAzar.txt";
 //    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
@@ -113,16 +114,15 @@ int main(int argc, char * argv[]){
         }
 
         cont++;
-        cout << "Repe: " << cont << endl;
-//        cout << "Nodos: " << nodos << endl;
+        cout << "N " << nodos << "R " << cont << endl;
         double porcentaje = 0.25;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
-//        cout << "*Exacto: " << impactoExacto[0] << "*";
-        vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
+        cout << "*Exacto: " << impactoExacto[0] << "*";
+//        vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
 //        cout << "*Goloso: " << impactoGoloso[0] << "*";
-        vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
+//        vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
 //        cout << "*Local: " << impactoLocal[0] << "*";
-        vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
+//        vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
 //        cout << "*Grasp: " << impactoGrasp[0] << "*";
 //        outputFile << impactoGoloso[0];
 //        cout << endl;
@@ -133,23 +133,25 @@ int main(int argc, char * argv[]){
 //        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
 //        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
 //         << " - Goloso: " << impactoGoloso[0] << endl;
-//        for(unsigned int i = 1; i < impactoGoloso.size(); i++){
-//            outputFile << " " << impactoGoloso[i];
-//        }
+        for(unsigned int i = 1; i < impactoExacto.size(); i++){
+            cout << " " << impactoExacto[i];
+//            outputFile << " " << impactoExacto[i];
+        }
+//        cout << endl;
 //        outputFile << endl;
 
         if(RES_EFECTIVIDAD){
-            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
+//            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
         }
 
     }
 
-    cout << endl << "Efectividad Goloso: " << ((double)efectividadGoloso/(double)cont) * 100 << "%" << endl;
-    cout << endl << "Efectividad Goloso acertando: " << ((double)efectividadGolosoAcertado/(double)cont) * 100 << "%" << endl;
-    cout << endl << "Efectividad Local: " << ((double)efectividadLocal/(double)cont) * 100 << "%" << endl;
-    cout << endl << "Efectividad Local acertando: " << ((double)efectividadLocalAcertado/(double)cont) * 100 << "%" << endl;
-    cout << endl << "Efectividad Grasp: " << ((double)efectividadGrasp/(double)cont) * 100 << "%" << endl;
-    cout << endl << "Efectividad Grasp acertando: " << ((double)efectividadGraspAcertado/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Goloso: " << ((double)efectividadGoloso/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Goloso acertando: " << ((double)efectividadGolosoAcertado/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Local: " << ((double)efectividadLocal/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Local acertando: " << ((double)efectividadLocalAcertado/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Grasp: " << ((double)efectividadGrasp/(double)cont) * 100 << "%" << endl;
+//    cout << endl << "Efectividad Grasp acertando: " << ((double)efectividadGraspAcertado/(double)cont) * 100 << "%" << endl;
 
     resEfect.close();
 
@@ -162,8 +164,8 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 3;
-    unsigned int maxNodos = 8;
+    unsigned int minNodos = 12;
+    unsigned int maxNodos = 12;
     unsigned int repeticiones = 100;
     int prob = 40;
 
