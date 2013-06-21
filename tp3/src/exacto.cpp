@@ -83,21 +83,23 @@ bool generarColoreo(vector<unsigned int> &colores, const Grafo &G, const Grafo &
     bool res = true;
     res = siguienteColoreo(coloreo,G.cantNodos(),colores.size(),coloreo.size()-1);
     if(res){
-        sort(coloreo.begin(),coloreo.end());
-        do{
-            if(G.coloreoLegal(coloreo)){
-                unsigned int temp;
-                temp = H.impacto(coloreo);
-                if(temp > solucion[0]){
-                    solucion[0] = temp;
-                    for(unsigned int k = 0; k < coloreo.size(); k++){
-                        solucion[k + 1] = coloreo[k];
-                    }
-                    if(solucion[0] == limite) encontrado = true;
-                }
-                if(temp == solucion[0]) mejora = true;
-            }
-        }while(next_permutation(coloreo.begin(),coloreo.end()) && !encontrado);
+        vector<unsigned int> coloreoSinIniciar(coloreo.size(),0);
+        permutacionesDelColoreo(0,coloreo,G,H,solucion,limite,coloreoSinIniciar);
+//        sort(coloreo.begin(),coloreo.end());
+//        do{
+//            if(G.coloreoLegal(coloreo)){
+//                unsigned int temp;
+//                temp = H.impacto(coloreo);
+//                if(temp > solucion[0]){
+//                    solucion[0] = temp;
+//                    for(unsigned int k = 0; k < coloreo.size(); k++){
+//                        solucion[k + 1] = coloreo[k];
+//                    }
+//                    if(solucion[0] == limite) encontrado = true;
+//                }
+//                if(temp == solucion[0]) mejora = true;
+//            }
+//        }while(next_permutation(coloreo.begin(),coloreo.end()) && !encontrado);
     }
     return res;
 }
@@ -120,6 +122,35 @@ bool siguienteColoreo(vector<unsigned int> &coloreo, unsigned int nodos, unsigne
     }
     return true;
 }
+
+void permutacionesDelColoreo(unsigned int nodo, vector<unsigned> &colores, const Grafo &G, const Grafo &H, vector<unsigned int> &solucion, unsigned int limite, vector<unsigned int> coloreo){
+    if(!encontrado){
+        if((nodo + 1) >= G.cantNodos()){
+            unsigned int temp;
+            temp = H.impacto(coloreo);
+            if(temp > solucion[0]){
+                solucion[0] = temp;
+                for(unsigned int k = 0; k < coloreo.size(); k++){
+                    solucion[k + 1] = coloreo[k];
+                }
+            }
+            if(solucion[0] == limite) encontrado = true;
+        }
+        else{
+            for(unsigned int c = 0; c < colores.size(); c++){
+                if(G.colorLegalDeNodo(nodo,coloreo,coloreo[c])){
+                    vector<unsigned int> nuevoColoreo(coloreo);
+                    vector<unsigned int> nuevoColores(colores);
+                    nuevoColoreo[nodo] = colores[c];
+                    nuevoColores.erase(nuevoColores.begin() + c);
+                    permutacionesDelColoreo(nodo + 1,nuevoColores,G,H,solucion,limite,nuevoColoreo);
+                }
+            }
+        }
+    }
+
+}
+
 
 void generarColoreosYCalcImpacto(unsigned int nodo, vector<unsigned int> &colores, const Grafo &G, const Grafo &H, const unsigned limite, const vector<unsigned int> &coloreo, unsigned int visitados, vector<unsigned int> &solucion){
     if(!encontrado){

@@ -58,3 +58,54 @@
 1371671701 source:c:\users\gino\desktop\algo3\tp3\src\grasp.cpp
 	"grasp.h"
 
+1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\goloso.cpp
+	"goloso.h"
+
+1371855820 c:\users\gino\desktop\algo3tps\tp3\src\goloso.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"Grafo.h"
+
+1371855820 c:\users\gino\desktop\algo3tps\tp3\src\grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+
+1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\grafo.cpp
+	"Grafo.h"
+
+1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\grasp.cpp
+	"grasp.h"
+
+1371602805 c:\users\gino\desktop\algo3tps\tp3\src\grasp.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+	"goloso.h"
+	"local.h"
+
+1371602846 c:\users\gino\desktop\algo3tps\tp3\src\local.h
+	"goloso.h"
+
+1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\local.cpp
+	"local.h"
+
+1371856387 source:c:\users\gino\desktop\algo3tps\tp3\src\main.cpp
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<sstream>
+	<ctime>
+	<cmath>
+	"Grafo.h"
+	"exacto.h"
+	"goloso.h"
+	"local.h"
+	"grasp.h"
+
+1371858332 c:\users\gino\desktop\algo3tps\tp3\src\exacto.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+
