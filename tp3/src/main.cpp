@@ -36,7 +36,7 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-    argv[1] = "input.in";
+//    argv[1] = "input.in";
 //    argv[1] = "testAzar.txt";
 //    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
@@ -114,7 +114,7 @@ int main(int argc, char * argv[]){
         }
 
         cont++;
-        cout << "N " << nodos << "R " << cont << endl;
+        cout << endl << "N " << nodos << " R " << cont << endl;
         double porcentaje = 0.25;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
         cout << "*Exacto: " << impactoExacto[0] << "*";
@@ -164,9 +164,9 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 12;
-    unsigned int maxNodos = 12;
-    unsigned int repeticiones = 100;
+    unsigned int minNodos = 3;
+    unsigned int maxNodos = 6;
+    unsigned int repeticiones = 1;
     int prob = 40;
 
     cout << "Creando test G y H al azar" << endl;

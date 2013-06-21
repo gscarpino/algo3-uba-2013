@@ -14,4 +14,7 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H);
 unsigned int calcLimiteImpacto(const Grafo &G, const Grafo &H);
 void generarColoreosYCalcImpacto(unsigned int nodo, vector<unsigned int> &colores, const Grafo &G, const Grafo &H, const unsigned limite, const vector<unsigned int> &coloreo,unsigned int visitados, vector<unsigned int> &solucion);
 void mostrarColoreo(const vector<unsigned int> &coloreo);
+
+bool generarColoreo(vector<unsigned int> &colores, const Grafo &G, const Grafo &H, vector<unsigned int> &coloreo, unsigned int limite, vector<unsigned int> &solucion);
+bool siguienteColoreo(vector<unsigned int> &coloreo, unsigned int nodos, unsigned int colores, unsigned int indice);
 #endif // EXACTO_H_INCLUDED
