@@ -117,7 +117,16 @@ int main(int argc, char * argv[]){
         cout << endl << "N " << nodos << " R " << cont << endl;
         double porcentaje = 0.25;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
-        cout << "*Exacto: " << impactoExacto[0] << "*";
+//        cout << "*Exacto: " << impactoExacto[0] << "*";
+        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
+        if(impactoExacto[0] != impactoExacto2[0]){
+            cout << "Exacto1: " << impactoExacto[0] << " - Exacto2: " << impactoExacto2[0] << endl;
+            cout << "Grafo G:" << endl;
+            grafoG.imprimir();
+            cout << "Grafo H:" << endl;
+            grafoH.imprimir();
+            exit(1);
+        }
 //        vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
 //        cout << "*Goloso: " << impactoGoloso[0] << "*";
 //        vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
@@ -133,10 +142,10 @@ int main(int argc, char * argv[]){
 //        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
 //        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
 //         << " - Goloso: " << impactoGoloso[0] << endl;
-        for(unsigned int i = 1; i < impactoExacto.size(); i++){
-            cout << " " << impactoExacto[i];
+//        for(unsigned int i = 1; i < impactoExacto.size(); i++){
+//            cout << " " << impactoExacto[i];
 //            outputFile << " " << impactoExacto[i];
-        }
+//        }
 //        cout << endl;
 //        outputFile << endl;
 
@@ -164,9 +173,9 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 3;
-    unsigned int maxNodos = 6;
-    unsigned int repeticiones = 1;
+    unsigned int minNodos = 8;
+    unsigned int maxNodos = 8;
+    unsigned int repeticiones = 1000;
     int prob = 40;
 
     cout << "Creando test G y H al azar" << endl;

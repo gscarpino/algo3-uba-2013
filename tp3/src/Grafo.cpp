@@ -109,3 +109,35 @@ bool Grafo::sonVecinos(unsigned int n1, unsigned int n2) const{
 unsigned int Grafo::gradoDe(const unsigned int nodo) const{
     return this->aristas[nodo].size();
 }
+
+void Grafo::ordenarAristas(unsigned int orden){
+    if(orden == 0){
+        for(unsigned int i = 0; i < this->aristas.size()-1; i++){
+            for(unsigned int j = i + 1; j < this->aristas.size(); j++){
+                if(this->aristas[i].size() < this->aristas[j].size()){
+                    swap(this->aristas[i],this->aristas[j]);
+                }
+            }
+        }
+    }
+    else{
+        for(unsigned int i = 0; i < this->aristas.size()-1; i++){
+            for(unsigned int j = i + 1; j < this->aristas.size(); j++){
+                if(this->aristas[i].size() > this->aristas[j].size()){
+                    swap(this->aristas[i],this->aristas[j]);
+                }
+            }
+        }
+    }
+}
+
+void Grafo::imprimir(){
+    cout << "Nodos: " << this->nodos << " - Aristas: " << this->ejes << endl;
+    for(unsigned int i = 0; i < this->aristas.size(); i++){
+        cout << "[" << i << "]:";
+        for(unsigned int j = 0; j < this->aristas[i].size(); j++){
+            cout << " " << this->aristas[i][j];
+        }
+        cout << endl;
+    }
+}

@@ -67,12 +67,12 @@
 	<ctime>
 	"Grafo.h"
 
-1371855820 c:\users\gino\desktop\algo3tps\tp3\src\grafo.h
+1372011482 c:\users\gino\desktop\algo3tps\tp3\src\grafo.h
 	<iostream>
 	<vector>
 	<algorithm>
 
-1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\grafo.cpp
+1372011656 source:c:\users\gino\desktop\algo3tps\tp3\src\grafo.cpp
 	"Grafo.h"
 
 1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\grasp.cpp
@@ -91,7 +91,7 @@
 1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\local.cpp
 	"local.h"
 
-1371856387 source:c:\users\gino\desktop\algo3tps\tp3\src\main.cpp
+1372017132 source:c:\users\gino\desktop\algo3tps\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -104,8 +104,11 @@
 	"local.h"
 	"grasp.h"
 
-1371858332 c:\users\gino\desktop\algo3tps\tp3\src\exacto.h
+1372011072 c:\users\gino\desktop\algo3tps\tp3\src\exacto.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
+
+1372017411 source:c:\users\gino\desktop\algo3tps\tp3\src\exacto.cpp
+	"exacto.h"
 

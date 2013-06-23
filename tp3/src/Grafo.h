@@ -8,10 +8,6 @@
 
 
 using namespace std;
-//
-//typedef vector< pair<bool, unsigned int> > Vec;
-//typedef vector<Vec> Matriz;
-//typedef pair<pair<unsigned int, unsigned int>, pair<bool, unsigned int> > Camino;
 
 class Grafo
 {
@@ -29,11 +25,14 @@ class Grafo
         unsigned int impacto(const vector<unsigned int> &coloreo) const;
         bool colorLegalDeNodo(const unsigned int nodo, const vector<unsigned int> &coloreo, unsigned int color ) const;
         bool coloreoLegal(const vector<unsigned int> &coloreo) const;
+        void ordenarAristas(unsigned int orden);
+        void imprimir();
 
     private:
         unsigned int nodos;
         unsigned int ejes;
         vector< vector <unsigned int> > aristas;
+
 
 
 };
