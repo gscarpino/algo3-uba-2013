@@ -38,10 +38,11 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
             mejora = false;
             huboColoreoLegal = false;
             while(generarColoreo(colores,G,H,coloreo,maxImpactoPosible,res));
-//            cout << "Por ahora: " << res[0] << endl;
-            if(!mejora && cantColores > 3 && !huboColoreoLegal){
-                break;
-            }
+            cout << "Por ahora: " << res[0] << endl;
+//            if(!mejora && res[0] > 0){
+//                system("pause");
+//                break;
+//            }
 //            cout << "Contador: " << contador << endl;
             contador = 0;
         }
@@ -55,11 +56,11 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
                 }
             }
         }
-        if(encontrado){
-            break;
-        }
+//        if(encontrado){
+//            break;
+//        }
     }
-
+    system("pause");
     return res;
 }
 
@@ -96,6 +97,8 @@ bool siguienteColoreo(vector<unsigned int> &coloreo, unsigned int nodos, unsigne
 void permutacionesDelColoreo(unsigned int nodo, vector<unsigned> &colores, const Grafo &G, const Grafo &H, vector<unsigned int> &solucion, unsigned int limite, vector<unsigned int> coloreo){
     if(!encontrado){
         if(nodo >= G.cantNodos()){
+//            mostrarColoreo(coloreo);
+////            system("pause");
             unsigned int temp;
             temp = H.impacto(coloreo);
             if(temp > solucion[0]){
@@ -161,27 +164,22 @@ vector<unsigned int> maximoImpactoExacto2(const Grafo &G, const Grafo &H){
 void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G,const Grafo &H, const vector<unsigned int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector< unsigned int> &res){
     for(unsigned int c = 0; c < colores.size(); c++){
         if(!encontrado){
-            if(visitados < G.cantNodos() && H.gradoDe(nodo) == 0){
-                RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,coloreo,colores,visitados + 1,res);
-            }
-            else{
-                if(G.colorLegalDeNodo(nodo,coloreo,colores[c])){
-                    vector<unsigned int> nuevoColoreo(coloreo);
-                    nuevoColoreo[nodo] = colores[c];
-                    if((visitados + 1) >= G.cantNodos()){
-                        unsigned int temp;
-                        temp = H.impacto(nuevoColoreo);
-                        if(temp > res[0]){
-                            res[0] = temp;
-                            for(unsigned int k = 0; k < nuevoColoreo.size(); k++){
-                                res[k + 1] = nuevoColoreo[k];
-                            }
+            if(G.colorLegalDeNodo(nodo,coloreo,colores[c])){
+                vector<unsigned int> nuevoColoreo(coloreo);
+                nuevoColoreo[nodo] = colores[c];
+                if((visitados + 1) >= G.cantNodos()){
+                    unsigned int temp;
+                    temp = H.impacto(nuevoColoreo);
+                    if(temp > res[0]){
+                        res[0] = temp;
+                        for(unsigned int k = 0; k < nuevoColoreo.size(); k++){
+                            res[k + 1] = nuevoColoreo[k];
                         }
-                        if(res[0] == maxImpactoPosible) encontrado = true;
                     }
-                    else{
-                        RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,nuevoColoreo,colores,visitados + 1,res);
-                    }
+                    if(res[0] == maxImpactoPosible) encontrado = true;
+                }
+                else{
+                    RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,nuevoColoreo,colores,visitados + 1,res);
                 }
             }
         }
@@ -197,22 +195,23 @@ void mostrarColoreo(const vector<unsigned int> &coloreo){
 
 unsigned int calcLimiteImpacto(const Grafo &G, const Grafo &H){
     unsigned int res = 0;
+    unsigned int res2 = 0;
     for(unsigned int i = 0; i < H.cantNodos(); i++){
         for(unsigned int j = i+1; j < H.cantNodos(); j++){
             if(G.sonVecinos(i,j) && H.sonVecinos(i,j)){
                 res++;
             }
         }
-//        if(H.vecinosDe(i).size() == 1){
-//            unsigned int nodo = H.vecinosDe(i)[0];
-//            vector<unsigned int> vecinos(H.vecinosDe(nodo));
-//            for(unsigned int k = 0; k < vecinos.size(); k++){
-//                if(G.sonVecinos(i,vecinos[k])){
-//                    res++;
-//                }
-//            }
-//        }
+        if(H.vecinosDe(i).size() == 1){
+            unsigned int nodo = H.vecinosDe(i)[0];
+            vector<unsigned int> vecinos(H.vecinosDe(nodo));
+            for(unsigned int k = 0; k < vecinos.size(); k++){
+                if(G.sonVecinos(i,vecinos[k])){
+                    res2++;
+                }
+            }
+        }
     }
-    res = H.cantAristas() - res;
+    res = H.cantAristas() - res - (res2/2);
     return res;
 }

@@ -37,7 +37,7 @@ int main(int argc, char * argv[]){
     }
 
 //    argv[1] = "input.in";
-//    argv[1] = "testAzar.txt";
+    argv[1] = "testAzar.txt";
 //    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
@@ -118,29 +118,29 @@ int main(int argc, char * argv[]){
         double porcentaje = 0.25;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
 //        cout << "*Exacto: " << impactoExacto[0] << "*";
-        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
-        if(impactoExacto[0] != impactoExacto2[0]){
-            cout << "Exacto1: " << impactoExacto[0] << " - Exacto2: " << impactoExacto2[0] << endl;
-            cout << "Grafo G:" << endl;
-            grafoG.imprimir();
-            cout << "Grafo H:" << endl;
-            grafoH.imprimir();
-            exit(1);
-        }
-//        vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
+//        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
+//        if(impactoExacto[0] != impactoExacto2[0]){
+//            cout << "Exacto1: " << impactoExacto[0] << " - Exacto2: " << impactoExacto2[0] << endl;
+//            cout << "Grafo G:" << endl;
+//            grafoG.imprimir();
+//            cout << "Grafo H:" << endl;
+//            grafoH.imprimir();
+//            exit(1);
+//        }
+        vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
 //        cout << "*Goloso: " << impactoGoloso[0] << "*";
-//        vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
+        vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
 //        cout << "*Local: " << impactoLocal[0] << "*";
-//        vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
+        vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
 //        cout << "*Grasp: " << impactoGrasp[0] << "*";
 //        outputFile << impactoGoloso[0];
 //        cout << endl;
-//        if(abs(impactoExacto[0]- impactoGoloso[0]) == 0) efectividadGolosoAcertado++;
-//        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 1) efectividadGoloso++;
-//        if(abs(impactoExacto[0]- impactoLocal[0]) == 0) efectividadLocalAcertado++;
-//        if(abs(impactoExacto[0]- impactoLocal[0]) <= 1) efectividadLocal++;
-//        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
-//        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
+        if(abs(impactoExacto[0]- impactoGoloso[0]) == 0) efectividadGolosoAcertado++;
+        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 1) efectividadGoloso++;
+        if(abs(impactoExacto[0]- impactoLocal[0]) == 0) efectividadLocalAcertado++;
+        if(abs(impactoExacto[0]- impactoLocal[0]) <= 1) efectividadLocal++;
+        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
+        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
 //         << " - Goloso: " << impactoGoloso[0] << endl;
 //        for(unsigned int i = 1; i < impactoExacto.size(); i++){
 //            cout << " " << impactoExacto[i];
@@ -155,12 +155,12 @@ int main(int argc, char * argv[]){
 
     }
 
-//    cout << endl << "Efectividad Goloso: " << ((double)efectividadGoloso/(double)cont) * 100 << "%" << endl;
-//    cout << endl << "Efectividad Goloso acertando: " << ((double)efectividadGolosoAcertado/(double)cont) * 100 << "%" << endl;
-//    cout << endl << "Efectividad Local: " << ((double)efectividadLocal/(double)cont) * 100 << "%" << endl;
-//    cout << endl << "Efectividad Local acertando: " << ((double)efectividadLocalAcertado/(double)cont) * 100 << "%" << endl;
-//    cout << endl << "Efectividad Grasp: " << ((double)efectividadGrasp/(double)cont) * 100 << "%" << endl;
-//    cout << endl << "Efectividad Grasp acertando: " << ((double)efectividadGraspAcertado/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Goloso: " << ((double)efectividadGoloso/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Goloso acertando: " << ((double)efectividadGolosoAcertado/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Local: " << ((double)efectividadLocal/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Local acertando: " << ((double)efectividadLocalAcertado/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Grasp: " << ((double)efectividadGrasp/(double)cont) * 100 << "%" << endl;
+    cout << endl << "Efectividad Grasp acertando: " << ((double)efectividadGraspAcertado/(double)cont) * 100 << "%" << endl;
 
     resEfect.close();
 
@@ -173,8 +173,8 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 8;
-    unsigned int maxNodos = 8;
+    unsigned int minNodos = 9;
+    unsigned int maxNodos = 9;
     unsigned int repeticiones = 1000;
     int prob = 40;
 
