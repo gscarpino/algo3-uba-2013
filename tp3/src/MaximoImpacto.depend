@@ -91,7 +91,7 @@
 1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\local.cpp
 	"local.h"
 
-1372017132 source:c:\users\gino\desktop\algo3tps\tp3\src\main.cpp
+1372031802 source:c:\users\gino\desktop\algo3tps\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -109,6 +109,6 @@
 	<cstdlib>
 	"Grafo.h"
 
-1372017411 source:c:\users\gino\desktop\algo3tps\tp3\src\exacto.cpp
+1372031865 source:c:\users\gino\desktop\algo3tps\tp3\src\exacto.cpp
 	"exacto.h"
 
