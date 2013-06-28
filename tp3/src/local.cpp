@@ -4,18 +4,10 @@ vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, double p
     vector<unsigned int> impactoGoloso(maximoImpactoGoloso(G,H,porcentaje));
     unsigned int impactoParcial = impactoGoloso[0];
     vector<unsigned int> coloreo;
-//    for(unsigned int i = 0; i < impactoGoloso.size(); i++){
-//        cout << impactoGoloso[i] << " ";
-//    }
-//    cout << endl;
+
     for(unsigned int i = 1; i < impactoGoloso.size(); i++){
         coloreo.push_back(impactoGoloso[i]);
     }
-//
-//    for(unsigned int i = 0; i < coloreo.size(); i++){
-//        cout << coloreo[i] << " ";
-//    }
-//    cout << endl;
 
     unsigned int nuevoImpacto = 0;
     for(unsigned int i = 0; i < H.cantNodos(); i++){
@@ -49,18 +41,10 @@ vector<unsigned int> maximoImpactoLocal(const Grafo &G, const Grafo &H, const ve
     vector<unsigned int> impactoGoloso(solGolosa);
     unsigned int impactoParcial = impactoGoloso[0];
     vector<unsigned int> coloreo;
-//    for(unsigned int i = 0; i < impactoGoloso.size(); i++){
-//        cout << impactoGoloso[i] << " ";
-//    }
-//    cout << endl;
+
     for(unsigned int i = 1; i < impactoGoloso.size(); i++){
         coloreo.push_back(impactoGoloso[i]);
     }
-//
-//    for(unsigned int i = 0; i < coloreo.size(); i++){
-//        cout << coloreo[i] << " ";
-//    }
-//    cout << endl;
 
     unsigned int nuevoImpacto = 0;
     for(unsigned int i = 0; i < H.cantNodos(); i++){

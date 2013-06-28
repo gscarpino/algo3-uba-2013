@@ -14,6 +14,8 @@
 #define TESTING 0
 #define RES_EFECTIVIDAD 0
 #define RES_TIMING 0
+#define RES_Goloso 0
+#define RES_Grasp 0
 
 using namespace std;
 
@@ -37,8 +39,8 @@ int main(int argc, char * argv[]){
     }
 
 //    argv[1] = "input.in";
-    argv[1] = "testAzar.txt";
-//    argv[1] = "GyHdensos.txt";
+//    argv[1] = "testAzar.txt";
+    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
@@ -54,6 +56,8 @@ int main(int argc, char * argv[]){
 
 
     ofstream resEfect;
+    ofstream resGoloso;
+    ofstream resGrasp;
     if(RES_EFECTIVIDAD){
         resEfect.open("Resultado_Efectividad.csv",  ios_base::trunc);
         if(!resEfect.is_open()){
@@ -61,6 +65,23 @@ int main(int argc, char * argv[]){
             exit(1);
         }
         resEfect << "Nodos Exacto Goloso BusquedaLocal Grasp" << endl;
+    }
+
+    if(RES_Goloso){
+        resGoloso.open("Resultado_Goloso.csv",  ios_base::trunc);
+        if(!resGoloso.is_open()){
+            cerr << "Error al abrir/crear el archivo de salida." << endl;
+            exit(1);
+        }
+        resGoloso << "Nodos Exacto 0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1" << endl;
+    }
+    if(RES_Grasp){
+        resGrasp.open("Resultado_Grasp.csv",  ios_base::trunc);
+        if(!resGrasp.is_open()){
+            cerr << "Error al abrir/crear el archivo de salida." << endl;
+            exit(1);
+        }
+        resGrasp << "Nodos Exacto 0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1" << endl;
     }
 
 
@@ -115,7 +136,7 @@ int main(int argc, char * argv[]){
 
         cont++;
         cout << endl << "N " << nodos << " R " << cont << endl;
-        double porcentaje = 0.25;
+        double porcentaje = 0.1;
         vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
 //        cout << "*Exacto: " << impactoExacto[0] << "*";
 //        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
@@ -141,6 +162,14 @@ int main(int argc, char * argv[]){
         if(abs(impactoExacto[0]- impactoLocal[0]) <= 1) efectividadLocal++;
         if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
         if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
+//        if(impactoGrasp[0] > impactoExacto[0]){
+//            cout << "Error! Grasp: " << impactoGrasp[0] << " - Exacto: " << impactoExacto[0] << endl;
+//            cout << "Grafo G:" << endl;
+//            grafoG.imprimir();
+//            cout << "Grafo H:" << endl;
+//            grafoH.imprimir();
+//            exit(1);
+//        }
 //         << " - Goloso: " << impactoGoloso[0] << endl;
 //        for(unsigned int i = 1; i < impactoExacto.size(); i++){
 //            cout << " " << impactoExacto[i];
@@ -150,8 +179,26 @@ int main(int argc, char * argv[]){
 //        outputFile << endl;
 
         if(RES_EFECTIVIDAD){
-//            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
+            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
         }
+
+        if(RES_Goloso){
+            resGoloso << nodos << " " << impactoExacto[0];
+            for(unsigned int parametro = 0; parametro <= 100; parametro+=5){
+                vector<unsigned int> impactoGoloso2(maximoImpactoGoloso(grafoG,grafoH,parametro/100.0));
+                resGoloso << " " << impactoGoloso2[0];
+            }
+            resGoloso << endl;
+        }
+        if(RES_Grasp){
+            resGrasp << nodos << " " << impactoExacto[0];
+            for(unsigned int parametro = 0; parametro <= 100; parametro+=5){
+                vector<unsigned int> impactoGrasp2(maximoImpactoGrasp(grafoG,grafoH,parametro/100.0));
+                resGrasp << " " << impactoGrasp2[0];
+            }
+            resGrasp << endl;
+        }
+
 
     }
 
@@ -163,6 +210,7 @@ int main(int argc, char * argv[]){
     cout << endl << "Efectividad Grasp acertando: " << ((double)efectividadGraspAcertado/(double)cont) * 100 << "%" << endl;
 
     resEfect.close();
+    resGoloso.close();
 
     cout << endl << "Termino" << endl;
     return 0;
@@ -173,10 +221,10 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 9;
-    unsigned int maxNodos = 9;
-    unsigned int repeticiones = 1000;
-    int prob = 40;
+    unsigned int minNodos = 10;
+    unsigned int maxNodos = 10;
+    unsigned int repeticiones = 100;
+    int prob = 50;
 
     cout << "Creando test G y H al azar" << endl;
     outputFile.open("testAzar.txt",  ios_base::trunc);

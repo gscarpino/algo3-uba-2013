@@ -38,11 +38,10 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
             mejora = false;
             huboColoreoLegal = false;
             while(generarColoreo(colores,G,H,coloreo,maxImpactoPosible,res));
-            cout << "Por ahora: " << res[0] << endl;
-//            if(!mejora && res[0] > 0){
-//                system("pause");
-//                break;
-//            }
+//            cout << "Por ahora: " << res[0] << endl;
+            if(!mejora && res[0] > 0){
+                break;
+            }
 //            cout << "Contador: " << contador << endl;
             contador = 0;
         }
@@ -56,11 +55,10 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
                 }
             }
         }
-//        if(encontrado){
-//            break;
-//        }
+        if(encontrado){
+            break;
+        }
     }
-    system("pause");
     return res;
 }
 
@@ -97,10 +95,9 @@ bool siguienteColoreo(vector<unsigned int> &coloreo, unsigned int nodos, unsigne
 void permutacionesDelColoreo(unsigned int nodo, vector<unsigned> &colores, const Grafo &G, const Grafo &H, vector<unsigned int> &solucion, unsigned int limite, vector<unsigned int> coloreo){
     if(!encontrado){
         if(nodo >= G.cantNodos()){
-//            mostrarColoreo(coloreo);
-////            system("pause");
             unsigned int temp;
             temp = H.impacto(coloreo);
+            mejora = mejora || (temp > solucion[0]);
             if(temp > solucion[0]){
                 solucion[0] = temp;
                 for(unsigned int k = 0; k < coloreo.size(); k++){
@@ -108,7 +105,6 @@ void permutacionesDelColoreo(unsigned int nodo, vector<unsigned> &colores, const
                 }
             }
             if(solucion[0] == limite) encontrado = true;
-            if(temp >= solucion[0]) mejora = true;
             contador++;
         }
         else{
