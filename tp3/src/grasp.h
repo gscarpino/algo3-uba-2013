@@ -12,5 +12,5 @@
 using namespace std;
 
 vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double porcentaje);
-
+void imprimirVector(const vector<unsigned int> &v);
 #endif // GRASP_H

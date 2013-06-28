@@ -7,12 +7,13 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     vector<unsigned int> coloreo(G.cantNodos(),1);
 
     //Criterios de parada
-    unsigned int maxIteraciones = 250;
-    unsigned int maxIterSinMejora = 75;
+    unsigned int maxIteraciones = 500;
+    unsigned int maxIterSinMejora = 250;
     unsigned int sinMejora = 0;
     unsigned int maxRCL = 5;
     unsigned int elegido;
     unsigned int solTemporal = 0;
+    porcentaje = 0.4;
 
 
 
@@ -21,8 +22,8 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
         vector< vector<unsigned int> > rcl(maxRCL);
         for(unsigned int k = 0; k < maxRCL; k++){
             rcl[k] = maximoImpactoGoloso(G,H,porcentaje);
-        }
 
+        }
         elegido = rand()%maxRCL;
 
         vector<unsigned int> solBusqLocal;
@@ -46,4 +47,11 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     }
 
     return res;
+}
+
+void imprimirVector(const vector<unsigned int> &v){
+    for(unsigned int i = 0; i < v.size(); i++){
+        cout << " " << v[i];
+    }
+    cout << endl;
 }

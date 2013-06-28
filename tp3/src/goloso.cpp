@@ -71,7 +71,9 @@ unsigned int siguienteModificable(const Grafo &G, const Grafo &H, const vector<u
     unsigned int res = 0;
 
     res = rand()%((unsigned int)(posibles.size()*porcentaje) + 1);
-
+    if(res >= posibles.size()){
+        res = 0;
+    }
     return posibles[res].second;
 //    return posibles[0].second;
 //    return posibles[posibles.size()-1].second;
