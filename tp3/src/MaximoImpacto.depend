@@ -170,3 +170,57 @@
 	"local.h"
 	"grasp.h"
 
+1372513553 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\exacto.cpp
+	"exacto.h"
+
+1372513553 e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\exacto.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+
+1372286067 e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+
+1372513553 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\goloso.cpp
+	"goloso.h"
+
+1371910692 e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\goloso.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"Grafo.h"
+
+1372286066 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\grafo.cpp
+	"Grafo.h"
+
+1372513553 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\grasp.cpp
+	"grasp.h"
+
+1372513553 e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\grasp.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+	"goloso.h"
+	"local.h"
+
+1371910692 e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\local.h
+	"goloso.h"
+
+1372513553 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\local.cpp
+	"local.h"
+
+1372519722 source:e:\users\raul\documents\facultad\2013c1\algoritmos y esctructuras de datos iii\svn\tp3\src\main.cpp
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<sstream>
+	<ctime>
+	<cmath>
+	"Grafo.h"
+	"exacto.h"
+	"goloso.h"
+	"local.h"
+	"grasp.h"
+
