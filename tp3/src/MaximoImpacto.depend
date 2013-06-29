@@ -2,10 +2,14 @@
 1372043641 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
 	"Grafo.h"
 
+1372031865 
+
 1372043641 c:\users\gino\desktop\algo3\tp3\src\grafo.h
 	<iostream>
 	<vector>
 	<algorithm>
+
+1372011482 >
 
 1372045004 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
@@ -111,4 +115,58 @@
 
 1372031865 source:c:\users\gino\desktop\algo3tps\tp3\src\exacto.cpp
 	"exacto.h"
+
+1372443081 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/Grafo.cpp
+	"Grafo.h"
+
+1372443081 /home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/Grafo.h
+	<iostream>
+	<vector>
+	<algorithm>
+
+1372464111 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/exacto.cpp
+	"exacto.h"
+
+1372462460 /home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/exacto.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+
+1372449529 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/goloso.cpp
+	"goloso.h"
+
+1372443081 /home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/goloso.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"Grafo.h"
+
+1372453685 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/grasp.cpp
+	"grasp.h"
+
+1372449529 /home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/grasp.h
+	<iostream>
+	<cstdlib>
+	"Grafo.h"
+	"goloso.h"
+	"local.h"
+
+1372443081 /home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/local.h
+	"goloso.h"
+
+1372449529 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/local.cpp
+	"local.h"
+
+1372464236 source:/home/nvallejo/Escritorio/algo3-uba-2013/tp3/src/main.cpp
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<sstream>
+	<ctime>
+	<cmath>
+	"Grafo.h"
+	"exacto.h"
+	"goloso.h"
+	"local.h"
+	"grasp.h"
 

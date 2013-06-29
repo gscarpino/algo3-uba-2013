@@ -38,9 +38,9 @@ int main(int argc, char * argv[]){
         exit(1);
     }
 
-//    argv[1] = "input.in";
+    argv[1] = "input.in";
 //    argv[1] = "testAzar.txt";
-    argv[1] = "GyHdensos.txt";
+//    argv[1] = "GyHdensos.txt";
 //    argv[1] = "conHcomplemento.txt";
     ifstream inputFile(argv[1]);
     if(!inputFile.is_open()){
@@ -137,15 +137,20 @@ int main(int argc, char * argv[]){
         cont++;
         cout << endl << "N " << nodos << " R " << cont << endl;
         double porcentaje = 0.1;
-        vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
+//        vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
 //        cout << "*Exacto: " << impactoExacto[0] << "*";
-//        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
+        vector<unsigned int> impactoExacto2(maximoImpactoExacto2(grafoG,grafoH));
+                cout << "*Exacto: " << impactoExacto2[0] << "*";
 //        if(impactoExacto[0] != impactoExacto2[0]){
 //            cout << "Exacto1: " << impactoExacto[0] << " - Exacto2: " << impactoExacto2[0] << endl;
 //            cout << "Grafo G:" << endl;
 //            grafoG.imprimir();
 //            cout << "Grafo H:" << endl;
 //            grafoH.imprimir();
+//            cout << "Coloreo Exacto 1:" << endl;
+//            mostrarColoreo(impactoExacto);
+//            cout << endl << "Coloreo Exacto 2:" << endl;
+//            mostrarColoreo(impactoExacto2);
 //            exit(1);
 //        }
         vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
@@ -155,13 +160,13 @@ int main(int argc, char * argv[]){
         vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
 //        cout << "*Grasp: " << impactoGrasp[0] << "*";
 //        outputFile << impactoGoloso[0];
-//        cout << endl;
-        if(abs(impactoExacto[0]- impactoGoloso[0]) == 0) efectividadGolosoAcertado++;
-        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 1) efectividadGoloso++;
-        if(abs(impactoExacto[0]- impactoLocal[0]) == 0) efectividadLocalAcertado++;
-        if(abs(impactoExacto[0]- impactoLocal[0]) <= 1) efectividadLocal++;
-        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
-        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
+        cout << endl;
+//        if(abs(impactoExacto[0]- impactoGoloso[0]) == 0) efectividadGolosoAcertado++;
+//        if(abs(impactoExacto[0]- impactoGoloso[0]) <= 1) efectividadGoloso++;
+//        if(abs(impactoExacto[0]- impactoLocal[0]) == 0) efectividadLocalAcertado++;
+//        if(abs(impactoExacto[0]- impactoLocal[0]) <= 1) efectividadLocal++;
+//        if(abs(impactoExacto[0]- impactoGrasp[0]) == 0) efectividadGraspAcertado++;
+//        if(abs(impactoExacto[0]- impactoGrasp[0]) <= 1) efectividadGrasp++;
 //        if(impactoGrasp[0] > impactoExacto[0]){
 //            cout << "Error! Grasp: " << impactoGrasp[0] << " - Exacto: " << impactoExacto[0] << endl;
 //            cout << "Grafo G:" << endl;
@@ -179,11 +184,11 @@ int main(int argc, char * argv[]){
 //        outputFile << endl;
 
         if(RES_EFECTIVIDAD){
-            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
+//            resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
         }
 
         if(RES_Goloso){
-            resGoloso << nodos << " " << impactoExacto[0];
+//            resGoloso << nodos << " " << impactoExacto[0];
             for(unsigned int parametro = 0; parametro <= 100; parametro+=5){
                 vector<unsigned int> impactoGoloso2(maximoImpactoGoloso(grafoG,grafoH,parametro/100.0));
                 resGoloso << " " << impactoGoloso2[0];
@@ -191,7 +196,7 @@ int main(int argc, char * argv[]){
             resGoloso << endl;
         }
         if(RES_Grasp){
-            resGrasp << nodos << " " << impactoExacto[0];
+//            resGrasp << nodos << " " << impactoExacto[0];
             for(unsigned int parametro = 0; parametro <= 100; parametro+=5){
                 vector<unsigned int> impactoGrasp2(maximoImpactoGrasp(grafoG,grafoH,parametro/100.0));
                 resGrasp << " " << impactoGrasp2[0];
@@ -221,8 +226,8 @@ void genTests(){
 
 
     ofstream outputFile;
-    unsigned int minNodos = 10;
-    unsigned int maxNodos = 10;
+    unsigned int minNodos = 8;
+    unsigned int maxNodos = 8;
     unsigned int repeticiones = 100;
     int prob = 50;
 
