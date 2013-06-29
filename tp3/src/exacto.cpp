@@ -39,9 +39,9 @@ vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H){
             huboColoreoLegal = false;
             while(generarColoreo(colores,G,H,coloreo,maxImpactoPosible,res));
 //            cout << "Por ahora: " << res[0] << endl;
-            if(!mejora && res[0] > 0){
-                break;
-            }
+//            if(!mejora && res[0] > 0){
+//                break;
+//            }
 //            cout << "Contador: " << contador << endl;
             contador = 0;
         }
@@ -104,7 +104,7 @@ void permutacionesDelColoreo(unsigned int nodo, vector<unsigned> &colores, const
                     solucion[k + 1] = coloreo[k];
                 }
             }
-            if(solucion[0] == limite) encontrado = true;
+//            if(solucion[0] == limite) encontrado = true;
             contador++;
         }
         else{
@@ -141,7 +141,7 @@ vector<unsigned int> maximoImpactoExacto2(const Grafo &G, const Grafo &H){
     encontrado = false;
 
     vector<unsigned int> coloreo(G.cantNodos(),0);
-    vector<unsigned int> colores(G.gradoMaximo()+1);
+    vector<unsigned int> colores(G.cantNodos());
 
     //Creo la lista de colores posibles
     for(unsigned int i = 0; i < colores.size(); i++){
@@ -150,37 +150,40 @@ vector<unsigned int> maximoImpactoExacto2(const Grafo &G, const Grafo &H){
 
     maxImpactoPosible = calcLimiteImpacto(G,H);
 
-    unsigned int visitados = 0;
-    RecursiveColorAssignment(0,G,H,coloreo,colores,visitados,res);
+    coloreo[0] = 1;
+    colorear(1,G,H,coloreo,res);
 
     return res;
 }
 
+void colorear(unsigned int nodo, const Grafo &G, const Grafo &H, vector<unsigned int> &coloreo,vector<unsigned int> &solucion){
 
-void RecursiveColorAssignment(const unsigned int nodo, const Grafo &G,const Grafo &H, const vector<unsigned int> &coloreo, const vector<unsigned int> &colores, const unsigned int visitados, vector< unsigned int> &res){
-    for(unsigned int c = 0; c < colores.size(); c++){
-        if(!encontrado){
-            if(G.colorLegalDeNodo(nodo,coloreo,colores[c])){
+    if(nodo >= G.cantNodos()){
+        unsigned int temp;
+//        mostrarColoreo(coloreo);
+        temp = H.impacto(coloreo);
+        if(temp > solucion[0]){
+            solucion[0] = temp;
+            for(unsigned int k = 0; k < coloreo.size(); k++){
+                solucion[k + 1] = coloreo[k];
+            }
+        }
+//        if(solucion[0] == limite) encontrado = true;
+        contador++;
+    }
+    else{
+        unsigned int maxColor = *max_element(coloreo.begin(),coloreo.end());
+        for(unsigned int c = 1; c <= (maxColor+1); c++){
+            if(G.colorLegalDeNodo(nodo,coloreo,c)){
                 vector<unsigned int> nuevoColoreo(coloreo);
-                nuevoColoreo[nodo] = colores[c];
-                if((visitados + 1) >= G.cantNodos()){
-                    unsigned int temp;
-                    temp = H.impacto(nuevoColoreo);
-                    if(temp > res[0]){
-                        res[0] = temp;
-                        for(unsigned int k = 0; k < nuevoColoreo.size(); k++){
-                            res[k + 1] = nuevoColoreo[k];
-                        }
-                    }
-                    if(res[0] == maxImpactoPosible) encontrado = true;
-                }
-                else{
-                    RecursiveColorAssignment((nodo + 1)%G.cantNodos(),G,H,nuevoColoreo,colores,visitados + 1,res);
-                }
+                nuevoColoreo[nodo] = c;
+                colorear(nodo+1,G,H,nuevoColoreo,solucion);
             }
         }
     }
+
 }
+
 
 void mostrarColoreo(const vector<unsigned int> &coloreo){
     for(unsigned int i = 0; i < coloreo.size(); i++){

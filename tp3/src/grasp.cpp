@@ -22,8 +22,7 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
         vector< vector<unsigned int> > rcl(maxRCL);
         for(unsigned int k = 0; k < maxRCL; k++){
             rcl[k] = maximoImpactoGoloso(G,H,porcentaje);
-
-        }
+		}
         elegido = rand()%maxRCL;
 
         vector<unsigned int> solBusqLocal;
