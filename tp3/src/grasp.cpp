@@ -7,13 +7,13 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     vector<unsigned int> coloreo(G.cantNodos(),1);
 
     //Criterios de parada
-    unsigned int maxIteraciones = 500;
-    unsigned int maxIterSinMejora = 250;
+    unsigned int maxIteraciones = 200;
+    unsigned int maxIterSinMejora = 50;
     unsigned int sinMejora = 0;
     unsigned int maxRCL = 5;
     unsigned int elegido;
     unsigned int solTemporal = 0;
-    porcentaje = 0.4;
+//    porcentaje = 0.4;
 
 
 
