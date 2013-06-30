@@ -11,10 +11,10 @@
 
 1372011482 >
 
-1372045004 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+1372539711 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1372438995 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
+1372545917 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -30,7 +30,7 @@
 1370819316 c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1372043684 c:\users\gino\desktop\algo3\tp3\src\exacto.h
+1372539701 c:\users\gino\desktop\algo3\tp3\src\exacto.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
@@ -59,7 +59,7 @@
 	"goloso.h"
 	"local.h"
 
-1372443362 source:c:\users\gino\desktop\algo3\tp3\src\grasp.cpp
+1372608693 source:c:\users\gino\desktop\algo3\tp3\src\grasp.cpp
 	"grasp.h"
 
 1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\goloso.cpp
