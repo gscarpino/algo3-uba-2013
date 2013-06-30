@@ -4,4 +4,22 @@
 
 \subsection{Análisis de complejidad}
 
+\indent Comencemos analizando la complejidad de la función impactoNodo.\\
+\indent Esta función mira para un nodo el impacto que aporta en H, comparando su color con el de sus vecinos. Dicho nodo tiene en H a lo sumo n-1 vecinos. Luego, impactoNodo cuesta O(n).
+
+\indent Analicemos ahora siguienteModificable. Al inicio comienza iterando sobre la cantidad de nodos de H y si dicho nodo no fue modificado o si no tiene vecinos, se calcula el impacto de cada nodo y se lo agrega a un vector de nodos candidatos a ser modificados.En el peor caso, todos los nodos están sin modificar y tienen vecinos,por lo tanto esto cuesta O($n^{2}$).\\
+\indent Luego, se ordena de manera creciente el vector de candidatos de acuerdo al impacto de cada nodo.En el peor caso dicho vector tiene n elementos, pues todos los nodos son modificables y ordenarlos cuesta entonces O(n*log(n)).\\
+\indent Luego, se itera sobre la cantidad de elementos de ese vector, esta vez para desempatar los nodos. En el peor caso todos los nodos empatan en el impacto que generan. Desempatarlos a todos cuesta en el peor caso O($n^{2}$) , que el caso en el que se invirtió el orden del vector por desempates.\\
+\indent A continuación se elige pseudoaleatoriamente en O(1) uno de los primeros elementos del vector.\\
+\indent Pasando en limpio, siguienteModificable cuesta O($n^2$ + n*log(n)+ $n^2$), que es O($n^{2}$).\\
+
+\indent Ahora analicemos maximoImpactoGoloso.\\
+\indent Al principio realiza unas cuantas operaciones en O(n). De estas es destacable la creación de un vector de tamaño igual al grado del nodo con grado máximo de G, que refiere a la cantidad de colores a usar. Pero el grado máximo de cada nodo es a lo sumo n-1. Luego crear ese vector cuesta O(n).\\
+\indent Luego, se ejecuta un while que a lo sumo itera n veces. Esto es porque en el peor caso tuve que pintar todos los nodos de distinto color hasta obtener un coloreo válido.\\
+\inden Dentro de ese while está implícito el chequeo de si el coloreo es válido, que cuesta O(n+m), donde vamos a acotar a m como el máximo entre las aristas de G y de H. Se ejecuta siguienteModificable y se itera luego en la cantidad de colores, costando cada iteración en la cantidad de colores O(n) que es lo que cuesta ver si pintar un nodo de ese color es no coincide con el color de uno de los vecinos de ese nodo, que como mencionamos antes pueden ser n-1.\\
+\indent Luego, lo de adentro del while cuesta O(n+m+ $n^{2}$) y el costo total del while es de O(n(n+m +$n^{2}$)), que es O(n*(n+m)+ $n^{3}$).\\
+\indent Luego de iterar se calcula el impacto de dicho coloreo en O(n+m).\\
+\indent Es decir que en total maximoImpactoGoloso cuesta O(n+n*(n+m)+ $n^{3}$ + n+m).\\
+\indent Por lo tanto, maximoImpactoGoloso cuesta O(n*(n+m)+ $n^{3}$).\\
+ 
 \subsection{Experimentación y Resultados}
