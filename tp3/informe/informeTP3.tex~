@@ -14,7 +14,7 @@
 \usepackage[paper=a4paper, left=1.4cm, right=1.4cm, bottom=1.4cm, top=1.4cm]{geometry}
 \usepackage[table]{xcolor} % color en las matrices
 \usepackage[font=small,labelfont=bf]{caption} % caption de las figuras en letra mas chica que el texto
-  
+			
 \color{black}
 
 %%%PAGE LAYOUT%%%
@@ -51,13 +51,23 @@
 }
 	\tableofcontents
 	\newpage
-%	\input{introduccion.tex}
-%	\newpage
-	\input{ej1.tex}
+	%descripcion de situaciones reales
+	\input{reales.tex}
 	\newpage
-	%\input{ej2.tex}
-	%\newpage
-	\input{ej3.tex}
+	%algoritmo exacto
+	\input{exacto.tex}
+	\newpage
+	%goloso
+	\input{goloso.tex}
+	\newpage
+	%busqueda local
+	\input{local.tex}
+	\newpage	
+	%grasp
+	\input{grasp.tex}
+	\newpage
+	%experimentacion
+	\input{experimentacion.tex}
 	\newpage
 	\bibliographystyle{plain}	
 	\clearpage
