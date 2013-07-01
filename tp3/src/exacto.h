@@ -10,6 +10,5 @@
 using namespace std;
 
 vector<unsigned int> maximoImpactoExacto(const Grafo &G, const Grafo &H);
-void mostrarColoreo(const vector<unsigned int> &coloreo);
 void colorear(unsigned int nodo, const Grafo &G, const Grafo &H, vector<unsigned int> &coloreo,vector<unsigned int> &solucion);
 #endif // EXACTO_H_INCLUDED
