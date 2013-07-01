@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.16)  1 JUL 2013 17:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.16)  1 JUL 2013 17:43
 entering extended mode
  %&-line parsing enabled.
 **informeTP3.tex
@@ -1116,6 +1116,22 @@ you left one out. Proceed, with fingers crossed.
 <inserted text> 
                 $
 l.12 \li
+         unsigned int sinMejora \gets 0
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.12 \li unsigned int sinMejora \gets
+                                      0
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.13 \li
         
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1123,7 +1139,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.18 \li 		rcl[k] \gets
+l.19 \li 		rcl[k] \gets
                         $maximoImpactoGoloso(g,h, porcentaje)$
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1131,7 +1147,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.20 \li
+l.21 \li
         
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1139,7 +1155,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.21 \li		unsigned int e \gets
+l.22 \li		unsigned int e \gets
                                $índice de uno de los elementos de rcl elegi...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1147,7 +1163,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.22 \li
+l.23 \li
         
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1155,7 +1171,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.23 ...ector$<$unsigned int$>$ solBusqLocal \gets
+l.24 ...ector$<$unsigned int$>$ solBusqLocal \gets
                                                    $maximoImpactoLocal(g,h,p...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1163,35 +1179,51 @@ you left one out. Proceed, with fingers crossed.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.24 \li
+l.25 \li
         
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.33 \li			sinMejora\gets
+                          0
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--27
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35 \li
+        		\Else \Do
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--48
 []$[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 Grafo$ \OT1/cmr/m/n/12 g$\OML/cmm/m/it/1
 2 ; Grafo$ \OT1/cmr/m/n/12 h$\OML/cmm/m/it/12 ; double$ \OT1/cmr/m/n/12 porcent
 aje$\OML/cmm/m/it/12 ; unsigned$ $int$
  []
 
 
-Overfull \hbox (33.86102pt too wide) in paragraph at lines 27--27
+Overfull \hbox (33.86102pt too wide) in paragraph at lines 48--48
 | [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--39
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
+Underfull \hbox (badness 10000) in paragraph at lines 53--60
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 42--43
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
@@ -1204,7 +1236,7 @@ Here is how much of TeX's memory you used:
  12223 multiletter control sequences out of 15000+50000
  12482 words of font info for 46 fonts, out of 3000000 for 9000
  54 hyphenation exceptions out of 8191
- 53i,13n,92p,631b,530s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,12n,92p,631b,530s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
 bx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
 /usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/
@@ -1218,7 +1250,7 @@ texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/typ
 e1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-texlive/fonts/type1/public/a
 msfonts/cm/cmtt12.pfb>
-Output written on informeTP3.pdf (17 pages, 605482 bytes).
+Output written on informeTP3.pdf (17 pages, 605795 bytes).
 PDF statistics:
  266 PDF objects out of 1000 (max. 8388607)
  49 named destinations out of 1000 (max. 500000)
