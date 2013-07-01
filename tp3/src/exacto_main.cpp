@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 
     while(!cin.eof() && cin.peek() != '#')
     {
-   //COMIENZO Carga de datos
+        //COMIENZO Carga de datos
         cin >> nodos >> aristasG >> aristasH;
 
         Grafo grafoG(nodos);
@@ -38,7 +38,7 @@ int main(int argc, char * argv[])
 
         // Quitamos el ultimo \n (para que cin.peek tome correctamente el siguiente caracter valido - numero o #)
         cin.get() ;
-      // FIN Carga de datos
+        // FIN Carga de datos
 
         cont++;
 
@@ -47,8 +47,10 @@ int main(int argc, char * argv[])
     return 0;
 }
 
-void mostrarColoreo(const vector<unsigned int> &coloreo){
-    for(unsigned int i = 0; i < coloreo.size(); i++){
+void mostrarColoreo(const vector<unsigned int> &coloreo)
+{
+    for(unsigned int i = 0; i < coloreo.size(); i++)
+    {
         cout << coloreo[i];
         (i != coloreo.size()) ? cout << " " : cout << "";
     }
