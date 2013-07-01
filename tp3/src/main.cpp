@@ -13,6 +13,7 @@
 
 #define TESTING 0
 #define RES_EFECTIVIDAD 0
+#define RES_EFECTIVIDAD2 1
 #define RES_TIMING 0
 #define RES_Goloso 0
 #define RES_Grasp 0
@@ -35,6 +36,7 @@ int main(int argc, char * argv[])
     }
 
     ofstream resEfect;
+    ofstream resEfect2;
     ofstream resGoloso;
     ofstream resGrasp;
     if(RES_EFECTIVIDAD)
@@ -46,6 +48,17 @@ int main(int argc, char * argv[])
             exit(1);
         }
         resEfect << "Nodos Exacto Goloso BusquedaLocal Grasp" << endl;
+    }
+
+    if(RES_EFECTIVIDAD2)
+    {
+        resEfect2.open("Resultado_Efectividad2.csv",  ios_base::trunc);
+        if(!resEfect2.is_open())
+        {
+            cerr << "Error al abrir/crear el archivo de salida." << endl;
+            exit(1);
+        }
+        resEfect2 << "Nodos Grasp Goloso BusquedaLocal" << endl;
     }
 
     if(RES_Goloso)
@@ -113,7 +126,7 @@ int main(int argc, char * argv[])
 
         cont++;
         cout << endl << "N " << nodos << " R " << cont << endl;
-        if(!RES_Goloso && !RES_Grasp){
+        if(!RES_Goloso && !RES_Grasp && !RES_EFECTIVIDAD2){
             double porcentaje = 0.1;
             vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
             vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
@@ -160,6 +173,14 @@ int main(int argc, char * argv[])
             resGrasp << endl;
         }
 
+        if(RES_EFECTIVIDAD2){
+            double porcentaje = 0.1;
+            vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
+            vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
+            vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,porcentaje));
+            resEfect2 << nodos << " " << impactoGrasp[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << endl;
+        }
+
 
     }
 
@@ -172,6 +193,8 @@ int main(int argc, char * argv[])
 
     resEfect.close();
     resGoloso.close();
+    resGrasp.close();
+    resEfect2.close();
 
     cout << endl << "Termino" << endl;
     return 0;
@@ -180,9 +203,9 @@ int main(int argc, char * argv[])
 
 void genTests(){
     ofstream outputFile;
-    unsigned int minNodos = 3;
-    unsigned int maxNodos = 16;
-    unsigned int repeticiones = 100;
+    unsigned int minNodos = 5;
+    unsigned int maxNodos = 100;
+    unsigned int repeticiones = 50;
     int prob = 50;
 
     cout << "Creando test G y H al azar" << endl;
