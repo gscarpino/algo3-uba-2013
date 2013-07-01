@@ -21,16 +21,16 @@ CPPFLAGS= -std=c++0x -lrt
 all: exacto local goloso grasp
 
 exacto:$(OBJS_EXACTO) 
-	$(CC) $(LDFLAGS) $(OBJS_EXACTO) -o $@
+	$(CC) $(LDFLAGS) $(OBJS_EXACTO) -o $(TARGET_EXACTO)
 
 local:$(OBJS_LOCAL) 
-	$(CC) $(LDFLAGS) $(OBJS_LOCAL) -o $@
+	$(CC) $(LDFLAGS) $(OBJS_LOCAL) -o $(TARGET_LOCAL)
 
 goloso:$(OBJS_GOLOSO) 
-	$(CC) $(LDFLAGS) $(OBJS_GOLOSO) -o $@
+	$(CC) $(LDFLAGS) $(OBJS_GOLOSO) -o $(TARGET_GOLOSO)
 
 grasp:$(OBJS_GRASP) 
-	$(CC) $(LDFLAGS) $(OBJS_GRASP) -o $@
+	$(CC) $(LDFLAGS) $(OBJS_GRASP) -o $(TARGET_GRASP)
 	
 %.o: %.cpp 
 	g++  -c $< -o $@ $(CPPFLAGS)
