@@ -9,6 +9,7 @@
 
 \li vector$<$unsigned int$>$ res(n + 1)
 \li res[0] \gets 0
+\li unsigned int sinMejora \gets 0
 \li
 \li vector$<$unsigned int$>$ coloreo(n,1) // Todos los elementos valen 1
 \li
@@ -22,7 +23,27 @@
 \li
 \li 	vector$<$unsigned int$>$ solBusqLocal \gets $maximoImpactoLocal(g,h,porcentaje,rcl[e])$
 \li
+\li 	\If solBusqLocal[0]$>$res[0] \Do
+\li			res[0] =solBusqLocal[0]
+\li
+\li			\For k desde 1 hasta n \Do
+\li				res[k]=solBusqLocal[k]
+\li
+			\End
+\li			sinMejora\gets 0
+		%\End
+\li		\Else \Do
+\li			sinMejora++;
+\li         \If sinMejora == maxIterSinMejora \Do
+            
+\li                salir del ciclo
+            
+            \End
+        \End
 
+	\End	
+\li
+\li return res
 \End
 \end{codebox}
 \end{algorithm}
