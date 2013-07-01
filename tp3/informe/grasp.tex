@@ -4,4 +4,17 @@
 
 \subsection{Análisis de complejidad}
 
+\indent Analicemos la complejidad de maximoImpactoGrasp. Los primeros pasos del algoritmos son crear unos vectores igual a la cantidad de nodos de los grafos. Eso cuesta O(n) para cada creación de vector.\\
+\indent Luego se itera maxIteraciones veces. El costo de cada iteración es el siguiente:\\
+\indent Primero se calcular maxRCL veces soluciones con maximoImpactoGoloso, donde maxRCL la cantidad de restrictive candidates list, es decir la cantidad máxima de candidatos golosos a utilizar.Ese ciclo cuesta entonces O(maxRCL*n*(n+m)+ $n^{3}$) de acuerdo a nuestro análisis de complejidad de maximoImpactoGoloso.\\
+\indent A continuación, se elige pseudoaleatoriamente uno de esos candidatos.\\
+\indent Una vez elegido un candidato, se aplica maximoImpactoLocal con dicha solución golosa.\\ Por lo que analizamos en la sección correspondiente, esto cuesta O(n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m)).\\
+\indent Una vez hecho esto, se decide si se va a quedar con la nueva solución obtenida con maximoImpactoLocal y esto cuesta O(n).\\
+\indent Luego, el ciclo cuesta :\\
+
+O(maxIteraciones* [(maxRCL*n*(n+m)+ $n^{3}$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m))] )\\
+
+ que además es la complejidad de maximoImpactoGrasp.\\
+
+
 \subsection{Experimentación y Resultados}
