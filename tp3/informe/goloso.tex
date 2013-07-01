@@ -2,6 +2,123 @@
 
 \subsection{Algoritmo}
 
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{maximoImpactoGoloso}(Grafo$ g$, Grafo$ h$, double $ porcentaje$)$}
+\li
+\li	vector$<$unsigned int$>$ res(n+1)
+\li res[0] \gets 0
+\li
+\li vector$<$unsigned int$>$ coloreo(n,1) // todos sus elementos valen 1
+\li vector$<$unsigned int$>$ colores(g.gradoMaximo()+1) 
+\li
+\li \For i desde 0 hasta la cantidad de colores a usar \Do
+
+\li 		colores[i] = i+1
+ 	\End
+
+\li
+\li vector$<$bool$>$ modificados(n,false) //todos sus elementos valen false
+\li unsigned int nodo
+\li
+\li \While $coloreo$ no sea un coloreo legal de g \Do
+\li
+\li 	nodo \gets $siguienteModificable(G,H,coloreo,modificados,porcentaje)$
+\li
+\li     \For c desde 1 hasta la cantidad de colores a usar \Do
+\li 				  	
+\li  			\If pintar a $nodo$ de color c es legal \Do
+\li 					coloreo[nodo] \gets $colores[c]$
+\li 					salir del for
+				\End
+\li
+		\End
+\li 	modificados[nodo] \gets $true$
+\li
+	\End
+\li
+\li res[0] \gets $h.impacto(coloreo)$
+\li
+\li \For i desde 1 hasta n \Do
+\li 	res[i+1]=coloreo[i]
+\li \End
+\li
+\li return res
+	
+\End
+\end{codebox}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{siguienteModificable}(Grafo$ g$, Grafo$ h$, vector<unsigned$ int$>$ coloreo, $	vector<bool> $ modificados$, double $ porcentaje$)$}
+\li
+\li 	vector$<$ tupla$<$unsigned int, unsigned int $> >$ posibles
+\li     \For i desde 1 hasta n \Do
+\li  		\If el nodo i no fue modificado y tiene vecinos \Do
+\li				agregar a posibles la tupla $<$impactoNodo(i,h, coloreo), i$>$
+			\End
+		\End
+\li 
+\li 	ordenar posibles de menor a mayor
+\li 	
+\li 	\For i desde 0 hasta el tamaño de posibles -1 \Do
+\li
+\li 		\For j desde i+1 hasta el tamaño de posibles \Do
+\li
+\li 			\If posibles[i].first == posibles[j].first \Do
+\li 				
+\li 					\If grado de posibles[i].second en g$<$ grado de posibles[j].second en g\Do
+\li 						swap(posibles[i], posibles[j])
+						\End
+\li						\Else 
+\li 						\If grado de posibles[i].second en g== grado de posibles[j].second en g \Do
+\li 							\If grado de posibles[i].second en h $<$ grado de posibles[j].second en h \Do
+\li										swap(posibles[i], posible[j])
+								\End
+							\End
+						\End
+				\End
+			\End
+		\End
+\li
+\li
+\li res \gets $elemento elegido al azar de $ 
+\li          alguno de los primeros (tamaño de posibles*porcentaje) elementos de posibles
+\li
+\li return posibles[res].second
+\li
+\End
+\end{codebox}
+\end{algorithm}
+
+
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{impactoNodo}($unsigned int $ nodo$$, Grafo$ h$, vector<unsigned$ int$>$ coloreo$)$}
+\li
+\li unsigned int res \gets 0
+\li vector$<$unsigned int$>$ vecinos \gets $vecinos del nodo $nodo$ en h$
+\li
+\li \For i desde 0 hasta la cantidad de vecinos de $nodo$ en h \Do
+\li
+\li 	\If coloreo[nodo]==coloreo[vecinos[i]] \Do
+\li 		res++
+		\End
+	\End
+\li
+\li return res
+\End
+\end{codebox}
+\end{algorithm}
+
+
+
 \subsection{Análisis de complejidad}
 
 \indent Comencemos analizando la complejidad de la función impactoNodo.\\
