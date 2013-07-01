@@ -4,4 +4,10 @@
 
 \subsection{Análisis de complejidad}
 
+\indent Veamos la complejidad de maximoImpactoLocal. Primero se calcula una solución con maximoImpactoGoloso. Como mencionamos en el apartado correspondiente eso cuesta O(n*(n+m)+ $n^{3}$). \\
+\indent Luego, se copia el coloreo que se obtuvo de maximoImpactoGoloso en O(n).\\
+\indent A continuación se itera sobre la cantidad de nodos de H. En cada iteración se copian los vecinos del nodo en el que estamos ahora. Como dicho nodo puede tener a lo sumo n-1 vecinos, eso cuesta O(n). Luego,se itera sobre los vecinos del nodo y por cada vecino del nodo se decide en O(n+m) si se va a pintar el nodo del mismo color que su vecino. Dicha decisión se fundamenta en si cambiar el color genera un coloreo válido en G y si aumenta el impacto H. Entonces,el costo del ciclo interior cuesta O(n*(n+m)). Por lo tanto, el ciclo que lo engloba cuesta O($n^{2}$*(n+m)).\\
+\indent Luego de terminar de iterar se guarda el coloreo parcial con un costo de O(n).\\
+\indent Entonces, maximoImpactoLocal cuesta O(n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m)).\\
+
 \subsection{Experimentación y Resultados}
