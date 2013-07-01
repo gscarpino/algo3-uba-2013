@@ -27,7 +27,6 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     unsigned int sinMejora = 0;
     unsigned int maxRCL = 5;
     unsigned int elegido;
-    unsigned int solTemporal = 0;
 
     //Optimización del parámetro
     if(G.cantNodos() < 75)
@@ -55,14 +54,13 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
 
         solBusqLocal = maximoImpactoLocal(G,H,rcl[elegido]);
 
-        if(solBusqLocal[0] > solTemporal)
+        if(solBusqLocal[0] > res[0])
         {
             res[0] = solBusqLocal[0];
-            for(unsigned int k = 0; k < coloreo.size(); k++)
+            for(unsigned int k = 1; k < solBusqLocal.size(); k++)
             {
-                res[k + 1] = coloreo[k];
+                res[k] = solBusqLocal[k];
             }
-            solTemporal = solBusqLocal[0];
             sinMejora = 0;
         }
         else
