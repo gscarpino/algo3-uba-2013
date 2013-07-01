@@ -42,11 +42,3 @@ void colorear(unsigned int nodo, const Grafo &G, const Grafo &H, vector<unsigned
     }
 
 }
-
-
-void mostrarColoreo(const vector<unsigned int> &coloreo){
-    for(unsigned int i = 0; i < coloreo.size(); i++){
-        cout << " " << coloreo[i];
-    }
-    cout << endl;
-}

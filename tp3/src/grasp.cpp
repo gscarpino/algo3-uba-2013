@@ -1,4 +1,6 @@
 #include "grasp.h"
+#include "goloso.h"
+#include "local.h"
 
 vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double porcentaje){
     vector<unsigned int> res(G.cantNodos() + 1);
@@ -63,11 +65,4 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     }
 
     return res;
-}
-
-void imprimirVector(const vector<unsigned int> &v){
-    for(unsigned int i = 0; i < v.size(); i++){
-        cout << " " << v[i];
-    }
-    cout << endl;
 }
