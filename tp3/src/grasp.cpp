@@ -7,15 +7,25 @@ vector<unsigned int> maximoImpactoGrasp(const Grafo &G, const Grafo &H, double p
     vector<unsigned int> coloreo(G.cantNodos(),1);
 
     //Criterios de parada
-    unsigned int maxIteraciones = G.cantNodos() * 3;
-    unsigned int maxIterSinMejora = 50;
+    //Optimizados
+    unsigned int maxIteraciones;
+    unsigned int maxIterSinMejora;
+    if(G.cantNodos() < 50){
+        maxIteraciones = G.cantNodos() * 10;
+        maxIterSinMejora = maxIteraciones * 0.2;
+    }
+    else{
+        maxIteraciones = G.cantNodos() * 3;
+        maxIterSinMejora = maxIteraciones * 0.5;
+    }
+    //Optimizados
     unsigned int sinMejora = 0;
     unsigned int maxRCL = 5;
     unsigned int elegido;
     unsigned int solTemporal = 0;
 
     //Optimización del parámetro
-    if(G.cantNodos() < 50){
+    if(G.cantNodos() < 75){
         porcentaje = 0.3;
     }
     else{
