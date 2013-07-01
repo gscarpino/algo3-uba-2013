@@ -73,7 +73,7 @@
 \caption{Comparación de efectividad contra Grasp}
 \end{figure}
 
-\quad Podemos ver como a partir de cierto punto, la heurística golosa no es para nada efectiva (según el criterio anteriormente mencionado). En cambio, la búsqueda local se \textit{estanca} entre el 10 \%  y 40 \%  de efectividad.
+\quad Podemos ver como a partir de cierto punto, la heurística golosa no es para nada efectiva (según el criterio anteriormente mencionado). En cambio, la búsqueda local se \textit{estanca} entre el 10$ % $ y 40 \%  de efectividad.
 
 \subsubsection{Costo}
 

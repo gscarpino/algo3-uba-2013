@@ -8,20 +8,20 @@
 \Procname{$\proc{maximoImpactoGrasp}(Grafo$ g$, Grafo$ h$, double $ porcentaje$, unsigned$ $int$ maxIteraciones$, unsigned$ $int$ maxIterSinMejora,$ unsigned$ $int$ maxRCL$)$}
 
 \li vector$<$unsigned int$>$ res(n + 1)
-\li res[0] \gets 0
-\li unsigned int sinMejora \gets 0
+\li res[0] $\gets$ 0
+\li unsigned int sinMejora $\gets$ 0
 \li
 \li vector$<$unsigned int$>$ coloreo(n,1) // Todos los elementos valen 1
 \li
 \li \For i desde 0 hasta maxIteraciones \Do 
 \li vector$<$vector$<$unsigned int$>>$ rcl(maxRCL)
 \li 	\For k desde 0 hasta maxRCL \Do
-\li 		rcl[k] \gets $maximoImpactoGoloso(g,h, porcentaje)$
+\li 		rcl[k] $\gets$ $maximoImpactoGoloso(g,h, porcentaje)$
 		\End
 \li
-\li		unsigned int e \gets $índice de uno de los elementos de rcl elegido al azar$
+\li		unsigned int e $\gets$ índice de uno de los elementos de rcl elegido al azar
 \li
-\li 	vector$<$unsigned int$>$ solBusqLocal \gets $maximoImpactoLocal(g,h,porcentaje,rcl[e])$
+\li 	vector$<$unsigned int$>$ solBusqLocal $\gets$ maximoImpactoLocal(g,h,porcentaje,rcl[e])
 \li
 \li 	\If solBusqLocal[0]$>$res[0] \Do
 \li			res[0] =solBusqLocal[0]
@@ -30,7 +30,7 @@
 \li				res[k]=solBusqLocal[k]
 \li
 			\End
-\li			sinMejora\gets 0
+\li			sinMejora$\gets$ 0
 		%\End
 \li		\Else \Do
 \li			sinMejora++;
