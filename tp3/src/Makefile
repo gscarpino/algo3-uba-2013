@@ -1,10 +1,10 @@
 RM := rm -rf
 CC = g++
 
-TARGET_EXACTO = exacto_main.cpp exacto.cpp Grafo.cpp
-TARGET_GOLOSO = goloso_main.cpp goloso.cpp Grafo.cpp
-TARGET_LOCAL = local_main.cpp local.cpp goloso.cpp Grafo.cpp
-TARGET_GRASP = grasp_main.cpp grasp.cpp goloso.cpp local.cpp Grafo.cpp
+SOURCES_EXACTO = exacto_main.cpp exacto.cpp Grafo.cpp
+SOURCES_GOLOSO = goloso_main.cpp goloso.cpp Grafo.cpp
+SOURCES_LOCAL = local_main.cpp local.cpp goloso.cpp Grafo.cpp
+SOURCES_GRASP = grasp_main.cpp grasp.cpp goloso.cpp local.cpp Grafo.cpp
 
 TARGET_EXACTO = exacto
 TARGET_GOLOSO = goloso
