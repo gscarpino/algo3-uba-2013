@@ -17,21 +17,21 @@
 \contentsline {section}{\numberline {4}Heur\IeC {\'\i }stica de B\IeC {\'u}squeda Local}{16}{section.4}
 \contentsline {subsection}{\numberline {4.1}Algoritmo}{16}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}An\IeC {\'a}lisis de complejidad}{17}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Experimentaci\IeC {\'o}n y Resultados}{17}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Grafos al azar}{17}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Grafos densos}{18}{subsubsection.4.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3}G y H complementos}{18}{subsubsection.4.3.3}
-\contentsline {section}{\numberline {5}Metaheur\IeC {\'\i }stica de Grasp}{19}{section.5}
-\contentsline {subsection}{\numberline {5.1}Algoritmo}{19}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}An\IeC {\'a}lisis de complejidad}{19}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Experimentaci\IeC {\'o}n y Resultados}{20}{subsection.5.3}
-\contentsline {subsubsection}{\numberline {5.3.1}Grafos al azar}{21}{subsubsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.2}Grafos densos}{21}{subsubsection.5.3.2}
-\contentsline {subsubsection}{\numberline {5.3.3}G y H complementos}{22}{subsubsection.5.3.3}
-\contentsline {section}{\numberline {6}Experimentaci\IeC {\'o}n General}{23}{section.6}
-\contentsline {subsection}{\numberline {6.1}Comparando con el Exacto}{23}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Distancia}{23}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Efectividad}{25}{subsubsection.6.1.2}
-\contentsline {subsection}{\numberline {6.2}Comparando con Grasp}{26}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Efectividad}{27}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Costo}{27}{subsubsection.6.2.2}
+\contentsline {subsection}{\numberline {4.3}Experimentaci\IeC {\'o}n y Resultados}{18}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Grafos al azar}{18}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}Grafos densos}{19}{subsubsection.4.3.2}
+\contentsline {subsubsection}{\numberline {4.3.3}G y H complementos}{19}{subsubsection.4.3.3}
+\contentsline {section}{\numberline {5}Metaheur\IeC {\'\i }stica de Grasp}{20}{section.5}
+\contentsline {subsection}{\numberline {5.1}Algoritmo}{20}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}An\IeC {\'a}lisis de complejidad}{21}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Experimentaci\IeC {\'o}n y Resultados}{22}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Grafos al azar}{22}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Grafos densos}{23}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.3}G y H complementos}{23}{subsubsection.5.3.3}
+\contentsline {section}{\numberline {6}Experimentaci\IeC {\'o}n General}{24}{section.6}
+\contentsline {subsection}{\numberline {6.1}Comparando con el Exacto}{24}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Distancia}{24}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Efectividad}{26}{subsubsection.6.1.2}
+\contentsline {subsection}{\numberline {6.2}Comparando con Grasp}{27}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Efectividad}{28}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Costo}{28}{subsubsection.6.2.2}

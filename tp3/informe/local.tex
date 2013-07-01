@@ -2,6 +2,8 @@
 
 \subsection{Algoritmo}
 
+\indent El algoritmo de búsqueda local que implementamos parte de una solución obtenida mediante el algoritmo constructivo goloso mostrado anteriormente. A partir de allí recorre cada nodo y chequea si cambiándole el color por el de alguno de sus vecinos si aumenta el impacto en H (siempre y cuando se esté en el contexto de un coloreo válido en G). De esta manera, comienza a generar un nuevo coloreo que parte de aquél obtenido por el algoritmo goloso. Luego de terminar de generarlo lo devuelve. \\
+
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.16)  1 JUL 2013 18:38
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.16)  1 JUL 2013 18:51
 entering extended mode
  %&-line parsing enabled.
 **informeTP3.tex
@@ -1122,100 +1122,110 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 138--139
 
 ) [14 <./goloso-tiempos-Azar.png (PNG copy)> <./goloso-tiempos-G-y-H-densos.png
  (PNG copy)>] [15 <./goloso-tiempos-H-complemento.png (PNG copy)>] (./local.tex
-Warning: Indentation ends at level -1 in codebox on page 16.
 
-Underfull \hbox (badness 10000) in paragraph at lines 63--68
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-[16] <BLocal-tiempos-Azar.png, id=284, 602.25pt x 301.125pt>
+Warning: Indentation ends at level -1 in codebox on page 16.
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 65--70
+
+ []
+
+[17] <BLocal-tiempos-Azar.png, id=288, 602.25pt x 301.125pt>
 File: BLocal-tiempos-Azar.png Graphic file (type png)
 
 <use BLocal-tiempos-Azar.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 78--79
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 80--81
  [][] 
  []
 
-<BLocal-tiempos-G-y-H-densos.png, id=285, 602.25pt x 301.125pt>
+<BLocal-tiempos-G-y-H-densos.png, id=289, 602.25pt x 301.125pt>
 File: BLocal-tiempos-G-y-H-densos.png Graphic file (type png)
 
 <use BLocal-tiempos-G-y-H-densos.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 86--87
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 88--89
  [][] 
  []
 
-[17 <./BLocal-tiempos-Azar.png (PNG copy)>]
-<BLocal-tiempos-H-complemento.png, id=291, 602.25pt x 301.125pt>
+[18 <./BLocal-tiempos-Azar.png (PNG copy)>]
+<BLocal-tiempos-H-complemento.png, id=295, 602.25pt x 301.125pt>
 File: BLocal-tiempos-H-complemento.png Graphic file (type png)
 
 <use BLocal-tiempos-H-complemento.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 94--95
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 96--97
  [][] 
  []
 
-) [18 <./BLocal-tiempos-G-y-H-densos.png (PNG copy)> <./BLocal-tiempos-H-comple
+) [19 <./BLocal-tiempos-G-y-H-densos.png (PNG copy)> <./BLocal-tiempos-H-comple
 mento.png (PNG copy)>] (./grasp.tex
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--50
 []$[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 Grafo$ \OT1/cmr/m/n/12 g$\OML/cmm/m/it/1
 2 ; Grafo$ \OT1/cmr/m/n/12 h$\OML/cmm/m/it/12 ; double$ \OT1/cmr/m/n/12 porcent
 aje$\OML/cmm/m/it/12 ; unsigned$ $int$
  []
 
 
-Overfull \hbox (37.77765pt too wide) in paragraph at lines 48--48
+Overfull \hbox (37.77765pt too wide) in paragraph at lines 50--50
 | [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--60
-
- []
-
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 61--62
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 55--62
 
  []
 
-
+[21]
 Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
-<grasp-tiempos-Azar.png, id=304, 602.25pt x 301.125pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+
+ []
+
+<grasp-tiempos-Azar.png, id=312, 602.25pt x 301.125pt>
 File: grasp-tiempos-Azar.png Graphic file (type png)
 
 <use grasp-tiempos-Azar.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 75--76
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 77--78
  [][] 
  []
 
-[20] <grasp-tiempos-G-y-H-densos.png, id=309, 602.25pt x 301.125pt>
+<grasp-tiempos-G-y-H-densos.png, id=313, 602.25pt x 301.125pt>
 File: grasp-tiempos-G-y-H-densos.png Graphic file (type png)
 
 <use grasp-tiempos-G-y-H-densos.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 83--84
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 85--86
  [][] 
  []
 
-<grasp-tiempos-H-complemento.png, id=310, 602.25pt x 301.125pt>
+[22 <./grasp-tiempos-Azar.png (PNG copy)>]
+<grasp-tiempos-H-complemento.png, id=319, 602.25pt x 301.125pt>
 File: grasp-tiempos-H-complemento.png Graphic file (type png)
 
 <use grasp-tiempos-H-complemento.png>
-Overfull \hbox (47.05516pt too wide) in paragraph at lines 91--92
+Overfull \hbox (47.05516pt too wide) in paragraph at lines 93--94
  [][] 
  []
 
-) [21 <./grasp-tiempos-Azar.png (PNG copy)> <./grasp-tiempos-G-y-H-densos.png (
-PNG copy)>] [22 <./grasp-tiempos-H-complemento.png (PNG copy)>]
-(./experimentacion.tex <distancia-Azar.png, id=322, 602.25pt x 301.125pt>
+) [23 <./grasp-tiempos-G-y-H-densos.png (PNG copy)> <./grasp-tiempos-H-compleme
+nto.png (PNG copy)>] (./experimentacion.tex
+<distancia-Azar.png, id=326, 602.25pt x 301.125pt>
 File: distancia-Azar.png Graphic file (type png)
-
-<use distancia-Azar.png>
+ <use distancia-Azar.png>
 Overfull \hbox (47.05516pt too wide) in paragraph at lines 18--19
  [][] 
  []
 
-<distancia-G-y-H-densos.png, id=323, 602.25pt x 301.125pt>
+<distancia-G-y-H-densos.png, id=327, 602.25pt x 301.125pt>
 File: distancia-G-y-H-densos.png Graphic file (type png)
 
 <use distancia-G-y-H-densos.png>
@@ -1223,8 +1233,8 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 24--25
  [][] 
  []
 
-[23 <./distancia-Azar.png (PNG copy)>]
-<distancia-H-complemento.png, id=329, 602.25pt x 301.125pt>
+[24 <./distancia-Azar.png (PNG copy)>]
+<distancia-H-complemento.png, id=333, 602.25pt x 301.125pt>
 File: distancia-H-complemento.png Graphic file (type png)
 
 <use distancia-H-complemento.png>
@@ -1232,8 +1242,8 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 30--31
  [][] 
  []
 
-[24 <./distancia-G-y-H-densos.png (PNG copy)> <./distancia-H-complemento.png (P
-NG copy)>] <efectividad-Azar.png, id=336, 602.25pt x 301.125pt>
+[25 <./distancia-G-y-H-densos.png (PNG copy)> <./distancia-H-complemento.png (P
+NG copy)>] <efectividad-Azar.png, id=341, 602.25pt x 301.125pt>
 File: efectividad-Azar.png Graphic file (type png)
 
 <use efectividad-Azar.png>
@@ -1241,7 +1251,7 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 46--47
  [][] 
  []
 
-<efectividad-G-y-H-densos.png, id=337, 602.25pt x 301.125pt>
+<efectividad-G-y-H-densos.png, id=342, 602.25pt x 301.125pt>
 File: efectividad-G-y-H-densos.png Graphic file (type png)
 
 <use efectividad-G-y-H-densos.png>
@@ -1249,7 +1259,7 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 52--53
  [][] 
  []
 
-<efectividad-H-complemento.png, id=338, 602.25pt x 301.125pt>
+<efectividad-H-complemento.png, id=343, 602.25pt x 301.125pt>
 File: efectividad-H-complemento.png Graphic file (type png)
 
 <use efectividad-H-complemento.png>
@@ -1257,8 +1267,8 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 58--59
  [][] 
  []
 
-[25 <./efectividad-Azar.png (PNG copy)> <./efectividad-G-y-H-densos.png (PNG co
-py)>] <efectividad-vs-grasp.png, id=346, 602.25pt x 301.125pt>
+[26 <./efectividad-Azar.png (PNG copy)> <./efectividad-G-y-H-densos.png (PNG co
+py)>] <efectividad-vs-grasp.png, id=350, 602.25pt x 301.125pt>
 File: efectividad-vs-grasp.png Graphic file (type png)
 
 <use efectividad-vs-grasp.png>
@@ -1266,24 +1276,24 @@ Overfull \hbox (47.05516pt too wide) in paragraph at lines 72--73
  [][] 
  []
 
-[26 <./efectividad-H-complemento.png (PNG copy)>]
-<timing-vs-grasp.png, id=352, 602.25pt x 301.125pt>
+[27 <./efectividad-H-complemento.png (PNG copy)>]
+<timing-vs-grasp.png, id=356, 602.25pt x 301.125pt>
 File: timing-vs-grasp.png Graphic file (type png)
  <use timing-vs-grasp.png>
 Overfull \hbox (47.05516pt too wide) in paragraph at lines 82--83
  [][] 
  []
 
-[27 <./efectividad-vs-grasp.png (PNG copy)> <./timing-vs-grasp.png (PNG copy)>]
-) [28] AED: lastpage setting LastPage (./informeTP3.aux) ) 
+[28 <./efectividad-vs-grasp.png (PNG copy)> <./timing-vs-grasp.png (PNG copy)>]
+) [29] AED: lastpage setting LastPage (./informeTP3.aux) ) 
 Here is how much of TeX's memory you used:
- 9451 strings out of 494999
- 132909 string characters out of 1180816
+ 9452 strings out of 494999
+ 132916 string characters out of 1180816
  234356 words of memory out of 3000000
  12306 multiletter control sequences out of 15000+50000
  12482 words of font info for 46 fonts, out of 3000000 for 9000
  54 hyphenation exceptions out of 8191
- 53i,13n,92p,631b,667s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,13n,92p,707b,667s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-tex
 live/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/
 type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/publ
@@ -1297,9 +1307,9 @@ ype1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-texlive/fonts/type1/public
 /cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy8.p
 fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on informeTP3.pdf (28 pages, 796102 bytes).
+Output written on informeTP3.pdf (29 pages, 798698 bytes).
 PDF statistics:
- 429 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
+ 433 PDF objects out of 1000 (max. 8388607)
+ 93 named destinations out of 1000 (max. 500000)
  399 words of extra memory for PDF output out of 10000 (max. 10000000)
 
