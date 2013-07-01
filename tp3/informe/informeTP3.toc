@@ -1,25 +1,37 @@
 \select@language {spanish}
-\contentsline {section}{\numberline {1}Descripci\IeC {\'o}n de situaciones reales}{3}{section.1}
-\contentsline {section}{\numberline {2}Algoritmo Exacto}{4}{section.2}
-\contentsline {subsection}{\numberline {2.1}Algoritmo}{4}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}An\IeC {\'a}lisis de complejidad}{5}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Experimentaci\IeC {\'o}n y Resultados}{7}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Grafos al azar}{8}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}Grafos densos}{8}{subsubsection.2.3.2}
-\contentsline {subsubsection}{\numberline {2.3.3}G y H complementos}{9}{subsubsection.2.3.3}
-\contentsline {section}{\numberline {3}Heur\IeC {\'\i }stica Constructiva Golosa}{10}{section.3}
-\contentsline {subsection}{\numberline {3.1}Algoritmo}{10}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}An\IeC {\'a}lisis de complejidad}{11}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Experimentaci\IeC {\'o}n y Resultados}{12}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Grafos al azar}{13}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Grafos densos}{13}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}G y H complementos}{14}{subsubsection.3.3.3}
-\contentsline {section}{\numberline {4}Heur\IeC {\'\i }stica de B\IeC {\'u}squeda Local}{15}{section.4}
-\contentsline {subsection}{\numberline {4.1}Algoritmo}{15}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}An\IeC {\'a}lisis de complejidad}{16}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Experimentaci\IeC {\'o}n y Resultados}{16}{subsection.4.3}
-\contentsline {section}{\numberline {5}Metaheur\IeC {\'\i }stica de Grasp}{17}{section.5}
-\contentsline {subsection}{\numberline {5.1}Algoritmo}{17}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}An\IeC {\'a}lisis de complejidad}{17}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Experimentaci\IeC {\'o}n y Resultados}{18}{subsection.5.3}
-\contentsline {section}{\numberline {6}Experimentaci\IeC {\'o}n General}{19}{section.6}
+\contentsline {section}{\numberline {1}Descripci\IeC {\'o}n de situaciones reales}{4}{section.1}
+\contentsline {section}{\numberline {2}Algoritmo Exacto}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Algoritmo}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}An\IeC {\'a}lisis de complejidad}{6}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Experimentaci\IeC {\'o}n y Resultados}{8}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Grafos al azar}{9}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Grafos densos}{9}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}G y H complementos}{10}{subsubsection.2.3.3}
+\contentsline {section}{\numberline {3}Heur\IeC {\'\i }stica Constructiva Golosa}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Algoritmo}{11}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}An\IeC {\'a}lisis de complejidad}{12}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Experimentaci\IeC {\'o}n y Resultados}{13}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Grafos al azar}{14}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Grafos densos}{14}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}G y H complementos}{15}{subsubsection.3.3.3}
+\contentsline {section}{\numberline {4}Heur\IeC {\'\i }stica de B\IeC {\'u}squeda Local}{16}{section.4}
+\contentsline {subsection}{\numberline {4.1}Algoritmo}{16}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}An\IeC {\'a}lisis de complejidad}{17}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Experimentaci\IeC {\'o}n y Resultados}{17}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Grafos al azar}{17}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}Grafos densos}{18}{subsubsection.4.3.2}
+\contentsline {subsubsection}{\numberline {4.3.3}G y H complementos}{18}{subsubsection.4.3.3}
+\contentsline {section}{\numberline {5}Metaheur\IeC {\'\i }stica de Grasp}{19}{section.5}
+\contentsline {subsection}{\numberline {5.1}Algoritmo}{19}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}An\IeC {\'a}lisis de complejidad}{19}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Experimentaci\IeC {\'o}n y Resultados}{20}{subsection.5.3}
+\contentsline {subsubsection}{\numberline {5.3.1}Grafos al azar}{21}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.2}Grafos densos}{21}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.3}G y H complementos}{22}{subsubsection.5.3.3}
+\contentsline {section}{\numberline {6}Experimentaci\IeC {\'o}n General}{23}{section.6}
+\contentsline {subsection}{\numberline {6.1}Comparando con el Exacto}{23}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Distancia}{23}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Efectividad}{25}{subsubsection.6.1.2}
+\contentsline {subsection}{\numberline {6.2}Comparando con Grasp}{26}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Efectividad}{27}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Costo}{27}{subsubsection.6.2.2}
