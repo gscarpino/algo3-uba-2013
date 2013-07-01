@@ -158,3 +158,30 @@ $\leq  d* \sum_{i=1}^{n} i!*(n+m)$\\
 \indent maximoImpactoExacto cuesta entonces O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) que es O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
 \subsection{Experimentación y Resultados}
+\quad Trabajamos con los siguientes 3 casos: grafos al azar, grafos densos, G y H complementos.
+
+\quad Se midieron los tiempos en corridas de  5 a 100 nodos con 100 repeticiones para cada cantidad de nodos.
+
+\subsubsection{Grafos al azar}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{exacto-tiempos-Azar.png}
+\caption{Costos}
+\end{figure}
+
+\subsubsection{Grafos densos}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{exacto-tiempos-G-y-H-densos.png}
+\caption{Costos}
+\end{figure}
+
+\subsubsection{G y H complementos}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{exacto-tiempos-H-complemento.png}
+\caption{Costos}
+\end{figure}
