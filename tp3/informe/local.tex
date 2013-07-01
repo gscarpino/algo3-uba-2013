@@ -2,6 +2,62 @@
 
 \subsection{Algoritmo}
 
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{maximoImpactoLocal}(unsigned$ $int$ nodo, $Grafo$ g$, Grafo$ h$, double $ porcentaje$)$}
+
+\li
+\li vector$<$unsigned int$>$ impactoGoloso  \gets maximoImpactoGoloso(g,h,porcentaje)
+\li unsigned int impactoParcial \gets impactoGoloso[0];
+\li vector$<$unsigned int$>$ coloreo(n);
+\li
+\li \For i desde 1 hasta n \Do
+    
+\li 	coloreo[i] \gets impactoGoloso[i]
+    
+    \End
+\li
+
+\li unsigned int nuevoImpacto \gets 0
+\li
+\li	\For i desde 1 hasta n \Do
+	
+\li
+\li		vector$<$unsigned int$>$ vecinos \gets $vecinos del nodo i en h$
+\li
+\li 	\For j desde 1 hasta la cantidad de vecinos de i en h \Do
+
+\li				unsigned int color = coloreo[vecinos[j]]
+\li
+\li				\If pintar al nodo i de $color$ es legal \Do			
+\li						vector$<$unsigned int$>$ nuevoColoreo \gets $coloreo$
+\li						nuevoColoreo[i] \gets $color$
+\li                		nuevoImpacto \gets $h.impacto(nuevoColoreo)$
+\li
+\li                		\If nuevoImpacto $>$ impactoParcial \Do
+                
+\li                			coloreo[i] \gets $color$
+\li                   			impactoParcial \gets $nuevoImpacto$
+                   		\End
+\li
+                \End
+        \End
+    \End
+
+\li
+\li		impactoGoloso[0] \gets $impactoParcial$
+\li
+\li \For i desde 0 hasta n \Do
+\li		impactoGoloso[i+1]=coloreo[i]
+	\End    
+
+\li
+\li return impactoGoloso
+\End
+\end{codebox}
+\end{algorithm}
+
 \subsection{Análisis de complejidad}
 
 \indent Veamos la complejidad de maximoImpactoLocal. Primero se calcula una solución con maximoImpactoGoloso. Como mencionamos en el apartado correspondiente eso cuesta O(n*(n+m)+ $n^{3}$). \\
