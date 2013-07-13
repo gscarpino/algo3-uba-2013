@@ -1,0 +1,78 @@
+
+\documentclass[spanish, 12pt,a4paper]{article}
+%\usepackage[spanish]{babel}
+\input{macrostp2.tex}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{clrscode3e}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{caratula}
+\usepackage{fancyhdr,lastpage}
+\usepackage[paper=a4paper, left=1.4cm, right=1.4cm, bottom=1.4cm, top=1.4cm]{geometry}
+\usepackage[table]{xcolor} % color en las matrices
+\usepackage[font=small,labelfont=bf]{caption} % caption de las figuras en letra mas chica que el texto
+				
+\color{black}
+
+%%%PAGE LAYOUT%%%
+\topmargin = -0.5cm
+\voffset = 0cm
+\hoffset = 0em
+\textwidth = 37em
+\textheight = 130 ex
+\oddsidemargin = 4 em
+\parindent = 2 em
+\parskip = 3 pt
+\footskip = 7ex
+\headheight = 20pt
+\pagestyle{fancy}
+\lhead{AyED	 III - 2013 C1 - Trabajo Pr\'actico 3} % cambia la parte izquierda del encabezado
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % cambia la parte derecha del encabezado
+\rfoot{\thepage}
+\cfoot{}
+\numberwithin{equation}{section} %sets equation numbers <chapter>.<section>.<subsection>.<index>
+
+%Lo siguiente controla el ancho de las figuras (principalmente para el texto de los captions)
+%\newcommand{\figurewidth}{.9\textwidth}
+\newcommand{\figurewidth}{1\textwidth}
+
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\Ode}[1]{\small{$\mathcal{O}(#1)$}}
+\newtheorem{teorema}{Teorema}[section]
+
+\input{caratula.tex} 
+\begin{document}
+{ \oddsidemargin = 1em
+	\headheight = -20pt
+	\maketitle
+}
+	\tableofcontents
+	\newpage
+	%descripcion de situaciones reales
+	\input{reales.tex}
+	\newpage
+	%algoritmo exacto
+	\input{exacto.tex}
+	\newpage
+	%goloso
+	\input{goloso.tex}
+	\newpage
+	%busqueda local
+	\input{local.tex}
+	\newpage	
+	%grasp
+	\input{grasp.tex}
+	\newpage
+	%experimentacion
+	\input{experimentacion.tex}
+	\newpage
+	\bibliographystyle{plain}	
+	\clearpage
+	\addcontentsline{toc}{section}{Bibliography}
+%	\bibliography{bib}	
+\end{document}
+
