@@ -1,71 +1,159 @@
 \section{Algoritmo Exacto}
 
+
 \subsection{Algoritmo}
+Antes de desarrollar la explicaci\'on, definimos algunos elementos que utilizaremos luego.
+Sean G = (V, E$_G$), H = (V, E$_H$) dos grafos con V el mismo conjunto de nodos, y sea $n$  = $|$V$|$. 
+Consideramos que los nodos de V se encuentran numerados de alguna manera con los n\'umeros de 1 a n.
+Sean los n colores representados por el conjunto C = \{1, 2, ..., n\}; un coloreo ser\'a representado por una lista $f$ de n valores, cada uno de ellos pertenenciente al conjunto C, donde el nodo $i$ es pintado con el color en la posici\'on \textsl{f}$_i$.
+Buscamos desarrollar un algortimo exacto que nos permita encontrar alg\'un coloreo \textsl{f} de G que use los colores de C, tal que el impacto (tal como se define en el enunciado) de \textsl{f} en H sea m\'aximo. 
 
-\indent La idea de este algoritmo es simple. Recorremos la cantidad de colores posibles del grafo g, calculamos su impacto en h y nos quedamos con el máximo.\\
-\indent La dificultad del problema radicaba en calcular la cantidad de colores posibles del grafo, algo que a priori puede ser infinito.\\
-\indent Consideramos a los colores como números enteros positivos. De aquí se extrae que hay infinitos colores y por lo tanto infinitos coloreos de G válidos.\\
-\indent Sin embargo, se pueden hacer algunas consideraciones para acotar considerablemente la cantidad de colores a usar, sin perder generalidad.\\
-\indent En primer lugar, intuitivamente se extrae que con $n$ colores es suficiente, donde $n$ es la cantidad de nodos para analizar todos los casos posibles. Entonces consideraremos como colores los primeros $n$ números enteros positivos. Esto es porque en realidad este caso sirve para analizar aquellos donde se tienen $n$ colores distintos, independientemente de que esos $n$ colores no sean los primeros $n$ números positivos (considerando un color como un número).\\
-\indent Sin embargo, todavía se puede acotar un poco más las instancias a analizar.\\
-\indent Esto tiene que ver con el hecho de que, aunque definamos $n$ colores, uno podría establecer una biyección entre dos conjuntos de colores con los mismos elementos dónde, por ejemplo, en el conjunto 2 se renombra al color 1 del primer conjunto como el color n y viceversa. Esto provocaría, de no tenerse en cuenta, que se estén analizando casos ya analizados. Si además, en vez de renombrar 2 colores los renombrasemos a todos, estaríamos analizando muchísimos casos que, si bien se corresponden a coloreos distintos, son en el fondo, casos equivalentes.\\
-\indent Para evitarnos estos análisis de más, determinamos los coloreos de la siguiente manera:\\
-\indent Eligimos un nodo cualquiera como el primer nodo para pintar. A ese nodo lo pintamos con el color 1, y por lo que mencionamos anteriormente, de esta manera se estarían analizando también los casos dónde ese nodo tiene otro color entre 2 y n.\\
-\indent Ahora se elije otro nodo para pintar en segundo lugar. Para pintarlo tenemos dos posibilidades: o pintarlo del mismo color que el nodo 1 o pintarlo con un color nuevo. Luego, se están generando dos coloreos distintos, y cada uno se sigue generando por separado.\\
-\indent La idea es que al pintar el nodo $k$, con $k<=n$, uno podría elegir 2 caminos : o pintarlo de un color ya usado, o pintarlo con un color nuevo.\\
-\indent Definamos $max$ como el color de máximo valor utilizado hasta ahora en el coloreo. Luego, existen $max+1$ maneras de continuar ese coloreo, pintando el nodo $k$ de 1,2...$max$ o de un color nuevo, $max+1$.\\
-\indent Debe notarse entonces, que por cada paso del coloreo se generan muchos nuevos coloreos más.\\
-\indent A medida que se generan los coloreos, generamos otra poda: aquella que determina si al pintar a un nodo de un color se está generando un coloreo válido. En caso de no serlo se deja de analizar ese caso.\\
-\indent Luego, de todos los colores posibles válidos se calcula el impacto en H y nos quedamos con aquél que proporciona un máximo impacto.\\
+La idea general del algoritmo es simple: generar todos los coloreos del grafo G, y por cada uno que sea legal, calcular el impacto en H y guardar aquel con el que el valor obtenido sea m\'aximo. 
 
-\indent El pseudocódigo del algoritmo es el siguiente:\\   
-
-
-
-
+Para genererar todos los coloreos posibles, vamos a partir de la siguiente funci\'on recursiva:
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{maximoImpactoExacto}(Grafo$ g$, Grafo$ h$)$}
-
-\li vector$<$unsigned int$>$ $res(n+1)$
-\li int $res[0] \gets 0$
-\li vector$<$unsigned int$>$ $coloreo(n,0)$
-\li $coloreo[0] \gets 1$
-\li $colorear(1,g,h,coloreo,res)$
-\li	return $res$
+\Procname{$\proc{coloreos}(nodo, coloreo)$}
+\li \If \textit{nodo} $\leq$ \textsc{length}(\textit{coloreo}) \Do
+\li 		\textsl{hacer algo con el coloreo}		
+		\End
+\li	\Else \Do
+\li			\For color \textbf{in} Colores \Do	
+\li					\textit{coloreo}[\textit{nodo}] = color
+\li					\textsc{coloreos}(nodo+1, coloreo)	
+				\End
+		\End
 \End
 \end{codebox}
 \end{algorithm}
 
+Esta funci\'on genera todos las combinaciones posibles de los colores de C (\textsl{Colores}) en los nodos de G.
+%: en cada posici\'on del coloreo (es decir, para cada nodo del grafo) pone cada uno de los colores de \textsl{Colores}, y para cada uno de ellos, completa las siguientes posiciones del coloreo.
+Sin embargo, \'esta es una tarea muy costosa, pues la cantidad de resultados posibles es de orden exponencial. Por ejemplo, si el grafo tiene n nodos, obtendr\'iamos al menos $n!$ coloreos: podr\'iamos colorear cada nodo de un color diferente, y despu\'es permutar los colores entre todos lo nodos. 
+M\'as all\'a de esto, dadas las caracter\'isticas del problema planteado, veremos algunos recursos que nos permitiran reducir dr\'asticamente la cantidad de casos a analizar.
+
+
+En primer lugar observamos que, para un grafo G dado, solo nos interesa analizar los coloreos que son legales (es decir, aquellos en los que si dos nodos son adyacentes, entonces est\'an pintados de colores distintos). Esto nos da una pauta sobre como aplicar podas a medida que vamos generando los coloreos: al pintar un nodo i (es decir, elegir un color para el posici\'on i del coloreo), utilizaremos solo los colores que produzcan un coloreo legal hasta ese momento.
+
+Por ejemplo, en la figura \ref{fig:ejemploSoloColoreosNoValidos} mostramos dos pasos en la generaci\'on de un coloreo para un grafo de 5 nodos. Podemos ver que si tenemos el nodo 2 pintado de color negro, al pintar el nodo 3 tambi\'en de color negro obtendremos un coloreo ilegal para cualquier otra combinaci\'on de colores en los nodos siguientes. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{ejemplo-coloreos-no-validos.png}
+\label{fig:ejemploSoloColoreosNoValidos}
+\caption{Ejemplo de coloreo de un nodo que lleva a coloreos ilegales.}
+\end{figure}
+
+Por lo tanto, podemos aplicar una una poda considerando solamente los colores que sean legales con respecto a los de los nodos pintados con anterioridad:
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{colorear}(unsigned$ $int$ nodo, $Grafo$ g$, Grafo$ h$, $vector$<$unsigned int$>$ coloreo$, $vector$<$unsigned int$>$ solucion$)$}
-
-\li \If (nodo $>$ n) \Do
-\li 	$int$ temp $\gets$ impacto(h, coloreo)
-\li		\If $temp > solucion[0]$ \Do
-\li			$solucion[0] \gets temp$
-\li			\For i desde 0 hasta n \Do
-\li				$solucion[i+1]=coloreo[i]$
-			\End
+\Procname{$\proc{coloreos}(nodo, coloreo)$}
+\li \If \textit{nodo} $\leq$ \textsc{length}(\textit{coloreo}) \Do
+\li 		\textsl{hacer algo con el coloreo}		
 		\End
+\li	\Else \Do
+\li			\For color \textbf{in} Colores \Do
+\li		 		\If color legal para el nodo \textsl{nodo}\Do	
+\li					\textit{coloreo}[\textit{nodo}] = color
+\li					\textsc{coloreos}(nodo+1, coloreo)	
+					\End
+				\End
+		\End
+\End
+\end{codebox}
+\end{algorithm}
+ 
+Por otro lado, notamos que existen coloreos que son equivalentes (en el sentido en que uno puede obtenerse a partir del otro por medio de un renombramiento de sus colores), y por lo tanto, una vez analizado un caso, los dem\'as solo aportan informaci\'on redundante. 
+Por ejemplo, supongamos que tenemos un grafo de 5 nodos 3-coloreable, y sean C = \{\textsl{gris} = 1, \textsl{rayado} = 2, \textsl{negro} = 3\} los colores. 
+Dos coloreos v\'alidos son 1-2-3-1-2 y 2-1-3-2-1, como se muestra en la figura \textbf{\ref{fig:ejemploRepeticionColoreo}}. 
+Sin embargo, f\'acilmente se ve que al intercambiar las etiquetas de los colores \textsl{1} y \textsl{2}, el primer coloreo puede transformase en el segundo, y el segundo puede transformase en el primero. 
+
+\begin{figure}[H]
+\label{fig:ejemploRepeticionColoreo}
+\caption{Ejemplo de dos coloreos legales que resultan equivalentes.}
+	\centering
+	\includegraphics[scale=1]{ejemplo-mismos-coloreos.png}
+\end{figure}
+
+
+%Dicho m\'as formalmente, existen pares de coloreos f y f' para los podemos establecer una biyecci\'on $\Phi : \; C \rightarrow C$ tal que  $f'(v) = \Phi(f(v))$ y $f(v) = \Phi(f'(v))$.
+
+Recordemos que numeramos los nodos y los colores con los n\'umeros de 1 a n, y dejemos de lado, por el momento, la condici\'on de legalidad.
+Definamos un conjunto de coloreos F donde cada coloreo f es un vector 
+$$f = [f(1), ... , f(n)]$$
+
+
+tal que, para cada uno, $f(v)$ cumple
+
+\begin{itemize}
+	\item $m$ es el m\'aximo en $f[1...v-1]$ (0, si $v-1 \leq 0$)
+	\item $1 \leq f(v) \leq m+1$
+\end{itemize}
+
+Es decir, para pintar el nodo v, se usan $m+1$ maneras distintas, usando los colores ya usados, de 1,2...$m$ o un color nuevo, $m+1$.
+
+\begin{figure}[H]
+\label{fig:ejemploRepeticionColoreo}
+	\centering
+	\includegraphics[scale=1]{ejemplo-coloreos-distintos.png}
+\caption{Ejemplo de un conjunto de coloreos seg\'un la caracterizaci\'on dada. Cada camino desde la ra\'iz a una hoja es un coloreo. Por ejemplo, 1-1-1-1, 1-2-1-2 y 1-2-3-4.}
+\end{figure}
+
+
+Por la forma en que estan construidos, resulta que dos coloreos f y f' cualesquiera de F no son equivalentes. 
+
+Adem\'as, cualquier otro coloreo que no est\'e en F es equivalente a uno que si lo est\'a.
+
+%Para evitar analizar estos casos de m\'as, definimos la siguiente manera para determinar los colores a usar en cada momento:
+Entonces, teniendo esto en cuenta, para evitar analizar los casos de m\'as definimos una forma m\'as restrictiva para armar los coloreos.
+El pseudocódigo del algoritmo es el siguiente:
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{colorear}(nodo, G, H, coloreo, solucion)$}
+
+\li \If $nodo \; \geq \; G.cantNodos$ \Comment{se pintaron todos los nodos de G} \Do
+\li	$impacto$ $\gets$ impacto del coloreo en H
+\li		\If $impacto\; > \; solucion.impacto$ \Do
+\li			$solucion.impacto \gets impacto$
+\li			$solucion.coloreo = coloreo$
+			\End
 	\End
 \li \Else \Do
-\li		$int$ maxColor $\gets $ maximo color usado hasta el momento 	
-\li		\For c desde 1 hasta maxColor \Do
-\li			\If es legal pintar el nodo $nodo$ del color c \Do
-\li				vector$<$unsigned int$>$ nuevoColoreo(coloreo)
-\li             $nuevoColoreo[nodo] \gets c$
-\li             $colorear(nodo+1,g,h,nuevoColoreo,solucion)$
+\li		$maxColor$ $\gets$ maximo color usado hasta el momento 	
+\li		\For c \textbf{from} 1 \textbf{to} maxColor \Do
+\li			\If es legal pintar $nodo$ de color c \Do
+\li					$nuevoColoreo \; = \; coloreo$
+\li         $nuevoColoreo[nodo] \gets c$
+\li         $colorear(G, H, nuevoColoreo, solucion)$
              \End
          \End
 \End
 \end{codebox}
 \end{algorithm}
+
+
+La funci\'on que resolver\'a el problema planteado es
+
+\begin{algorithm}[H]
+\caption{} 
+\begin{codebox}
+\Procname{$\proc{maximoImpactoExacto}(Grafo$ G$, Grafo$ H$)$}
+\li Sea $solucion$ un vector de n+1 elementos
+\li Sea $coloreo$ un vector de n elementos
+\li $solucion[0] \gets 0$
+\li $coloreo[0] \gets 1$
+\li $colorear(1,g,h,coloreo,solucion)$
+\li	return $solucion$
+\End
+\end{codebox}
+\end{algorithm}
+
 
 
 \subsection{Análisis de complejidad}
