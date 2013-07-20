@@ -2,25 +2,51 @@
 
 \subsection{Algoritmo}
 
+\indent El desarrollo de este algoritmo se encaró analizando ciertas características del problema a resolver. Dado que lo se busca es el máximo impacto posible, al comenzar el algoritmo se emplea una distribución de colores en los nodos que lo provea y que no es necesariamente un coloreo válido de G: aquella que surge de pintar todos los nodos con el mismo color (una distribución de colores que solamente es un coloreo para un grafo G que carezca de aristas en su totalidad y que para cualquier otro tipo de grafos no cumple con la definición de coloreo). \\
+\indent Teniendo en cuenta que partimos de un máximo, la idea es ir modificando el color de la menor cantidad de nodos posible hasta que se halle un coloreo válido para G, momento en el cual se deja de iterar y se devuelve el coloreo hasta ese momento obtenido. Qué nodo se priorizará modificar en cada paso se define en base a los siguientes criterios:\\
+
+\indent En primer lugar, deberá ser un nodo que no se haya modificado en algún paso anterior del algoritmo. En segundo lugar, que dicho nodo en caso de modificarse disminuya lo menos posible el impacto que se maneja hasta ese momento(lo que es lo mismo que decir que es el nodo que menos impacto aporta al coloreo). En caso de que dos o más nodos cumplan con estos requirimientos (lo que querría decir que modificar el color de cualquiera de ellos disminuye en la misma cantidad el impacto y que esa cantidad es la menor que se podría disminuir), se definieron ciertos criterios de desempate: se elegirá al nodo que mayor grado tenga en G ( ya que se busca lograr un coloreo legal de G modificando la menor cantidad de nodos posibles y al tener el nodo una mayor cantidad de vecinos en G modificar su color podría acercarnos más a un coloreo válido de G) y en caso de empatar en este criterio, se eligirá al nodo que menor grado tenga en H (porque se busca maximizar el impacto).\\
+
+\indent A la hora de implementarlo, sin embargo, le dimos una vuelta de tuerca más. Como precisábamos un algoritmo goloso con cierto grado de aleatoriedad, definimos una parámetro $porcentaje$  número real entre 0 y 1 que se usa de la siguiente manera:\\
+\indent El proceso de elección del nodo mencionado anteriormente se implementó ordenando una lista de posibles nodos a modificar de manera tal que el nodo que mejor se ajuste a los requerimientos se encuentre en la primera posición. Una vez ordenada esta lista, se elegirá el nodo que se corresponda con el índice de dicha lista que se obtiene de obtener un número pseudoaleatoriamente y calcular el resto de dividirlo por el $porcentaje$ del tamaño de la lista más 1 (es decir índice = rand \% lista.size()*$porcentaje$ + 1). Es fácil observar que si $porcentaje$=0 entonces se devolverá el primer elemento de la lista, que es el nodo que mejor se ajusta a los criterios de elección. \\
+
+\indent La función que se encarga de la elección del nodo es $siguienteModificable$, que será llamada por $maximoImpactoGoloso$ hasta que se encuentre un coloreo válido. $maximoImpactoGoloso$ es además la encargada de aplicar el cambio de color en el nodo devuelto por $siguienteModificable$.\\
+
+\indent El pseudocódigo es el que sigue:\\
 
 
-\quad Analizando las características del problema implementamos una heurística constructiva golosa con los siguientes objetivos:
 
-\quad
+%\quad Analizando las características del problema implementamos una heurística constructiva golosa con los siguientes objetivos:
 
-\quad \quad \quad - Empezar con el impacto máximo posible (cantidad de aristas de H)
+%\quad
 
-\quad 
+%\quad \quad \quad - Empezar con el impacto máximo posible (cantidad de aristas de H)
 
-\quad \quad \quad - Modificar la menor cantidad de nodos posibles
+%\quad 
 
-\quad
+%\quad \quad \quad - Modificar la menor cantidad de nodos posibles
 
-\quad \quad \quad - El nodo que se modifique, tendría que bajar lo menos posible el impacto
+%\quad
 
-\quad
+%\quad \quad \quad - El nodo que se modifique, tendría que bajar lo menos posible el impacto
 
-\quad Pseudocódigo:
+%\quad En \textit{maximoImpactoGoloso} primero se colorea a todos los nodos con el mismo color, por lo que, sin tener en cuenta al grafo G, el impacto en H es máximo. Mientras que no sea legal este coloreo en G, se va a ir modificando los nodos. Apenas se consiga un coloreo legal se detiene. Por lo tanto, no necesariamente el ciclo principal itera la cantidad de nodos (en el peor caso sí).
+
+%\quad En \textit{siguienteModificable} se obtiene el nodo a modificar. Se crea una lista de nodos que no hayan sido modificados y se calcula para cada uno su aporte al impacto en H. Se ordena la lista por los siguientes criterios:
+
+%\quad
+
+%\quad \quad - Menor impacto en H aportado: se desea modificar al que menos aporta para ver si cambiando de color aporta más.
+
+%\quad
+
+%\quad \quad - Mayor grado en G: se busca que cuanto antes el coloreo de G sea legal modificando lo menos posible, y modificando un nodo de grado grande se podria conseguir esto.
+
+%\quad 
+
+%\quad \quad - Menor grado en H: por lo que dijimos, en caso de empate de los anteriores criterios, queremos modificar lo menos posible en G y H
+
+%\quad Pseudocódigo:
 
 \begin{algorithm}[H]
 \caption{} 
@@ -72,22 +98,6 @@
 \end{algorithm}
 
 \quad
-
-\quad En \textit{maximoImpactoGoloso} primero se colorea a todos los nodos con el mismo color, por lo que, sin tener en cuenta al grafo G, el impacto en H es máximo. Mientras que no sea legal este coloreo en G, se va a ir modificando los nodos. Apenas se consiga un coloreo legar se detiene. Por lo tanto, no necesariamente el ciclo principal itera la cantidad de nodos (en el peor caso sí).
-
-\quad En \textit{siguienteModificable} se obtiene el nodo a modificar. Se crea una lista de nodos que no hayan sido modificados y se calcula para cada uno su aporte al impacto en H. Se ordena la lista por los siguientes criterios:
-
-\quad
-
-\quad \quad - Menor impacto en H aportado: se desea modificar al que menos aporta para ver si cambiando de color aporta más.
-
-\quad
-
-\quad \quad - Mayor grado en G: se busca que cuanto antes el coloreo de G sea legal modificando lo menos posible, y modificando un nodo de grado grande se podria conseguir esto.
-
-\quad 
-
-\quad \quad - Menor grado en H: por lo que dijimos, en caso de empate de los anteriores criterios, queremos modificar lo menos posible en G y H
 
 
 \subsection{Análisis de complejidad}
