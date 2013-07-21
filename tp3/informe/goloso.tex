@@ -121,30 +121,36 @@
 \indent Por lo tanto, maximoImpactoGoloso cuesta O(n*(n+m)+ $n^{3}$).\\
  
 \subsection{Experimentación y Resultados}
-\quad Trabajamos con los siguientes 3 casos: grafos al azar, grafos densos, G y H complementos.
 
-\quad Se midieron los tiempos en corridas de  5 a 100 nodos con 100 repeticiones para cada cantidad de nodos.
 
-\subsubsection{Grafos al azar}
+\subsubsection{Optimización del parámetro}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{goloso-tiempos-Azar.png}
-\caption{Costos}
-\end{figure}
+\quad Como explicamos anteriormente, nuestra heurística recibe un parámetro que determina la aleatoriedad de la elección del siguente nodo a colorear con el objetivo de encontrar un coloreo del grafo G válido.
 
-\subsubsection{Grafos densos}
+\quad Comparamos los resultados obtenidos por el goloso contra la metaheurística GRASP, y calculamos la distancia de las soluciones. Es decir, la diferencia entre ambas. Probamos con 50, 100, 150 y 200 nodos con 100 repeticiones por cada cantidad de nodos. Testeamos con grafos aleatorios por su diversidad en tipos de grafos. Calculando un promedio obtuvimos:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{goloso-tiempos-G-y-H-densos.png}
-\caption{Costos}
+	\includegraphics[scale=0.6]{optimizacionGoloso.png}
 \end{figure}
 
-\subsubsection{G y H complementos}
+\quad Podemos observar que cuanto mayor sea la cantidad de nodos a elegir aleatoriamente empeora el resultado. Esto se debe a que en la porción de lista que elegimos al azar, se encuentra ordenada por los criterios anteriormente desarrollados. Con lo que al principio se encuentran los mejores candidatos. Concluimos con que si se utiliza solamente esta heurística, es conveniente que el valor del parámetro sea 0.
+
+\subsubsection{Costo temporal}
+
+\quad Una vez analizado el tema del parametro vamos a tomar el costo temporal de la heurística.
+
+\quad Analizaremos con grafos del tipo aleatorio, grafos de forma estrella no uniforme y grafos de red de 4 vértices.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{goloso-tiempos-H-complemento.png}
-\caption{Costos}
+	\includegraphics[scale=0.6]{timingGoloso.png}
 \end{figure}
+
+\quad
+
+\quad Podemos observar que efectivamente se cumple con la cota teórica calculada anteriormente. Mantiene la tendencia asintótica de O($ n^{3}$) pero más \textit{suave}. 
+
+\quad Si comparamos con las gráficas obtenidas con el método exacto es drástico la mejora en cuanto costos temporal pero como veremos más adelante lo que se gana en tiempo se pierde mucho en calidad de solución obtenida.
+
+\quad Se observa que con las tres familias de grafos con las que testeamos no hay diferencias apreciables en cuanto a costo temporal.

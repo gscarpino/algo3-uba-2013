@@ -85,30 +85,26 @@
 \indent Entonces, maximoImpactoLocal cuesta O(n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m)).\\
 
 \subsection{Experimentación y Resultados}
-\quad Trabajamos con los siguientes 3 casos: grafos al azar, grafos densos, G y H complementos.
 
-\quad Se midieron los tiempos en corridas de  5 a 100 nodos con 100 repeticiones para cada cantidad de nodos.
+\quad A continuación analizaremos el costo temporal de la búsqueda local. Al igual que antes, testeamos con grafos generados al azar, con grafos estrellas no uniformes y grafos web de 4 vértices.
 
-\subsubsection{Grafos al azar}
+\quad Se midieron los tiempos en corridas de  5 a 100 nodos con 50 repeticiones para cada cantidad de nodos y se las comparó con la cota teórica calculada anteriormente.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{BLocal-tiempos-Azar.png}
-\caption{Costos}
-\end{figure}
-
-\subsubsection{Grafos densos}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{BLocal-tiempos-G-y-H-densos.png}
+	\includegraphics[scale=0.6]{timingBLocal.png}
 \caption{Costos}
 \end{figure}
 
-\subsubsection{G y H complementos}
+\quad
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{BLocal-tiempos-H-complemento.png}
-\caption{Costos}
-\end{figure}
+\quad Se observa que se cumple con la cota del peor caso calculada.
+
+\quad A diferencia de la heurística golosa, se puede ver que con los tres tipos de grafos se obtuvieron diferentes resultados.
+
+\quad Con la que menor costos temporales se obtuvo fue con los grafos generados al azar. En cambio, vemos que con los grafos estrella el costo aumenta considerablemente. En menor medida ocurre con los grafos de red de 4 nodos. 
+
+\quad Esto se debe a que estos dos últimos tipos de grafos en general son menos \textit{densos} que los grafos generados aleatoriamente. Como nuestra heurística de búsqueda local busca cambiar el color de un nodo por otro color legal (de algún vecino en el grafo H) en estos grafos menos densos hay mayor opciones por lo que se itera y prueba más veces.
+
+\quad Si bien las cotas teóricas de las heurísticas golosa y de búsqueda local son las mismas, las constante que las multiplica son distintas, siendo mayor la de esta última ya que requiere más cálculo computacional.
