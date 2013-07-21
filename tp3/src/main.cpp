@@ -14,13 +14,25 @@
 #define TESTING 0
 #define RES_EFECTIVIDAD 0
 #define RES_EFECTIVIDAD2 0
-#define RES_TIMING 0
+#define RES_TIMING 1
 #define RES_Goloso 0
-#define RES_Grasp 1
+#define RES_Grasp 0
 
 using namespace std;
 
 void genTests();
+
+timespec diff(timespec start, timespec end){
+        timespec temp;
+        if ((end.tv_nsec-start.tv_nsec)<0) {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+        } else {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+        }
+        return temp;
+}
 void borrarElemento(vector<unsigned int> &v, unsigned int e);
 
 int main(int argc, char * argv[])
@@ -40,6 +52,7 @@ int main(int argc, char * argv[])
     ofstream resEfect2;
     ofstream resGoloso;
     ofstream resGrasp;
+    ofstream resTiming;
     if(RES_EFECTIVIDAD)
     {
         resEfect.open("Resultado_Efectividad.csv",  ios_base::trunc);
@@ -49,6 +62,17 @@ int main(int argc, char * argv[])
             exit(1);
         }
         resEfect << "Nodos Exacto Goloso BusquedaLocal Grasp" << endl;
+    }
+
+    if(RES_TIMING)
+    {
+        resTiming.open("Resultado_tiempos.csv",  ios_base::trunc);
+        if(!resTiming.is_open())
+        {
+            cerr << "Error al abrir/crear el archivo de salida." << endl;
+            exit(1);
+        }
+        resTiming << "Nodos Grasp Goloso BLocal" << endl;
     }
 
     if(RES_EFECTIVIDAD2)
@@ -82,6 +106,7 @@ int main(int argc, char * argv[])
         }
         resGrasp << "Nodos 0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1" << endl;
     }
+
 
 
     unsigned int efectividadGoloso = 0;
@@ -127,8 +152,8 @@ int main(int argc, char * argv[])
 
         cont++;
         cout << endl << "N " << nodos << " R " << cont << endl;
-        if(!RES_Goloso && !RES_Grasp && !RES_EFECTIVIDAD2){
-            double porcentaje = 0.1;
+        if(!RES_Goloso && !RES_Grasp && !RES_EFECTIVIDAD2 && !RES_TIMING){
+            double porcentaje = 0;
             vector<unsigned int> impactoExacto(maximoImpactoExacto(grafoG,grafoH));
             vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
             vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,impactoGoloso));
@@ -174,6 +199,27 @@ int main(int argc, char * argv[])
             resGrasp << endl;
         }
 
+        if(RES_TIMING){
+            timespec comienzo;
+            timespec terminacion;
+            resTiming << nodos;
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+//            vector<unsigned int> impactoGrasp(maximoImpactoGrasp(grafoG,grafoH,0.0));
+            vector<unsigned int> impactoGrasp(maximoImpactoExacto(grafoG,grafoH));
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+            resTiming << " " << diff(comienzo,terminacion).tv_nsec;
+
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+//            vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,0.0));
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+            resTiming << " " << diff(comienzo,terminacion).tv_nsec;
+
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &comienzo);
+//            vector<unsigned int> impactoLocal(maximoImpactoLocal(grafoG,grafoH,0.0));
+            clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &terminacion);
+            resTiming << " " << diff(comienzo,terminacion).tv_nsec << endl;
+        }
+
         if(RES_EFECTIVIDAD2){
             double porcentaje = 0.1;
             vector<unsigned int> impactoGoloso(maximoImpactoGoloso(grafoG,grafoH,porcentaje));
@@ -194,6 +240,7 @@ int main(int argc, char * argv[])
 
     resEfect.close();
     resGoloso.close();
+    resTiming.close();
     resGrasp.close();
     resEfect2.close();
 
@@ -204,9 +251,9 @@ int main(int argc, char * argv[])
 
 void genTests(){
     ofstream outputFile;
-    unsigned int minNodos = 15;
+    unsigned int minNodos = 5;
     unsigned int maxNodos = 15;
-    unsigned int repeticiones = 100;
+    unsigned int repeticiones = 50;
     int prob = 30;
 
     cout << "Creando test G y H al azar" << endl;
