@@ -13,14 +13,15 @@
 
 #define TESTING 0
 #define RES_EFECTIVIDAD 0
-#define RES_EFECTIVIDAD2 1
+#define RES_EFECTIVIDAD2 0
 #define RES_TIMING 0
 #define RES_Goloso 0
-#define RES_Grasp 0
+#define RES_Grasp 1
 
 using namespace std;
 
 void genTests();
+void borrarElemento(vector<unsigned int> &v, unsigned int e);
 
 int main(int argc, char * argv[])
 {
@@ -144,11 +145,11 @@ int main(int argc, char * argv[])
                 resEfect << nodos << " " << impactoExacto[0] << " " << impactoGoloso[0] << " " << impactoLocal[0] << " " << impactoGrasp[0] << endl;
             }
             else{
-                cout << "Exacto: " << impactoExacto[0] << endl;
-                cout << "Goloso: " << impactoGoloso[0] << endl;
-                cout << "Local: " << impactoLocal[0] << endl;
-                cout << "Grasp: " << impactoGrasp[0] << endl;
-                cout << endl;
+//                cout << "Exacto: " << impactoExacto[0] << endl;
+//                cout << "Goloso: " << impactoGoloso[0] << endl;
+//                cout << "Local: " << impactoLocal[0] << endl;
+//                cout << "Grasp: " << impactoGrasp[0] << endl;
+//                cout << endl;
             }
         }
 
@@ -165,9 +166,9 @@ int main(int argc, char * argv[])
 
         if(RES_Grasp){
             resGrasp << nodos;
-            for(unsigned int parametro = 0; parametro <= 100; parametro+=5)
+            for(unsigned int parametro = 5; parametro <= 100; parametro+=5)
             {
-                vector<unsigned int> impactoGrasp2(maximoImpactoGrasp(grafoG,grafoH,parametro/100.0));
+                vector<unsigned int> impactoGrasp2(maximoImpactoGrasp(grafoG,grafoH,parametro/10.0));
                 resGrasp << " " << impactoGrasp2[0];
             }
             resGrasp << endl;
@@ -203,10 +204,10 @@ int main(int argc, char * argv[])
 
 void genTests(){
     ofstream outputFile;
-    unsigned int minNodos = 5;
-    unsigned int maxNodos = 100;
-    unsigned int repeticiones = 50;
-    int prob = 50;
+    unsigned int minNodos = 15;
+    unsigned int maxNodos = 15;
+    unsigned int repeticiones = 100;
+    int prob = 30;
 
     cout << "Creando test G y H al azar" << endl;
     outputFile.open("testAzar.txt",  ios_base::trunc);
@@ -252,43 +253,57 @@ void genTests(){
     outputFile.close();
     cout << "Test creado." << endl;
 
-    prob = 75;
-
-    cout << "Creando test G y H densos" << endl;
-    outputFile.open("GyHdensos.txt",  ios_base::trunc);
+    //Minimo 5 nodos
+    cout << "Creando test G y H estrella" << endl;
+    outputFile.open("testStar.txt",  ios_base::trunc);
     if(!outputFile.is_open())
     {
         cerr << "Error al abrir/crear el archivo de salida." << endl;
         exit(1);
     }
 
-    for(unsigned int nodos = minNodos; nodos <= maxNodos; nodos++)
-    {
-        for(unsigned int r = 0; r < repeticiones; r++)
-        {
+    for(unsigned int nodos = minNodos; nodos <= maxNodos; nodos++) {
+        for(unsigned int r = 0; r < repeticiones; r++) {
             vector<pair<unsigned int, unsigned int> > vecinosG;
             vector<pair<unsigned int, unsigned int> > vecinosH;
-            for(unsigned int i = 0; i < nodos; i++)
-            {
-                for(unsigned int j = i+1; j < nodos; j++)
-                {
-                    if(rand()%100 < prob)
-                    {
-                        vecinosG.push_back(make_pair(i+1,j+1));
-                    }
-                    if(rand()%100 < prob)
-                    {
+            vector<unsigned int> gradoUno;
+
+            vecinosG.push_back(make_pair(1,2));
+            vecinosG.push_back(make_pair(1,3));
+            vecinosG.push_back(make_pair(1,4));
+            vecinosG.push_back(make_pair(1,5));
+
+            gradoUno.push_back(1);
+            gradoUno.push_back(2);
+            gradoUno.push_back(3);
+            gradoUno.push_back(4);
+            gradoUno.push_back(5);
+
+            for(unsigned int i=5; i < nodos; i++){
+                unsigned int elegido = rand()%((unsigned int)(gradoUno.size()*1.3));
+                if(elegido >= gradoUno.size()){
+                    elegido = 0;
+                }
+                vecinosG.push_back(make_pair(gradoUno[elegido],i+1));
+                if(gradoUno[elegido] != 1){
+                    borrarElemento(gradoUno,gradoUno[elegido]);
+                }
+                gradoUno.push_back(i+1);
+            }
+
+
+            for(unsigned int i = 0; i < nodos; i++) {
+                for(unsigned int j = i+1; j < nodos; j++) {
+                    if(rand()%100 < prob) {
                         vecinosH.push_back(make_pair(i+1,j+1));
                     }
                 }
             }
             outputFile << nodos << " " << vecinosG.size() << " " << vecinosH.size()<< endl;
-            for(unsigned int i = 0; i < vecinosG.size(); i++)
-            {
+            for(unsigned int i = 0; i < vecinosG.size(); i++) {
                 outputFile << vecinosG[i].first << " " << vecinosG[i].second << endl;
             }
-            for(unsigned int i = 0; i < vecinosH.size(); i++)
-            {
+            for(unsigned int i = 0; i < vecinosH.size(); i++) {
                 outputFile << vecinosH[i].first << " " << vecinosH[i].second << endl;
             }
         }
@@ -298,56 +313,59 @@ void genTests(){
     outputFile.close();
     cout << "Test creado." << endl;
 
-    prob = 50;
-
-    cout << "Creando test H complemento de G" << endl;
-    outputFile.open("conHcomplemento.txt",  ios_base::trunc);
+    //Minimo 5 nodos
+    cout << "Creando test G y H Web" << endl;
+    outputFile.open("testWeb.txt",  ios_base::trunc);
     if(!outputFile.is_open())
     {
         cerr << "Error al abrir/crear el archivo de salida." << endl;
         exit(1);
     }
 
-    for(unsigned int nodos = minNodos; nodos <= maxNodos; nodos++)
-    {
-        for(unsigned int r = 0; r < repeticiones; r++)
-        {
-            unsigned int cont = 0;
-            vector<vector<bool> > vecinosG;
+    for(unsigned int nodos = minNodos; nodos <= maxNodos; nodos++) {
+        for(unsigned int r = 0; r < repeticiones; r++) {
+            vector<pair<unsigned int, unsigned int> > vecinosG;
+            vector<pair<unsigned int, unsigned int> > vecinosH;
+            vector<unsigned int> externos;
 
-            for(unsigned int i = 0; i < nodos; i++)
-            {
-                vector<bool> temp(nodos,false);
-                vecinosG.push_back(temp);
-                for(unsigned int j = i+1; j < nodos; j++)
-                {
-                    if(rand()%100 < prob)
-                    {
-                        vecinosG[i][j] = true;
-                        cont++;
+            vecinosG.push_back(make_pair(1,2));
+            vecinosG.push_back(make_pair(1,3));
+            vecinosG.push_back(make_pair(1,4));
+            vecinosG.push_back(make_pair(1,5));
+
+            externos.push_back(2);
+            externos.push_back(3);
+            externos.push_back(4);
+            externos.push_back(5);
+
+            for(unsigned int i=5; i < nodos; i++){
+                unsigned int elegido = (i-1)%4;
+                vecinosG.push_back(make_pair(externos[elegido],i+1));
+                if(elegido == 3){
+                    for(unsigned int j = 0; j < externos.size(); j++){
+                        vecinosG.push_back(make_pair(externos[j],externos[(j+1)%externos.size()]));
+                    }
+                    externos.clear();
+                    externos.push_back(i-2);
+                    externos.push_back(i-1);
+                    externos.push_back(i);
+                    externos.push_back(i+1);
+                }
+            }
+
+            for(unsigned int i = 0; i < nodos; i++) {
+                for(unsigned int j = i+1; j < nodos; j++) {
+                    if(rand()%100 < prob) {
+                        vecinosH.push_back(make_pair(i+1,j+1));
                     }
                 }
             }
-            outputFile << nodos << " " << cont << " " << (nodos*nodos - nodos - cont*2)/2 << endl;
-            for(unsigned int i = 0; i < nodos; i++)
-            {
-                for(unsigned int j = i+1; j < nodos; j++)
-                {
-                    if(vecinosG[i][j])
-                    {
-                        outputFile << i+1 << " " << j+1 << endl;
-                    }
-                }
+            outputFile << nodos << " " << vecinosG.size() << " " << vecinosH.size()<< endl;
+            for(unsigned int i = 0; i < vecinosG.size(); i++) {
+                outputFile << vecinosG[i].first << " " << vecinosG[i].second << endl;
             }
-            for(unsigned int i = 0; i < nodos; i++)
-            {
-                for(unsigned int j = i+1; j < nodos; j++)
-                {
-                    if(!vecinosG[i][j])
-                    {
-                        outputFile << i+1 << " " << j+1 << endl;
-                    }
-                }
+            for(unsigned int i = 0; i < vecinosH.size(); i++) {
+                outputFile << vecinosH[i].first << " " << vecinosH[i].second << endl;
             }
         }
     }
@@ -355,4 +373,14 @@ void genTests(){
     outputFile << "#";
     outputFile.close();
     cout << "Test creado." << endl;
+
+}
+
+void borrarElemento(vector<unsigned int> &v, unsigned int e){
+    for(unsigned int i = 0; i < v.size(); i++){
+        if(v[i] == e){
+            v.erase(v.begin() + i);
+            break;
+        }
+    }
 }
