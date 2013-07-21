@@ -164,3 +164,20 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \quad Vamos a comparar el costo obtenido por nuestra heuristica versus el costo calculado teóricamente en la sección de complejidad.
 
 \quad Vamos a testear con 3 tipos de grafos: al azar, grafos estrellas no uniformes, grafos redes de 4 vértices.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{timingGRASP.png}
+\end{figure}
+
+\quad
+
+\quad Se ve claramente como a partir del nodo 50 hay un cambio brusco de los costos prácticos obtenidos. Refleja nuestro criterio de que para grafos con menos de 50 nodos se itera como máximo 5 veces la cantidad de nodos, caso contrario 3 veces. Lo que produce una disminución en los costos temporales. 
+
+\quad
+
+\quad Podemos observar que a partir de cierto punto se estabiliza el costo. Se debe a que se esta cumpliendo el segundo criterio de parada, el de si ocurre cierta cantidad de iteraciones donde no se mejora la solución se termina. 
+
+\quad
+
+\quad Con respecto a las distintas familias de grafos vemos que el comportamiento de nuestra heurística es  prácticamente el mismo. No se observan grandes diferencias. Con lo cual concluimos con estas familias de grafos no influye en el costo temporal.
