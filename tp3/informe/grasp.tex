@@ -74,9 +74,13 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 
 \subsection{Experimentación y Resultados}
 
+
+
 \subsubsection{Optimización de parámetros}
 
 \quad Primero buscamos optimizar los parámetros que utiliza nuestra implementación. Los cuales son el parámetro de la heurística golosa aleatoria que usa como base para ir armando las lista de candidatos, y los criterios de parada de una cantidad máxima de iteraciones y una cantidad máxima de iteraciones sin mejora en la solución que se va obteniendo.
+
+\quad Para testear, medir y generar resultados usamos el concepto de distancia en este caso como la diferencia entre el valor máximo que se obtiene del valor de impacto para determinado grafo y el valor obtenido con la heuristica con ciertos valores de parámetros determinados.
 
 \begin{itemize}
 
@@ -159,3 +163,9 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \quad Podemos observar como a partir del valor 0.5, se estabiliza la mejora por lo que consideramos a ese valor como el óptimo. Es decir, que si no se obtiene una mejora en la solución parcial obtenida en esa cantidad de iteraciones se termina, osea, la mitad de la cantidad máxima de iteraciones de la heurística. Ejemplo: si son 500 iteraciones máximas, si se cumple que en 250 iteraciones consecutivas no hay mejora, se finaliza.
 
 \end{itemize}
+
+\subsubsection{Costo temporal}
+
+\quad Vamos a comparar el costo obtenido por nuestra heuristica versus el costo calculado teóricamente en la sección de complejidad.
+
+\quad Vamos a testear con 3 tipos de grafos: al azar, grafos estrellas no uniformes, grafos redes de 4 vértices.
