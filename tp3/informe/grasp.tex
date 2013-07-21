@@ -99,7 +99,6 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{optimizacionGRASPParGoloso1.png}
-\caption{Costos}
 \end{figure}
 
 \quad
@@ -113,7 +112,6 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{optimizacionGRASPParGoloso2.png}
-\caption{Costos}
 \end{figure}
 
 \quad Tras obtener estos resultados, decidimos que cuando el grafo posea menos de 50 nodos el valor sea 0.3, en cambio, cuando tenga más nodos sea de 0.1. Esto significa que cuando más \textit{chico} es el grafo, en el goloso aleatorio se elige al azar entre menor cantidad de nodos para colorear de cierta forma. Osea que cuando se construye nuestra lista de candidatos posibles, cuanto más \textit{grande} es el grafo, se necesita menor porcentaje de aleatoriedad para crear posibles soluciones distintas entre si.
@@ -133,7 +131,6 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{optimizacionGRASPParIterMax.png}
-\caption{Costos}
 \end{figure}
 
 \quad Se puede observar que a partir del valor 3 del parámetro, lo que se mejora de la soluciones que se van obteniendo es menos. Creemos que es el punto ideal entre costo computacional y mejora de las soluciones parciales. Sin embargo, cuando son grafos pequeños, la cantidad de iteraciones es poca por lo que probamos con menor cantidad de nodos y un rango para el parámetro mayor. Obtuvimos que lo óptimo sería el valor 5.
@@ -141,7 +138,6 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{optimizacionGRASPParIterMax2.png}
-\caption{Costos}
 \end{figure}
 
 \quad Aumentar el valor del parámetro de 3 a 5 no implicaria un gran costo computacional debido a que es menor la cantidad de nodos. Entonces queda que para grafos de menos de 50 nodos se utiliza la herística con cantidad máxima de iteraciones 5 veces la cantidad de nodos. Con grafos \textit{más grandes} se utiliza 3 veces la cantidad de nodos.
@@ -157,7 +153,6 @@ O(maxIteraciones* [(maxRCL*(n*(n+m)+ $n^{3})$)+ (n*(n+m)+ $n^{3}$ +$ n^{2}$*(n+m
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{optimizacionGRASPParIterMaxSinMejora.png}
-\caption{Costos}
 \end{figure}
 
 \quad Podemos observar como a partir del valor 0.5, se estabiliza la mejora por lo que consideramos a ese valor como el óptimo. Es decir, que si no se obtiene una mejora en la solución parcial obtenida en esa cantidad de iteraciones se termina, osea, la mitad de la cantidad máxima de iteraciones de la heurística. Ejemplo: si son 500 iteraciones máximas, si se cumple que en 250 iteraciones consecutivas no hay mejora, se finaliza.

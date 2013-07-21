@@ -3,63 +3,31 @@
 
 \subsection{Comparando con el Exacto}
 
-\quad Debido al costo del exacto se realizaron tests de 3 nodos a 19 con 100 repeticiones para cada cantidad.
+\quad Vamos a comparar todas nuestras implementaciones y a calcular las distancias con respecto al algoritmo exacto. Debido al costo del exacto se realizaron tests de 5 nodos a 17 con 50 repeticiones para cada cantidad. Definimos distancia como la diferencia entre el resultado exacto y el de la heurística correspondiente. 
 
-\subsubsection{Distancia}
+
+\quad Comparamos primero con grafos generados aleatoriamente, luego con grafos estrellas no uniformes y grafos \textit{web}.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-Azar.png}
+\end{figure}
+
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=0.8]{distancia-Estrella.png}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=0.8]{distancia-Web.png}
+%\end{figure}
 
 \quad
 
-\quad Comparamos los resultados del algoritmo exacto, el goloso, la búsqueda local y GRASP. Calculamos las distancias a la solución del exacto. 
 
-\quad
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{distancia-Azar.png}
-\caption{Grafos al azar}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{distancia-G-y-H-densos.png}
-\caption{G y H densos}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{distancia-H-complemento.png}
-\caption{H es el complemento de G}
-\end{figure}
-
-\quad
-
-\quad Como se puede observar, casi no hay diferencias entre grafos aleatorios y densos. Aunque con los grafos donde G y H son complementos uno del otro, la búsqueda local aumentó considerablemente su distancia.
-
-\subsubsection{Efectividad}
-
-\quad Ahora consideramos que un resultado es efectivo si dista menos del 10  \% del resultado exacto.
-
-\quad
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{efectividad-Azar.png}
-\caption{Grafos al azar}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{efectividad-G-y-H-densos.png}
-\caption{G y H densos}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{efectividad-H-complemento.png}
-\caption{H es el complemento de G}
-\end{figure}
-
-\quad Se observa que para estas cantidades de nodos la efectividad de GRASP no decae, a diferencia de las otras heurísticas.
 
 \subsection{Comparando con Grasp}
 
