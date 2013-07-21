@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1372043641 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
+1372710454 source:c:\users\gino\desktop\algo3\tp3\src\grafo.cpp
 	"Grafo.h"
 
 1372031865 
@@ -11,10 +11,10 @@
 
 1372011482 >
 
-1372539711 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
+1372710454 source:c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1372545917 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
+1374344027 source:c:\users\gino\desktop\algo3\tp3\src\main.cpp
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -30,14 +30,14 @@
 1370819316 c:\users\gino\desktop\algo3\tp3\src\exacto.cpp
 	"exacto.h"
 
-1372539701 c:\users\gino\desktop\algo3\tp3\src\exacto.h
+1372710454 c:\users\gino\desktop\algo3\tp3\src\exacto.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
 
 1370870297 c:\users\gino\desktop\algo3\tp3\src\general.h
 
-1372427815 source:c:\users\gino\desktop\algo3\tp3\src\goloso.cpp
+1372710454 source:c:\users\gino\desktop\algo3\tp3\src\goloso.cpp
 	"goloso.h"
 
 1371671660 c:\users\gino\desktop\algo3\tp3\src\goloso.h
@@ -46,21 +46,23 @@
 	<ctime>
 	"Grafo.h"
 
-1372433656 source:c:\users\gino\desktop\algo3\tp3\src\local.cpp
+1372710454 source:c:\users\gino\desktop\algo3\tp3\src\local.cpp
 	"local.h"
 
 1371494591 c:\users\gino\desktop\algo3\tp3\src\local.h
 	"goloso.h"
 
-1372428911 c:\users\gino\desktop\algo3\tp3\src\grasp.h
+1372710454 c:\users\gino\desktop\algo3\tp3\src\grasp.h
 	<iostream>
 	<cstdlib>
 	"Grafo.h"
 	"goloso.h"
 	"local.h"
 
-1372653100 source:c:\users\gino\desktop\algo3\tp3\src\grasp.cpp
+1374363516 source:c:\users\gino\desktop\algo3\tp3\src\grasp.cpp
 	"grasp.h"
+	"goloso.h"
+	"local.h"
 
 1371855820 source:c:\users\gino\desktop\algo3tps\tp3\src\goloso.cpp
 	"goloso.h"
