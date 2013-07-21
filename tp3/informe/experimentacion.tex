@@ -3,7 +3,7 @@
 
 \subsection{Comparando con el Exacto}
 
-\quad Vamos a comparar todas nuestras implementaciones y a calcular las distancias con respecto al algoritmo exacto. Debido al costo del exacto se realizaron tests de 5 nodos a 17 con 50 repeticiones para cada cantidad. Definimos distancia como la diferencia entre el resultado exacto y el de la heurística correspondiente. 
+\quad Vamos a comparar todas nuestras implementaciones y a calcular las distancias con respecto al algoritmo exacto. Debido al costo del exacto se realizaron tests de 5 nodos a 16 con 50 repeticiones para cada cantidad. Definimos distancia como la diferencia entre el resultado exacto y el de la heurística correspondiente. 
 
 
 \quad Comparamos primero con grafos generados aleatoriamente, luego con grafos estrellas no uniformes y grafos \textit{web}.
@@ -14,16 +14,41 @@
 	\includegraphics[scale=0.6]{distancia-Azar.png}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-Star.png}
+\end{figure}
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[scale=0.8]{distancia-Estrella.png}
-%\end{figure}
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[scale=0.8]{distancia-Web.png}
-%\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-Web.png}
+\end{figure}
+
+\quad Se observa...
+
+\quad
+
+\quad Ahora vamos a mostrar los datos anteriores pero comparando cada heuristica consigo misma fijándonos la distancia con la solución exacta.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-Goloso.png}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-BLocal.png}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{distancia-GRASP.png}
+\end{figure}
+
+\quad Podemos apreciar...
+
+\quad
+
 
 \quad
 
@@ -31,25 +56,36 @@
 
 \subsection{Comparando con Grasp}
 
-\quad Dejando de lado el algoritmo exacto, podemos experimentar con una mayor cantidad de nodos. Comparamos la heuristica golosa, la búsqueda local y GRASP
+\quad Dejando de lado el algoritmo exacto se puede experimentar con una mayor cantidad de nodos.
 
-\subsubsection{Efectividad}
+\quad Comparamos la heuristica golosa, la búsqueda local y GRASP.
+
+\quad 
+
+\subsubsection{Distancia}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{efectividad-vs-grasp.png}
-\caption{Comparación de efectividad contra Grasp}
+	\includegraphics[scale=0.8]{distancia-Grasp-Azar.png}
 \end{figure}
 
-\quad Podemos ver como a partir de cierto punto, la heurística golosa no es para nada efectiva (según el criterio anteriormente mencionado). En cambio, la búsqueda local se \textit{estanca} entre el 10 \%  y 40 \%  de efectividad.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{distancia-Grasp-Star.png}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{distancia-Grasp-Web.png}
+\end{figure}
 
 \subsubsection{Costo}
 
-\begin{figure}[H]		
-	\centering
-	\includegraphics[scale=0.8]{timing-vs-grasp.png}
-\caption{Costo temporal de las heurísticas, en escala logaritmica, contra Grasp}
-\end{figure}
+%\begin{figure}[H]		
+%	\centering
+%	\includegraphics[scale=0.8]{timing-vs-grasp.png}
+%\caption{Costo temporal de las heurísticas, en escala logaritmica, contra Grasp}
+%\end{figure}
 
 \quad En este gráfico podemos observar como GRASP a pesar de obtener resultados mucho mejores que las otras heuristicas, consume mucho más tiempo de procesamiento.
 
