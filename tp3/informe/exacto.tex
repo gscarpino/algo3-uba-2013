@@ -171,13 +171,10 @@ La funci\'on que resolver\'a el problema planteado es
 donde $k$ es la cantidad de nodos que quedan por pintar.\\
 
 
-\indent Veamos entonces cuánto cuesta pintar todos los nodos.\\
-\indent Basado en la definición que dimos antes, si tenemos que pintar todos los nodos, estamos en el caso T(n).\\
-
-\indent T(n)=(n-n+1)*(n+m + T(n-1))\\
-
-\indent Desarrollemos T(n):\\
-
+Veamos entonces cuánto cuesta pintar todos los nodos.\\
+Basado en la definición que dimos antes, si tenemos que pintar todos los nodos, estamos en el caso T(n) = (n-n+1)*(n+m + T(n-1)).
+Desarrollemos T(n):
+\vspace{1em}
 
 \begin{centering}
 T(n)=(n-n+1)*(n+m + T(n-1))\\
@@ -194,24 +191,25 @@ T(n)=(n-n+1)*(n+m + T(n-1))\\
 \indent Es decir que $$T(n)= \left[ \sum_{i=1}^{n} i! * (n+m) \right] + n! * (n+m)$$\\
 
 Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).
-Veámoslo por inducción en la cantidad de nodos por pintar:q ueremos ver que existe un $d \in \mathbb{R}_{> 0}$ y $n_{0}  \in \mathbb{N}$ tales que para todo $n \geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
+Veámoslo por inducción en la cantidad de nodos por pintar. 
+Queremos ver que existe un $d \in \mathbb{R}_{> 0}$ y $n_{0}  \in \mathbb{N}$ tales que para todo $n \geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
 
 \begin{itemize}
-	\item Caso base: n=1 \\
-
+	\item Caso base: n=1 
 \begin{center}
-T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m) =\\
+T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m)\\
 =2*(1+m) $\leq$ 2*  $\sum_{i=1}^{1} i! * (1+m)$ 
 \end{center}
 
-Es decir que con $d=2$ nos alcanza.
+Es decir que alcanza con tomar $d=2$.
 
-\item Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
+\item Paso inductivo: suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ queremos ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
 
 \begin{center}
-T(n)=(n-n+1)*(n+m + T(n-1))= (n+m) + T(n-1)\\
 
-$$\stackrel{HI}{\leq} n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $$
+$T(n)=(n-n+1)*(n+m + T(n-1))= (n+m) + T(n-1) $\\
+
+$\stackrel{HI}{\leq} n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $
 
 $\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n+m)] $ \\
 
@@ -227,8 +225,6 @@ $\leq  d* \sum_{i=1}^{n} i!*(n+m)$\\
 
 \indent que es lo que queríamos ver.\\
 \end{itemize}
-
-
 
 Por lo tanto, las complejidades son
 
