@@ -30,7 +30,6 @@ Para genererar todos los coloreos posibles, vamos a partir de la siguiente funci
 \end{algorithm}
 
 Esta funci\'on genera todos las combinaciones posibles de los colores de C (\textsl{Colores}) en los nodos de G.
-%: en cada posici\'on del coloreo (es decir, para cada nodo del grafo) pone cada uno de los colores de \textsl{Colores}, y para cada uno de ellos, completa las siguientes posiciones del coloreo.
 Sin embargo, \'esta es una tarea muy costosa, pues la cantidad de resultados posibles es de orden exponencial. Por ejemplo, si el grafo tiene n nodos, obtendr\'iamos al menos $n!$ coloreos: podr\'iamos colorear cada nodo de un color diferente, y despu\'es permutar los colores entre todos lo nodos. 
 M\'as all\'a de esto, dadas las caracter\'isticas del problema planteado, veremos algunos recursos que nos permitiran reducir dr\'asticamente la cantidad de casos a analizar.
 
@@ -80,8 +79,6 @@ Sin embargo, f\'acilmente se ve que al intercambiar las etiquetas de los colores
 \end{figure}
 
 
-%Dicho m\'as formalmente, existen pares de coloreos f y f' para los podemos establecer una biyecci\'on $\Phi : \; C \rightarrow C$ tal que  $f'(v) = \Phi(f(v))$ y $f(v) = \Phi(f'(v))$.
-
 Recordemos que numeramos los nodos y los colores con los n\'umeros de 1 a n, y dejemos de lado, por el momento, la condici\'on de legalidad.
 Definamos un conjunto de coloreos F donde cada coloreo f es un vector 
 $$f = [f(1), ... , f(n)]$$
@@ -105,11 +102,9 @@ Es decir, para pintar el nodo v, se usan $m+1$ maneras distintas, usando los col
 
 
 Por la forma en que estan construidos, resulta que dos coloreos f y f' cualesquiera de F no son equivalentes. 
-
 Adem\'as, cualquier otro coloreo que no est\'e en F es equivalente a uno que si lo est\'a.
 
-%Para evitar analizar estos casos de m\'as, definimos la siguiente manera para determinar los colores a usar en cada momento:
-Entonces, teniendo esto en cuenta, para evitar analizar los casos de m\'as definimos una forma m\'as restrictiva para armar los coloreos.
+Entonces, para evitar analizar mas de una vez coloreos equivalente, definimos una forma m\'as restrictiva para armar los coloreos basandonos en lo anteriormente expuesto.
 El pseudoc\'odigo del algoritmo (ya considerando la selecci\'on del coloreo de m\'aximo impacto cada vez que completamos un coloreo) es el siguiente:
 
 \begin{algorithm}[H]
