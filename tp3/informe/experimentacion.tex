@@ -65,13 +65,15 @@
 
 \subsection{Comparando con Grasp}
 
-\quad Dejando de lado el algoritmo exacto se puede experimentar con una mayor cantidad de nodos.
+\quad Dejando de lado el algoritmo exacto se puede experimentar con una mayor cantidad de nodos en un tiempo razonable.
 
-\quad Comparamos la heuristica golosa, la búsqueda local y GRASP.
+\quad Comparamos entre si las heuristicas golosa, búsqueda local y GRASP.
 
 \quad 
 
 \subsubsection{Distancia}
+
+\quad Vamos a calcular la distancia con el mismo criterio de la sección anterior, pero ahora tomando como punto de referencia la solución de la metaheurística GRASP.
 
 \begin{figure}[H]
 	\centering
@@ -88,9 +90,19 @@
 	\includegraphics[scale=0.6]{distancia-Grasp-Web.png}
 \end{figure}
 
+\quad Se observa que en los grafos aleatorios la heurística constructiva golosa tiene un comportamiento lineal, en cambio en las otras familias es levemente exponencial.
+
+\quad La heurística de búsqueda local tiene un comportamiento lineal con todas estas familias de grafos. Aunque en los grafos aleatorios es más uniforme, un poco menos estable en los grafos estrellas y mucho menos estable en los grafos Web de 4 vértices.
+
+\quad Hay que tener en cuenta que usamos a GRASP como punto de referencia por lo que su distancia siempre es 0.
+
+\quad Si nos fijamos en los valores obtenidos podemos ver como la calidad de las soluciones obtenidas empeoran pasando de una familia a otra. En este sentido las heuristicas golosa y de búsqueda local se comportaron igual. Donde mejor fue la calidad fue con la familia de grafos aleatorios. En un punto intermedio fue con los grafos estrella y donde peor calidad de solución se obtuvo fue en los grafos Web de 4 vértices.
+
+\quad Estos resultados no se pudieron apreciar comparando con el método exacto debido a que no fue posible  poder experimentar con la misma cantidad de nodos ya que tomaria un tiempo no prudencial.
+
 \subsubsection{Costo}
 
-\quad Algo...
+\quad Ahora analizaremos el costo temporal con las tres familias de grafos y comparando las heuristicas entre sí.
 
 \begin{figure}[H]
 	\centering
@@ -109,8 +121,8 @@
 
 \quad
 
-\quad En este gráfico podemos observar como GRASP a pesar de obtener resultados mucho mejores que las otras heuristicas, consume mucho más tiempo de procesamiento.
+\quad Debido a que GRASP arrojó resultados mucho mayores en comparación con las otras dos heurísticas, tuvimos que usar la escala logarítmica para poder compararlos mejor.
 
-\quad
+\quad No se pueden apreciar diferencias relevantes entre los tres gráficos.
 
-\quad Si bien la búsqueda local cuesta apenas más que la golosa, en comparación con GRASP, se obtiene muchos mejores resultados.
+\quad HABLAR DE RELACION CONSUMO DE TIEMPO VS CALIDAD DE LA SOLUCION. GRASP CONSUMO MUCHO CALIDAD MUY BUENA, GOLOSO NO CONSUME NADA CALIAD PESIMA, BUSQUEDA LOCAL MEJORA ALGO DEL GOLOSO PERO NO ALCANZA PORQUE SE QUEDA EN MINIMOS LOCALES. A PESAR DEL COSTO DE GRASP ES MUCHO MAS CONVENIENTE QUE EL METODO EXACTO.
