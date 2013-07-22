@@ -30,6 +30,7 @@ Para genererar todos los coloreos posibles, vamos a partir de la siguiente funci
 \end{algorithm}
 
 Esta funci\'on genera todos las combinaciones posibles de los colores de C (\textsl{Colores}) en los nodos de G.
+%: en cada posici\'on del coloreo (es decir, para cada nodo del grafo) pone cada uno de los colores de \textsl{Colores}, y para cada uno de ellos, completa las siguientes posiciones del coloreo.
 Sin embargo, \'esta es una tarea muy costosa, pues la cantidad de resultados posibles es de orden exponencial. Por ejemplo, si el grafo tiene n nodos, obtendr\'iamos al menos $n!$ coloreos: podr\'iamos colorear cada nodo de un color diferente, y despu\'es permutar los colores entre todos lo nodos. 
 M\'as all\'a de esto, dadas las caracter\'isticas del problema planteado, veremos algunos recursos que nos permitiran reducir dr\'asticamente la cantidad de casos a analizar.
 
@@ -41,8 +42,8 @@ Por ejemplo, en la figura \ref{fig:ejemploSoloColoreosNoValidos} mostramos dos p
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=1]{ejemplo-coloreos-no-validos.png}
-\caption{Ejemplo de coloreo de un nodo que lleva a coloreos ilegales.}
 \label{fig:ejemploSoloColoreosNoValidos}
+\caption{Ejemplo de coloreo de un nodo que lleva a coloreos ilegales.}
 \end{figure}
 
 Por lo tanto, podemos aplicar una una poda considerando solamente los colores que sean legales con respecto a los de los nodos pintados con anterioridad:
@@ -72,12 +73,14 @@ Dos coloreos v\'alidos son 1-2-3-1-2 y 2-1-3-2-1, como se muestra en la figura \
 Sin embargo, f\'acilmente se ve que al intercambiar las etiquetas de los colores \textsl{1} y \textsl{2}, el primer coloreo puede transformase en el segundo, y el segundo puede transformase en el primero. 
 
 \begin{figure}[H]
+\label{fig:ejemploRepeticionColoreo}
+\caption{Ejemplo de dos coloreos legales que resultan equivalentes.}
 	\centering
 	\includegraphics[scale=1]{ejemplo-mismos-coloreos.png}
-\caption{Ejemplo de dos coloreos legales que resultan equivalentes.}
-\label{fig:ejemploRepeticionColoreo}
 \end{figure}
 
+
+%Dicho m\'as formalmente, existen pares de coloreos f y f' para los podemos establecer una biyecci\'on $\Phi : \; C \rightarrow C$ tal que  $f'(v) = \Phi(f(v))$ y $f(v) = \Phi(f'(v))$.
 
 Recordemos que numeramos los nodos y los colores con los n\'umeros de 1 a n, y dejemos de lado, por el momento, la condici\'on de legalidad.
 Definamos un conjunto de coloreos F donde cada coloreo f es un vector 
@@ -94,25 +97,27 @@ tal que, para cada uno, $f(v)$ cumple
 Es decir, para pintar el nodo v, se usan $m+1$ maneras distintas, usando los colores ya usados, de 1,2...$m$ o un color nuevo, $m+1$.
 
 \begin{figure}[H]
+\label{fig:ejemploRepeticionColoreo}
 	\centering
 	\includegraphics[scale=1]{ejemplo-coloreos-distintos.png}
-\label{fig:ejemploColoreosDistintos}
 \caption{Ejemplo de un conjunto de coloreos seg\'un la caracterizaci\'on dada. Cada camino desde la ra\'iz a una hoja es un coloreo. Por ejemplo, 1-1-1-1, 1-2-1-2 y 1-2-3-4.}
 \end{figure}
 
 
 Por la forma en que estan construidos, resulta que dos coloreos f y f' cualesquiera de F no son equivalentes. 
+
 Adem\'as, cualquier otro coloreo que no est\'e en F es equivalente a uno que si lo est\'a.
 
-Entonces, para evitar analizar mas de una vez coloreos equivalente, definimos una forma m\'as restrictiva para armar los coloreos basandonos en lo anteriormente expuesto.
-El pseudoc\'odigo del algoritmo (ya considerando la selecci\'on del coloreo de m\'aximo impacto cada vez que completamos un coloreo) es el siguiente:
+%Para evitar analizar estos casos de m\'as, definimos la siguiente manera para determinar los colores a usar en cada momento:
+Entonces, teniendo esto en cuenta, para evitar analizar los casos de m\'as definimos una forma m\'as restrictiva para armar los coloreos.
+El pseudocódigo del algoritmo es el siguiente:
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{colorear}(nodo i, grafo G, grafo H, coloreo, solucion)$}
+\Procname{$\proc{colorear}(nodo, G, H, coloreo, solucion)$}
 
-\li \If $i \; \geq \; G.cantNodos$ \Comment{se pintaron todos los nodos de G} \Do
+\li \If $nodo \; \geq \; G.cantNodos$ \Comment{se pintaron todos los nodos de G} \Do
 \li	$impacto$ $\gets$ impacto del coloreo en H
 \li		\If $impacto\; > \; solucion.impacto$ \Do
 \li			$solucion.impacto \gets impacto$
@@ -122,10 +127,10 @@ El pseudoc\'odigo del algoritmo (ya considerando la selecci\'on del coloreo de m
 \li \Else \Do
 \li		$maxColor$ $\gets$ maximo color usado hasta el momento 	
 \li		\For c \textbf{from} 1 \textbf{to} maxColor \Do
-\li			\If es legal pintar el nodo $i$ de color c \Do
+\li			\If es legal pintar $nodo$ de color c \Do
 \li					$nuevoColoreo \; = \; coloreo$
-\li         $nuevoColoreo[i] \gets c$
-\li         $colorear(i+1, G, H, nuevoColoreo, solucion)$
+\li         $nuevoColoreo[nodo] \gets c$
+\li         $colorear(G, H, nuevoColoreo, solucion)$
              \End
          \End
 \End
@@ -171,67 +176,74 @@ La funci\'on que resolver\'a el problema planteado es
 donde $k$ es la cantidad de nodos que quedan por pintar.\\
 
 
-Veamos entonces cuánto cuesta pintar todos los nodos.\\
-Basado en la definición que dimos antes, si tenemos que pintar todos los nodos, estamos en el caso T(n) = (n-n+1)*(n+m + T(n-1)).
-Desarrollemos T(n):
-\vspace{1em}
+\indent Veamos entonces cuánto cuesta pintar todos los nodos.\\
+\indent Basado en la definición que dimos antes, si tenemos que pintar todos los nodos, estamos en el caso T(n).\\
+
+\indent T(n)=(n-n+1)*(n+m + T(n-1))\\
+
+\indent Desarrollemos T(n):\\
+
 
 \begin{centering}
-T(n)=(n-n+1)*(n+m + T(n-1))\\
-= n+m + [2*(n+m) + 2*T(n-2)]\\
-=(n+m)+2*(n+m) + 2*[3*(n+m)+ 3* T(n-3)]\\
-=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3 T(n-3)\\
-=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3*[4*(n+m)+4*T(n-4)]\\
-=(n+m)+2*(n+m)+2*3*(n+m)+2*3*4*(n+m)+ 2*3*4*T(n-4)\\
-...\\
-=[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * T(0) \\
+T(n)=(n-n+1)*(n+m + T(n-1))=\\
+= n+m + [2*(n+m) + 2*T(n-2)]=\\
+=(n+m)+2*(n+m) + 2*[3*(n+m)+ 3* T(n-3)]=\\
+=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3 T(n-3)=\\
+=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3*[4*(n+m)+4*T(n-4)]=\\
+=(n+m)+2*(n+m)+2*3*(n+m)+2*3*4*(n+m)+ 2*3*4*T(n-4)=\\
+=...=\\
+=[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * T(0)= \\
 =[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * (n+m)\\
 \end{centering}
 
-\indent Es decir que $$T(n)= \left[ \sum_{i=1}^{n} i! * (n+m) \right] + n! * (n+m)$$\\
 
-Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).
-Veámoslo por inducción en la cantidad de nodos por pintar. 
-Queremos ver que existe un $d \in \mathbb{R}_{> 0}$ y $n_{0}  \in \mathbb{N}$ tales que para todo $n \geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
+\indent Es decir que T(n)= [ $\sum_{i=1}^{n} i! * (n+m) $] + n! * (n+m)\\
 
-\begin{itemize}
-	\item Caso base: n=1 
+\indent Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).\\
+
+\indent Veámoslo por inducción en la cantidad de nodos por pintar:\\
+
+\indent Queremos ver que existe un $d$ real positivo y $n_{0}$ natural positivo tales que para todo $n\geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
+
+\indent Caso base: n=1 \\
+
 \begin{center}
-T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m)\\
-=2*(1+m) $\leq$ 2*  $\sum_{i=1}^{1} i! * (1+m)$ 
+T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m) =\\
+=2*(1+m) $\leq$ 2*  $\sum_{i=1}^{1} i! * (1+m)$ \\
 \end{center}
 
-Es decir que alcanza con tomar $d=2$.
+\indent Es decir que con un $d=2$ nos alcanza.\\
 
-\item Paso inductivo: suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ queremos ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
+
+\indent Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ \\
+
 
 \begin{center}
+T(n)=(n-n+1)*(n+m + T(n-1))=\\
 
-$T(n)=(n-n+1)*(n+m + T(n-1))= (n+m) + T(n-1) $\\
+= (n+m) + T(n-1)$\leq$\\
 
-$\stackrel{HI}{\leq} n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $
+$\leq$ por hipótesis inductiva $\leq$\\
 
-$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n+m)] $ \\
+$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] \leq $\\
 
-$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + 1] $ \\
+$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n+m)] \leq$ \\
 
-$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + n!]$ \\
+$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + 1] \leq$ \\
 
-$\leq (n+m) *[ (d* \sum_{i=1}^{n} i!)] $\\
+$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + n!] \leq$ \\
+
+$\leq (n+m) *[ (d* \sum_{i=1}^{n} i!)] \leq$\\
 
 $\leq  d* \sum_{i=1}^{n} i!*(n+m)$\\
 
 \end{center}
 
 \indent que es lo que queríamos ver.\\
-\end{itemize}
 
-Por lo tanto, las complejidades son
+\indent Luego, colorear cuesta O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
-\begin{itemize}
-	\item \textsc{colorear}: O($\sum_{i=1}^{n} i! * (n+m) $)
-	\item \textsc{maximoImpactoExacto}: O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) = O($\sum_{i=1}^{n} i! * (n+m) $)
-\end{itemize}
+\indent maximoImpactoExacto cuesta entonces O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) que es O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
 \subsection{Experimentación y Resultados}
 
@@ -255,7 +267,7 @@ Por lo tanto, las complejidades son
 
 \quad
 
-\quad \textbf{Aclaración Importante:} Vamos a trabajar con estas familias de grafos con el resto de las experimentaciones de este trabajo práctico. 
+\quad \textbf{Aclaración Importante:} Vamos a trabajar con estas familias de grafos con el resto de las experimentaciones de este trabajo práctico. Los resultados (datos procesados y no procesados) de las experimentaciones se encuentran en la carpeta \textit{resultados}.
 
 \quad 
 
