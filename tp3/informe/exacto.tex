@@ -246,30 +246,43 @@ $\leq  d* \sum_{i=1}^{n} i!*(n+m)$\\
 \indent maximoImpactoExacto cuesta entonces O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) que es O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
 \subsection{Experimentación y Resultados}
-\quad Trabajamos con los siguientes 3 casos: grafos al azar, grafos densos, G y H complementos.
 
-\quad Se midieron los tiempos en corridas de  5 a 100 nodos con 100 repeticiones para cada cantidad de nodos.
+\quad Para realizar testeos y generar resultados lo más diversos posibles definimos 3 familias de grafos:
 
-\subsubsection{Grafos al azar}
+\begin{itemize}
+\item \textbf{Grafos aleatorios:} \quad Primero creamos un grafo de la cantidad de vértices deseada pero sin aristas. Luego recorremos todos los nodos por orden de etiqueta. Por cada nodo, determinamos si esta conectado a cada uno de los otros nodos. Usamos la función \textit{rand()} de la Standar Library de $C++$ con una probabilidad del $ 30\div $ si de que esté unido a un nodo. 
+
+ \quad Vimos que la probabilidad si es mayor se generan casi siempre grafos conexos. Como buscamos que sean lo más diversos posibles, nos pareció un valor razonable donde se generan diversas componentes conexas y hasta incluso grafos conexos.
+
+\quad
+
+\item \textbf{Grafos Estrella no uniformes (Star):} \quad Se parte un nodo central luego se le añaden 4 nodos a los cuales los consideremos externos. Se van a ir agregando nodos hasta la cantidad deseada. Un nodo que se agrega puede estar conectado con un nodo \textit{externo} o el nodo central. Si se agrega al nodo externo se considera como un nuevo nodo externo. Si se conecta con un nodo externo, éste deja de serlo y el nuevo nodo pasa a ser externo. 
+
+\quad Así, todos los nodos menos el central tienen grado uno o dos. Si es externo grado 1, caso contrario 2. El grado del nodo interno varia con cada creación de grafo. La elección a qué nodo se uno se hace aleatoriamente usando la misma función mencionada para los grafos aleatorios.
+
+\quad
+
+\item \textbf{Grafos Web de 4 vértices (Red)\footnote{http://en.wikipedia.org/wiki/List\_of\_graphs}:} \quad estos grafos son un caso particular de grafos $ Web_{s t} $ que son t ciclos de s vértices cada uno conectados entre los ciclos un nodo con un solo nodo del ciclo aledaño. 
+\end{itemize}
+
+\quad
+
+\quad \textbf{Aclaración Importante:} Vamos a trabajar con estas familias de grafos con el resto de las experimentaciones de este trabajo práctico. 
+
+\quad 
+
+\quad Se midieron los tiempos en corridas de  5 a 15 nodos con 50 repeticiones para cada cantidad de nodos.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.8]{exacto-tiempos-Azar.png}
+	\includegraphics[scale=0.8]{timingExacto.png}
 \caption{Costos}
 \end{figure}
 
-\subsubsection{Grafos densos}
+\quad Debido al gran costo computacional de este método no se puede experimentar con una mayor cantidad de nodos sin que tome una cantidad de tiempo considerable. Elegir esa cantidad nos permite realizar varias repeticiones para obtener resultados más fiables.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{exacto-tiempos-G-y-H-densos.png}
-\caption{Costos}
-\end{figure}
+\quad Podemos observar que en este método no influye la diferencia entre las familias de grafos, tomando para cada uno el mismo costo temporal. 
 
-\subsubsection{G y H complementos}
+\quad A partir del nodo 14 se ve claramente como la cota teórica sobrepasa a los resultados obtenidos. Éstos muestran una tendencia con una curvatura mucho menos pronunciada que la teórica.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.8]{exacto-tiempos-H-complemento.png}
-\caption{Costos}
-\end{figure}
+\quad Las mediciones estan en milisegundos, por lo que son despreciables los resultados con pocos nodos que toman pocos milisegundos pero se ve que a medida que aumenta la cantidad de nodos aumenta considerablemente el costo temporal.
