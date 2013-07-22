@@ -1,61 +1,39 @@
 \section{Descripción de situaciones reales}
-%%
-%%Para ciertos tipos de problemas que se suelen modelar con grafos, se usa coloreo de grafos. Estos problemas, en general, suelen ser donde para ciertas cosas chocan interesas o hay incompatibilidades. Modelandolo, un nodo que representa un objeto está relacionado a otro, es decir, son adyacentes, si pasa lo anteriormente dicho. Coloreando el grafo, los nodos vecinos tienen distinto color, donde el color representa algo oportuno.
-%%
-%%En el caso de este problema, se aplica cuando uno modela un problema con coloreo para el grafo G, cambian las relaciones y se obtiene un grafo H. Se quiere averiguar cómo impacta el cambio, buscando el máximo valor posible. Sirve, de cierta forma, para medir esto.
-%%\\
-%%\\
-%%\\
-%Dado un grafo G, aplicar sobre \'el un coloreo legal de nodos consiste en asignar un ``color'' (una etiqueta) a cada uno de sus nodo
-%de forma tal que ning\'un par de nodos adyacentes tengan asignados el mismo color. 
-%
-%El problema cl\'asico consiste en encontrar un coloreo que utilice la menor cantidad posible de colores. 
-%En genereal, con \'el se pueden modelar situaciones en las que se cumplen
-%	\begin{itemize}
-%	\item se requiere asignar, de manera \'optima, un conjunto finito de recursos a un conjunto de ``objetos'' 
-%	\item los objetos tiene relaciones de conflicto entre ellos
-%	\item un recurso no puede asignarse a la vez a dos objetos en conflicto
-%\end{itemize}
-%	
-%Por ejemplo, si se necesita asignar aulas a un conjunto de materias con la condici\'on de que dos materias cuyos horarios se solapan no pueden ser dictadas en el mismo aula, podemos modelar el problema definiendo un grafo donde cada materia es representada por un nodo particular, y los nodos de dos materias con horarios superpuestos son unidos por una arista. Entonces, encontrar un coloreo de este grafo equivale a asignar aulas a las materias, y que el coloreo sea m\'inimo significa que la cantidad de aulas sea m\'inima.
-
-
 En este trabajo se presenta otra variante al problema de coloreo, conocida como Coloreo de M\'aximo Impacto (CMI).
 Se define el \textbf{impacto} de un coloreo C sobre un grafo G = (V, E) como el n\'umero de aristas $vw$ $\in $ E tal que el color de $v$ es igual al de $w$.
 Dados dos grafos G y H definidos sobre el mismo conjunto de v\'ertices, CMI consiste en encontrar un coloreo C de G que al ser aplicado en H maximice el impacto de C en H. 
-En este caso, los problemas que se pueden modelar tiene las siguientes caracter\'isticas:
+En general, observamos que los problemas que se pueden modelar tiene las siguientes caracter\'isticas:
 \begin{itemize}
 	\item se tiene un mismo conjunto de elementos, con dos criterios para relacionarlos entre si;
 	\item se quiere asignar (o particionar) los elementos de forma tal que se maximiza la cantidad de elementos relacionados seg\'un criterio, mientras que se respeta el otro.
 \end{itemize}
 	
-Presentamos aqu\'i algunos ejemplos de esto aplicado a situaciones que pueden darse en la vida real:
+Presentamos aqu\'i algunos ejemplos de esto aplicado a situaciones que pueden darse en la vida real.
 
-En una facultad, se tiene n materias que corresponden a alguna de m \'areas de estudio.
-Las materias pueden tener horarios solapados, de manera que no siempre es posible utilizar el mismo aula para dar dos materias distintas el mismo dia.
-Ademas, cada materia necesita elementos de trabajo especificos, seg\'un el \'area a la que corresponda.
-Se desea asignar las aulas a las materias, de manera tal que se maximice la cantidad de materias del mismo area que se dicten en el mismo aula.
 
-Podemos resolver el problema planteando dos grafos G y H con las materias como nodos, tales que :
+\subsection{Ejemplo 1}
+En una facultad, se tiene \textsl{n} materias que corresponden a alguna de \textsl{m} \'areas de estudio.
+Las materias pueden tener horarios solapados, de manera que no siempre es posible utilizar el mismo aula para dar dos materias distintas el mismo d\'ia.
+Adem\'as, cada materia necesita que en su aula se encuentren elementos de trabajo espec\'ificos, seg\'un el \'area a la que corresponda. 
+A fin de poder equipar las aulas de la mejor manera reduciendo la cantidad de equipamiento necesario, se desea asignarlas a las materias de forma tal que se maximice la cantidad de materias del mismo area que se dicten en un mismo aula.
+
+Podemos resolver el problema planteando dos grafos G y H con las materias como nodos, tales que:
 \begin{itemize}
 	\item en G, los nodos est\'an relacionados por una arista si las materias tiene horarios solapados;
-	\item en H, los nodos est\'an relacionados si pertenecen al mismo \'area de estudio.  
+	\item en H, los nodos est\'an relacionados si pertenecen al mismo \'area de estudio,  
+	\item los colores asignados representan las aulas asignadas a las materias.
 \end{itemize}
-En este caso, los colores a usar representaran las distintas aulas a asignar.
-Un coloreo de impacto m\'aximo ser\'a aquel que en G no asigne las mismas aulas a materias con horarios solapados, mientras que en H, maximiza la cantidad de materias del mismo \'area que comparten el mismo aula.
+En este caso, un coloreo de m\'aximo impacto ser\'a aquel que en G no asigne las mismas aulas a materias con horarios solapados, mientras que en H, maximiza la cantidad de materias del mismo \'area que comparten el mismo aula.
 
+\subsection{Ejemplo 2}
+Un centro de salud tiene pacientes internados en distintas sedes.
+Los enfermeros del centro deben atender a los pacientes en horarios espec\'ificos, por lo si dos pacientes coinciden en este horarios, el mismo enfermero no puede tratarlos.
+A fin de minimizar el movimiento de enfermeros entre las distintas sede, se desea asignarlos a los pacientes considerando la restricci\'on de los horarios de monitoreo y maximizando la cantidad de pacientes que cada uno debe tratar en una misma sede.
 
-
-conjunto de locales\\
-g: si son del mismo rubro\\
-h: si estan en la misma zona geografica\\
-coloreo: visitantes\\
-CMI: maximizar la cantidad de locales de distinto rubro que pertenecen a la misma zona de ventas, y estan en la misma zona geografica\\
-
-
-un conjunto de experimentos\\
-g: relacionadas si comparten ejecutores\\
-h: relacionadas son experimentos relacionados\\
-colores = dias en los que se tiene que realizar \\
-CMI: asignar los dias de manera de maximizar la cantidad de experimentos del mismo area que se realizan cada dia\\
-
+Aqu\'i, en el modelado consideramos a los pacientes como nodos de los grafos G y H, tal que 
+\begin{itemize}
+	\item en G, los nodos est\'an relacionados si los pacientes necesitan ser atendidos en el mismo momento;
+	\item en H, los nodos est\'an relacionados si los pacientes se encuentran en la misma sede.  
+	\item los colores asignados representan a los distintos enfermeros
+\end{itemize}
+Entonces, un CMI representa la asignaci\'on de enfermeros a los pacientes de manera que ningun enfermero sea asignado a dos pacientes si estos requieren atenci\'on en el mismo momento, mientras que se maximiza la cantidad de pacientes que cada enfermero ve en cada sede. 
