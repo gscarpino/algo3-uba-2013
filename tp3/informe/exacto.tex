@@ -193,50 +193,49 @@ T(n)=(n-n+1)*(n+m + T(n-1))\\
 
 \indent Es decir que $$T(n)= \left[ \sum_{i=1}^{n} i! * (n+m) \right] + n! * (n+m)$$\\
 
-\indent Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).\\
+Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).
+Veámoslo por inducción en la cantidad de nodos por pintar:q ueremos ver que existe un $d \in \mathbb{R}_{> 0}$ y $n_{0}  \in \mathbb{N}$ tales que para todo $n \geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
 
-\indent Veámoslo por inducción en la cantidad de nodos por pintar:\\
-
-\indent Queremos ver que existe un $d$ real positivo y $n_{0}$ natural positivo tales que para todo $n\geq n_{0}$ vale que $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $.
-
-\indent Caso base: n=1 \\
+\begin{itemize}
+	\item Caso base: n=1 \\
 
 \begin{center}
 T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m) =\\
-=2*(1+m) $\leq$ 2*  $\sum_{i=1}^{1} i! * (1+m)$ \\
+=2*(1+m) $\leq$ 2*  $\sum_{i=1}^{1} i! * (1+m)$ 
 \end{center}
 
-\indent Es decir que con un $d=2$ nos alcanza.\\
+Es decir que con $d=2$ nos alcanza.
 
-
-\indent Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
+\item Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
 
 \begin{center}
-T(n)=(n-n+1)*(n+m + T(n-1))=\\
+T(n)=(n-n+1)*(n+m + T(n-1))= (n+m) + T(n-1)\\
 
-= (n+m) + T(n-1)$\leq$\\
+$$\stackrel{HI}{\leq} n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $$
 
-$\leq$ por hipótesis inductiva $\leq$\\
+$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n+m)] $ \\
 
-$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n-1+m)] \leq $\\
+$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + 1] $ \\
 
-$\leq n+m + d * [\sum_{i=1}^{n-1} i! * (n+m)] \leq$ \\
+$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + n!]$ \\
 
-$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + 1] \leq$ \\
-
-$\leq (n+m) *[ (d* \sum_{i=1}^{n-1} i!) + n!] \leq$ \\
-
-$\leq (n+m) *[ (d* \sum_{i=1}^{n} i!)] \leq$\\
+$\leq (n+m) *[ (d* \sum_{i=1}^{n} i!)] $\\
 
 $\leq  d* \sum_{i=1}^{n} i!*(n+m)$\\
 
 \end{center}
 
 \indent que es lo que queríamos ver.\\
+\end{itemize}
 
-\indent Luego, colorear cuesta O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
-\indent maximoImpactoExacto cuesta entonces O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) que es O($\sum_{i=1}^{n} i! * (n+m) $).\\
+
+Por lo tanto, las complejidades son
+
+\begin{itemize}
+	\item \textsc{colorear}: O($\sum_{i=1}^{n} i! * (n+m) $)
+	\item \textsc{maximoImpactoExacto}: O(n+1 + n + 1 + $\sum_{i=1}^{n} i! * (n+m) $) = O($\sum_{i=1}^{n} i! * (n+m) $)
+\end{itemize}
 
 \subsection{Experimentación y Resultados}
 
