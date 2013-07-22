@@ -42,8 +42,8 @@ Por ejemplo, en la figura \ref{fig:ejemploSoloColoreosNoValidos} mostramos dos p
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=1]{ejemplo-coloreos-no-validos.png}
-\label{fig:ejemploSoloColoreosNoValidos}
 \caption{Ejemplo de coloreo de un nodo que lleva a coloreos ilegales.}
+\label{fig:ejemploSoloColoreosNoValidos}
 \end{figure}
 
 Por lo tanto, podemos aplicar una una poda considerando solamente los colores que sean legales con respecto a los de los nodos pintados con anterioridad:
@@ -73,10 +73,10 @@ Dos coloreos v\'alidos son 1-2-3-1-2 y 2-1-3-2-1, como se muestra en la figura \
 Sin embargo, f\'acilmente se ve que al intercambiar las etiquetas de los colores \textsl{1} y \textsl{2}, el primer coloreo puede transformase en el segundo, y el segundo puede transformase en el primero. 
 
 \begin{figure}[H]
-\label{fig:ejemploRepeticionColoreo}
-\caption{Ejemplo de dos coloreos legales que resultan equivalentes.}
 	\centering
 	\includegraphics[scale=1]{ejemplo-mismos-coloreos.png}
+\caption{Ejemplo de dos coloreos legales que resultan equivalentes.}
+\label{fig:ejemploRepeticionColoreo}
 \end{figure}
 
 
@@ -97,9 +97,9 @@ tal que, para cada uno, $f(v)$ cumple
 Es decir, para pintar el nodo v, se usan $m+1$ maneras distintas, usando los colores ya usados, de 1,2...$m$ o un color nuevo, $m+1$.
 
 \begin{figure}[H]
-\label{fig:ejemploRepeticionColoreo}
 	\centering
 	\includegraphics[scale=1]{ejemplo-coloreos-distintos.png}
+\label{fig:ejemploColoreosDistintos}
 \caption{Ejemplo de un conjunto de coloreos seg\'un la caracterizaci\'on dada. Cada camino desde la ra\'iz a una hoja es un coloreo. Por ejemplo, 1-1-1-1, 1-2-1-2 y 1-2-3-4.}
 \end{figure}
 
@@ -110,14 +110,14 @@ Adem\'as, cualquier otro coloreo que no est\'e en F es equivalente a uno que si 
 
 %Para evitar analizar estos casos de m\'as, definimos la siguiente manera para determinar los colores a usar en cada momento:
 Entonces, teniendo esto en cuenta, para evitar analizar los casos de m\'as definimos una forma m\'as restrictiva para armar los coloreos.
-El pseudocódigo del algoritmo es el siguiente:
+El pseudoc\'odigo del algoritmo (ya considerando la selecci\'on del coloreo de m\'aximo impacto cada vez que completamos un coloreo) es el siguiente:
 
 \begin{algorithm}[H]
 \caption{} 
 \begin{codebox}
-\Procname{$\proc{colorear}(nodo, G, H, coloreo, solucion)$}
+\Procname{$\proc{colorear}(nodo i, grafo G, grafo H, coloreo, solucion)$}
 
-\li \If $nodo \; \geq \; G.cantNodos$ \Comment{se pintaron todos los nodos de G} \Do
+\li \If $i \; \geq \; G.cantNodos$ \Comment{se pintaron todos los nodos de G} \Do
 \li	$impacto$ $\gets$ impacto del coloreo en H
 \li		\If $impacto\; > \; solucion.impacto$ \Do
 \li			$solucion.impacto \gets impacto$
@@ -127,10 +127,10 @@ El pseudocódigo del algoritmo es el siguiente:
 \li \Else \Do
 \li		$maxColor$ $\gets$ maximo color usado hasta el momento 	
 \li		\For c \textbf{from} 1 \textbf{to} maxColor \Do
-\li			\If es legal pintar $nodo$ de color c \Do
+\li			\If es legal pintar el nodo $i$ de color c \Do
 \li					$nuevoColoreo \; = \; coloreo$
-\li         $nuevoColoreo[nodo] \gets c$
-\li         $colorear(G, H, nuevoColoreo, solucion)$
+\li         $nuevoColoreo[i] \gets c$
+\li         $colorear(i+1, G, H, nuevoColoreo, solucion)$
              \End
          \End
 \End
@@ -185,19 +185,18 @@ donde $k$ es la cantidad de nodos que quedan por pintar.\\
 
 
 \begin{centering}
-T(n)=(n-n+1)*(n+m + T(n-1))=\\
-= n+m + [2*(n+m) + 2*T(n-2)]=\\
-=(n+m)+2*(n+m) + 2*[3*(n+m)+ 3* T(n-3)]=\\
-=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3 T(n-3)=\\
-=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3*[4*(n+m)+4*T(n-4)]=\\
-=(n+m)+2*(n+m)+2*3*(n+m)+2*3*4*(n+m)+ 2*3*4*T(n-4)=\\
-=...=\\
-=[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * T(0)= \\
+T(n)=(n-n+1)*(n+m + T(n-1))\\
+= n+m + [2*(n+m) + 2*T(n-2)]\\
+=(n+m)+2*(n+m) + 2*[3*(n+m)+ 3* T(n-3)]\\
+=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3 T(n-3)\\
+=(n+m)+2*(n+m)+ 2*3*(n+m) + 2*3*[4*(n+m)+4*T(n-4)]\\
+=(n+m)+2*(n+m)+2*3*(n+m)+2*3*4*(n+m)+ 2*3*4*T(n-4)\\
+...\\
+=[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * T(0) \\
 =[ $\sum_{i=1}^{n} i! * (n+m) $] + n! * (n+m)\\
 \end{centering}
 
-
-\indent Es decir que T(n)= [ $\sum_{i=1}^{n} i! * (n+m) $] + n! * (n+m)\\
+\indent Es decir que $$T(n)= \left[ \sum_{i=1}^{n} i! * (n+m) \right] + n! * (n+m)$$\\
 
 \indent Conjeturamos entonces que T(n) es O($\sum_{i=1}^{n} i! * (n+m) $).\\
 
@@ -215,8 +214,7 @@ T(1)= $\sum_{i=1}^{1} i! * (1+m)  1! * (1+m) $ = 2*1!*(1+m) =\\
 \indent Es decir que con un $d=2$ nos alcanza.\\
 
 
-\indent Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ \\
-
+\indent Paso inductivo: Suponiendo que vale que $T(n-1) \leq d * [\sum_{i=1}^{n-1} i! * (n-1+m)] $ quiero ver que vale $T(n) \leq d * [\sum_{i=1}^{n} i! * (n+m)] $ 
 
 \begin{center}
 T(n)=(n-n+1)*(n+m + T(n-1))=\\
