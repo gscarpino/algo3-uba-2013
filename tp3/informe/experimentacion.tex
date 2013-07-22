@@ -3,7 +3,7 @@
 
 \subsection{Comparando con el Exacto}
 
-\quad Vamos a comparar todas nuestras implementaciones y a calcular las distancias con respecto al algoritmo exacto. Debido al costo del exacto se realizaron tests de 5 nodos a 16 con 50 repeticiones para cada cantidad. Definimos distancia como la diferencia entre el resultado exacto y el de la heurística correspondiente. 
+\quad Vamos a comparar todas nuestras implementaciones y a calcular las distancias con respecto al algoritmo exacto. Debido al costo del exacto se realizaron tests de 5 nodos a 16 con 50 repeticiones para cada cantidad. Definimos distancia como la diferencia entre el resultado exacto y el de la heurística correspondiente. Esto nos da una idea de \textit{que tan mala es la heurística}.
 
 
 \quad Comparamos primero con grafos generados aleatoriamente, luego con grafos estrellas no uniformes y grafos \textit{web}.
@@ -24,7 +24,13 @@
 	\includegraphics[scale=0.6]{distancia-Web.png}
 \end{figure}
 
-\quad Se observa...
+\quad Se ve claro como a medida de que se incrementan los nodos en los grafos la calidad de las soluciones obtenidas empeoran.
+
+\quad Con respecto a la heuristica golosa es la peor de las heuristicas, sin embargo como se vera más adelante es la de menor costo temporal. El empeoramiento (distancia) es lineal a la solución exacta en las 3 familias de grafos.
+
+\quad Con la búsqueda local pasa algo similar salvo que por los datos obtenidos podriamos decir que es prácticamente la mitad de peor que el goloso. 
+
+\quad En cambio, con la metaheurística GRASP se obtiene distancias casi nulas con respecto a la solución exacta. Siendo en promedio menor a una para este rango de nodos de grafos que experimentamos (en las 3 familias).
 
 \quad
 
@@ -35,20 +41,23 @@
 	\includegraphics[scale=0.6]{distancia-Goloso.png}
 \end{figure}
 
+\quad Prácticamente el goloso se comporta igual con los tres tipos de grafos, es decir, que la calidad de las soluciones obtenidas no depende de estas familias de grafos. Podemos determinar que a pesar de la similitud, esta heurística es levemente peor con los grafos Web de 4 vértices.
+
+\quad
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{distancia-BLocal.png}
 \end{figure}
+
+\quad Vemos un comportamiento menos estable que con el goloso con respecto a las distintas familias de grafos. Sin embargo la tendencia es clara, lineal. No se puede determinar una familia para el cual esta heurística es peor.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{distancia-GRASP.png}
 \end{figure}
 
-\quad Podemos apreciar...
-
-\quad
-
+\quad Esta metaheurística es la menos estable de las 3. Varia mucho la distancia, presentando varios picos. Creemos que se debe a los criterios de parada definidos aunque hay que tener en cuenta que el promedio máximo es 0.5 menor a 1. Se podria decir que esta metaheuristica se comporta peor con las familias de grafo Web de 4 vertices porque con los grafos \textit{más grandes} es la que produce mayor distancia de la solución exacta.
 
 \quad
 
